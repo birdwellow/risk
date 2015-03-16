@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<style>
+			body {
+				margin: 0px;
+				padding: 0px;
+			}
+			#container {
+				background: #ddd;
+				background-image: url('');
+				height: 500px;
+				width: 50%;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<button onclick="toOwnerView()">Owner</button>
+		<button onclick="toContinentView()">Continent</button>
+		<button onclick="confirm()">Confirm</button>
+		
+		<div id="container"></div>
+		
+		<script src="kinetic-v5.0.1.min.js" defer="defer"></script>
+		<script src="data.js"></script>
+		<script src="rules.js"></script>
+		<script defer="defer" src="app.js"></script>
+	</body>
+</html>
