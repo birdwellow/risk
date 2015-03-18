@@ -3,15 +3,35 @@
 <html>
 	<head>
 		<style>
+			@font-face {
+				font-family: 'Oswald';
+				font-style: normal;
+				font-weight: 400;
+				src: local('Oswald Regular'), local('Oswald-Regular'), url(res/font/Oswald-Regular.woff) format('woff');
+			}
+			@font-face {
+				font-family: 'Garamond';
+				font-style: normal;
+				font-weight: 400;
+				src: url('res/font/EBGaramond.otf') format('opentype');
+			}
 			body {
 				margin: 0px;
 				padding: 0px;
 			}
-			#container {
+			#map {
 				background: #ddd;
-				background-image: url('img/grid.png');
+				background-image: url('res/img/DirtyPaper-2.jpg');
+				background-position: -10px; 
 				height: 500px;
 				width: 50%;
+				cursor: pointer;
+			}
+			#random {
+				font-family: Garamond;
+				background: #222;
+				height: 150px;
+				width: 600px;
 				cursor: pointer;
 			}
 		</style>
@@ -21,7 +41,10 @@
 		<button onclick="toContinentView()">Continent</button>
 		<button onclick="confirm()">Confirm</button>
 		
-		<div id="container"></div>
+		<div id="map"></div>
+		<div id="random">
+			Test String
+		</div>
 		
 		<script src="jquery-1.11.2.min.js"></script>
 		<script src="kinetic-v5.0.1.min.js" defer="defer"></script>

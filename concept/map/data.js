@@ -5,18 +5,20 @@ var continents = [
 		name : "NorthAmerica",
 		id : 1,
 		colorscheme : {
-			fill : ["#cc2", "#dd5", "#ee8"],
-			stroke : ["#000", "#000", "#000"],
-			strokeWidth : [1, 2, 3],
+			fill : ["rgba(200,200,40,0.5)", "rgba(200,200,40,0.75)", "rgba(200,200,40,1)"],
+			stroke : ["", "rgba(100,100,20,1)", "rgba(150,150,30,1)"],
+			strokeWidth : [1, 3, 3],
+			text : ["rgba(0,0,0,0.25)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0.75)"]
 		},
 	},
 	{
 		name : "SouthAmerica",
 		id : 2,
 		colorscheme : {
-			fill : ["#c2c", "#d5d", "#e8e"],
-			stroke : ["#000", "#000", "#000"],
-			strokeWidth : [1, 2, 3],
+			fill : ["rgba(200,40,200,0.5)", "rgba(200,40,200,0.75)", "rgba(200,40,200,1)"],
+			stroke : ["", "rgba(100,20,100,1)", "rgba(150,30,150,1)"],
+			strokeWidth : [1, 3, 3],
+			text : ["rgba(0,0,0,0.25)", "rgba(0,0,0,0.5)", "rgba(0,0,0,0.75)"]
 		},
 	},
 ];
@@ -26,27 +28,30 @@ var players = [
 		name : "Tom Ate",
 		id : 3901,
 		colorscheme : {
-			fill : ["#f44", "#f88", "#f99"],
-			stroke : ["", "", ""],
-			strokeWidth : [1, 2, 3],
+			fill : ["rgba(255,88,88,0.5)", "rgba(255,88,88,0.75)", "rgba(255,88,88,1)"],
+			stroke : ["", "rgba(127,44,44,1)", "rgba(190,66,66,1)"],
+			strokeWidth : [1, 3, 3],
+			text : ["rgba(0,0,0,0.20)", "rgba(127,44,44,1)", "rgba(190,66,66,1)"]
 		},
 	},
 	{
 		name : "Niko Tien",
 		id : 5982,
 		colorscheme : {
-			fill : ["#44f", "#88f", "#99f"],
-			stroke : ["", "", ""],
-			strokeWidth : [1, 2, 3],
+			fill : ["rgba(88,255,88,0.5)", "rgba(88,255,88,0.75)", "rgba(88,255,88,1)"],
+			stroke : ["", "rgba(44,127,44,1)", "rgba(66,190,66,1)"],
+			strokeWidth : [1, 3, 3],
+			text : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"]
 		},
 	},
 	{
 		name : "Andi Körber",
 		id : 9338,
 		colorscheme : {
-			fill : ["#4f4", "#8f8", "#9f9"],
-			stroke : ["", "", ""],
-			strokeWidth : [1, 2, 3],
+			fill : ["rgba(88,88,255,0.5)", "rgba(88,88,255,0.75)", "rgba(88,88,255,1)"],
+			stroke : ["", "rgba(44,44,127,1)", "rgba(66,66,190,1)"],
+			strokeWidth : [1, 3, 3],
+			text : ["rgba(0,0,0,0.20)", "rgba(44,44,127,1)", "rgba(66,66,190,1)"]
 		},
 	},
 ];
@@ -63,6 +68,10 @@ var regions = [
 			x : 188,
 			y : 163,
 		},
+		labelCenter : {
+			x : 188,
+			y : 149,
+		},
 		angle : 20,
 		pathData : ''//M10,10 C0,0 10,150 100,100 S300,150 400,150'
 	},
@@ -77,6 +86,10 @@ var regions = [
 			x : 191,
 			y : 116,
 		},
+		labelCenter : {
+			x : 175,
+			y : 110,
+		},
 		angle : 2
 	},
 	{
@@ -89,6 +102,10 @@ var regions = [
 		center : {
 			x : 177,
 			y : 64,
+		},
+		labelCenter : {
+			x : 167,
+			y : 54,
 		},
 		angle : -2
 	},
@@ -103,7 +120,11 @@ var regions = [
 			x : 331,
 			y : 257,
 		},
-		angle : -10
+		labelCenter : {
+			x : 331,
+			y : 243,
+		},
+		angle : 30
 	}
 ];
 
@@ -112,62 +133,46 @@ var Config = {
 
 	view : {
 
-		containerName : 'container',
+		map : {
+			containerName : 'map',
 
-		width : $('#container').width(),
+			width : $('#map').width(),
 
-		height : $('#container').height(),
+			height : $('#map').height()
+		},
+
+		random : {
+			containerName : 'random',
+
+			width : $('#random').width(),
+
+			height : $('#random').height()
+		},
 
 		scheme : {
 			name : "owner",
+
 			pointer : {
-				fill : "#888",
-				stroke : "#111",
+				fill : "#444",
+				stroke : "",
 				strokeWidth : 0
 			},
 
-			/*
-			regionTags : {
-				fill: '#000',
-				pointerDirection: 'down',
-				pointerWidth: 10,
-				pointerHeight: 10,
-				lineJoin: 'round',
-				shadowColor: '#000',
-				shadowBlur: 10,
-				shadowOffset: {x:10, y:10},
-				shadowOpacity: 0.5
-			},
-			*/
-
 			regionTexts : {
-				fontFamily: 'Calibri',
+				fontFamily: 'Garamond',
 				fontSize: 18,
 				padding: 5,
-				fill: '#fff',
+				fill: 'rgba(0,0,0,0.5)',
 				offsetX: 5,
 				//offsetY: 15
 			},
 
-			troopTags : {
-				fill: '#ddd',
-				stroke: '#000',
-				pointerWidth: 10,
-				pointerHeight: 10,
-				lineJoin: 'round',
-				shadowColor: '#000',
-				shadowBlur: 10,
-				shadowOffset: {x:10, y:10},
-				shadowOpacity: 0.5,
-				cornerRadius : 10,
-				borderRadius : 10
-			},
-
 			troopTexts : {
 				fontFamily: 'Calibri',
-				fontSize: 18,
+				fontSize: 25,
 				padding: 5,
-				fill: '#444'
+				fill: '#fff',
+				fontStyle:"100"
 			}
 
 		}

@@ -59,11 +59,17 @@ var Game = {
 
 	View : {
 
-		stage : new Kinetic.Stage({
-			container: Config.view.containerName,
-			width: Config.view.width,
-			height: Config.view.height
+		mapStage : new Kinetic.Stage({
+			container: Config.view.map.containerName,
+			width: Config.view.map.width,
+			height: Config.view.map.height
 		}),
+
+		/*randomStage : new Kinetic.Stage({
+			container: Config.view.random.containerName,
+			width: Config.view.random.width,
+			height: Config.view.random.height
+		}),*/
 
 		mapLayer : new Kinetic.Layer({}),
 		labelLayer : new Kinetic.Layer({}),
@@ -71,6 +77,8 @@ var Game = {
 		mapTopLayer : new Kinetic.Layer({}),
 		labelTopLayer : new Kinetic.Layer({}),
 		symbolLayer : new Kinetic.Layer({}),
+
+		randomLayer : new Kinetic.Layer({}),
 
 		elements : {
 
@@ -152,37 +160,34 @@ var Game = {
 					strokeWidth: region.owner.colorscheme.strokeWidth[0],
 				});
 
-				var nameLabel = new Kinetic.Label({
-					x: region.center.x,
-					y: region.center.y
+				path.nameLabel = new Kinetic.Label({
+					x: region.labelCenter.x,
+					y: region.labelCenter.y
 				});
-				nameLabel.tag = new Kinetic.Tag(Config.view.scheme.regionTags);
-				nameLabel.add(nameLabel.tag);
 				
 				var config = Config.view.scheme.regionTexts;
 				config.text = region.name;
 				config.offsetX = region.name.length + config.offsetX;
 				config.rotation = region.angle;
 				config.data = region.path;
+				config.fill = region.owner.colorscheme.text[0];
 				if(region.pathData){
-					nameLabel.text = new Kinetic.TextPath(config);
+					path.nameLabel.text = new Kinetic.TextPath(config);
 				} else {
-					nameLabel.text = new Kinetic.Text(config);
+					path.nameLabel.text = new Kinetic.Text(config);
 				}
-				nameLabel.add(nameLabel.text);
+				path.nameLabel.add(path.nameLabel.text);
 
 
-				var troopLabel = new Kinetic.Label({
-					x: region.center.x,
-					y: region.center.y + 10
-				});
-				troopLabel.tag = new Kinetic.Tag(Config.view.scheme.troopTags);
-				troopLabel.add(troopLabel.tag)
-				
 				var config = Config.view.scheme.troopTexts;
 				config.text = region.troops;
-				troopLabel.text = new Kinetic.Text(config);
-				troopLabel.add(troopLabel.text);
+				path.troopLabel = new Kinetic.Label({
+					x: region.center.x - config.padding - config.fontSize/2,
+					y: region.center.y - config.padding - config.fontSize/2,
+				});
+				
+				path.troopLabel.text = new Kinetic.Text(config);
+				path.troopLabel.add(path.troopLabel.text);
 
 				this.elements.regions[region.id] = path;
 				path.model = region;
@@ -203,7 +208,7 @@ var Game = {
 					this._state = 0;
 					this.update();
 					this.moveTo(Game.View.mapLayer);
-					this.nameLabel.moveTo(Game.View.labelLayer);
+					this.nameLabel.moveTo(Game.View.mapLayer);
 					this.troopLabel.moveTo(Game.View.labelLayer);
 					Game.View.mapTopLayer.drawScene();
 					Game.View.mapLayer.drawScene();
@@ -218,7 +223,7 @@ var Game = {
 					this._state = 1;
 					this.update();
 					this.moveTo(Game.View.mapTopLayer);
-					this.nameLabel.moveTo(Game.View.labelTopLayer);
+					this.nameLabel.moveTo(Game.View.mapTopLayer);
 					this.troopLabel.moveTo(Game.View.labelTopLayer);
 					Game.View.mapTopLayer.drawScene();
 					Game.View.labelTopLayer.drawScene();
@@ -256,47 +261,48 @@ var Game = {
 					if(this.colorscheme.strokeWidth[this._state] != undefined){
 						this.setStrokeWidth(this.colorscheme.strokeWidth[this._state]);
 					}
+					if(this.colorscheme.text[this._state] != undefined){
+						this.nameLabel.text.setFill(this.colorscheme.text[this._state]);
+					}
 				};
 
 				path.scheme("owner");
 				Game.View.mapLayer.add(path);
 
-				path.nameLabel = nameLabel;
-				path.troopLabel = troopLabel;
-				troopLabel.path = path;
-				nameLabel.path = path;
+				path.troopLabel.path = path;
+				path.nameLabel.path = path;
 
 
 
 				path.on('mouseover', function() {
 					Game.Controller.fire("mouseoverRegionPath", this);
 				});
-				nameLabel.on('mouseover', function() {
+				path.nameLabel.on('mouseover', function() {
 					Game.Controller.fire("mouseoverRegionPath", this.path);
 				}); 
-				troopLabel.on('mouseover', function() {
+				path.troopLabel.on('mouseover', function() {
 					Game.Controller.fire("mouseoverRegionPath", this.path);
 				}); 
 				path.on('click', function() {
 					Game.Controller.fire("clickRegionPath", this);
 				});
-				nameLabel.on('mouseout', function() {
+				path.nameLabel.on('mouseout', function() {
 					Game.Controller.fire("mouseoutRegionPath", this.path);
 				});
-				troopLabel.on('mouseout', function() {
+				path.troopLabel.on('mouseout', function() {
 					Game.Controller.fire("mouseoutRegionPath", this.path);
 				});
 				path.on('mouseout', function() {
 					Game.Controller.fire("mouseoutRegionPath", this);
 				});
-				nameLabel.on('click', function() {
+				path.nameLabel.on('click', function() {
 					Game.Controller.fire("clickRegionPath", this.path);
 				});
-				troopLabel.on('click', function() {
+				path.troopLabel.on('click', function() {
 					Game.Controller.fire("clickRegionPath", this.path);
 				});
-				Game.View.labelLayer.add(nameLabel);
-				Game.View.labelLayer.add(troopLabel);
+				Game.View.mapLayer.add(path.nameLabel);
+				Game.View.labelLayer.add(path.troopLabel);
 			}
 
 			var highlightBackground = new Kinetic.Rect({
@@ -307,12 +313,12 @@ var Game = {
 			});
 			Game.View.highlightLayer.highlightBackground = highlightBackground;
 
-			this.stage.add(Game.View.mapLayer);
-			this.stage.add(Game.View.labelLayer);
-			this.stage.add(Game.View.highlightLayer);
-			this.stage.add(Game.View.mapTopLayer);
-			this.stage.add(Game.View.symbolLayer);
-			this.stage.add(Game.View.labelTopLayer);
+			this.mapStage.add(Game.View.mapLayer);
+			this.mapStage.add(Game.View.labelLayer);
+			this.mapStage.add(Game.View.highlightLayer);
+			this.mapStage.add(Game.View.mapTopLayer);
+			this.mapStage.add(Game.View.symbolLayer);
+			this.mapStage.add(Game.View.labelTopLayer);
 		},
 
 	},
@@ -355,7 +361,7 @@ var Game = {
 };
 
 
-Game.init();
+$( document ).ready(Game.init());
 
 
 function toOwnerView(){
