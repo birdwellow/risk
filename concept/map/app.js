@@ -1,20 +1,4 @@
-var Config = {
 
-	view : {
-
-		container : {
-
-			name : 'container',
-
-			width : 500,
-
-			height : 500,
-
-		},
-
-	},
-
-};
 
 var Math2d = {
 	distance : function(point1, point2){
@@ -61,6 +45,10 @@ var Game = {
 
 	Model : {
 
+		init : function(){
+
+		},
+
 		regions : regions,
 
 		players : players,
@@ -72,9 +60,9 @@ var Game = {
 	View : {
 
 		stage : new Kinetic.Stage({
-			container: Config.view.container.name,
-			width: Config.view.container.width,
-			height: Config.view.container.height
+			container: Config.view.containerName,
+			width: Config.view.width,
+			height: Config.view.height
 		}),
 
 		mapLayer : new Kinetic.Layer({}),
@@ -97,18 +85,18 @@ var Game = {
 			vec = Math2d.normalize(vec);
 			vec = Math2d.orthogonalize(vec);
 
-			var myPoints = [
-				end.model.center.x,
-				end.model.center.y,
-				start.model.center.x - 10 * vec[1].x,
-				start.model.center.y - 10 * vec[1].y,
-				start.model.center.x + 10 * vec[1].x,
-				start.model.center.y + 10 * vec[1].y
-			];
-
 			this.elements.pointer = new Kinetic.Line({
-				fill : '#111',
-				points : myPoints,
+				fill : Config.view.scheme.pointer.fill,
+				stroke : Config.view.scheme.pointer.stroke,
+				strokeWidth : Config.view.scheme.pointer.strokeWidth,
+				points : [
+					start.model.center.x - 10 * vec[1].x,
+					start.model.center.y - 10 * vec[1].y,
+					end.model.center.x,
+					end.model.center.y,
+					start.model.center.x + 10 * vec[1].x,
+					start.model.center.y + 10 * vec[1].y
+				],
 				closed: true
 			});
 			this.symbolLayer.add(this.elements.pointer);
@@ -118,17 +106,9 @@ var Game = {
 
 		pointerOff : function(){
 			this.elements.pointer.remove();
+			this.elements.pointer = null;
 			this.symbolLayer.draw();
 			this.highlightOff();
-		},
-
-		scheme : function(scheme){
-			for(var key in this.elements.regions){
-				var regionView = this.elements.regions[key];
-				regionView.scheme(scheme);
-			}
-			Game.View.mapLayer.draw();
-			Game.View.mapTopLayer.draw();
 		},
 
 		highlightOn : function(){
@@ -139,6 +119,15 @@ var Game = {
 		highlightOff : function(){
 			Game.View.highlightLayer.highlightBackground.remove();
 			Game.View.highlightLayer.drawScene();
+		},
+
+		scheme : function(scheme){
+			for(var key in this.elements.regions){
+				var regionView = this.elements.regions[key];
+				regionView.scheme(scheme);
+			}
+			Game.View.mapLayer.draw();
+			Game.View.mapTopLayer.draw();
 		},
 
 		init : function (){
@@ -162,76 +151,38 @@ var Game = {
 					stroke: region.owner.colorscheme.stroke[0],
 					strokeWidth: region.owner.colorscheme.strokeWidth[0],
 				});
+
 				var nameLabel = new Kinetic.Label({
 					x: region.center.x,
 					y: region.center.y
 				});
-				nameLabel.tag = new Kinetic.Tag({
-					fill: '#000',
-					pointerDirection: 'down',
-					pointerWidth: 10,
-					pointerHeight: 10,
-					lineJoin: 'round',
-					shadowColor: '#000',
-					shadowBlur: 10,
-					shadowOffset: {x:10, y:10},
-					shadowOpacity: 0.5
-				});
-				/*
-				nameLabel.text = new Kinetic.TextPath({
-					text: region.name,
-					fontFamily: 'Calibri',
-					fontSize: 18,
-					padding: 5,
-					fill: '#fff',
-					offsetX: region.name.length * 5,
-					offsetY: 15,
-					rotation: region.angle,
-					data: 'M10,10 C0,0 10,150 100,100 S300,150 400,50'
-				});
-				*/
-				nameLabel.text = new Kinetic.Text({
-					text: region.name,
-					fontFamily: 'Calibri',
-					fontSize: 18,
-					padding: 5,
-					fill: '#fff',
-					offsetX: region.name.length * 5,
-					offsetY: 15,
-					rotation: region.angle
-				});
-				nameLabel
-					//.add(nameLabel.tag)
-					.add(nameLabel.text);
+				nameLabel.tag = new Kinetic.Tag(Config.view.scheme.regionTags);
+				nameLabel.add(nameLabel.tag);
+				
+				var config = Config.view.scheme.regionTexts;
+				config.text = region.name;
+				config.offsetX = region.name.length + config.offsetX;
+				config.rotation = region.angle;
+				config.data = region.path;
+				if(region.pathData){
+					nameLabel.text = new Kinetic.TextPath(config);
+				} else {
+					nameLabel.text = new Kinetic.Text(config);
+				}
+				nameLabel.add(nameLabel.text);
 
 
 				var troopLabel = new Kinetic.Label({
 					x: region.center.x,
 					y: region.center.y + 10
 				});
-				troopLabel.tag = new Kinetic.Tag({
-					fill: '#ddd',
-					stroke: '#000',
-					pointerWidth: 10,
-					pointerHeight: 10,
-					lineJoin: 'round',
-					shadowColor: '#000',
-					shadowBlur: 10,
-					shadowOffset: {x:10, y:10},
-					shadowOpacity: 0.5,
-					cornerRadius : 10,
-					borderRadius : 10
-				});
-				troopLabel.text = new Kinetic.Text({
-					text: region.troops,
-					fontFamily: 'Calibri',
-					fontSize: 18,
-					padding: 5,
-					fill: '#444'
-				});
-				troopLabel
-					.add(troopLabel.tag)
-					.add(troopLabel.text);
+				troopLabel.tag = new Kinetic.Tag(Config.view.scheme.troopTags);
+				troopLabel.add(troopLabel.tag)
+				
+				var config = Config.view.scheme.troopTexts;
+				config.text = region.troops;
+				troopLabel.text = new Kinetic.Text(config);
+				troopLabel.add(troopLabel.text);
 
 				this.elements.regions[region.id] = path;
 				path.model = region;
@@ -296,7 +247,6 @@ var Game = {
 					if(this.model[this.colorschemeName] && this.model[this.colorschemeName].colorscheme){
 						this.colorscheme = this.model[this.colorschemeName].colorscheme;
 					}
-
 					if(this.colorscheme.fill[this._state] != undefined){
 						this.setFill(this.colorscheme.fill[this._state]);
 					}
@@ -320,7 +270,7 @@ var Game = {
 
 				path.on('mouseover', function() {
 					Game.Controller.fire("mouseoverRegionPath", this);
-				}); 
+				});
 				nameLabel.on('mouseover', function() {
 					Game.Controller.fire("mouseoverRegionPath", this.path);
 				}); 
@@ -351,8 +301,8 @@ var Game = {
 
 			var highlightBackground = new Kinetic.Rect({
 				fill: '#000',
-				width: 10000,
-				height: 10000,
+				width: 5000,
+				height: 5000,
 				opacity: 0.5
 			});
 			Game.View.highlightLayer.highlightBackground = highlightBackground;
@@ -368,6 +318,10 @@ var Game = {
 	},
 
 	Controller : {
+
+		init : function(){
+			this.behave("selectStart");
+		},
 
 		globalEvents : globalBehaviors,
 
@@ -394,8 +348,9 @@ var Game = {
 	},
 
 	init : function(){
+		this.Model.init();
+		this.Controller.init();
 		this.View.init();
-		this.Controller.behave("selectStart");
 	},
 };
 
