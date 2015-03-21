@@ -140,7 +140,6 @@ var Game = {
 			config.text = "-";
 			config.offsetY = 0;
 			this.elements.decButton.text = new Kinetic.Text(config);
-
 			config.fill = config.background[0];
 			config.height = config.width;
 			config.stroke = config.borderColor[0];
@@ -153,7 +152,6 @@ var Game = {
 			this.elements.decButton.add(this.elements.decButton.text);
 			this.controlsLayer.add(this.elements.incButton);
 			this.controlsLayer.add(this.elements.decButton);
-			this.controlsLayer.drawScene();
 
 			this.elements.incButton.state = function(newState){
 				this._state = newState;
@@ -171,7 +169,6 @@ var Game = {
 			};
 
 			this.elements.incButton.on("mouseover", function(){
-				console.log("hover");
 				this.state(1);
 			});
 			this.elements.decButton.on("mouseover", function(){
@@ -198,15 +195,12 @@ var Game = {
 			this.elements.incButton.on("click", function(){
 				Game.Controller.fire("shiftUnit");
 			});
-			this.elements.incButton.on("click", function(){
+			this.elements.decButton.on("click", function(){
 				Game.Controller.fire("retractUnit");
 			});
-
-			this.elements.incButton.eventListeners.mouseover.name = "mouseover";
-			this.elements.incButton.eventListeners.mouseover.handler = function(){
-				console.log("hover");
-			};
-			console.log(this.elements.incButton);
+			this.controlsLayer.draw();
+			this.symbolLayer.draw();
+			
 		},
 
 		troopShiftOff : function(){
@@ -444,6 +438,7 @@ var Game = {
 					if(this.colorscheme.troops && this.colorscheme.troops.strokeWidth[this._state] != undefined){
 						this.troopLabel.tag.setStrokeWidth(this.colorscheme.troops.strokeWidth[this._state]);
 					}
+					this.troopLabel.text.setText(this.model.troops);
 				};
 
 				path.scheme("owner");

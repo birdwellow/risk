@@ -210,8 +210,7 @@ var Config = {
 					color : ["#fff","green","red"],
 					fontSize : 25,
 					cornerRadius: 15,
-					//background: ["rgba(0,0,0,0.35)","rgba(0,0,0,0.5)","rgba(0,0,0,0.65)"],
-					background: ["red","red","red"],
+					background: ["rgba(0,0,0,0.35)","rgba(0,0,0,0.5)","rgba(0,0,0,0.65)"],
 					borderColor: ["#222","#222","#222"],
 					borderWidth: [2,2,2]
 				}

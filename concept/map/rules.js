@@ -27,7 +27,6 @@ var behaviors = {
 
 		init : function(startRegionPath){
 			this.startRegionPath = startRegionPath;
-			//Game.View.troopShift({model:{center:{x:100, y:100}}}, {model:{center:{x:200, y:200}}});
 		},
 
 		mouseoverRegionPath : function(regionPath){
@@ -76,12 +75,10 @@ var behaviors = {
 
 		confirmAction : function(){
 			this.targetRegionPath.model.owner = this.startRegionPath.model.owner;
-			this.targetRegionPath.click();
-			this.startRegionPath.click();
+			this.targetRegionPath.update();
+			this.startRegionPath.update();
 			Game.View.troopShift(this.startRegionPath, this.targetRegionPath);
-			/*
-			Game.View.pointerOff();
-			Game.Controller.behave("shiftTroops", this.startRegionPath, this.targetRegionPath);*/
+			Game.Controller.behave("shiftTroops", this.startRegionPath, this.targetRegionPath);
 		}
 
 	},
@@ -98,15 +95,24 @@ var behaviors = {
 		},
 
 		shiftUnit : function(){
-
+			++this.targetRegionPath.model.troops;
+			this.targetRegionPath.update();
+			--this.startRegionPath.model.troops;
+			this.startRegionPath.update();
+			Game.View.labelTopLayer.drawScene();
 		},
 
 		retractUnit : function(){
-
+			--this.targetRegionPath.model.troops;
+			this.targetRegionPath.update();
+			++this.startRegionPath.model.troops;
+			this.startRegionPath.update();
+			Game.View.labelTopLayer.drawScene();
 		},
 
 		confirmAction : function(){
 			Game.View.troopShiftOff();
+			Game.View.pointerOff();
 			this.targetRegionPath.mouseout();
 			this.startRegionPath.mouseout();
 			Game.Controller.behave("selectStart");
