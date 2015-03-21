@@ -27,6 +27,7 @@ var behaviors = {
 
 		init : function(startRegionPath){
 			this.startRegionPath = startRegionPath;
+			//Game.View.troopShift({model:{center:{x:100, y:100}}}, {model:{center:{x:200, y:200}}});
 		},
 
 		mouseoverRegionPath : function(regionPath){
@@ -75,14 +76,43 @@ var behaviors = {
 
 		confirmAction : function(){
 			this.targetRegionPath.model.owner = this.startRegionPath.model.owner;
-			this.targetRegionPath.mouseout();
-			this.startRegionPath.mouseout();
-			this.targetRegionPath.update;
+			this.targetRegionPath.click();
+			this.startRegionPath.click();
+			Game.View.troopShift(this.startRegionPath, this.targetRegionPath);
+			/*
 			Game.View.pointerOff();
-			Game.Controller.behave("selectStart");
+			Game.Controller.behave("shiftTroops", this.startRegionPath, this.targetRegionPath);*/
 		}
 
 	},
+
+	shiftTroops : {
+
+		startRegionPath : null,
+
+		targetRegionPath : null,
+
+		init : function(startRegionPath, targetRegionPath){
+			this.startRegionPath = startRegionPath;
+			this.targetRegionPath = targetRegionPath;
+		},
+
+		shiftUnit : function(){
+
+		},
+
+		retractUnit : function(){
+
+		},
+
+		confirmAction : function(){
+			Game.View.troopShiftOff();
+			this.targetRegionPath.mouseout();
+			this.startRegionPath.mouseout();
+			Game.Controller.behave("selectStart");
+		},
+
+	}
 
 };
 

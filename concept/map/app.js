@@ -1,6 +1,7 @@
 
 
 var Math2d = {
+
 	distance : function(point1, point2){
 		return Math.sqrt(
 			Math.pow(point1.x - point2.x, 2)
@@ -37,6 +38,33 @@ var Math2d = {
 				y: vector[1].y/length,
 			}
 		];
+	},
+
+	middleOf : function(){
+		var count = 0;
+		var sumX = 0;
+		var sumY = 0;
+		for(var i = 0; i < arguments.length; i++){
+			count++;
+			var arg = arguments[i];
+			if(arg.x && arg.y){
+				sumX += arg.x;
+				sumY += arg.y;
+			}
+		}
+		var x = -1;
+		var y = -1;
+		var result = {
+			x : x,
+			y : y
+		};
+		if(count > 0){
+			result = {
+				x : Math.round(sumX/count),
+				y : Math.round(sumY/count)
+			};
+		}
+		return result;
 	}
 };
 
@@ -65,11 +93,11 @@ var Game = {
 			height: Config.view.map.height
 		}),
 
-		/*randomStage : new Kinetic.Stage({
+		randomStage : new Kinetic.Stage({
 			container: Config.view.random.containerName,
 			width: Config.view.random.width,
 			height: Config.view.random.height
-		}),*/
+		}),
 
 		mapLayer : new Kinetic.Layer({}),
 		labelLayer : new Kinetic.Layer({}),
@@ -77,6 +105,7 @@ var Game = {
 		mapTopLayer : new Kinetic.Layer({}),
 		labelTopLayer : new Kinetic.Layer({}),
 		symbolLayer : new Kinetic.Layer({}),
+		controlsLayer : new Kinetic.Layer({}),
 
 		randomLayer : new Kinetic.Layer({}),
 
@@ -86,6 +115,106 @@ var Game = {
 
 			pointer : null,
 
+		},
+
+		troopShift : function(start, end){
+			var vec = Math2d.fromTo(start.model.center, end.model.center);
+			vec = Math2d.normalize(vec);
+
+			var middle = Math2d.middleOf(start.model.center, end.model.center);
+			var config = Config.view.scheme.troopShift.controls;
+			this.elements.incButton = new Kinetic.Label({
+				x : middle.x - config.width/2 - vec[1].x * 2 * 15,
+				y : middle.y - config.width/2 - vec[1].y * 2 * 15
+			});
+			this.elements.decButton = new Kinetic.Label({
+				x : middle.x - config.width/2 + vec[1].x * 2 * 15,
+				y : middle.y - config.width/2 + vec[1].y * 2 * 15
+			});
+			config.text = "+";
+			config.fill = config.color[0];
+			config.align = 'center';
+			config.offsetY = -5;
+			config.stroke = "";
+			this.elements.incButton.text = new Kinetic.Text(config);
+			config.text = "-";
+			config.offsetY = 0;
+			this.elements.decButton.text = new Kinetic.Text(config);
+
+			config.fill = config.background[0];
+			config.height = config.width;
+			config.stroke = config.borderColor[0];
+			config.strokeWidth = config.borderWidth[0];
+			this.elements.incButton.label = new Kinetic.Rect(config);
+			this.elements.decButton.label = new Kinetic.Rect(config);
+			this.elements.incButton.add(this.elements.incButton.label);
+			this.elements.incButton.add(this.elements.incButton.text);
+			this.elements.decButton.add(this.elements.decButton.label);
+			this.elements.decButton.add(this.elements.decButton.text);
+			this.controlsLayer.add(this.elements.incButton);
+			this.controlsLayer.add(this.elements.decButton);
+			this.controlsLayer.drawScene();
+
+			this.elements.incButton.state = function(newState){
+				this._state = newState;
+				var config = Config.view.scheme.troopShift.controls;
+				this.text.setFill(config[this._state]);
+				this.label.setFill(config.background[this._state]);
+				Game.View.controlsLayer.drawScene();
+			};
+			this.elements.decButton.state = function(newState){
+				this._state = newState;
+				var config = Config.view.scheme.troopShift.controls;
+				this.text.setFill(config[this._state]);
+				this.label.setFill(config.background[this._state]);
+				Game.View.controlsLayer.drawScene();
+			};
+
+			this.elements.incButton.on("mouseover", function(){
+				console.log("hover");
+				this.state(1);
+			});
+			this.elements.decButton.on("mouseover", function(){
+				this.state(1);
+			});
+			this.elements.incButton.on("mouseout", function(){
+				this.state(0);
+			});
+			this.elements.decButton.on("mouseout", function(){
+				this.state(0);
+			});
+			this.elements.incButton.on("mousedown", function(){
+				this.state(2);
+			});
+			this.elements.decButton.on("mousedown", function(){
+				this.state(2);
+			});
+			this.elements.incButton.on("mouseup", function(){
+				this.state(1);
+			});
+			this.elements.decButton.on("mouseup", function(){
+				this.state(1);
+			});
+			this.elements.incButton.on("click", function(){
+				Game.Controller.fire("shiftUnit");
+			});
+			this.elements.incButton.on("click", function(){
+				Game.Controller.fire("retractUnit");
+			});
+
+			this.elements.incButton.eventListeners.mouseover.name = "mouseover";
+			this.elements.incButton.eventListeners.mouseover.handler = function(){
+				console.log("hover");
+			};
+			console.log(this.elements.incButton);
+		},
+
+		troopShiftOff : function(){
+			this.elements.incButton.remove();
+			this.elements.incButton = null;
+			this.elements.decButton.remove();
+			this.elements.decButton = null;
+			this.controlsLayer.draw();
 		},
 
 		pointer : function(start, end){
@@ -105,11 +234,42 @@ var Game = {
 					start.model.center.x + 10 * vec[1].x,
 					start.model.center.y + 10 * vec[1].y
 				],
-				closed: true
+				closed: true,
+
+				fillLinearGradientColorStops: Config.view.scheme.pointer.fillLinearGradientColorStops,
+				fillLinearGradientStartPoint: {
+					x: start.model.center.x,
+					y: start.model.center.y
+				},
+				fillLinearGradientEndPoint: {
+					x: end.model.center.x,
+					y: end.model.center.y
+				},
 			});
 			this.symbolLayer.add(this.elements.pointer);
 			this.symbolLayer.drawScene();
 			this.highlightOn();
+
+			var duration = Config.view.scheme.pointer.speed * 1000;
+			var animation = new Kinetic.Animation(function(frame){
+				if(Game.View.elements.pointer){
+					Game.View.elements.pointer.setPoints([
+						start.model.center.x - 10 * vec[1].x,
+						start.model.center.y - 10 * vec[1].y,
+						start.model.center.x + (end.model.center.x - start.model.center.x) * frame.time/duration,
+						start.model.center.y + (end.model.center.y - start.model.center.y) * frame.time/duration,
+						start.model.center.x + 10 * vec[1].x,
+						start.model.center.y + 10 * vec[1].y
+					]);
+					Game.View.symbolLayer.drawScene();
+				} else {
+					this.stop();
+				}
+				if(frame.time > duration){
+					this.stop();
+				}
+			});
+			animation.start();
 		},
 
 		pointerOff : function(){
@@ -159,34 +319,41 @@ var Game = {
 					stroke: region.owner.colorscheme.stroke[0],
 					strokeWidth: region.owner.colorscheme.strokeWidth[0],
 				});
-
-				path.nameLabel = new Kinetic.Label({
-					x: region.labelCenter.x,
-					y: region.labelCenter.y
-				});
 				
-				var config = Config.view.scheme.regionTexts;
-				config.text = region.name;
-				config.offsetX = region.name.length + config.offsetX;
-				config.rotation = region.angle;
-				config.data = region.path;
-				config.fill = region.owner.colorscheme.text[0];
+				var nameLabelConfig = Config.view.scheme.regionTexts;
+				nameLabelConfig.text = region.name;
+				nameLabelConfig.offsetX = region.name.length + nameLabelConfig.offsetX;
+				nameLabelConfig.rotation = region.angle;
+				nameLabelConfig.data = region.path;
+				nameLabelConfig.x = region.labelCenter.x;
+				nameLabelConfig.y = region.labelCenter.y;
+				nameLabelConfig.fill = region.owner.colorscheme.text[0];
 				if(region.pathData){
-					path.nameLabel.text = new Kinetic.TextPath(config);
+					path.nameLabel = new Kinetic.TextPath(nameLabelConfig);
 				} else {
-					path.nameLabel.text = new Kinetic.Text(config);
+					path.nameLabel = new Kinetic.Text(nameLabelConfig);
 				}
-				path.nameLabel.add(path.nameLabel.text);
 
 
-				var config = Config.view.scheme.troopTexts;
-				config.text = region.troops;
+				var troopLabelConfig = Config.view.scheme.troopTexts;
+				troopLabelConfig.text = region.troops;
+				troopLabelConfig.align = 'center';
 				path.troopLabel = new Kinetic.Label({
-					x: region.center.x - config.padding - config.fontSize/2,
-					y: region.center.y - config.padding - config.fontSize/2,
+					x: region.center.x - troopLabelConfig.padding - troopLabelConfig.fontSize/2,
+					y: region.center.y - troopLabelConfig.padding - troopLabelConfig.fontSize/2
 				});
-				
-				path.troopLabel.text = new Kinetic.Text(config);
+				troopLabelConfig.fill = region.owner.colorscheme.troops.color[0];
+				path.troopLabel.text = new Kinetic.Text(troopLabelConfig);
+				path.troopLabel.tag = new Kinetic.Rect({
+					width: troopLabelConfig.width,
+					height: troopLabelConfig.width,
+					cornerRadius: troopLabelConfig.cornerRadius,
+
+					fill: region.owner.colorscheme.troops.fill[0],
+					stroke: region.owner.colorscheme.troops.stroke[0],
+					strokeWidth: region.owner.colorscheme.troops.strokeWidth[0]
+				});
+				path.troopLabel.add(path.troopLabel.tag);
 				path.troopLabel.add(path.troopLabel.text);
 
 				this.elements.regions[region.id] = path;
@@ -236,6 +403,7 @@ var Game = {
 					this._state = 2;
 					this.update();
 					Game.View.mapTopLayer.drawScene();
+					Game.View.labelTopLayer.drawScene();
 				};
 				path.isClicked = function(){
 					return this._state == 2;
@@ -262,7 +430,19 @@ var Game = {
 						this.setStrokeWidth(this.colorscheme.strokeWidth[this._state]);
 					}
 					if(this.colorscheme.text[this._state] != undefined){
-						this.nameLabel.text.setFill(this.colorscheme.text[this._state]);
+						this.nameLabel.setFill(this.colorscheme.text[this._state]);
+					}
+					if(this.colorscheme.troops && this.colorscheme.troops.color[this._state] != undefined){
+						this.troopLabel.text.setFill(this.colorscheme.troops.color[this._state]);
+					}
+					if(this.colorscheme.troops && this.colorscheme.troops.fill[this._state] != undefined){
+						this.troopLabel.tag.setFill(this.colorscheme.troops.fill[this._state]);
+					}
+					if(this.colorscheme.troops && this.colorscheme.troops.stroke[this._state] != undefined){
+						this.troopLabel.tag.setStroke(this.colorscheme.troops.stroke[this._state]);
+					}
+					if(this.colorscheme.troops && this.colorscheme.troops.strokeWidth[this._state] != undefined){
+						this.troopLabel.tag.setStrokeWidth(this.colorscheme.troops.strokeWidth[this._state]);
 					}
 				};
 
@@ -317,8 +497,9 @@ var Game = {
 			this.mapStage.add(Game.View.labelLayer);
 			this.mapStage.add(Game.View.highlightLayer);
 			this.mapStage.add(Game.View.mapTopLayer);
-			this.mapStage.add(Game.View.symbolLayer);
 			this.mapStage.add(Game.View.labelTopLayer);
+			this.mapStage.add(Game.View.symbolLayer);
+			this.mapStage.add(Game.View.controlsLayer);
 		},
 
 	},

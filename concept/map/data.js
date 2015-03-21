@@ -28,30 +28,48 @@ var players = [
 		name : "Tom Ate",
 		id : 3901,
 		colorscheme : {
-			fill : ["rgba(255,88,88,0.5)", "rgba(255,88,88,0.75)", "rgba(255,88,88,1)"],
-			stroke : ["", "rgba(127,44,44,1)", "rgba(190,66,66,1)"],
+			fill : ["rgba(200,22,22,0.75)", "rgba(255,88,88,0.875)", "rgba(255,88,88,1)"],
+			stroke : ["", "", "rgba(127,44,44,1)"],
 			strokeWidth : [1, 3, 3],
-			text : ["rgba(0,0,0,0.20)", "rgba(127,44,44,1)", "rgba(190,66,66,1)"]
+			text : ["rgba(0,0,0,0.20)", "rgba(127,44,44,1)", "rgba(190,66,66,1)"],
+			troops : {
+				stroke : ["rgba(87,22,22,1)", "rgba(87,22,22,1)", "rgba(87,22,22,1)"],
+				strokeWidth : [2,2,2],
+				color : ["rgba(87,22,22,1)", "rgba(87,22,22,1)", "rgba(87,22,22,1)"],
+				fill : ["rgba(127,44,44,0.5)", "rgba(127,44,44,0.5)", "rgba(127,44,44,1)"]
+			}
 		},
 	},
 	{
 		name : "Niko Tien",
 		id : 5982,
 		colorscheme : {
-			fill : ["rgba(88,255,88,0.5)", "rgba(88,255,88,0.75)", "rgba(88,255,88,1)"],
-			stroke : ["", "rgba(44,127,44,1)", "rgba(66,190,66,1)"],
+			fill : ["rgba(88,255,88,0.75)", "rgba(88,255,88,0.875)", "rgba(88,255,88,1)"],
+			stroke : ["", "", "rgba(44,127,44,1)"],
 			strokeWidth : [1, 3, 3],
-			text : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"]
+			text : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"],
+			troops : {
+				stroke : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"],
+				strokeWidth : [2,2,2],
+				color : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"],
+				fill : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"]
+			}
 		},
 	},
 	{
 		name : "Andi Körber",
 		id : 9338,
 		colorscheme : {
-			fill : ["rgba(88,88,255,0.5)", "rgba(88,88,255,0.75)", "rgba(88,88,255,1)"],
-			stroke : ["", "rgba(44,44,127,1)", "rgba(66,66,190,1)"],
+			fill : ["rgba(88,88,255,0.75)", "rgba(88,88,255,0.875)", "rgba(88,88,255,1)"],
+			stroke : ["", "", "rgba(44,44,127,1)"],
 			strokeWidth : [1, 3, 3],
-			text : ["rgba(0,0,0,0.20)", "rgba(44,44,127,1)", "rgba(66,66,190,1)"]
+			text : ["rgba(0,0,0,0.20)", "rgba(44,44,127,1)", "rgba(66,66,190,1)"],
+			troops : {
+				stroke : ["rgba(0,0,0,0.20)", "rgba(44,44,127,1)", "rgba(66,66,190,1)"],
+				strokeWidth : [2,2,2],
+				color : ["rgba(0,0,0,0.20)", "rgba(44,44,127,1)", "rgba(66,66,190,1)"],
+				fill : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"]
+			}
 		},
 	},
 ];
@@ -153,9 +171,12 @@ var Config = {
 			name : "owner",
 
 			pointer : {
-				fill : "#444",
+				//fill : "#444",
+				//fillLinearGradientColorStops: [0, 'red', 1, 'yellow'],
+				fillLinearGradientColorStops: [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222'],
 				stroke : "",
-				strokeWidth : 0
+				strokeWidth : 0,
+				speed : 0.5
 			},
 
 			regionTexts : {
@@ -172,7 +193,28 @@ var Config = {
 				fontSize: 25,
 				padding: 5,
 				fill: '#fff',
-				fontStyle:"100"
+				fontStyle: "100",
+				width: 40,
+				offsetY : -5,
+				background : 'rgba(255,255,255,0.25)',
+				border: 'rgba(255,255,255,0.5)',
+				cornerRadius: 20
+			},
+
+			troopShift : {
+				display : {
+
+				},
+				controls : {
+					width : 30,
+					color : ["#fff","green","red"],
+					fontSize : 25,
+					cornerRadius: 15,
+					//background: ["rgba(0,0,0,0.35)","rgba(0,0,0,0.5)","rgba(0,0,0,0.65)"],
+					background: ["red","red","red"],
+					borderColor: ["#222","#222","#222"],
+					borderWidth: [2,2,2]
+				}
 			}
 
 		}
