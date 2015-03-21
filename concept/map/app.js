@@ -74,14 +74,25 @@ var Game = {
 	Model : {
 
 		init : function(){
-
+			this.regions = regions;
+			this.players = players;
+			this.continents = continents;
+			for(var i = 0; i < this.regions.length; i++){
+				var region = this.regions[i];
+				region.setOwner = function(newOwner){
+					this.owner = newOwner;
+					this.path.update();
+				}
+				region.addUnit = function(){
+					++this.troops;
+					this.path.update();
+				}
+				region.removeUnit = function(){
+					--this.troops;
+					this.path.update();
+				}
+			}
 		},
-
-		regions : regions,
-
-		players : players,
-
-		continents : continents,
 
 	},
 
@@ -118,6 +129,7 @@ var Game = {
 		},
 
 		troopShift : function(start, end){
+			this.troopShiftOff();
 			var vec = Math2d.fromTo(start.model.center, end.model.center);
 			vec = Math2d.normalize(vec);
 
@@ -204,9 +216,11 @@ var Game = {
 		},
 
 		troopShiftOff : function(){
-			this.elements.incButton.remove();
+			if(this.elements.incButton)
+				this.elements.incButton.remove();
+			if(this.elements.decButton)
+				this.elements.decButton.remove();
 			this.elements.incButton = null;
-			this.elements.decButton.remove();
 			this.elements.decButton = null;
 			this.controlsLayer.draw();
 		},
@@ -352,6 +366,7 @@ var Game = {
 
 				this.elements.regions[region.id] = path;
 				path.model = region;
+				region.path = path;
 
 
 
@@ -439,6 +454,15 @@ var Game = {
 						this.troopLabel.tag.setStrokeWidth(this.colorscheme.troops.strokeWidth[this._state]);
 					}
 					this.troopLabel.text.setText(this.model.troops);
+					if(this.getLayer()){
+						this.getLayer().draw();
+					}
+					if(this.nameLabel.getLayer() && this.nameLabel.getLayer() != this.getLayer()){
+						this.nameLabel.getLayer().draw();
+					}
+					if(this.troopLabel.getLayer() && this.troopLabel.getLayer() != this.getLayer() && this.troopLabel.getLayer() != this.nameLabel.getLayer()){
+						this.troopLabel.getLayer().draw();
+					}
 				};
 
 				path.scheme("owner");
@@ -450,31 +474,31 @@ var Game = {
 
 
 				path.on('mouseover', function() {
-					Game.Controller.fire("mouseoverRegionPath", this);
+					Game.Controller.fire("mouseoverRegionPath", this.model);
 				});
 				path.nameLabel.on('mouseover', function() {
-					Game.Controller.fire("mouseoverRegionPath", this.path);
+					Game.Controller.fire("mouseoverRegionPath", this.path.model);
 				}); 
 				path.troopLabel.on('mouseover', function() {
-					Game.Controller.fire("mouseoverRegionPath", this.path);
+					Game.Controller.fire("mouseoverRegionPath", this.path.model);
 				}); 
 				path.on('click', function() {
-					Game.Controller.fire("clickRegionPath", this);
+					Game.Controller.fire("clickRegionPath", this.model);
 				});
 				path.nameLabel.on('mouseout', function() {
-					Game.Controller.fire("mouseoutRegionPath", this.path);
+					Game.Controller.fire("mouseoutRegionPath", this.path.model);
 				});
 				path.troopLabel.on('mouseout', function() {
-					Game.Controller.fire("mouseoutRegionPath", this.path);
+					Game.Controller.fire("mouseoutRegionPath", this.path.model);
 				});
 				path.on('mouseout', function() {
-					Game.Controller.fire("mouseoutRegionPath", this);
+					Game.Controller.fire("mouseoutRegionPath", this.model);
 				});
 				path.nameLabel.on('click', function() {
-					Game.Controller.fire("clickRegionPath", this.path);
+					Game.Controller.fire("clickRegionPath", this.path.model);
 				});
 				path.troopLabel.on('click', function() {
-					Game.Controller.fire("clickRegionPath", this.path);
+					Game.Controller.fire("clickRegionPath", this.path.model);
 				});
 				Game.View.mapLayer.add(path.nameLabel);
 				Game.View.labelLayer.add(path.troopLabel);

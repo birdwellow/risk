@@ -2,53 +2,53 @@ var behaviors = {
 
 	selectStart : {
 
-		mouseoverRegionPath : function(regionPath){
-			if(!regionPath.isClicked()){
-				regionPath.mouseover();
+		mouseoverRegionPath : function(region){
+			if(!region.path.isClicked()){
+				region.path.mouseover();
 			}
 		},
 
-		mouseoutRegionPath : function(regionPath){
-			if(!regionPath.isClicked()){
-				regionPath.mouseout();
+		mouseoutRegionPath : function(region){
+			if(!region.path.isClicked()){
+				region.path.mouseout();
 			}
 		},
 
-		clickRegionPath : function(startRegionPath){
-			startRegionPath.click();
-			Game.Controller.behave("selectTarget", startRegionPath);
+		clickRegionPath : function(startRegion){
+			startRegion.path.click();
+			Game.Controller.behave("selectTarget", startRegion);
 		}
 
 	},
 
 	selectTarget : {
 
-		startRegionPath : null,
+		startRegion : null,
 
-		init : function(startRegionPath){
-			this.startRegionPath = startRegionPath;
+		init : function(startRegion){
+			this.startRegion = startRegion;
 		},
 
-		mouseoverRegionPath : function(regionPath){
-			if(!regionPath.isClicked()){
-				regionPath.mouseover();
+		mouseoverRegionPath : function(region){
+			if(!region.path.isClicked()){
+				region.path.mouseover();
 			}
 		},
 
-		mouseoutRegionPath : function(regionPath){
-			if(!regionPath.isClicked()){
-				regionPath.mouseout();
+		mouseoutRegionPath : function(region){
+			if(!region.path.isClicked()){
+				region.path.mouseout();
 			}
 		},
 
-		clickRegionPath : function(targetRegionPath){
-			if(targetRegionPath.isClicked()){
-				targetRegionPath.mouseover();
+		clickRegionPath : function(targetRegion){
+			if(targetRegion.path.isClicked()){
+				targetRegion.path.mouseover();
 				Game.Controller.behave("selectStart");
 			} else {
-				targetRegionPath.click();
-				Game.View.pointer(this.startRegionPath, targetRegionPath);
-				Game.Controller.behave("performAction", this.startRegionPath, targetRegionPath);
+				targetRegion.path.click();
+				Game.View.pointer(this.startRegion.path, targetRegion.path);
+				Game.Controller.behave("performAction", this.startRegion, targetRegion);
 			}
 		}
 
@@ -56,65 +56,61 @@ var behaviors = {
 
 	performAction : {
 
-		startRegionPath : null,
+		startRegion : null,
 
-		targetRegionPath : null,
+		targetRegion : null,
 
-		init : function(startRegionPath, targetRegionPath){
-			this.startRegionPath = startRegionPath;
-			this.targetRegionPath = targetRegionPath;
+		init : function(startRegion, targetRegion){
+			this.startRegion = startRegion;
+			this.targetRegion = targetRegion;
 		},
 
-		clickRegionPath : function(regionPath){
-			if(regionPath.isClicked() && regionPath == this.targetRegionPath){
-				regionPath.mouseover();
+		clickRegionPath : function(region){
+			if(region.path.isClicked() && region.path == this.targetRegion.path){
+				region.path.mouseover();
 				Game.View.pointerOff();
-				Game.Controller.behave("selectTarget", this.startRegionPath);
+				Game.Controller.behave("selectTarget", this.startRegion);
 			}
 		},
 
 		confirmAction : function(){
-			this.targetRegionPath.model.owner = this.startRegionPath.model.owner;
-			this.targetRegionPath.update();
-			this.startRegionPath.update();
-			Game.View.troopShift(this.startRegionPath, this.targetRegionPath);
-			Game.Controller.behave("shiftTroops", this.startRegionPath, this.targetRegionPath);
+			this.targetRegion.setOwner(this.startRegion.owner);
+			Game.View.troopShift(this.startRegion.path, this.targetRegion.path);
+			Game.Controller.behave("shiftTroops", this.startRegion, this.targetRegion);
 		}
 
 	},
 
 	shiftTroops : {
 
-		startRegionPath : null,
+		startRegion : null,
 
-		targetRegionPath : null,
+		targetRegion : null,
 
-		init : function(startRegionPath, targetRegionPath){
-			this.startRegionPath = startRegionPath;
-			this.targetRegionPath = targetRegionPath;
+		init : function(startRegion, targetRegion){
+			this.startRegion = startRegion;
+			this.targetRegion = targetRegion;
 		},
 
 		shiftUnit : function(){
-			++this.targetRegionPath.model.troops;
-			this.targetRegionPath.update();
-			--this.startRegionPath.model.troops;
-			this.startRegionPath.update();
-			Game.View.labelTopLayer.drawScene();
+			if(this.startRegion.troops > 0){
+				this.startRegion.removeUnit();
+				this.targetRegion.addUnit();
+			}
 		},
 
 		retractUnit : function(){
-			--this.targetRegionPath.model.troops;
-			this.targetRegionPath.update();
-			++this.startRegionPath.model.troops;
-			this.startRegionPath.update();
-			Game.View.labelTopLayer.drawScene();
+			if(this.targetRegion.troops > 0){
+				this.startRegion.addUnit();
+				this.targetRegion.removeUnit();
+			}
 		},
 
 		confirmAction : function(){
 			Game.View.troopShiftOff();
 			Game.View.pointerOff();
-			this.targetRegionPath.mouseout();
-			this.startRegionPath.mouseout();
+			this.targetRegion.path.mouseout();
+			this.startRegion.path.mouseout();
 			Game.Controller.behave("selectStart");
 		},
 
