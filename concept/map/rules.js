@@ -74,9 +74,26 @@ var behaviors = {
 		},
 
 		confirmAction : function(){
-			this.targetRegion.setOwner(this.startRegion.owner);
-			Game.View.troopShift(this.startRegion.path, this.targetRegion.path);
-			Game.Controller.behave("shiftTroops", this.startRegion, this.targetRegion);
+			var startRegion = this.startRegion;
+			var targetRegion = this.targetRegion;
+			Dicer.throw(3,2, function(win){
+				if(win && targetRegion.troops > 0){
+					targetRegion.removeUnit();
+					if(targetRegion.troops == 0){
+						targetRegion.setOwner(startRegion.owner);
+						Game.View.troopShift(startRegion.path, targetRegion.path);
+						Game.Controller.behave("shiftTroops", startRegion, targetRegion);
+					}
+				} else if(!win && startRegion.troops > 0){
+					startRegion.removeUnit();
+					if(startRegion.troops == 0){
+						Game.View.pointerOff();
+						targetRegion.path.mouseout();
+						startRegion.path.mouseout();
+						Game.Controller.behave("selectStart");
+					}
+				}
+			});
 		}
 
 	},
