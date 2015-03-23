@@ -1,4 +1,332 @@
+var Dicer = {
 
+	images : {},
+	_loaded : 0,
+	stage : new Kinetic.Stage({
+		container : "dicer",
+		width: 300,
+		height: 300
+	}),
+	diceLayer : new Kinetic.Layer(),
+
+	playerDice : new Array(),
+	opponentDice : new Array(),
+
+	load : function(imagesObject){
+		this.imagesToLoad = 0;
+		for(var key in imagesObject){
+			this.imagesToLoad += imagesObject[key].length;
+		}
+		this.stage.add(this.diceLayer);
+		for(var key in imagesObject){
+			this.images[key] = new Array();
+			for(var i = 0; i < imagesObject[key].length; i++){
+				var img = new Image();
+				img.src = imagesObject[key][i];
+				img.onload = function(){
+					++Dicer._loaded;
+					if(Dicer._loaded == Dicer.imagesToLoad){
+						//Dicer.display(3,2);
+					}
+				}
+				this.images[key][i] = img;
+			}
+		}
+	},
+
+	init : function(){
+		var imagesObject = {
+			lying : [
+				"res/img/dice/die-1.gif",
+				"res/img/dice/die-2.gif",
+				"res/img/dice/die-3.gif",
+				"res/img/dice/die-4.gif",
+				"res/img/dice/die-5.gif",
+				"res/img/dice/die-6.gif",
+			],
+			horizontal : [
+				"res/img/dice/dices-1.gif",
+				"res/img/dice/dices-2.gif",
+				"res/img/dice/dices-3.gif",
+				"res/img/dice/dices-4.gif",
+				"res/img/dice/dices-5.gif",
+				"res/img/dice/dices-6.gif"
+			],
+			vertical : [
+				"res/img/dice/dicet-1.gif",
+				"res/img/dice/dicet-2.gif",
+				"res/img/dice/dicet-3.gif",
+				"res/img/dice/dicet-4.gif",
+				"res/img/dice/dicet-5.gif",
+				"res/img/dice/dicet-6.gif"
+			]
+		};
+		this.load(imagesObject);
+	},
+
+	random : function(range){
+		return Math.ceil(range * Math.random());
+	},
+
+	createProgram : function(minSteps, maxSteps){
+		var arr = ["horizontal","vertical"];
+		var program = new Array();
+		for(var j = 0; j < minSteps - 1 + this.random(maxSteps - minSteps); j++){
+			var mode = this.random(2)-1;
+			program.push("lying");
+			program.push(arr[mode]);
+			program.push("lying");
+			program.push(arr[mode]);
+		}
+		return program;
+	},
+
+	display : function(playerDiceNum, opponentDiceNum){
+		if(this.arrows){
+			for(var i = 0; i < this.arrows.length; i++){
+				this.arrows[i].remove();
+			}
+		}
+		var playerResults = new Array();
+		var opponentResults = new Array();
+		for(var i = 0; i < playerDiceNum; i++){
+			playerResults[i] = this.random(6);
+		}
+		for(var i = 0; i < opponentDiceNum; i++){
+			opponentResults[i] = this.random(6);
+		}
+		playerResults = playerResults.sort(function(a, b){return b-a});
+		opponentResults = opponentResults.sort(function(a, b){return b-a});
+		for(var i = 0; i < playerDiceNum; i++){
+			this.playerDice[i] = new Dicer.Die({
+				mode : "lying",
+				x : 20,
+				y : 20 + i*35,
+				images : this.images,
+				layer : this.diceLayer,
+				result : playerResults[i]
+			});
+		}
+		for(var i = 0; i < opponentDiceNum; i++){
+			var program = new Array();
+			for(var j = 0; j < 4 + this.random(10); j++){
+				program.push(this.random(2));
+			}
+			this.opponentDice[i] = new Dicer.Die({
+				mode : "lying",
+				x : 180,
+				y : 20 + i*35,
+				images : this.images,
+				layer : this.diceLayer,
+				result : opponentResults[i]
+			});
+		}
+		Dicer.diceLayer.drawScene();
+	},
+
+	Die : function(config){
+		this._running = true;
+		this.mode = config.mode;
+		this.y = config.y;
+		this.x = config.x;
+		this.images = config.images;
+		this.image = new Kinetic.Image({
+			x : config.x,
+			y : config.y,
+			image: this.images[this.mode][Dicer.random(6) - 1]
+		});
+		this.program = Dicer.createProgram(4, 10);
+		this.layer = config.layer;
+		this.layer.add(this.image);
+		this.step = 0;
+		this.result = config.result;
+		this.nextFrame = function(){
+			if(this.program[this.step] == undefined){
+				if(this.running()){
+					this.stop();
+				}
+			} else {
+				this.mode = this.program[this.step];
+				var random = Dicer.random(6);
+				this.image.setImage(this.images[this.mode][random-1]);
+				++this.step;
+			}
+		};
+		this.stop = function(){
+			this._running = false;
+			//this.result = Dicer.random(6);
+			this.mode = "lying";
+			this.image.setImage(this.images[this.mode][this.result-1]);
+		};
+		this.running = function(){
+			return this._running;
+		};
+	},
+
+	running : function(){
+		var running = false;
+		for(var i = 0; i < Dicer.playerDice.length; i++){
+			running = running || Dicer.playerDice[i].running();
+		}
+		for(var i = 0; i < Dicer.opponentDice.length; i++){
+			running = running || Dicer.opponentDice[i].running();
+		}
+		return running;
+	},
+
+	throw : function(playerDiceNum, opponentDiceNum, callback){
+		this.display(playerDiceNum, opponentDiceNum);
+		this.nextTime = 0;
+		this.frameStep = 0;
+		var animation = new Kinetic.Animation(function(frame){
+			if(Dicer.nextTime == 0){
+				Dicer.nextTime = frame.time;
+			}
+			if(frame.time > Dicer.nextTime){
+				if(Dicer.running()){
+					Dicer.frame();
+					Dicer.nextTime += 50;
+				} else {
+					this.stop();
+					var result = Dicer.getResult();
+					var wins = Dicer.evaluate(result);
+					Dicer.animate(wins, callback);
+				}
+			}
+		});
+		animation.start();
+	},
+
+	evaluate : function(resultObject){
+		var length = Math.min(resultObject.player.length, resultObject.opponent.length);
+		var wins = [];
+		for(var i = 0; i < length; i++){
+			var playerWins = (resultObject.player[i] > resultObject.opponent[i]);
+			wins[i] = playerWins;
+		}
+		return wins;
+	},
+
+	animate : function(wins, callback){
+		for(var i = 0; i < wins.length; i++){
+			var playerDiePoint = {
+				x: Dicer.playerDice[i].x,
+				y: Dicer.playerDice[i].y
+			};
+			var opponentDiePoint = {
+				x: Dicer.opponentDice[i].x,
+				y: Dicer.opponentDice[i].y
+			};
+			if(wins[i]){
+				this.pointer(this.playerDice[i], this.opponentDice[i], i, "win", callback);
+			} else {
+				this.pointer(this.opponentDice[i], this.playerDice[i], i, "loose", callback);
+			}
+		}
+	},
+
+	pointer : function(startDie, endDie, index, mode, callback){
+		if(!this.arrows){
+			this.arrows = [];
+		}
+		var distance = {
+			x: 20,
+			y: 0
+		};
+		var startPoint = {
+			x: startDie.x + startDie.image.getImage().height/2,
+			y: startDie.y + startDie.image.getImage().width/2
+		};
+		var endPoint = {
+			x: endDie.x + endDie.image.getImage().height/2,
+			y: endDie.y + endDie.image.getImage().width/2
+		};
+		if(startPoint.x < endPoint.x){
+			startPoint.x += distance.x;
+			endPoint.x -= distance.x;
+		} else {
+			startPoint.x -= distance.x;
+			endPoint.x += distance.x;
+		}
+		var vec = Math2d.fromTo(startPoint, endPoint);
+		vec = Math2d.normalize(vec);
+		vec = Math2d.orthogonalize(vec);
+
+		this.arrows[index] = new Kinetic.Line({
+			fill : Config.view.scheme.dicePointer[mode].fill,
+			stroke : Config.view.scheme.dicePointer[mode].stroke,
+			strokeWidth : Config.view.scheme.dicePointer[mode].strokeWidth,
+			points : [
+				startPoint.x - 10 * vec[1].x,
+				startPoint.y - 10 * vec[1].y,
+				endPoint.x,
+				endPoint.y,
+				startPoint.x + 10 * vec[1].x,
+				startPoint.y + 10 * vec[1].y
+			],
+			closed: true,
+
+			fillLinearGradientColorStops: Config.view.scheme.dicePointer[mode].fillLinearGradientColorStops,
+			fillLinearGradientStartPoint: {
+				x: startPoint.x,
+				y: startPoint.y
+			},
+			fillLinearGradientEndPoint: {
+				x: endPoint.x,
+				y: endPoint.y
+			},
+		});
+		this.diceLayer.add(this.arrows[index]);
+		this.diceLayer.drawScene();
+
+		var duration = Config.view.scheme.dicePointer[mode].speed * 1000;
+		var animation = new Kinetic.Animation(function(frame){
+			if(frame.time > duration){
+				this.stop();
+				if(typeof callback == "function"){
+					callback(mode == "win");
+				}
+			} else {
+				Dicer.arrows[index].setPoints([
+					startPoint.x - 10 * vec[1].x,
+					startPoint.y - 10 * vec[1].y,
+					startPoint.x + (endPoint.x - startPoint.x) * frame.time/duration,
+					startPoint.y + (endPoint.y - startPoint.y) * frame.time/duration,
+					startPoint.x + 10 * vec[1].x,
+					startPoint.y + 10 * vec[1].y
+				]);
+				Dicer.diceLayer.drawScene();
+			}
+		});
+		animation.start();
+	},
+
+	getResult : function(){
+		var result = {
+			player : [],
+			opponent : []
+		};
+		for(var i = 0; i < this.playerDice.length; i++){
+			result.player[i] = this.playerDice[i].result;
+		}
+		for(var i = 0; i < this.opponentDice.length; i++){
+			result.opponent[i] = this.opponentDice[i].result;
+		}
+		return result;
+	},
+
+	frame : function(){
+		for(var i = 0; i < this.playerDice.length; i++){
+			this.playerDice[i].nextFrame();
+		}
+		for(var i = 0; i < this.opponentDice.length; i++){
+			this.opponentDice[i].nextFrame();
+		}
+		this.frameStep++;
+		this.diceLayer.drawScene();
+	}
+
+};
 
 var Math2d = {
 
@@ -104,12 +432,6 @@ var Game = {
 			height: Config.view.map.height
 		}),
 
-		randomStage : new Kinetic.Stage({
-			container: Config.view.random.containerName,
-			width: Config.view.random.width,
-			height: Config.view.random.height
-		}),
-
 		mapLayer : new Kinetic.Layer({}),
 		labelLayer : new Kinetic.Layer({}),
 		highlightLayer : new Kinetic.Layer({}),
@@ -117,8 +439,6 @@ var Game = {
 		labelTopLayer : new Kinetic.Layer({}),
 		symbolLayer : new Kinetic.Layer({}),
 		controlsLayer : new Kinetic.Layer({}),
-
-		randomLayer : new Kinetic.Layer({}),
 
 		elements : {
 
@@ -557,6 +877,7 @@ var Game = {
 		this.Model.init();
 		this.Controller.init();
 		this.View.init();
+		Dicer.init();
 	},
 };
 
@@ -574,4 +895,8 @@ function toContinentView(){
 
 function confirm(){
 	Game.Controller.fire("confirmAction");
+}
+
+function dice(){
+	Dicer.throw(3,2, console.log);
 }

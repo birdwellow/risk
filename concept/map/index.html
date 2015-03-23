@@ -27,12 +27,13 @@
 				width: 50%;
 				cursor: pointer;
 			}
-			#random {
+			#dicer {
 				font-family: Garamond;
-				background: #222;
+				background: none;
 				height: 150px;
 				width: 600px;
 				cursor: pointer;
+				float: right;
 			}
 		</style>
 	</head>
@@ -40,11 +41,12 @@
 		<button onclick="toOwnerView()">Owner</button>
 		<button onclick="toContinentView()">Continent</button>
 		<button onclick="confirm()">Confirm</button>
+		<button onclick="dice()">Dice</button>
 		
-		<div id="map"></div>
-		<div id="random">
+		<div id="dicer">
 			Test String
 		</div>
+		<div id="map"></div>
 		
 		<script src="jquery-1.11.2.min.js"></script>
 		<script src="kinetic-v5.1.0.min.js" defer="defer"></script>

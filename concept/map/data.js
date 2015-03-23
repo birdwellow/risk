@@ -159,13 +159,13 @@ var Config = {
 			height : $('#map').height()
 		},
 
-		random : {
-			containerName : 'random',
+		/*random : {
+			containerName : 'dicer',
 
-			width : $('#random').width(),
+			width : $('#dicer').width(),
 
-			height : $('#random').height()
-		},
+			height : $('#dicer').height()
+		},*/
 
 		scheme : {
 			name : "owner",
@@ -177,6 +177,21 @@ var Config = {
 				stroke : "",
 				strokeWidth : 0,
 				speed : 0.5
+			},
+
+			dicePointer : {
+				loose : {
+					fillLinearGradientColorStops: [0, 'rgba(255,0,0,0)', 0.05, 'rgba(255,0,0,0)', 0.4, 'red', 1, 'yellow'],
+					stroke : "",
+					strokeWidth : 0,
+					speed : 0.5
+				},
+				win : {
+					fillLinearGradientColorStops: [0, 'rgba(0,255,0,0)', 0.05, 'rgba(0,255,0,0)', 0.4, 'green', 1, 'green'],
+					stroke : "",
+					strokeWidth : 0,
+					speed : 0.5
+				}
 			},
 
 			regionTexts : {

@@ -1,5 +1,5 @@
 <!--
-    JavaScript Animated D6 Dice Roller - Proper Installation Verification 
+    JavaScript Animated D6 Dice Roller - Example Combat System 
 
     Written in 2005 by Michael K. Eidson, mike@eposic.org, http://eposic.org 
 
@@ -12,12 +12,22 @@
 -->
 <html>
 <head>
-<title>Testing the Installation of the JavaScript Animated D6 Dice Roller</title>
+<title>Example File for JavaScript Animated D6 Dice Roller</title>
 <script type='text/javascript' src='d6.js'></script>
 </head>
 <body>
+<p>Roll 6 or higher on two dice to hit your opponent.</p>
 <script type='text/javascript'>
-D6.dice(4);
+var newUrl = 'success.html';
+function attack(result) {
+	if (result < 6)
+		newUrl = 'failure.html';
+	window.setTimeout('newpage()', 500);
+}
+function newpage() {
+	location.replace(newUrl);
+}
+D6.dice(2, attack);
 </script>
 
 <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">

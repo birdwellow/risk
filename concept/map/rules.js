@@ -48,13 +48,13 @@ var behaviors = {
 			} else {
 				targetRegion.path.click();
 				Game.View.pointer(this.startRegion.path, targetRegion.path);
-				Game.Controller.behave("performAction", this.startRegion, targetRegion);
+				Game.Controller.behave("attack", this.startRegion, targetRegion);
 			}
 		}
 
 	},
 
-	performAction : {
+	attack : {
 
 		startRegion : null,
 
