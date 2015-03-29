@@ -1,10 +1,11 @@
-<?php namespace App;
+<?php namespace Game;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Ratchet\ConnectionInterface;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -30,5 +31,29 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var array
 	 */
 	protected $hidden = ['password', 'remember_token'];
+        
+        
+        protected $socket = null;
+        
+        public $theme = "default";
+        
+        public function getSocket(){
+            return $this->socket;
+        }
+        
+        public function setSocket(ConnectionInterface $conn){
+            $this->socket = $conn;
+        }
+
+        public function createdMatches()
+        {
+            return $this->hasMany('Game\Model\Match', 'created_by_user_id', 'id');
+        }
+        
+        
+        public function joinedMatch()
+        {
+            return $this->belongsTo('Game\Model\Match', 'joined_match_id', 'id');
+        }
 
 }

@@ -1,0 +1,35 @@
+.right {
+    float: right;
+}
+
+.panel input[type="text"]{
+    width: calc(100% - 20px);
+    margin: 10px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    padding: 5px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    box-shadow: inset 5px 5px 5px rgba(0,0,0,0.5);
+}
+
+.panel input[type="text"]:active{
+    box-shadow: inset 5px 5px 5px rgba(0,0,0,0.75);
+}
+
+#chatcontent{
+    height: 300px;
+    margin: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 3px;
+}
+
+.message {
+    background: rgba(255,255,255,0.25);
+    border-radius: 3px;
+    padding: 3px;
+    font-size: 16px;
+    margin-bottom: 5px;
+}

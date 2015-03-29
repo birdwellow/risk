@@ -36,7 +36,7 @@ var players = [
 				stroke : ["rgba(87,22,22,1)", "rgba(87,22,22,1)", "rgba(87,22,22,1)"],
 				strokeWidth : [2,2,2],
 				color : ["rgba(87,22,22,1)", "rgba(87,22,22,1)", "rgba(87,22,22,1)"],
-				fill : ["rgba(127,44,44,0.5)", "rgba(127,44,44,0.5)", "rgba(127,44,44,1)"]
+				fill : ["rgba(127,44,44,0.5)", "rgba(127,44,44,0.5)", "rgba(200,88,88,0.75)"]
 			}
 		},
 	},
@@ -49,10 +49,10 @@ var players = [
 			strokeWidth : [1, 3, 3],
 			text : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"],
 			troops : {
-				stroke : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"],
+				stroke : ["rgba(22,87,22,1)", "rgba(22,87,22,1)", "rgba(22,87,22,1)"],
 				strokeWidth : [2,2,2],
-				color : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"],
-				fill : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"]
+				color : ["rgba(22,87,22,1)", "rgba(22,87,22,1)", "rgba(22,87,22,1)"],
+				fill : ["rgba(44,127,44,0.5)", "rgba(44,127,44,0.5)", "rgba(88,200,88,0.75)"]
 			}
 		},
 	},
@@ -65,10 +65,10 @@ var players = [
 			strokeWidth : [1, 3, 3],
 			text : ["rgba(0,0,0,0.20)", "rgba(44,44,127,1)", "rgba(66,66,190,1)"],
 			troops : {
-				stroke : ["rgba(0,0,0,0.20)", "rgba(44,44,127,1)", "rgba(66,66,190,1)"],
+				stroke : ["rgba(22,22,87,1)", "rgba(22,22,87,1)", "rgba(22,22,87,1)"],
 				strokeWidth : [2,2,2],
-				color : ["rgba(0,0,0,0.20)", "rgba(44,44,127,1)", "rgba(66,66,190,1)"],
-				fill : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"]
+				color : ["rgba(22,22,87,1)", "rgba(22,22,87,1)", "rgba(22,22,87,1)"],
+				fill : ["rgba(44,44,127,0.5)", "rgba(44,44,127,0.5)", "rgba(88,88,200,0.75)"]
 			}
 		},
 	},
@@ -153,26 +153,20 @@ var Config = {
 
 		map : {
 			containerName : 'map',
-
 			width : $('#map').width(),
-
 			height : $('#map').height()
 		},
 
-		/*random : {
-			containerName : 'dicer',
-
-			width : $('#dicer').width(),
-
-			height : $('#dicer').height()
-		},*/
+		dicer : {
+			width : 300,
+			padding : 20,
+			spacing : 10
+		},
 
 		scheme : {
 			name : "owner",
 
 			pointer : {
-				//fill : "#444",
-				//fillLinearGradientColorStops: [0, 'red', 1, 'yellow'],
 				fillLinearGradientColorStops: [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222'],
 				stroke : "",
 				strokeWidth : 0,

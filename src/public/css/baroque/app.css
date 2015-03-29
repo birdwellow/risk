@@ -4,12 +4,6 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-@font-face {
-  font-family: 'Garamond';
-  font-style: normal;
-  font-weight: 400;
-  src: url('/font/EBGaramond.otf') format('opentype');
-}
 body {
   margin: 0;
   background-image: url(/img/baroque-background.jpg);
@@ -3164,7 +3158,7 @@ tbody.collapse.in {
   list-style: none;
   font-size: 16px;
   text-align: left;
-  background-color: rgba(0,0,0,0.75);
+  background-color: rgba(0,0,0,0.875);
   border: 0;
   border-radius: 4px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -3192,7 +3186,7 @@ tbody.collapse.in {
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
   text-decoration: none;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(255,255,255,0.15);
 }
 .dropdown-menu > li.logout > a:hover,
 .dropdown-menu > li.logout > a:focus {
@@ -4160,7 +4154,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.75);
   box-shadow: inset 5px 5px 5px rgba(0,0,0,0.5);
   color: #ccc;
 }
@@ -4696,9 +4690,9 @@ a.thumbnail.active {
   color: #66512c;
 }
 .alert-danger {
-  background-color: #f2dede;
-  border-color: #ebccd1;
-  color: #a94442;
+  background-color: #a94442;
+  border: none;
+  color: #fff;
 }
 .alert-danger hr {
   border-top-color: #e4b9c0;

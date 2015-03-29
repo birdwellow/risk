@@ -1,40 +1,37 @@
 var Dicer = {
 
 	images : {},
-	_loaded : 0,
-	stage : new Kinetic.Stage({
-		container : "dicer",
-		width: 300,
-		height: 300
-	}),
+	imageHeight : 0,
+	loadCount : 0,
 	diceLayer : new Kinetic.Layer(),
 
 	playerDice : new Array(),
 	opponentDice : new Array(),
 
-	load : function(imagesObject){
+	load : function(imagesObject, callback){
 		this.imagesToLoad = 0;
 		for(var key in imagesObject){
 			this.imagesToLoad += imagesObject[key].length;
 		}
-		this.stage.add(this.diceLayer);
 		for(var key in imagesObject){
 			this.images[key] = new Array();
 			for(var i = 0; i < imagesObject[key].length; i++){
 				var img = new Image();
 				img.src = imagesObject[key][i];
 				img.onload = function(){
-					++Dicer._loaded;
-					if(Dicer._loaded == Dicer.imagesToLoad){
-						//Dicer.display(3,2);
+					++Dicer.loadCount;
+					if(Dicer.loadCount == Dicer.imagesToLoad && typeof callback == "function"){
+						callback();
 					}
 				}
 				this.images[key][i] = img;
+				this.imageHeight = img.height;
 			}
 		}
 	},
 
-	init : function(){
+	init : function(callback){
+		this.diceLayer = Game.View.diceLayer;
 		var imagesObject = {
 			lying : [
 				"res/img/dice/die-1.gif",
@@ -61,7 +58,7 @@ var Dicer = {
 				"res/img/dice/dicet-6.gif"
 			]
 		};
-		this.load(imagesObject);
+		this.load(imagesObject, callback);
 	},
 
 	random : function(range){
@@ -81,7 +78,9 @@ var Dicer = {
 		return program;
 	},
 
-	display : function(playerDiceNum, opponentDiceNum){
+	on : function(playerDiceNum, opponentDiceNum, startRegion, endRegion){
+		//console.log("From: " + startRegion.owner.colorscheme + " to: " + endRegion.owner.colorscheme);
+		this.diceLayer.clear();
 		if(this.arrows){
 			for(var i = 0; i < this.arrows.length; i++){
 				this.arrows[i].remove();
@@ -97,13 +96,45 @@ var Dicer = {
 		}
 		playerResults = playerResults.sort(function(a, b){return b-a});
 		opponentResults = opponentResults.sort(function(a, b){return b-a});
+		this.group = new Kinetic.Group({
+			x: 100,
+			y: 100
+		});
+		this.background = new Kinetic.Rect({
+			x: 0,
+			y: 0,
+			width: Config.view.dicer.width,
+			height: 2 * Config.view.dicer.padding + 2 * Config.view.dicer.spacing + 3 * this.imageHeight,
+			//fill: "rgba(0,0,0,0.5)",
+			fillLinearGradientColorStops: [
+				0,
+				startRegion.owner.colorscheme.troops.fill[2],
+				0.45,
+				startRegion.owner.colorscheme.troops.fill[2],
+				0.55,
+				endRegion.owner.colorscheme.troops.fill[2],
+				1,
+				endRegion.owner.colorscheme.troops.fill[2]
+			],
+			fillLinearGradientStartPoint: {
+				x: 0,
+				y: 0
+			},
+			fillLinearGradientEndPoint: {
+				x: Config.view.dicer.width,
+				y: 0
+			},
+
+		});
+		this.group.add(this.background);
+		this.diceLayer.add(this.group);
 		for(var i = 0; i < playerDiceNum; i++){
 			this.playerDice[i] = new Dicer.Die({
 				mode : "lying",
-				x : 20,
-				y : 20 + i*35,
+				x : Config.view.dicer.padding,
+				y : Config.view.dicer.padding + i*(Config.view.dicer.spacing + this.imageHeight),
 				images : this.images,
-				layer : this.diceLayer,
+				layer : this.group,
 				result : playerResults[i]
 			});
 		}
@@ -114,10 +145,10 @@ var Dicer = {
 			}
 			this.opponentDice[i] = new Dicer.Die({
 				mode : "lying",
-				x : 180,
-				y : 20 + i*35,
+				x : Config.view.dicer.width - Config.view.dicer.spacing - this.imageHeight,
+				y : Config.view.dicer.padding + i * (Config.view.dicer.spacing + this.imageHeight),
 				images : this.images,
-				layer : this.diceLayer,
+				layer : this.group,
 				result : opponentResults[i]
 			});
 		}
@@ -174,27 +205,29 @@ var Dicer = {
 		return running;
 	},
 
-	throw : function(playerDiceNum, opponentDiceNum, callback){
-		this.display(playerDiceNum, opponentDiceNum);
-		this.nextTime = 0;
-		this.frameStep = 0;
-		var animation = new Kinetic.Animation(function(frame){
-			if(Dicer.nextTime == 0){
-				Dicer.nextTime = frame.time;
-			}
-			if(frame.time > Dicer.nextTime){
-				if(Dicer.running()){
-					Dicer.frame();
-					Dicer.nextTime += 50;
-				} else {
-					this.stop();
-					var result = Dicer.getResult();
-					var wins = Dicer.evaluate(result);
-					Dicer.animate(wins, callback);
+	throw : function(playerDiceNum, opponentDiceNum, callback, startRegion, endRegion){
+		if(!this.running()){
+			this.on(playerDiceNum, opponentDiceNum, startRegion, endRegion);
+			this.nextTime = 0;
+			this.frameStep = 0;
+			var animation = new Kinetic.Animation(function(frame){
+				if(Dicer.nextTime == 0){
+					Dicer.nextTime = frame.time;
 				}
-			}
-		});
-		animation.start();
+				if(frame.time > Dicer.nextTime){
+					if(Dicer.running()){
+						Dicer.frame();
+						Dicer.nextTime += 50;
+					} else {
+						this.stop();
+						var result = Dicer.getResult();
+						var wins = Dicer.evaluate(result);
+						Dicer.animate(wins, callback);
+					}
+				}
+			});
+			animation.start();
+		}
 	},
 
 	evaluate : function(resultObject){
@@ -276,7 +309,7 @@ var Dicer = {
 				y: endPoint.y
 			},
 		});
-		this.diceLayer.add(this.arrows[index]);
+		this.group.add(this.arrows[index]);
 		this.diceLayer.drawScene();
 
 		var duration = Config.view.scheme.dicePointer[mode].speed * 1000;
@@ -439,6 +472,8 @@ var Game = {
 		labelTopLayer : new Kinetic.Layer({}),
 		symbolLayer : new Kinetic.Layer({}),
 		controlsLayer : new Kinetic.Layer({}),
+
+		diceLayer : new Kinetic.Layer({}),
 
 		elements : {
 
@@ -839,6 +874,7 @@ var Game = {
 			this.mapStage.add(Game.View.labelTopLayer);
 			this.mapStage.add(Game.View.symbolLayer);
 			this.mapStage.add(Game.View.controlsLayer);
+			this.mapStage.add(Game.View.diceLayer);
 		},
 
 	},
@@ -895,8 +931,4 @@ function toContinentView(){
 
 function confirm(){
 	Game.Controller.fire("confirmAction");
-}
-
-function dice(){
-	Dicer.throw(3,2, console.log);
 }

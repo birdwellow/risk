@@ -1,4 +1,4 @@
-<?php namespace App\Commands;
+<?php namespace Game\Commands;
 
 abstract class Command {
 

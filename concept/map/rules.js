@@ -81,6 +81,8 @@ var behaviors = {
 					targetRegion.removeUnit();
 					if(targetRegion.troops == 0){
 						targetRegion.setOwner(startRegion.owner);
+						targetRegion.addUnit();
+						startRegion.removeUnit();
 						Game.View.troopShift(startRegion.path, targetRegion.path);
 						Game.Controller.behave("shiftTroops", startRegion, targetRegion);
 					}
@@ -93,7 +95,7 @@ var behaviors = {
 						Game.Controller.behave("selectStart");
 					}
 				}
-			});
+			}, startRegion, targetRegion);
 		}
 
 	},
@@ -110,14 +112,14 @@ var behaviors = {
 		},
 
 		shiftUnit : function(){
-			if(this.startRegion.troops > 0){
+			if(this.startRegion.troops > 1){
 				this.startRegion.removeUnit();
 				this.targetRegion.addUnit();
 			}
 		},
 
 		retractUnit : function(){
-			if(this.targetRegion.troops > 0){
+			if(this.targetRegion.troops > 1){
 				this.startRegion.addUnit();
 				this.targetRegion.removeUnit();
 			}
