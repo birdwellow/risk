@@ -7,10 +7,9 @@
 
 .tool-panel input[type="text"],
 .game-panel input[type="text"],
-.game-panel input[type="password"],
-.game-panel input[type="file"],
 .game-panel select{
     width: calc(100% - 20px);
+    margin: 10px;
     background: rgba(0,0,0,0.5);
     color: #fff;
     border: none;
@@ -18,27 +17,6 @@
     border-radius: 2px;
     box-sizing: border-box;
     box-shadow: inset 5px 5px 5px rgba(0,0,0,0.5);
-}
-.tool-panel input[type="text"]{
-    margin: 10px;
-}
-
-
-.styled-select select {
-    border-radius: 2px;
-    width: 268px;
-}
-.styled-select {
-    border-radius: 2px;
-    width: 240px;
-    overflow: hidden;
-    background: url(/img/select.png) no-repeat 96% 0;
-}
-
-.section{
-    border-bottom: 1px solid #fff;
-    padding: 15px;
-    margin-bottom: 15px;
 }
 
 .game-panel option{
@@ -113,8 +91,8 @@
 }
 
 .user-avatar{
-    max-height: 40px;
-    max-width: 40px;
+    max-height: 30px;
+    max-width: 30px;
     margin-right: 10px;
     border-radius: 3px;
 }

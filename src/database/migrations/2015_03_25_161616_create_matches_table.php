@@ -24,8 +24,8 @@ class CreateMatchesTable extends Migration {
                 
                 Schema::table('users', function(Blueprint $table)
                 {
-                        $table->integer('joined_match_id')->unsigned();
-                        $table->foreign('joined_match_id')->references('id')->on('matches');
+                        $table->integer('joined_match_id')->null()->unsigned();
+                        //$table->foreign('joined_match_id')->references('id')->on('matches');
                 });
 	}
 

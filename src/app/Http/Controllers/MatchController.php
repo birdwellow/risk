@@ -12,19 +12,31 @@ class MatchController extends Controller {
 		$this->middleware('auth');
 	}
 
-	public function overview()
+	public function index()
 	{
                 $matches = Match::all();
 		return view('match.overview')->with("matches", $matches);
 	}
 
+	public function overview()
+	{
+                return $this->index();
+	}
+
 	public function init()
 	{
                 $user = Auth::user();
-                if($user->joinedMatch){
-                    return redirect("/home");
+                if($user->joinedMatch !== null){
+                    $dialog = [
+                        "type" => "error",
+                        "message" => "You already joined a match",
+                        "title" => "Not allowed"
+                    ];
+                    Log::info($dialog);
+                    return $this->overview()
+                            ->with("dialog", $dialog);
                 }
-		return view('match.init');
+                return view('match.init');
 	}
 
 	public function create()

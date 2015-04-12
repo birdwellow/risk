@@ -10,22 +10,22 @@
     
         <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default">
-                        <div class="panel-heading">All matches</div>
+                        <div class="panel-heading">{{ Lang::get('message.title.overview.matches') }}</div>
 
                         <div class="panel-body">
                             <table style="width:100%;">
                                 <tr>
                                     <td>
-                                        Name
+                                        {{ Lang::get('message.field.match.name') }}
                                     </td>
                                     <td>
-                                        Users
+                                        {{ Lang::get('message.field.match.joinedusers') }}
                                     </td>
                                     <td>
-                                        Date
+                                        {{ Lang::get('message.field.match.startdate') }}
                                     </td>
                                     <td>
-                                        Created By
+                                        {{ Lang::get('message.field.match.createdby') }}
                                     </td>
                                     <td>
                                     </td>
@@ -50,11 +50,11 @@
                                         {{ $match->createdBy->name }}
                                     </td>
                                     <td>
-                                        <a href="/match/{{ $match->id }}">Join</a>
+                                        <a href="{{ route('match.join', $match->id) }}">{{ Lang::get('message.link.match.join') }}</a>
                                     </td>
                                     <td>
                                         @if(Auth::user()->id == $match->createdBy->id)
-                                            <a href="/match/cancel/{{ $match->id }}">Delete</a>
+                                            <a href="{{ route('match.cancel', $match->id) }}">{{ Lang::get('message.link.match.cancel') }}</a>
                                         @endif
                                     </td>
                                 </tr>

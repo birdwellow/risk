@@ -11,17 +11,67 @@
 |
 */
 
-//Route::get('/', 'WelcomeController@index');
-Route::get('/', 'MatchController@overview');
+Route::get('/', [
+    'as' => 'index',
+    'uses' => 'MatchController@index'
+]);
 
-//Route::get('home', 'HomeController@index');
-Route::get('home', 'MatchController@overview');
+Route::get('home', [
+    'as' => 'home',
+    'uses' => 'MatchController@overview'
+]);
 
-Route::get('match/overview', 'MatchController@overview');
-Route::get('match/new', 'MatchController@init');
-Route::post('match/create', 'MatchController@create');
-Route::get('match/{id}', 'MatchController@match');
-Route::get('match/cancel/{id}', 'MatchController@cancel');
+Route::get('match/overview', [
+    'as' => 'match.overview',
+    'uses' => 'MatchController@overview'
+]);
+
+Route::get('match/new', [
+    'as' => 'match.new',
+    'uses' => 'MatchController@init'
+]);
+
+Route::post('match/create', [
+    'as' => 'match.create',
+    'uses' => 'MatchController@create'
+]);
+
+Route::get('match/{id}', [
+    'as' => 'match.join',
+    'uses' => 'MatchController@match'
+]);
+
+Route::get('match/cancel/{id}', [
+    'as' => 'match.cancel',
+    'uses' => 'MatchController@cancel'
+]);
+
+Route::get('user/profile', [
+    'as' => 'user.profile',
+    'uses' => 'UserController@profile'
+]);
+
+Route::post('user/profile', [
+    'as' => 'user.profile.save',
+    'uses' => 'UserController@profileSave'
+]);
+
+Route::get('user/options', [
+    'as' => 'user.options',
+    'uses' => 'UserController@options'
+]);
+
+Route::post('user/options', [
+    'as' => 'user.options.save',
+    'uses' => 'UserController@optionsSave'
+]);
+
+Route::get('lang/{lang}', [
+    'as' => 'switch.language',
+    'uses' => 'LanguageController@switchTo'
+]);
+
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

@@ -9,31 +9,35 @@
 <div class="container">
     
         <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                        <div class="panel-heading">Create a new Match</div>
+                <div class="panel panel-default game-panel">
+                        <div class="panel-heading">{{ Lang::get('message.title.init.match') }}</div>
 
                         <div class="panel-body">
-                            {!! Form::open(array('url' => 'match/create')) !!}
-                            <table>
-                                <tr>
-                                    <td>
-                                        Name:
-                                    </td>
-                                    <td>
-                                        {!! Form::text('name') !!}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Map:
-                                    </td>
-                                    <td>
-                                        {!! Form::text('map_id') !!}
-                                    </td>
-                                </tr>
-                            </table>
+                            {!! Form::open(
+                                array(
+                                    'url' => route('match.create'),
+                                    'class' => 'form-horizontal',
+                                    'role' => 'form',
+                                )
+                            ) !!}
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">
+                                    {{ Lang::get('message.field.match.name') }}
+                                </label>
+                                <div class="col-md-6">
+                                    {!! Form::text('name') !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">
+                                    {{ Lang::get('message.field.match.map') }}
+                                </label>
+                                <div class="col-md-6">
+                                    {!! Form::text('map_id') !!}
+                                </div>
+                            </div>
                             {!! 
-                                Form::submit('Create!', array(
+                                Form::submit(Lang::get('message.button.match.create'), array(
                                     'class' => 'btn btn-primary'
                                 ))
                             !!}

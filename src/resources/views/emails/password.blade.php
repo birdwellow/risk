@@ -1,1 +1,1 @@
-Click here to reset your password: {{ url('password/reset/'.$token) }}
+{{ Lang::get('email.password.reset.link.click') }}: {{ url('password/reset/'.$token) }}
