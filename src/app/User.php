@@ -32,19 +32,24 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
         
-        
         protected $socket = null;
         
-        public $theme = "default";
         
         public function getSocket(){
             return $this->socket;
         }
         
+        
         public function setSocket(ConnectionInterface $conn){
             $this->socket = $conn;
         }
+        
+        
+        public function disconnect(){
+            unset($this->connection);
+        }
 
+        
         public function createdMatches()
         {
             return $this->hasMany('Game\Model\Match', 'created_by_user_id', 'id');

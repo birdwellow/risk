@@ -28,13 +28,12 @@ function GameSocket(url){
     
     var self = this;
     
-    this._connectionId = null;
     this._webSocket = new WebSocket(url);
     this._events = new Array();
     
     this._webSocket.addEventListener("open", function (e) {
         self.send(
-            "join",
+            "connect",
             {
                 "user_id" : userId,
                 "match_id" : matchId
@@ -52,20 +51,15 @@ function GameSocket(url){
     
     this._webSocket.addEventListener("message", function (e) {
         var message = JSON.parse(e.data);
-        if(message.type == "connectionid"){
-            self._connectionId = message.data;
-        } else {
-            if(typeof self._events[message.type] == "function"){
-                self._events[message.type](message);
-            }
+        if(typeof self._events[message.type] == "function"){
+            self._events[message.type](message);
         }
     });
     
     this.send = function(type, message){
         var msg = JSON.stringify({
             "type" : type,
-            "data" : message,
-            "connectionid" : self._connectionId
+            "data" : message
         });
         self._webSocket.send(msg);
     };

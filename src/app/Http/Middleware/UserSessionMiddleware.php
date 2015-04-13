@@ -19,12 +19,12 @@ class UserSessionMiddleware {
 	{
                 if(!Session::has("colorscheme")){
                     $colorscheme = "modern";
-                    if(Auth::user()){
+                    if(Auth::user() && Auth::user()->colorscheme){
                         $colorscheme = Auth::user()->colorscheme;
                     }
                     Session::set("colorscheme", $colorscheme);
                 }
-                if(Auth::user()){
+                if(Auth::user() && Auth::user()->colorscheme){
                     Session::set("colorscheme", Auth::user()->colorscheme);
                 }
                 

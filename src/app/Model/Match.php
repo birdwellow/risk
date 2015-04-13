@@ -14,8 +14,9 @@ class Match extends Model {
 
     public function __construct(){
         parent::__construct();
-        $this->connectedUsers = new \SplObjectStorage();
+        $this->connectedUsers = new SplObjectStorage();
     }
+    
     
     public function connectUser(User $user){
         if(!$this->connectedUsers->contains($user)){
@@ -23,28 +24,24 @@ class Match extends Model {
         }
     }
     
+    
     public function disconnectUser(User $user){
         if($this->connectedUsers->contains($user)){
             $this->connectedUsers->detach($user);
         }
     }
     
+    
     public function getConnectedUsers(){
         return $this->connectedUsers;
     }
     
-    public function getUserBySocket(ConnectionInterface $conn){
-        foreach ($this->connectedUsers as $user){
-            if($user->getSocket() === $conn){
-                return $user;
-            }
-        }
-    }
 
     public function joinedUsers()
     {
         return $this->hasMany('Game\User', 'joined_match_id', 'id');
     }
+    
     
     public function createdBy()
     {
