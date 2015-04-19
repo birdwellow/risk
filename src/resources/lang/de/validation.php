@@ -36,9 +36,9 @@ return [
 	"digits_between"       => ":attribute muss zwischen :min und :max Ziffern lang sein.",
 	"email"                => ":attribute muss eine g&uuml;tige E-Mail-Adresse sein.",
 	"filled"               => ":attribute wird ben&ouml;tigt.",
-	"exists"               => "Die Auswahl :attribute ung&uuml;tig.",
+	"exists"               => "Die Auswahl f&uuml;r :attribute ung&uuml;tig.",
 	"image"                => ":attribute muss ein Bild sein.",
-	"in"                   => "Die Auswahl :attribute ung&uuml;tig.",
+	"in"                   => "Die Auswahl f&uuml;r :attribute ung&uuml;tig.",
 	"integer"              => ":attribute muss eine ganze Zahl sein.",
 	"ip"                   => ":attribute muss eine g&uuml;tige IP-Adresse sein.",
 	"max"                  => [
@@ -54,7 +54,7 @@ return [
 		"string"  => ":attribute muss mindestens :min Zeichen lang sein.",
 		"array"   => ":attribute muss mindestens :min Elemente haben.",
 	],
-	"not_in"               => "Die Auswahl :attribute ist ung&uuml;ltig.",
+	"not_in"               => "Die Auswahl f&uuml;r :attribute ist ung&uuml;ltig.",
 	"numeric"              => ":attribute muss eine Zahl sein.",
 	"regex"                => ":attribute ist ung&uuml;ltig.",
 	"required"             => ":attribute wird ben&ouml;tigt.",
@@ -102,6 +102,10 @@ return [
 	|
 	*/
 
-	'attributes' => [],
+	'attributes' => [
+            'username' => "Username",
+            'email' => "E-Mail",
+            'colorscheme' => "Schema",
+        ],
 
 ];

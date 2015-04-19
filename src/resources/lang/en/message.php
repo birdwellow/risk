@@ -50,6 +50,7 @@ return [
         'field.match.joinedusers' => "Players",
         'field.match.startdate' => "Started",
         'field.match.createdby' => "Created by",
+        'field.match.invite' => "Invite",
     
         'field.user.theme' => "Theme",
         'field.user.language' => "Language",

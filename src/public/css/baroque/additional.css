@@ -5,6 +5,16 @@
     cursor: pointer;
 }
 
+.dropdown-menu > li > a.inactive {
+  color: #888;
+  cursor: pointer;
+}
+.dropdown-menu > li > a.inactive:hover,
+.dropdown-menu > li > a.inactive:focus {
+  background-color: rgba(0,0,0,0);
+}
+
+textarea,
 .tool-panel input[type="text"],
 .game-panel input[type="text"],
 .game-panel input[type="password"],

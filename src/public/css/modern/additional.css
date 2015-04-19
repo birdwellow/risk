@@ -71,6 +71,7 @@
     border-radius: 5px;
     padding: 5px;
     font-size: 16px;
+    color: #fff;
     background: rgba(0,0,0,0.5);
 }
 #modal-dialog .body {
@@ -95,4 +96,38 @@
     max-width: 30px;
     margin-right: 10px;
     border-radius: 3px;
+}
+
+
+/* jQuery-UI additionals */
+
+.ui-menu .ui-menu-item {
+	position: relative;
+	margin: 0;
+	padding: 3px 1em 3px .4em;
+	cursor: pointer;
+	min-height: 0; /* support: IE7 */
+	/* support: IE10, see #8844 */
+	list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+}
+.ui-widget-content {
+	border: none;
+	background: #eeeeee;
+	color: #333333;
+}
+.ui-widget {
+        border-radius: 5px;
+}
+
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus,
+.ui-state-focus{
+        background: #888;
+	color: #fff;
+}
+.ui-menu-icons .ui-menu-item {
+	padding-left: 2em;
 }

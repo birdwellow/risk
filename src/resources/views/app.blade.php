@@ -6,6 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{{ Lang::get('message.title') }}</title>
 
+	<link href="/css/jquery-ui.css" rel="stylesheet">
+	<link href="/css/jquery-ui.structure.css" rel="stylesheet">
+	<link href="/css/jquery-ui.theme.css" rel="stylesheet">
+        
 	<link id="css-app" href="/css/{{ Session::get("colorscheme") }}/app.css" rel="stylesheet">
 	<link id="css-additional" href="/css/{{ Session::get("colorscheme") }}/additional.css" rel="stylesheet">
 
@@ -20,16 +24,21 @@
             }
         </style>
         
-        <script src="/js/jquery.min.js" defer="defer"></script>
+        <script src="/js/thirdparty/jquery.min.js" defer="defer"></script>
+        <script src="/js/thirdparty/jquery-ui.min.js" defer="defer"></script>
+        <script src="/js/thirdparty/bootstrap.min.js" defer="defer"></script>
         <script src="/js/app.js" defer="defer"></script>
         
         <script defer="defer">
-        @if(isset($dialog))
+        <?php
+            $dialog = session("dialog");
+        ?>
+        @if($dialog !== null)
             var userDialog = {
                 type : "{{ $dialog["type"] }}",
-                message : "{{ $dialog["message"] }}",
-        @if(isset($dialog->title))
-                title : "$dialog->title",
+                message : "{{ Lang::get($dialog["message"]) }}",
+        @if(isset($dialog["title"]))
+                title : "{{ Lang::get($dialog["title"]) }}",
         @endif
         @if(isset($dialog->buttons))
                 buttons : {
@@ -74,7 +83,7 @@
                     <button type="button" class="close" id="modal-closer" label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <span id="modal-title" class="title">Modal title</span>
+                    <span id="modal-dialog-title" class="title">Modal title</span>
                 </div>
                 <div id="modal-dialog-body" class="body">
                     Body
@@ -110,7 +119,11 @@
                                                 </a>
                                                 <ul class="dropdown-menu" role="menu">
                                                         <li><a href="{{ route('match.overview') }}">{{ Lang::get('message.link.match.overview') }}</a></li>
-                                                        <li><a href="{{ route('match.new') }}">{{ Lang::get('message.link.match.new') }}</a></li>
+                                                        @if(!Auth::user()->joinedMatch())
+                                                            <li><a href="{{ route('match.new') }}">{{ Lang::get('message.link.match.new') }}</a></li>
+                                                        @else
+                                                            <li><a class="inactive">{{ Lang::get('message.link.match.new') }}</a></li>
+                                                        @endif
                                                 </ul>
                                         </li>
                                         @endif
@@ -145,15 +158,33 @@
 					@endif
 				</ul>
 			</div>
+                    
 		</div>
+            
 	</nav>
+    
+
+        @if (session()->has('message') || isset($message))
+        <?php $message = ( session('message') ? session('message') : $message); ?>
+            <div class="container">
+                <div class="col-md-10 col-md-offset-1 alert alert-{{ $message->type }}">
+                        {{ Lang::get($message->messageKey) }}
+                        @if (isset($message->hints) && $message->hints)
+                            <ul>
+                            @foreach ($message->hints->all() as $hints)
+                                <li>
+                                    {{ $hints }}
+                                </li>
+                            @endforeach
+                            </ul>
+                        @endif
+                </div>
+            </div>
+        @endif
     
     
 
 	@yield('content')
 
-	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

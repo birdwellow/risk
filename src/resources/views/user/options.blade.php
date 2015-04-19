@@ -13,12 +13,6 @@
                         <div class="panel-heading">{{ Lang::get('message.title.user.profile') }}</div>
 
                         <div class="panel-body">
-
-                            @if (isset($success) && $success)
-                                    <div class="alert alert-success">
-                                            {{ Lang::get('message.success.userinput.save') }}
-                                    </div>
-                            @endif
                                         
                             {!! Form::open(
                                 array(

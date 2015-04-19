@@ -5,8 +5,23 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\App;
+use Game\Managers\LanguageManager;
+use Game\Managers\OptionsManager;
 
 class UserSessionMiddleware {
+    
+    
+        protected $languageManager;
+        
+        protected $optionsManager;
+
+
+        public function __construct(LanguageManager $languageManager, OptionsManager $optionsManager) {
+
+            $this->languageManager = $languageManager;
+            $this->optionsManager = $optionsManager;
+            
+        }
 
 	/**
 	 * Handle an incoming request.
@@ -17,26 +32,12 @@ class UserSessionMiddleware {
 	 */
 	public function handle($request, Closure $next)
 	{
-                if(!Session::has("colorscheme")){
-                    $colorscheme = "modern";
-                    if(Auth::user() && Auth::user()->colorscheme){
-                        $colorscheme = Auth::user()->colorscheme;
-                    }
-                    Session::set("colorscheme", $colorscheme);
-                }
-                if(Auth::user() && Auth::user()->colorscheme){
-                    Session::set("colorscheme", Auth::user()->colorscheme);
-                }
+                $this->optionsManager->setDefaultColorscheme();
+                $this->optionsManager->setUserColorscheme(Auth::user());
                 
-                $language = Session::get("language");
-                if($language == null){
-                    Session::set("language", "en");
-                }
-                if(Auth::user()){
-                    $language = Auth::user()->language;
-                    Session::set("language", $language);
-                }
-                App::setLocale($language);
+                $this->languageManager->setUserLocale(Auth::user());
+                $this->languageManager->setFallbackLocale();
+                $this->languageManager->setAppLocale();
                 
 		return $next($request);
 	}

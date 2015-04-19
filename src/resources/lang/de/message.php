@@ -50,12 +50,14 @@ return [
         'field.match.joinedusers' => "Spieler",
         'field.match.startdate' => "Er&ouml;ffnet",
         'field.match.createdby' => "Ersteller",
+        'field.match.invite' => "Einladen",
     
         'field.user.theme' => "Schema",
         'field.user.language' => "Sprache",
     
     
         'error.userinput' => "Es gab einen Fehler mit deinen Daten.",
+        
     
         'success.userinput.save' => "Deine Daten wurden gespeichert.",
     

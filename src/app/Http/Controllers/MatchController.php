@@ -4,17 +4,26 @@ use \Illuminate\Support\Facades\Request;
 use \Game\Model\Match;
 use \Illuminate\Support\Facades\Auth;
 use \Illuminate\Support\Facades\Log;
+use Game\User;
+use Game\Managers\MatchManager;
+use Game\Exceptions\GameException;
+use Game\Handlers\Messages\ErrorFeedback;
 
 class MatchController extends Controller {
     
-	public function __construct()
+        
+        protected $matchManager;
+
+        
+        public function __construct(MatchManager $matchManager)
 	{
 		$this->middleware('auth');
+                $this->matchManager = $matchManager;
 	}
 
 	public function index()
 	{
-                $matches = Match::all();
+                $matches = $this->matchManager->getMatches();
 		return view('match.overview')->with("matches", $matches);
 	}
 
@@ -25,56 +34,69 @@ class MatchController extends Controller {
 
 	public function init()
 	{
-                $user = Auth::user();
-                if($user->joinedMatch !== null){
-                    $dialog = [
-                        "type" => "error",
-                        "message" => "You already joined a match",
-                        "title" => "Not allowed"
-                    ];
-                    Log::info($dialog);
-                    return $this->overview()
-                            ->with("dialog", $dialog);
+                try{
+                    $this->matchManager->checkUserCanCreateMatch(Auth::user());
+                } catch (GameException $ex) {
+                    
+                    return redirect()
+                            ->back()
+                            ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
                 }
                 return view('match.init');
 	}
 
 	public function create()
 	{
-                $user = Auth::user();
-                if($user->joinedMatch !== null){
-                    return redirect("/home");
+                try {
+                    
+                    $this->matchManager->checkUserCanCreateMatch(Auth::user());
+                    $this->matchManager->createMatch(Auth::user(), [
+                        "invited_players" => Request::input('invited_players'),
+                        "name" => Request::input('name')
+                    ]);
+                    return $this->overview();
+                    
+                } catch (GameException $ex) {
+                    
+                    return redirect()
+                                ->back()
+                                ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
+                    
                 }
-                $match = new Match();
-                $match->name = Request::input('name');
-                $match->createdBy()->associate(Auth::user());
-                $match->save();
-                return $this->overview();
+                return view('match.init');
 	}
 
 	public function cancel($id)
 	{
-                $match = Match::find($id);
-                if($match && Auth::user()->id == $match->createdBy->id){
-                    $match->delete();
+                try {
+                    $user = Auth::user();
+                    $this->matchManager->checkUserCanDeleteMatch($id, $user);
+                    $this->matchManager->deleteMatch($id, $user);
+                    return $this->overview();
+                    
+                } catch (GameException $ex) {
+                    
+                    return redirect()
+                                ->back()
+                                ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
+                    
                 }
-                return $this->overview();
 	}
         
         public function match($id)
         {
-                $id = (int)$id;
-                $user = Auth::user();
-                if($user->joinedMatch && $user->joinedMatch->id !== $id){
-                    return redirect("/home");
-                }
-                $match = Match::find($id);
-                if($match == null){
-                    return redirect("/home");
-                } else {
-                    $user->joinedMatch()->associate($match);
-                    $user->save();
+                try {
+                    
+                    $user = Auth::user();
+                    $match = $this->matchManager->goToMatch((int)$id, $user);
                     return view('match.play')->with('match', $match);
+                    
+                } catch (GameException $ex) {
+                    
+                    return redirect()
+                                ->back()
+                                ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
+                    
                 }
         }
 

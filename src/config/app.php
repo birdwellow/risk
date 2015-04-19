@@ -146,6 +146,7 @@ return [
 		'Game\Providers\EventServiceProvider',
 		'Game\Providers\RouteServiceProvider',
 		'Game\Providers\GameServiceProvider',
+		'Game\Providers\ManagerServiceProvider',
 
 	],
 

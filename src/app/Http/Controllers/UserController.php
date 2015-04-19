@@ -1,17 +1,27 @@
 <?php namespace Game\Http\Controllers;
 
 use \Illuminate\Support\Facades\Auth;
-use \Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
+use Game\Managers\LanguageManager;
+use Game\Managers\OptionsManager;
+use Game\Exceptions\GameException;
+use Game\Handlers\Messages\ErrorFeedback;
+use Game\Handlers\Messages\SuccessFeedback;
 
 class UserController extends Controller {
     
-	public function __construct()
+        protected $languageManager;
+        
+        protected $optionsManager;
+
+
+        public function __construct(LanguageManager $languageManager, OptionsManager $optionsManager)
 	{
-		$this->middleware('auth');
+		$this->optionsManager = $optionsManager;
+                $this->languageManager = $languageManager;
+                $this->middleware('auth');
 	}
 
 	public function profile()
@@ -27,35 +37,38 @@ class UserController extends Controller {
 
         public function options()
 	{
+                $allowedColorschemes = $this->optionsManager->getAllowedColorschemes();
 		return view('user.options')
-                        ->with("colorSchemeValues", ['baroque' => "Baroque", 'modern' => "Modern"])
-                        ->with("languageValues", ['en' => "English", 'de' => "German"]);
+                        ->with("colorSchemeValues", $allowedColorschemes);
 	}
         
         public function optionsSave()
         {
                 $user = Auth::user();
-                $user->name = Request::input('name');
-                $user->email = Request::input('email');
-                $user->colorscheme = Request::input('colorScheme');
-                Session::set("colorscheme", Request::input('colorScheme'));
+                $optionInputs = array(
+                    "username" => Request::input('name'),
+                    "email" => Request::input('email'),
+                    "colorscheme" => Request::input('colorScheme'),
+                    "avatar" => Request::file('avatar')
+                );
                 
-                if(Request::hasFile('avatar') && Request::file('avatar')->isValid()){
-                    $oldFile = $user->avatarfile;
-                    $file = Request::file('avatar');
-                    $path = app_path() . "/../public/img/avatars";
-                    $storeFileName = $user->name . "_" . uniqid() . "." . $file->getClientOriginalExtension();
-                    Request::file('avatar')->move($path, $storeFileName);
-                    $user->avatarfile = $storeFileName;
+                try{
                     
-                    if(File::exists($path."/".$oldFile)){
-                        File::delete($path."/".$oldFile);
-                    }
+                    $this->optionsManager->saveOptions($user, $optionInputs);
+                
+                    Session::set("colorscheme", Request::input('colorScheme'));
+
+                    return $this->options()->with(
+                            "message",
+                            new SuccessFeedback("message.success.userinput.save")
+                    );
+                    
+                } catch (GameException $ex) {
+                    return redirect()->back()->with(
+                            "message",
+                            new ErrorFeedback($ex->getUIMessageKey(), $ex->getCustomData())
+                    );
                 }
-                
-                $user->save();
-                
-                return $this->options()->with("success", true);
         }
 
 }

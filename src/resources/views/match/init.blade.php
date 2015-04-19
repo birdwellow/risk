@@ -36,6 +36,20 @@
                                     {!! Form::text('map_id') !!}
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">
+                                    {{ Lang::get('message.field.match.invite') }}
+                                </label>
+                                <div class="col-md-6">
+                                    {!! Form::text('', '', array(
+                                        'id' => 'invitation_helper'
+                                    )) !!}
+                                    
+                                    <textarea
+                                        id="invited_players"
+                                        name="invited_players"></textarea>                                    
+                                </div>
+                            </div>
                             {!! 
                                 Form::submit(Lang::get('message.button.match.create'), array(
                                     'class' => 'btn btn-primary'

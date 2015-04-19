@@ -4688,15 +4688,15 @@ a.thumbnail.active {
 .alert-warning .alert-link {
   color: #66512c;
 }
-.alert-danger {
+.alert-error {
   background-color: #a94442;
   border: none;
   color: #fff;
 }
-.alert-danger hr {
+.alert-error hr {
   border-top-color: #e4b9c0;
 }
-.alert-danger .alert-link {
+.alert-error .alert-link {
   color: #843534;
 }
 @-webkit-keyframes progress-bar-stripes {

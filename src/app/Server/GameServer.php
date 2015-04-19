@@ -35,7 +35,9 @@ class GameServer implements GameServerInterface {
     }
     
 
-    public function onOpen(ConnectionInterface $conn) { }
+    public function onOpen(ConnectionInterface $conn) {
+        
+    }
     
     public function onClose(ConnectionInterface $conn) {
         

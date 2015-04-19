@@ -1,0 +1,27 @@
+<?php namespace Game\Handlers\Messages;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of UserFeedback
+ *
+ * @author fvo
+ */
+class UIFeedback {
+    
+    public $type;
+    public $messageKey;
+    public $hints;
+    
+    public function __construct($type, $messageKey, $hints = null){
+        $this->type = $type;
+        $this->messageKey = $messageKey;
+        $this->hints = $hints;
+    }
+    
+    
+}

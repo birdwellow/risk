@@ -8,10 +8,64 @@ $(document).ready(function(){
         $("#css-additional").attr("href", "/css/" + $("#theme-select").val() + "/additional.css");
     });
     setTimeout(function(){
-        $(".alert-success").fadeOut(500, function(){
+        $(".alert-success").hide("blind", {}, 500);
+        /*$(".alert-success").fadeOut(500, function(){
             $(".alert-success").hide();
-            });
-        }, 3000);
+        });*/
+    }, 3000);
+    
+    
+    function split( val ) {
+        return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+        return split( term ).pop();
+    }
+    
+    $( "#invitation_helper" )
+        // don't navigate away from the field on tab when selecting an item
+        .bind( "keydown", function( event ) {
+            if ( event.keyCode === $.ui.keyCode.TAB && $( this ).autocomplete( "instance" ).menu.active ) {
+                event.preventDefault();
+            }
+        })
+        
+        .autocomplete({
+            source: function( request, response ) {
+                $.getJSON( "/json/users/names", {
+                    term: extractLast( request.term )
+                }, response );
+            },
+            
+            search: function() {
+                // custom minLength
+                var term = extractLast( this.value );
+                if ( term.length < 2 ) {
+                    return false;
+                }
+            },
+            
+            focus: function() {
+                // prevent value inserted on focus
+                return false;
+            },
+            
+            select: function( event, ui ) {
+                var terms = split( this.value );
+                
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                var invitedPlayers = $( "#invited_players").val();
+                invitedPlayers += terms.join( ", " );
+                $( "#invited_players").val(invitedPlayers);
+                $( "#invitation_helper").val("");
+                return false;
+            }
+        });
 });
 
 function Dialog(config){
@@ -23,6 +77,7 @@ function Dialog(config){
     
     this._stack = $("#modal");
     this._background = $("#modal-background");
+    this._closer = $("#modal-closer");
     this._close = $("#modal-dialog-close");
     this._action = $("#modal-dialog-action");
     this._dialog = $("#modal-dialog");
@@ -33,6 +88,9 @@ function Dialog(config){
         this._stack.hide();
     };
     this._background.click(function(){
+        self.close();
+    });
+    this._closer.click(function(){
         self.close();
     });
     

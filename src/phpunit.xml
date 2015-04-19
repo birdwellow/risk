@@ -18,5 +18,9 @@
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
+        <env name="DB_HOST" value="127.0.0.1:33060"/>
+        <env name="DB_DATABASE" value="riskdb"/>
+        <env name="DB_USERNAME" value="homestead"/>
+        <env name="DB_PASSWORD" value="secret"/>
     </php>
 </phpunit>
