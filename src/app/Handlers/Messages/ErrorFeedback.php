@@ -1,5 +1,7 @@
 <?php namespace Game\Handlers\Messages;
 
+use Game\Handlers\Messages\UIFeedback;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,15 +13,14 @@
  *
  * @author fvo
  */
-class ErrorFeedback {
+class ErrorFeedback extends UIFeedback {
     
     public $type = "error";
     public $messageKey;
     public $hints;
     
     public function __construct($messageKey, $hints = null){
-        $this->messageKey = $messageKey;
-        $this->hints = $hints;
+        parent::__construct($messageKey, $hints);
     }
     
     

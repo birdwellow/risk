@@ -17,8 +17,7 @@ class UIFeedback {
     public $messageKey;
     public $hints;
     
-    public function __construct($type, $messageKey, $hints = null){
-        $this->type = $type;
+    public function __construct($messageKey, $hints = null){
         $this->messageKey = $messageKey;
         $this->hints = $hints;
     }
