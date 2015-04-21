@@ -5,8 +5,7 @@
 <script src="/js/match.js" defer="defer"></script>
 <script>
     var username = "{{ Auth::user()->name }}";
-    var userId = "{{ Auth::user()->id }}";
-    var matchId = {{ $match->id }};
+    var joinId = "{{ Auth::user()->joinid }}";
     
 </script>
 

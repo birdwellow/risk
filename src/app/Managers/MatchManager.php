@@ -3,6 +3,9 @@
 use Game\User;
 use Game\Model\Match;
 use Game\Exceptions\GameException;
+use \Illuminate\Support\Facades\Session;
+use \Illuminate\Support\Facades\Log;
+use Game\Model\UUID;
 
 /**
  * Description of MatchManager
@@ -83,8 +86,10 @@ class MatchManager {
             if($match == null){
                 throw new GameException("MATCH.NOT.FOUND");
             } else {
+                $user->joinid = UUID::v5("1546058f-5a25-4334-85ae-e68f2a44bbaf", $user->name);
                 $user->joinedMatch()->associate($match);
                 $user->save();
+                
                 return $match;
             }
         

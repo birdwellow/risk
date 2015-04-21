@@ -37,6 +37,9 @@ class GameServer implements GameServerInterface {
 
     public function onOpen(ConnectionInterface $conn) {
         
+        $joinId = $conn->WebSocket->request->getQuery()->get("joinid");
+        $this->connectUser($conn, $joinId);
+        
     }
     
     public function onClose(ConnectionInterface $conn) {
@@ -53,24 +56,30 @@ class GameServer implements GameServerInterface {
         
         $message = json_decode($msg);
         
-        if($message->type == "connect"){
-            $this->connect($conn, $message);
-        }
-        else if($message->type == "chat.message"){
+        if($message->type == "chat.message"){
             $this->chatMessage($conn, $message);
         }
     }
     
     
-    protected function connect(ConnectionInterface $conn, $message){
+    protected function connectUser(ConnectionInterface $conn, $joinId){
+        
+        $user = User::where("joinid", $joinId)->first();
+        if(!$user instanceof User){
+            return;
+        }
+        $user->joinid = null;
+        $user->save();
+        
+        $joinedMatch = $user->joinedMatch;
+        $joinedMatchId = $joinedMatch->id;
         
         if(!$this->connections->contains($conn)){
         
-            $match = $this->getMatchById($message->data->match_id);
+            $match = $this->getMatchById($joinedMatchId);
             if($match == null){
-                $match = Match::find($message->data->match_id);
+                $match = Match::find($joinedMatchId);
             }
-            $user = User::find($message->data->user_id);
 
             if($match !== null && $user !== null){
 

@@ -32,13 +32,6 @@ function GameSocket(url){
     this._events = new Array();
     
     this._webSocket.addEventListener("open", function (e) {
-        self.send(
-            "connect",
-            {
-                "user_id" : userId,
-                "match_id" : matchId
-            }
-        );
     });
 
     this._webSocket.addEventListener("close", function (e) {
@@ -72,7 +65,7 @@ function GameSocket(url){
 
 
 
-var socket = new GameSocket("ws://dev.app.risk:7778/");
+var socket = new GameSocket("ws://dev.app.risk:7778/?joinid=" + joinId);
 socket.on("chat.message", function(message){
     chat.receive(message.data, message.username);
 });
