@@ -78,7 +78,7 @@ class GameServer implements GameServerInterface {
         
             $match = $this->getMatchById($joinedMatchId);
             if($match == null){
-                $match = Match::find($joinedMatchId);
+                $match = $joinedMatchId;
             }
 
             if($match !== null && $user !== null){

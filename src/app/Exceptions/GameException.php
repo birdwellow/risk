@@ -35,6 +35,10 @@ class GameException extends Exception {
             "message" => "error.user.cannot.delete.match",
             "category" => "error.user"
         ],
+        "USER.CANNOT.ADMINISTRATE.MATCH" => [
+            "message" => "error.user.cannot.administrate.match",
+            "category" => "error.user"
+        ],
         "USER.INVALID.OPTIONS" => [
             "message" => "error.user.invalid.options",
             "category" => "error.user"

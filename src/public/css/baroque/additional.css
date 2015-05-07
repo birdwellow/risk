@@ -1,3 +1,10 @@
+a.warn{
+    color: #d9534f;
+}
+a.warn:hover{
+    color: #ea645f;
+}
+
 .right {
     float: right;
 }
@@ -127,4 +134,50 @@ textarea,
     max-width: 40px;
     margin-right: 10px;
     border-radius: 3px;
+}
+
+.warning-small{
+    font-size: 14px;
+    line-height: 100%;
+    color: #d9534f;
+}
+
+.form-horizontal .control {
+    text-align: left;
+    margin-bottom: 0;
+    padding-top: 7px;
+}
+
+
+/* jQuery-UI additionals */
+
+.ui-menu .ui-menu-item {
+	position: relative;
+	margin: 0;
+	padding: 3px 1em 3px .4em;
+	cursor: pointer;
+	min-height: 0; /* support: IE7 */
+	/* support: IE10, see #8844 */
+	list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+}
+.ui-widget-content {
+	border: none;
+	background: #eeeeee;
+	color: #333333;
+}
+.ui-widget {
+        border-radius: 5px;
+}
+
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus,
+.ui-state-focus{
+        background: #888;
+	color: #fff;
+}
+.ui-menu-icons .ui-menu-item {
+	padding-left: 2em;
 }

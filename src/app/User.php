@@ -50,15 +50,27 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
 
         
-        public function createdMatches()
+        public function createdMatch()
         {
-            return $this->hasMany('Game\Model\Match', 'created_by_user_id', 'id');
+            return $this->hasOne('Game\Model\Match', 'created_by_user_id', 'id');
         }
         
         
         public function joinedMatch()
         {
             return $this->belongsTo('Game\Model\Match', 'joined_match_id', 'id');
+        }
+
+        
+        public function matchJoined()
+        {
+            return $this->hasMany('Game\Model\UserJoinMatch', 'user_id', 'id');
+        }
+
+        
+        public function invitedToJoin()
+        {
+            return $this->hasMany('Game\Model\UserJoinMatch');
         }
 
 }

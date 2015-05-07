@@ -1,3 +1,10 @@
+a.warn{
+    color: #d9534f;
+}
+a.warn:hover{
+    color: red;
+}
+
 .right {
     float: right;
 }
@@ -96,6 +103,18 @@
     max-width: 30px;
     margin-right: 10px;
     border-radius: 3px;
+}
+
+.warning-small{
+    font-size: 14px;
+    line-height: 100%;
+    color: #d9534f;
+}
+
+.form-horizontal .control {
+    text-align: left;
+    margin-bottom: 0;
+    padding-top: 7px;
 }
 
 

@@ -6,6 +6,7 @@ use Game\Exceptions\GameException;
 use \Illuminate\Support\Facades\Session;
 use \Illuminate\Support\Facades\Log;
 use Game\Model\UUID;
+use Game\Model\UserJoinMatch;
 
 /**
  * Description of MatchManager
@@ -13,15 +14,6 @@ use Game\Model\UUID;
  * @author fvo
  */
 class MatchManager {
-    
-    
-    public function getMatches($criteria = array()){
-        
-        if(count($criteria) == 0){
-            return Match::all();
-        }
-        
-    }
     
     
     public function checkUserCanCreateMatch($user) {
@@ -43,22 +35,46 @@ class MatchManager {
     }
     
     
-    public function createMatch($user, $inputs) {
-
-            $invitedPlayersInput = str_replace(" ", "", $inputs['invited_players']);
-            $invitedPlayerNames = explode(",", $invitedPlayersInput);
-            $invitedPlayers = array();
-            foreach ($invitedPlayerNames as $invitedPlayerName){
-                $foundPlayer = User::where("name", $invitedPlayerName)->first();
-                if($foundPlayer){
-                    array_push($invitedPlayers, $foundPlayer);
-                }
+    public function checkUserCanAdministrateMatch($match, $user) {
+        
+            if($match && $user->id !== $match->createdBy->id){
+                throw new GameException("USER.CANNOT.DELETE.MATCH");
             }
+        
+    }
+    
+    
+    public function getMatches($criteria = array()){
+        
+        if(count($criteria) == 0){
+            return Match::all();
+        }
+        
+    }
+    
+    
+    public function createMatch($user, $inputs) {
 
             $match = new Match();
             $match->name = $inputs['name'];
             $match->createdBy()->associate($user);
             $match->save();
+
+            $invitedPlayersInput = str_replace(", ", ",", $inputs['invited_players']);
+            $invitedPlayerNames = explode(",", $invitedPlayersInput);
+            $invitationMessage = $inputs['invitation_message'];
+            foreach ($invitedPlayerNames as $invitedPlayerName){
+                $foundPlayer = User::where("name", $invitedPlayerName)->first();
+                if($foundPlayer){
+                    $userJoinMatch = new UserJoinMatch();
+                    $userJoinMatch->status = "invited";
+                    $userJoinMatch->invitedBy()->associate($user);
+                    $userJoinMatch->user()->associate($foundPlayer);
+                    $userJoinMatch->match()->associate($match);
+                    $userJoinMatch->invitation_message = $invitationMessage;
+                    $userJoinMatch->save();
+                }
+            }
             
             $user->joinedMatch()->associate($match);
             $user->save();
@@ -91,6 +107,63 @@ class MatchManager {
                 $user->save();
                 
                 return $match;
+            }
+        
+    }
+    
+    public function rejectInvitation($id, $user) {
+        
+        $join = UserJoinMatch::find($id)->first();
+        Log::info($join);
+        
+        if($user->id == $join->user->id){
+            
+            $join->status = "rejected";
+            $join->save();
+            
+        }
+        else {
+            
+            // throw Exception?
+            
+        }
+        
+    }
+    
+    public function deleteInvitation($id, $user) {
+        
+        $join = UserJoinMatch::find($id)->first();
+        
+        if($user->id == $join->invitedBy->id){
+            
+            $join->delete();
+            
+        }
+        else {
+            
+            // throw Exception?
+            
+        }
+        
+    }
+    
+    
+    public function saveAdministratedMatch($match, $user, $inputs) {
+        
+            $invitedPlayersInput = str_replace(", ", ",", $inputs['invited_players']);
+            $invitedPlayerNames = explode(",", $invitedPlayersInput);
+            $invitationMessage = $inputs['invitation_message'];
+            foreach ($invitedPlayerNames as $invitedPlayerName){
+                $foundPlayer = User::where("name", $invitedPlayerName)->first();
+                if($foundPlayer){
+                    $userJoinMatch = new UserJoinMatch();
+                    $userJoinMatch->status = "invited";
+                    $userJoinMatch->invitedBy()->associate($user);
+                    $userJoinMatch->user()->associate($foundPlayer);
+                    $userJoinMatch->match()->associate($match);
+                    $userJoinMatch->invitation_message = $invitationMessage;
+                    $userJoinMatch->save();
+                }
             }
         
     }

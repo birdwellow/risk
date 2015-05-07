@@ -110,7 +110,7 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ route('home') }}">{{ Lang::get('message.link.home') }}</a></li>
+					<li><a href="{{ route('index') }}">{{ Lang::get('message.link.home') }}</a></li>
                                         @if (Auth::check())
                                         <li class="dropdown">
                                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -118,11 +118,16 @@
                                                     <span class="caret"></span>
                                                 </a>
                                                 <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="{{ route('match.overview') }}">{{ Lang::get('message.link.match.overview') }}</a></li>
-                                                        @if(!Auth::user()->joinedMatch())
+                                                        <li><a href="{{ route('index') }}">{{ Lang::get('message.link.match.overview') }}</a></li>
+                                                        
+                                                        @if(!Auth::user()->joinedMatch)
                                                             <li><a href="{{ route('match.new') }}">{{ Lang::get('message.link.match.new') }}</a></li>
                                                         @else
                                                             <li><a class="inactive">{{ Lang::get('message.link.match.new') }}</a></li>
+                                                        @endif
+                                                        
+                                                        @if(Auth::user()->createdMatch)
+                                                            <li><a href="{{ route('match.administrate', Auth::user()->createdMatch->id) }}">{{ Lang::get('message.link.match.administrate', ['matchName'=>Auth::user()->createdMatch->name]) }}</a></li>
                                                         @endif
                                                 </ul>
                                         </li>

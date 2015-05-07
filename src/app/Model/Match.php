@@ -47,4 +47,10 @@ class Match extends Model {
     {
         return $this->belongsTo('Game\User', 'created_by_user_id', 'id');
     }
+
+        
+    public function invitedFromJoins()
+    {
+        return $this->hasMany('Game\Model\UserJoinMatch', 'invited_by_user_id', 'id');
+    }
 }

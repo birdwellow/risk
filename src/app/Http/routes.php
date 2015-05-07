@@ -16,16 +16,6 @@ Route::get('/', [
     'uses' => 'MatchController@index'
 ]);
 
-Route::get('home', [
-    'as' => 'home',
-    'uses' => 'MatchController@overview'
-]);
-
-Route::get('match/overview', [
-    'as' => 'match.overview',
-    'uses' => 'MatchController@overview'
-]);
-
 Route::get('match/new', [
     'as' => 'match.new',
     'uses' => 'MatchController@init'
@@ -45,6 +35,29 @@ Route::get('match/cancel/{id}', [
     'as' => 'match.cancel',
     'uses' => 'MatchController@cancel'
 ]);
+
+Route::get('match/administrate/{id}', [
+    'as' => 'match.administrate',
+    'uses' => 'MatchController@administrate'
+]);
+
+Route::post('match/administrate/{id}', [
+    'as' => 'match.administrate.save',
+    'uses' => 'MatchController@saveAdministrate'
+]);
+
+Route::get('invitation/reject/{id}', [
+    'as' => 'invitation.reject',
+    'uses' => 'MatchController@rejectInvitation'
+]);
+
+Route::get('invitation/delete/{id}', [
+    'as' => 'invitation.delete',
+    'uses' => 'MatchController@deleteInvitation'
+]);
+
+
+
 
 Route::get('user/profile', [
     'as' => 'user.profile',

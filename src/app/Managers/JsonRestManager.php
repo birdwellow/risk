@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\App;
+use Game\User;
 
 /**
  * Description of MatchManager
