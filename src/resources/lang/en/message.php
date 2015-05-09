@@ -102,6 +102,10 @@ return [
     
         'text.invitation.received.fromfor' => "From :invitorName for ':matchName'",
         'text.invitation.rejectec.byfor' => "By :rejectorName for ':matchName'",
-        
-
+    
+    
+        'placeholder.search' => "Search",
+        'placeholder.invitation.message' => "Your invitation message",
+        'placeholder.invitation.playernames' => "user_name_1, user_name_2, ...",
+    
 ];

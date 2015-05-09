@@ -4,8 +4,7 @@ $(document).ready(function(){
         var dialog = new Dialog(userDialog);
     }
     $("#theme-select").change(function(e){
-        $("#css-app").attr("href", "/css/" + $("#theme-select").val() + "/app.css");
-        $("#css-additional").attr("href", "/css/" + $("#theme-select").val() + "/additional.css");
+        $("#css-theme").attr("href", "/css/" + $("#theme-select").val() + "/theme.css");
     });
     setTimeout(function(){
         $(".alert-success").hide("blind", {}, 500);
@@ -33,6 +32,7 @@ $(document).ready(function(){
         .autocomplete({
             source: function( request, response ) {
                 $.getJSON( "/json/users/names", {
+                    selectednames: $("#invited_players").val(),
                     term: extractLast( request.term )
                 }, response );
             },

@@ -18,7 +18,8 @@ class OptionsManager {
 
     protected $allowedColorschemes = [
         "modern" => "Modern",
-        "baroque" => "Baroque"
+        "baroque" => "Baroque",
+        "cold_war" => "Cold War",
     ];
     
     

@@ -20,48 +20,61 @@
                                     'role' => 'form',
                                 )
                             ) !!}
-                            <div class="form-group section">
+                            <div class="section">
                                 <h2>
                                     {{ Lang::get('message.title.match.data') }}
                                 </h2>
-                                <label class="col-md-4 control-label">
-                                    {{ Lang::get('message.field.match.name') }}
-                                </label>
-                                <div class="col-md-6">
-                                    {!! Form::text('name') !!}
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">
+                                        {{ Lang::get('message.field.match.name') }}
+                                    </label>
+                                    <div class="col-md-6">
+                                        {!! Form::text('name') !!}
+                                    </div>
                                 </div>
-                                <label class="col-md-4 control-label">
-                                    {{ Lang::get('message.field.match.map') }}
-                                </label>
-                                <div class="col-md-6">
-                                    {!! Form::text('map_id') !!}
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">
+                                        {{ Lang::get('message.field.match.map') }}
+                                    </label>
+                                    <div class="col-md-6">
+                                        {!! Form::text('map_id') !!}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group section">
+                            <div class="section">
                                 <h2>
                                     {{ Lang::get('message.title.match.invitations') }}
                                 </h2>
-                                <label class="col-md-4 control-label">
-                                    {{ Lang::get('message.field.match.invite') }}
-                                </label>
-                                <div class="col-md-6">
-                                    {!! Form::text('', '', array(
-                                        'id' => 'invitation_helper'
-                                    )) !!}
-                                    
-                                    <textarea
-                                        id="invited_players"
-                                        name="invited_players"></textarea>                                    
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">
+                                    </label>
+                                    <div class="col-md-6">
+                                        {!! Form::text('', '', array(
+                                            'id' => 'invitation_helper',
+                                            'placeholder' => Lang::get('message.placeholder.search')
+                                        )) !!}
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">
-                                    {{ Lang::get('message.field.match.invitationmessage') }}
-                                </label>
-                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">
+                                    </label>
+                                    <div class="col-md-6">
+                                        <textarea
+                                            id="invited_players"
+                                            name="invited_players"
+                                            placeholder="{{ Lang::get('message.placeholder.invitation.playernames') }}"></textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">
+                                    </label>
+                                    <div class="col-md-6">
                                     <textarea
                                         id="invitation_message"
-                                        name="invitation_message"></textarea>                                    
+                                        name="invitation_message"
+                                        placeholder="{{ Lang::get('message.placeholder.invitation.message') }}"></textarea>
+                                    </div>
                                 </div>
                             </div>
                             {!! 

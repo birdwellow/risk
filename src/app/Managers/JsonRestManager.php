@@ -12,17 +12,12 @@ use Game\User;
 class JsonRestManager {
     
     
-    public function getAllUserNamesLikeExcept($pattern, $exceptUsers = array()) {
-        
-            $exceptIds = array();
-            foreach ($exceptUsers as $user){
-                array_push($exceptIds, $user->id);
-            }
+    public function getAllUserNamesLikeExcept($pattern, $exceptUserNames = array()) {
         
             $userNames = array();
             $allUsers = User::where('name', "like", "%".$pattern."%")->get();
             foreach ($allUsers as $user){
-                if(!in_array($user->id, $exceptIds)){
+                if(!in_array($user->name, $exceptUserNames)){
                     array_push($userNames, $user->name);
                 }
             }

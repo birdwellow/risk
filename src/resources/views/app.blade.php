@@ -4,26 +4,12 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+        
 	<title>{{ Lang::get('message.title') }}</title>
 
+	<link id="css-theme" href="/css/{{ Session::get("colorscheme") }}/theme.css" rel="stylesheet">
 	<link href="/css/jquery-ui.css" rel="stylesheet">
-	<link href="/css/jquery-ui.structure.css" rel="stylesheet">
-	<link href="/css/jquery-ui.theme.css" rel="stylesheet">
-        
-	<link id="css-app" href="/css/{{ Session::get("colorscheme") }}/app.css" rel="stylesheet">
-	<link id="css-additional" href="/css/{{ Session::get("colorscheme") }}/additional.css" rel="stylesheet">
 
-	<!-- Fonts -->
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-        <style>
-            @font-face {
-              font-family: 'Garamond';
-              font-style: normal;
-              font-weight: 400;
-              src: url('/font/baroque/EBGaramond.otf') format('opentype');
-            }
-        </style>
-        
         <script src="/js/thirdparty/jquery.min.js" defer="defer"></script>
         <script src="/js/thirdparty/jquery-ui.min.js" defer="defer"></script>
         <script src="/js/thirdparty/bootstrap.min.js" defer="defer"></script>
