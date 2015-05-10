@@ -4,7 +4,7 @@ $(document).ready(function(){
         var dialog = new Dialog(userDialog);
     }
     $("#theme-select").change(function(e){
-        $("#css-theme").attr("href", "/css/" + $("#theme-select").val() + "/theme.css");
+        $("#css-theme").attr("href", "/css/theme_" + $("#theme-select").val() + ".css");
     });
     setTimeout(function(){
         $(".alert-success").hide("blind", {}, 500);

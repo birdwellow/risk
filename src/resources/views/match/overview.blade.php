@@ -24,26 +24,30 @@
                                         {{ Lang::get('message.field.match.name') }}
                                     </td>
                                     <td>
-                                        {{ Lang::get('message.field.match.joinedusers') }}
-                                    </td>
-                                    <td>
-                                        {{ Lang::get('message.field.match.startdate') }}
-                                    </td>
-                                    <td>
-                                        {{ Lang::get('message.field.match.createdby') }}
+                                        {{ $user->joinedMatch->name }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        {{ $user->joinedMatch->name }}
+                                        {{ Lang::get('message.field.match.joinedusers') }}
                                     </td>
                                     <td>
                                         @foreach($user->joinedMatch->joinedUsers as $joinedUser)
                                             {{ $joinedUser->name }}
                                         @endforeach
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{ Lang::get('message.field.match.startdate') }}
+                                    </td>
                                     <td>
                                         {{ $user->joinedMatch->created_at }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {{ Lang::get('message.field.match.createdby') }}
                                     </td>
                                     <td>
                                         {{ $user->joinedMatch->createdBy->name }}

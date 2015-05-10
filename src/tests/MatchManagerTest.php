@@ -18,7 +18,7 @@ class MatchManagerTest extends TestCase {
                     "name" => "TestUser1",
                     "email" => "test1@test.de",
                     "language" => "de",
-                    "colorscheme" => "modern",
+                    "colorscheme" => "classic",
                 ]);
                 $user1->save();
                 $this->users["user1"] = $user1;
@@ -27,7 +27,7 @@ class MatchManagerTest extends TestCase {
                     "name" => "TestUser2",
                     "email" => "test2@test.de",
                     "language" => "en",
-                    "colorscheme" => "baroque",
+                    "colorscheme" => "classic",
                 ]);
                 $user2->save();
                 $this->users["user2"] = $user2;

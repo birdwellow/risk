@@ -14,12 +14,11 @@ class OptionsManager {
     
     protected $sessionColorschemeToken = "colorscheme";
     
-    protected $fallbackColorscheme = "modern";
+    protected $fallbackColorscheme = "classic";
 
     protected $allowedColorschemes = [
-        "modern" => "Modern",
-        "baroque" => "Baroque",
-        "cold_war" => "Cold War",
+        "classic" => "Classic",
+        "coldwar" => "Cold War",
     ];
     
     
