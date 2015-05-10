@@ -43,13 +43,16 @@ class MatchController extends Controller {
 	{
                 try{
                     $this->matchManager->checkUserCanCreateMatch(Auth::user());
+                    $mapNames = $this->matchManager->getMapNames();
+                    Log::info($mapNames);
+                    return view('match.init')
+                            ->with("mapNames", $mapNames);
                 } catch (GameException $ex) {
                     
                     return redirect()
                             ->back()
                             ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
                 }
-                return view('match.init');
 	}
 
 	public function create()
@@ -59,10 +62,13 @@ class MatchController extends Controller {
                     $this->matchManager->checkUserCanCreateMatch(Auth::user());
                     $this->matchManager->createMatch(Auth::user(), [
                         "invited_players" => Request::input('invited_players'),
+                        "mapName" => Request::input('mapName'),
                         "name" => Request::input('name'),
-                        "invitation_message" => Request::input('invitation_message')
+                        "invitation_message" => Request::input('invitation_message'),
+                        "closed" => Request::input('closed'),
+                        "maxusers" => Request::input('maxusers')
                     ]);
-                    return redirect("index");
+                    return redirect()->route("index");
                     
                 } catch (GameException $ex) {
                     
@@ -71,7 +77,7 @@ class MatchController extends Controller {
                                 ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
                     
                 }
-                return view('match.init');
+                //return view('match.init');
 	}
 
 	public function cancel($id)

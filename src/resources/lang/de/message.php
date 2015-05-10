@@ -50,6 +50,8 @@ return [
     
         'field.match.name' => "Name",
         'field.match.map' => "Karte",
+        'field.match.closed' => "Nur eingeladene Spieler?",
+        'field.match.maxusers' => "Maximale Spielerzahl",
         'field.match.joinedusers' => "Spieler",
         'field.match.startdate' => "Er&ouml;ffnet",
         'field.match.createdby' => "Ersteller",

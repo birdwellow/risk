@@ -7,6 +7,7 @@ use \Illuminate\Support\Facades\Session;
 use \Illuminate\Support\Facades\Log;
 use Game\Model\UUID;
 use Game\Model\UserJoinMatch;
+use Game\Model\Map;
 
 /**
  * Description of MatchManager
@@ -58,7 +59,14 @@ class MatchManager {
             $match = new Match();
             $match->name = $inputs['name'];
             $match->createdBy()->associate($user);
+            $match->closed = ($inputs["closed"] !== null);
+            Log::info("Maxusers: " .$inputs["maxusers"]);
+            $match->maxusers = $inputs["maxusers"];
+            $map = Map::where("name", $inputs['mapName'])->first();
+            $match->map()->associate($map);
+            
             $match->save();
+            
 
             $invitedPlayersInput = str_replace(", ", ",", $inputs['invited_players']);
             $invitedPlayerNames = explode(",", $invitedPlayersInput);
@@ -166,6 +174,17 @@ class MatchManager {
                 }
             }
         
+    }
+        
+    public function getMapNames() {
+
+        $maps = Map::all();
+        $mapNames = array();
+        foreach ($maps as $map) {
+            $mapNames[] = $map->name;
+        }
+        return $mapNames;
+
     }
     
 }

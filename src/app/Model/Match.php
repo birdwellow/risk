@@ -7,7 +7,7 @@ use Ratchet\ConnectionInterface;
 
 class Match extends Model {
 
-    protected $fillable = ['cardChangeBonusLevel', 'map', 'name'];
+    protected $fillable = ['cardChangeBonusLevel', 'map', 'name', 'closed', 'maxUsers'];
     
     protected $connectedUsers;
 
@@ -52,5 +52,11 @@ class Match extends Model {
     public function invitedFromJoins()
     {
         return $this->hasMany('Game\Model\UserJoinMatch', 'invited_by_user_id', 'id');
+    }
+    
+    
+    public function map()
+    {
+        return $this->belongsTo('Game\Model\Map', 'map_id', 'id');
     }
 }

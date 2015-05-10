@@ -6366,6 +6366,7 @@ textarea,
     font-size: 14px;
     line-height: 100%;
     color: #d9534f;
+    margin-top: 10px;
 }
 
 .form-horizontal .control {

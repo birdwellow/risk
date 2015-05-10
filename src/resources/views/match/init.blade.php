@@ -32,14 +32,46 @@
                                         {!! Form::text('name') !!}
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">
                                         {{ Lang::get('message.field.match.map') }}
                                     </label>
-                                    <div class="col-md-6">
-                                        {!! Form::text('map_id') !!}
+                                    <div class="col-md-6 styled-select">
+                                        <select name="mapName" id="mapname-select" class="styled-select">
+                                            @foreach($mapNames as $mapName)
+                                            <option value="{{ $mapName }}">
+                                                {{ $mapName }}
+                                            </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">
+                                        {{ Lang::get('message.field.match.closed') }}
+                                    </label>
+                                    <div class="col-md-6">
+                                        {!! Form::checkbox('closed') !!}
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">
+                                        {{ Lang::get('message.field.match.maxusers') }}
+                                    </label>
+                                    <div class="col-md-6 styled-select">
+                                        <select name="maxusers" id="maxusers" class="styled-select">
+                                            <option value="2">2</option>
+                                            <option value="2">3</option>
+                                            <option value="2">4</option>
+                                            <option value="2">5</option>
+                                            <option value="2" selected="">6</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
                             </div>
                             <div class="section">
                                 <h2>

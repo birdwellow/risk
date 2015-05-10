@@ -2,6 +2,7 @@
 
 use Game\User;
 use Illuminate\Support\Facades\Session;
+use Game\Model\Map;
 
 class MatchManagerTest extends TestCase {
     

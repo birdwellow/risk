@@ -51,6 +51,9 @@ return [
     
         'field.match.name' => "Name",
         'field.match.map' => "Map",
+        'field.match.closed' => "Only invited users?",
+        'field.match.maxusers' => "Maximum User Count",
+        'field.match.map' => "Map",
         'field.match.joinedusers' => "Players",
         'field.match.startdate' => "Started",
         'field.match.createdby' => "Created by",
@@ -97,7 +100,7 @@ return [
         'title.game.settings' => "Game Settings",
         'title.match.invitations' => "Invite users",
         'title.match.data' => "Match Data",
-        'title.match.data' => "Cancel Match",
+        'title.match.cancel' => "Cancel Match",
     
     
         'text.invitation.received.fromfor' => "From :invitorName for ':matchName'",

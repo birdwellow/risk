@@ -17,6 +17,8 @@ class CreateMatchesTable extends Migration {
 			$table->increments('id');
                         $table->integer('created_by_user_id')->unsigned();
                         $table->foreign('created_by_user_id')->references('id')->on('users');
+                        $table->boolean('closed');
+                        $table->integer('maxusers');
                         $table->string('name');
                         $table->integer('cardChangeBonusLevel');
 			$table->timestamps();
