@@ -58,6 +58,8 @@ class MatchController extends Controller {
 	{
                 try {
                     
+                    throw new GameException("MATCH.NOT.FOUND");
+                    
                     $this->matchManager->checkUserCanCreateMatch(Auth::user());
                     $this->matchManager->createMatch(Auth::user(), [
                         "invited_players" => Request::input('invited_players'),
@@ -67,14 +69,14 @@ class MatchController extends Controller {
                         "closed" => Request::input('closed'),
                         "maxusers" => Request::input('maxusers')
                     ]);
+                    
                     return redirect()->route("index");
                     
                 } catch (GameException $ex) {
                     
-                    Log::info($ex);
-                    
                     return redirect()
                                 ->back()
+                                ->withInput()
                                 ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
                     
                 }

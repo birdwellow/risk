@@ -3,15 +3,16 @@ $(document).ready(function(){
     if(typeof userDialog !== "undefined"){
         var dialog = new Dialog(userDialog);
     }
+    
     $("#theme-select").change(function(e){
         $("#css-theme").attr("href", "/css/theme_" + $("#theme-select").val() + ".css");
     });
-    setTimeout(function(){
-        $(".alert-success").hide("blind", {}, 500);
-        /*$(".alert-success").fadeOut(500, function(){
+    
+    /*setTimeout(function(){
+        $(".alert-success").fadeOut(1000, function(){
             $(".alert-success").hide();
-        });*/
-    }, 3000);
+        });
+    }, 3000);*/
     
     
     function split( val ) {

@@ -37,8 +37,8 @@
                                                     <label class="col-md-4 control-label">
                                                             {{ Lang::get('message.field.match.map') }}
                                                     </label>
-                                                    <div class="col-md-6 styled-select">
-                                                            <select name="mapName" id="mapname-select" class="styled-select">
+                                                    <div class="col-md-6">
+                                                            <select name="mapName" id="mapname-select">
                                                                 @foreach($mapNames as $mapName)
                                                                     <option value="{{ $mapName }}">
                                                                             {{ $mapName }}
@@ -61,8 +61,8 @@
                                                         <label class="col-md-4 control-label">
                                                               {{ Lang::get('message.field.match.maxusers') }}
                                                         </label>
-                                                        <div class="col-md-6 styled-select">
-                                                                <select name="maxusers" id="maxusers" class="styled-select">
+                                                        <div class="col-md-6">
+                                                                <select name="maxusers" id="maxusers">
                                                                         <option value="2">2</option>
                                                                         <option value="2">3</option>
                                                                         <option value="2">4</option>
@@ -95,7 +95,7 @@
                                                                     id="invited_players"
                                                                     name="invited_players"
                                                                     placeholder="{{ Lang::get('message.placeholder.invitation.playernames') }}"
-                                                                ></textarea>
+                                                                >{{ old('invited_players') }}</textarea>
                                                         </div>
                                                 </div>
 
@@ -107,7 +107,7 @@
                                                                     id="invitation_message"
                                                                     name="invitation_message"
                                                                     placeholder="{{ Lang::get('message.placeholder.invitation.message') }}"
-                                                                ></textarea>
+                                                                >{{ old('invitation_message') }}</textarea>
                                                         </div>
                                                 </div>
                                         </div>

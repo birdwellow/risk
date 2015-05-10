@@ -20,7 +20,7 @@
                         <div class="panel-body">
                             
                             @if($user->joinedMatch)
-                                <table style="width:100%;">
+                                <table>
                                         <tr>
                                                 <td>
                                                         {{ Lang::get('message.field.match.name') }}
@@ -73,7 +73,7 @@
                         </div>
                 
                         <div class="panel-body">
-                                <table style="width:100%;">
+                                <table>
                                     @foreach($invitations as $invitation)
                                         <tr>
                                                 <td style="width:20%;">
@@ -105,7 +105,7 @@
                         </div>
 
                         <div class="panel-body">
-                                <table style="width:100%;">
+                                <table>
                                     @foreach($rejectedInvitations as $rejectedInvitation)
                                         <tr>
                                                 <td>
@@ -136,7 +136,7 @@
                         </div>
 
                         <div class="panel-body">
-                                <table style="width:100%;">
+                                <table>
                                         <tr>
                                                 <td>
                                                         {{ Lang::get('message.field.match.name') }}

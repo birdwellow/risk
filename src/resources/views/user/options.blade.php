@@ -79,8 +79,8 @@
                                                         <label class="col-md-4 control-label">
                                                                 {{ Lang::get('message.field.user.theme') }}
                                                         </label>
-                                                        <div class="col-md-6 styled-select">
-                                                                <select name="colorScheme" class="styled-select" id="theme-select" >
+                                                        <div class="col-md-6">
+                                                                <select name="colorScheme" id="theme-select" >
                                                                     @foreach($colorSchemeValues as $key => $value)
                                                                         <option value="{{ $key }}"
                                                                                 @if($key == Auth::user()->colorscheme)

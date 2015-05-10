@@ -55,8 +55,6 @@ class MatchManager {
     
     
     public function createMatch($user, $inputs) {
-        
-            Log::info("Creating...");
 
             $match = new Match();
             $match->name = $inputs['name'];
