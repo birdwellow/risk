@@ -135,6 +135,11 @@ textarea,
     margin-bottom: 5px;
 }
 
+.data {
+    font-size: 0.8em;
+    color: #bbb;
+}
+
 #modal{
     display: none;
 }

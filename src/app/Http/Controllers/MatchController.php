@@ -44,7 +44,6 @@ class MatchController extends Controller {
                 try{
                     $this->matchManager->checkUserCanCreateMatch(Auth::user());
                     $mapNames = $this->matchManager->getMapNames();
-                    Log::info($mapNames);
                     return view('match.init')
                             ->with("mapNames", $mapNames);
                 } catch (GameException $ex) {
@@ -72,12 +71,13 @@ class MatchController extends Controller {
                     
                 } catch (GameException $ex) {
                     
+                    Log::info($ex);
+                    
                     return redirect()
                                 ->back()
                                 ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
                     
                 }
-                //return view('match.init');
 	}
 
 	public function cancel($id)

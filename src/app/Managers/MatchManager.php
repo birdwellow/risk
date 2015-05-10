@@ -55,12 +55,13 @@ class MatchManager {
     
     
     public function createMatch($user, $inputs) {
+        
+            Log::info("Creating...");
 
             $match = new Match();
             $match->name = $inputs['name'];
             $match->createdBy()->associate($user);
             $match->closed = ($inputs["closed"] !== null);
-            Log::info("Maxusers: " .$inputs["maxusers"]);
             $match->maxusers = $inputs["maxusers"];
             $map = Map::where("name", $inputs['mapName'])->first();
             $match->map()->associate($map);

@@ -14,93 +14,89 @@
 
                         <div class="panel-body">
                                         
-                            {!! Form::open(
-                                array(
-                                    'url' => route('user.options'),
-                                    'class' => 'form-horizontal',
-                                    'role' => 'form',
-                                    'files' => true,
-                                )
-                            ) !!}
-                            <div class="section">
-                                <h2>
-                                    {{ Lang::get('message.title.user.data') }}
-                                </h2>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">
-                                            {{ Lang::get('message.field.username') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                            {!! Form::text('name', Auth::user()->name) !!}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">
-                                            {{ Lang::get('message.field.email') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                            {!! Form::text('email', Auth::user()->email) !!}
-                                    </div>
-                                </div>
-                                
-                                <!--
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">
-                                            {{ Lang::get('message.field.password') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                            {!! Form::password('password') !!}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">
-                                            {{ Lang::get('message.field.password.confirmation') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                            {!! Form::password('passwordconfirmation') !!}
-                                    </div>
-                                </div>
-                                -->
-                                
-                                
-                                
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">
-                                            {{ Lang::get('message.field.avatar.file') }}
-                                    </label>
-                                    <div class="col-md-6">
-                                            {!! Form::file('avatar') !!}
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="section">
-                                <h2>
-                                    {{ Lang::get('message.title.game.settings') }}
-                                </h2>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">
-                                            {{ Lang::get('message.field.user.theme') }}
-                                    </label>
-                                    <div class="col-md-6 styled-select">
-                                            {!! Form::select(
-                                                'colorScheme',
-                                                $colorSchemeValues,
-                                                Auth::user()->colorscheme,
-                                                array(
-                                                    "class" => "styled-select",
-                                                    "id" => "theme-select"
-                                                )
-                                            ) !!}
-                                    </div>
-                                </div>
-                            </div>
-                            {!! 
-                                Form::submit( Lang::get('message.button.save'), array(
-                                    'class' => 'btn btn-primary'
-                                ))
-                            !!}
-                            {!! Form::close() !!}
+                                <form method="POST" action="{{ route('user.options') }}" class="form-horizontal" role="form" enctype="multipart/form-data" >
+                                    
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    
+                                        <div class="section">
+                                                <h2>
+                                                        {{ Lang::get('message.title.user.data') }}
+                                                </h2>
+                                            
+                                                <div class="form-group">
+                                                        <label class="col-md-4 control-label">
+                                                                {{ Lang::get('message.field.username') }}
+                                                        </label>
+                                                        <div class="col-md-6">
+                                                                <input type="text" name="name" value="{{ Auth::user()->name }}" />
+                                                        </div>
+                                                </div>
+                                            
+                                                <div class="form-group">
+                                                        <label class="col-md-4 control-label">
+                                                                {{ Lang::get('message.field.email') }}
+                                                        </label>
+                                                        <div class="col-md-6">
+                                                                <input type="text" name="email" value="{{ Auth::user()->email }}" />
+                                                        </div>
+                                                </div>
+                                            
+                                                <!--
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label">
+                                                            {{ Lang::get('message.field.password') }}
+                                                    </label>
+                                                    <div class="col-md-6">
+                                                            {!! Form::password('password') !!}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label">
+                                                            {{ Lang::get('message.field.password.confirmation') }}
+                                                    </label>
+                                                    <div class="col-md-6">
+                                                            {!! Form::password('passwordconfirmation') !!}
+                                                    </div>
+                                                </div>
+                                                -->
+                                                
+                                                <div class="form-group">
+                                                        <label class="col-md-4 control-label">
+                                                                {{ Lang::get('message.field.avatar.file') }}
+                                                        </label>
+                                                        <div class="col-md-6">
+                                                                <input type="file" name="avatar" accept="image/*">
+                                                        </div>
+                                                </div>
+                                    
+                                        </div>
+                                    
+                                        <div class="section">
+                                                <h2>
+                                                        {{ Lang::get('message.title.game.settings') }}
+                                                </h2>
+                                                <div class="form-group">
+                                                        <label class="col-md-4 control-label">
+                                                                {{ Lang::get('message.field.user.theme') }}
+                                                        </label>
+                                                        <div class="col-md-6 styled-select">
+                                                                <select name="colorScheme" class="styled-select" id="theme-select" >
+                                                                    @foreach($colorSchemeValues as $key => $value)
+                                                                        <option value="{{ $key }}"
+                                                                                @if($key == Auth::user()->colorscheme)
+                                                                                    selected
+                                                                                @endif
+                                                                        >
+                                                                            {{ $value }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        
+                                        <input type="submit" value="{{ Lang::get('message.button.save') }}" class="btn btn-primary" >
+                                </form>
                         </div>
                 </div>
         </div>

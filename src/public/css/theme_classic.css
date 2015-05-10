@@ -133,6 +133,12 @@ textarea,
     margin-bottom: 5px;
 }
 
+.data-row,
+.data-column {
+    font-size: 0.8em;
+    color: #bbb;
+}
+
 #modal{
     display: none;
 }

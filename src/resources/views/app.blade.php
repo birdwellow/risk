@@ -62,24 +62,30 @@
 </head>
 <body>
         <div id="modal">
-            <div id="modal-background">
-            </div>
+                <div id="modal-background">
+                </div>
 
-            <div id="modal-dialog" class="info">
-                <div class="header">
-                    <button type="button" class="close" id="modal-closer" label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <span id="modal-dialog-title" class="title">Modal title</span>
+                <div id="modal-dialog" class="info">
+                        <div class="header">
+                                <button type="button" class="close" id="modal-closer" label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                </button>
+                                <span id="modal-dialog-title" class="title">
+                                        Modal title
+                                </span>
+                        </div>
+                        <div id="modal-dialog-body" class="body">
+                                Body
+                        </div>
+                        <div class="footer">
+                                <button class="btn btn-primary" id="modal-dialog-close" type="button">
+                                        Close
+                                </button>
+                                <button class="btn btn-primary" id="modal-dialog-action" type="button">
+                                        Save changes
+                                </button>
+                        </div>
                 </div>
-                <div id="modal-dialog-body" class="body">
-                    Body
-                </div>
-                <div class="footer">
-                    <button class="btn btn-primary" id="modal-dialog-close" type="button">Close</button>
-                    <button class="btn btn-primary" id="modal-dialog-action" type="button">Save changes</button>
-                </div>
-            </div>
         </div>
         
         
@@ -92,29 +98,51 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand">Risiko</a>
+				<a class="navbar-brand">
+                                        Risiko
+                                </a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ route('index') }}">{{ Lang::get('message.link.home') }}</a></li>
+					<li>
+                                                <a href="{{ route('index') }}">
+                                                        {{ Lang::get('message.link.home') }}
+                                                </a>
+                                        </li>
                                         @if (Auth::check())
                                         <li class="dropdown">
                                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                                    {{ Lang::get('message.title.matches') }}
-                                                    <span class="caret"></span>
+                                                        {{ Lang::get('message.title.matches') }}
+                                                        <span class="caret"></span>
                                                 </a>
                                                 <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="{{ route('index') }}">{{ Lang::get('message.link.match.overview') }}</a></li>
+                                                        <li>
+                                                                <a href="{{ route('index') }}">
+                                                                        {{ Lang::get('message.link.match.overview') }}
+                                                                </a>
+                                                        </li>
                                                         
                                                         @if(!Auth::user()->joinedMatch)
-                                                            <li><a href="{{ route('match.new') }}">{{ Lang::get('message.link.match.new') }}</a></li>
+                                                        <li>
+                                                                <a href="{{ route('match.new') }}">
+                                                                        {{ Lang::get('message.link.match.new') }}
+                                                                </a>
+                                                        </li>
                                                         @else
-                                                            <li><a class="inactive">{{ Lang::get('message.link.match.new') }}</a></li>
+                                                        <li>
+                                                                <a class="inactive">
+                                                                        {{ Lang::get('message.link.match.new') }}
+                                                                </a>
+                                                        </li>
                                                         @endif
                                                         
                                                         @if(Auth::user()->createdMatch)
-                                                            <li><a href="{{ route('match.administrate', Auth::user()->createdMatch->id) }}">{{ Lang::get('message.link.match.administrate', ['matchName'=>Auth::user()->createdMatch->name]) }}</a></li>
+                                                        <li>
+                                                                <a href="{{ route('match.administrate', Auth::user()->createdMatch->id) }}">
+                                                                        {{ Lang::get('message.link.match.administrate', ['matchName'=>Auth::user()->createdMatch->name]) }}
+                                                                </a>
+                                                        </li>
                                                         @endif
                                                 </ul>
                                         </li>
@@ -124,27 +152,60 @@
 				<ul class="nav navbar-nav navbar-right">
                                         
                                         <li class="dropdown">
-                                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Lang::get("message.name.language." . App::getLocale()) }} <span class="caret"></span></a>
+                                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                        {{ Lang::get("message.name.language." . App::getLocale()) }}
+                                                        <span class="caret"></span>
+                                                </a>
                                                 <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="{{ route('switch.language', "en") }}">{{ Lang::get('message.name.language.en') }}</a></li>
-                                                        <li><a href="{{ route('switch.language', "de") }}">{{ Lang::get('message.name.language.de') }}</a></li>
+                                                        <li>
+                                                                <a href="{{ route('switch.language', "en") }}">
+                                                                        {{ Lang::get('message.name.language.en') }}
+                                                                </a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="{{ route('switch.language', "de") }}">
+                                                                        {{ Lang::get('message.name.language.de') }}
+                                                                </a>
+                                                        </li>
                                                 </ul>
                                         </li>
                                         
 					@if (Auth::guest())
-						<li><a href="/auth/login">{{ Lang::get('message.link.login') }}</a></li>
-						<li><a href="/auth/register">{{ Lang::get('message.link.register') }}</a></li>
+						<li>
+                                                        <a href="/auth/login">
+                                                                {{ Lang::get('message.link.login') }}
+                                                        </a>
+                                                </li>
+						<li>
+                                                        <a href="/auth/register">
+                                                                {{ Lang::get('message.link.register') }}
+                                                        </a>
+                                                </li>
 					@else
 						<li class="dropdown">
                                                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                                             @if( Auth::user()->avatarfile )
                                                                 <img class="user-avatar" src="/img/avatars/{{ Auth::user()->avatarfile }}" />
                                                             @endif
-                                                            {{ Auth::user()->name }} <span class="caret"></span></a>
+                                                            {{ Auth::user()->name }}
+                                                            <span class="caret"></span>
+                                                        </a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="{{ route('user.profile') }}">{{ Lang::get('message.link.profile') }}</a></li>
-								<li><a href="{{ route('user.options') }}">{{ Lang::get('message.link.options') }}</a></li>
-								<li class="logout"><a href="/auth/logout">{{ Lang::get('message.link.logout') }}</a></li>
+								<li>
+                                                                        <a href="{{ route('user.profile') }}">
+                                                                            {{ Lang::get('message.link.profile') }}
+                                                                        </a>
+                                                                </li>
+								<li>
+                                                                        <a href="{{ route('user.options') }}">
+                                                                            {{ Lang::get('message.link.options') }}
+                                                                        </a>
+                                                                </li>
+								<li class="logout">
+                                                                        <a href="/auth/logout">
+                                                                            {{ Lang::get('message.link.logout') }}
+                                                                        </a>
+                                                                </li>
 							</ul>
 						</li>
 					@endif
@@ -157,21 +218,23 @@
     
 
         @if (session()->has('message') || isset($message))
+        
         <?php $message = ( session('message') ? session('message') : $message); ?>
-            <div class="container">
+        
+        <div class="container">
                 <div class="col-md-10 col-md-offset-1 alert alert-{{ $message->type }}">
                         {{ Lang::get($message->messageKey) }}
                         @if (isset($message->hints) && $message->hints)
                             <ul>
-                            @foreach ($message->hints->all() as $hints)
-                                <li>
-                                    {{ $hints }}
-                                </li>
-                            @endforeach
+                                @foreach ($message->hints->all() as $hints)
+                                    <li>
+                                            {{ $hints }}
+                                    </li>
+                                @endforeach
                             </ul>
                         @endif
                 </div>
-            </div>
+        </div>
         @endif
     
     

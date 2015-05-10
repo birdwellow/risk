@@ -16,7 +16,8 @@ class UserSeeder extends Seeder {
             'email' => "subber@bazi.de",
             'password' => Hash::make("pass"),
             'language' => "en",
-            'colorscheme' => "coldwar"
+            'colorscheme' => "coldwar",
+            'avatarfile' => "Subberbazi_5527efc91bdaf.jpg"
         ]);
         User::create([
             'name' => "Oberbazi",
