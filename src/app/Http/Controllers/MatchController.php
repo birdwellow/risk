@@ -58,8 +58,6 @@ class MatchController extends Controller {
 	{
                 try {
                     
-                    throw new GameException("MATCH.NOT.FOUND");
-                    
                     $this->matchManager->checkUserCanCreateMatch(Auth::user());
                     $this->matchManager->createMatch(Auth::user(), [
                         "invited_players" => Request::input('invited_players'),
