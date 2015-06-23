@@ -1,10 +1,12 @@
 <?php namespace Game\Managers;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Game\Exceptions\GameException;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
+use Exception;
 
 /**
  * Description of MatchManager
@@ -28,7 +30,7 @@ class OptionsManager {
                 ]
             );
             if($validator->fails()){
-                \Illuminate\Support\Facades\Log::info($validator->messages());
+                
                 throw new GameException(
                         "USER.INVALID.OPTIONS",
                         $validator->messages()
@@ -48,9 +50,14 @@ class OptionsManager {
                 $storeFileName = $user->name . "_" . uniqid() . "." . $avatarFile->getClientOriginalExtension();
                 $avatarFile->move($path, $storeFileName);
                 $user->avatarfile = $storeFileName;
+                $user->save();
 
                 if(File::exists($path."/".$oldFile)){
-                    File::delete($path."/".$oldFile);
+                    try{
+                        File::delete($path."/".$oldFile);
+                    } catch (Exception $ex) {
+                        Log::error($ex);
+                    }
                 }
             }
         
