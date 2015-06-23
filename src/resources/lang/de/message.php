@@ -45,8 +45,9 @@ return [
     
         'field.username' => "Username",
         'field.email' => "E-Mail-Addresse",
-        'field.password' => 'Passwort',
-        'field.password.confirmation' => "Passwort Best&auml;tigung",
+        'field.old.password' => 'Altes Passwort',
+        'field.new.password' => 'Neues Passwort',
+        'field.new.password.confirmation' => "Neues Passwort best&auml;tigen",
         'field.avatar.file' => "Avatar-File",
     
         'field.match.name' => "Name",
@@ -73,6 +74,7 @@ return [
         'warning.invitation.rejected' => "Du hast die Einladung abgelehnt.",
     
         'success.userinput.save' => "Deine Daten wurden gespeichert.",
+        'success.password.changed' => "Dein Passwort wurde ge&auml;ndert.",
         'success.matchdata.save' => "Die Match-Daten wurden gespeichert.",
         'success.invitation.deleted' => "Die Einladung wurde gel&ouml;scht.",
     
@@ -97,6 +99,7 @@ return [
         'title.matches' => "Matches",
         'title.user.profile' => "User-Profil",
         'title.user.data' => "User-Daten",
+        'title.user.password' => "Passwort",
         'title.game.settings' => "Spiel-Optionen",
         'title.match.invitations' => "Spieler einladen",
         'title.match.data' => "Match-Daten",

@@ -89,6 +89,11 @@ Route::post('user/options', [
     'uses' => 'UserController@optionsSave'
 ]);
 
+Route::post('user/password', [
+    'as' => 'user.password.save',
+    'uses' => 'UserController@passwordSave'
+]);
+
 Route::get('lang/{lang}', [
     'as' => 'switch.language',
     'uses' => 'LanguageController@switchTo'

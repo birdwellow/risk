@@ -1,9 +1,10 @@
 <?php namespace Game\Managers;
 
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Game\Exceptions\GameException;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Description of MatchManager
@@ -53,6 +54,44 @@ class OptionsManager {
                 }
             }
         
+    }
+    
+    
+    public function savePassword($user, $passwordInputs) {
+            
+            $newPassword = $passwordInputs["newpassword"];
+            $validator = Validator::make(
+                [
+                    'password' => $newPassword
+                ],
+                [
+                    'password' => 'required|min:4|max:20'
+                ]
+            );
+            if($validator->fails()){
+                throw new GameException(
+                        "USER.PASSWORDINVALID",
+                        $validator->messages()
+                );
+            }
+            
+            
+            $newPasswordConfirm = $passwordInputs["newpasswordconfirm"];
+            if ($newPassword !== $newPasswordConfirm) {
+                throw new GameException(
+                        "USER.PASSWORDCONFIRMATION.NOT.MATCHING"
+                );
+            }
+        
+            $oldPassword = $passwordInputs["oldpassword"];
+            if (!Auth::attempt(['email' => $user->email, 'password' => $oldPassword])) {
+                throw new GameException(
+                        "USER.WRONG.OLDPASSWORD"
+                );
+            }
+            
+            $user->password = Hash::make($newPassword);
+            $user->save();
     }
     
     

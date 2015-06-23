@@ -53,7 +53,7 @@ class UserController extends Controller {
                     
                     $this->optionsManager->saveOptions($user, $optionInputs);
 
-                    return $this->options()->with(
+                    return redirect()->back()->with(
                             "message",
                             new SuccessFeedback("message.success.userinput.save")
                     );
@@ -64,6 +64,33 @@ class UserController extends Controller {
                             new ErrorFeedback($ex->getUIMessageKey(), $ex->getCustomData())
                     );
                 }
+        }
+        
+        public function passwordSave(){
+            
+                $user = Auth::user();
+                $passwordInputs = array(
+                    "oldpassword" => Request::input('oldpassword'),
+                    "newpassword" => Request::input('newpassword'),
+                    "newpasswordconfirm" => Request::input('newpasswordconfirm')
+                );
+                
+                try{
+                    
+                    $this->optionsManager->savePassword($user, $passwordInputs);
+
+                    return redirect()->back()->with(
+                            "message",
+                            new SuccessFeedback("message.success.password.changed")
+                    );
+                    
+                } catch (GameException $ex) {
+                    return redirect()->back()->with(
+                            "message",
+                            new ErrorFeedback($ex->getUIMessageKey(), $ex->getCustomData())
+                    );
+                }
+            
         }
 
 }

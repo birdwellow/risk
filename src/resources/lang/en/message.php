@@ -46,8 +46,9 @@ return [
     
         'field.username' => "User Name",
         'field.email' => "E-Mail Address",
-        'field.password' => 'Password',
-        'field.password.confirmation' => "Password Confirmation",
+        'field.old.password' => 'Old Password',
+        'field.new.password' => 'New Password',
+        'field.new.password.confirmation' => "Confirm New Password",
         'field.avatar.file' => "Avatar File",
     
         'field.match.name' => "Name",
@@ -75,6 +76,7 @@ return [
         'warning.invitation.rejected' => "You rejected the invitation.",
     
         'success.userinput.save' => "Your data was stored.",
+        'success.password.changed' => "Your password was changed.",
         'success.matchdata.save' => "Your match data was saved.",
         'success.invitation.deleted' => "The Invitation was deleted.",
     
@@ -99,6 +101,7 @@ return [
         'title.matches' => "Matches",
         'title.user.profile' => "User Profile",
         'title.user.data' => "User Data",
+        'title.user.password' => "Password",
         'title.game.settings' => "Game Settings",
         'title.match.invitations' => "Invite users",
         'title.match.data' => "Match Data",

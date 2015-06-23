@@ -23,6 +23,9 @@ return [
         'user.cannot.administrate.match' => "Du darfst das Spiel nicht verwalten.",
         'user.invalid.options' => "Deine Optionen konnten leider nicht gespeichert werden, da sie nicht g&uuml;ltig sind.",
         'user.not.invited.to.closed.match' => "Nur eingeladene Spieler können diesem Spiel beitreten.",
+        'user.wrong.old.password' => "Das eingegebene alte Passwort ist nicht korrekt.",
+        'user.passwordconfirmation.not.matching' => "Das eingegebene neue Passwort entspricht nicht der Passwort-Bestätigung.",
+        'user.password.invalid' => "Das eingegebene neue Passwort entspricht nicht den Passwortrichtlinien.",
     
         'user.create.match.wrong.parameters' => "Das Match konnte nicht erstellt werden. Bitte korrigiere deine Eingaben.",
     

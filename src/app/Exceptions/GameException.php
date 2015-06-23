@@ -49,7 +49,19 @@ class GameException extends Exception {
         ],
         "USER.CREATE.MATCH.WRONG.PARAMETERS" => [
             "message" => "error.user.create.match.wrong.parameters",
-            "category" => "error.system"
+            "category" => "error.user"
+        ],
+        "USER.WRONG.OLDPASSWORD" => [
+            "message" => "error.user.wrong.old.password",
+            "category" => "error.user"
+        ],
+        "USER.PASSWORDCONFIRMATION.NOT.MATCHING" => [
+            "message" => "error.user.passwordconfirmation.not.matching",
+            "category" => "error.user"
+        ],
+        "USER.PASSWORDINVALID" => [
+            "message" => "error.user.password.invalid",
+            "category" => "error.user"
         ],
         
         
