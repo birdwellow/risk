@@ -2,33 +2,38 @@
 
 use Game\User;
 use Game\Model\Match;
-use Game\Model\Invitation;
 use Illuminate\Support\Facades\Session;
 
-class MatchManagementTest extends TestCase {
-    
-    
+
         /*
          * The MatchManagment must fulfill the following tests:
-         *      Overview:
-         *      * testOverviewIsUnpopulatedByDefault                The overview page must be unpopulated for by default
+         *      Complex "Overview":
+         *      * testOverviewIsUnpopulatedByDefault                The overview page must be unpopulated by default
          * 
-         *      Match creation:
-         *      * testUnjoinedUserCanCreateMatchAndAutomaticallyJoins
+         *      Complex "Match creation":
+         *      - testUnjoinedUserCanCreateMatchAndAutomaticallyJoins
          *                                                          An unjoined user can create a match
-         *      * testJoinedUserCannotCreateMatch                   An joined user cannot create a 
+         *      - testJoinedUserCannotCreateMatch                   A joined user cannot create a match
          *      - testMatchCannotBeCreatedWithWrongParameters       A match cannot be created when entering invalid parameters
          * 
-         *      Match joining:
+         *      Complex "Match joining":
          *      - testUnjoinedUserCanJoinAWaitingMatch              An unjoined user can join a waiting match
-         *      - testUserCannotJoinAStartedMatch                   A user cannot join a started match
          *      - testJoinedUserCannotJoinAnyMatch                  A joined user cannot join any match
+         *      - testUserCannotJoinAStartedMatch                   A user cannot join a started match
+         *      - testUserCannotJoinACancelledMatch                 A user cannot join a cancelled match
          * 
-         *      Match administration:
-         *      * testOnlyCreatorCanAdministrateMatch               A match can only be administrated by its creator
-         *      * testOnlyCreatorCanStartMatch                      A match can only be started by its creator
+         *      Complex "Match administration":
+         *      - testOnlyCreatorCanAdministrateMatch               A match can only be administrated by its creator
+         *      - testOnlyCreatorCanStartMatch                      A match can only be started by its creator
+         *      - testOnlyCreatorCanCancelMatch                     A match can only be cancelled by its creator
          *      - testMatchCannotBeAdministratedWithWrongParameters A match cannot be adminstrated with invalid parameters
+         * 
+         *      Complex "Match inviting":
+         *      - testUserCanBeInvited                              A user can be invited to a game by sending a Join link via message
+         *      - testJoinedUserCannotBeInvited                     A user, that already joined another match, cannot be invited and the match creator sees a warning
          */
+
+class MatchManagementTest extends TestCase {
     
     
         public function setUp() {
@@ -43,17 +48,21 @@ class MatchManagementTest extends TestCase {
         }
         
  
+        /**********************
+         * 
+         *  Complex: "Overview"
+         * 
+         **********************/
         
         /**
 	 * Test: New User calls the index page
          * Expectations:
          *      * No matches joins displayed
-         *      * No match invitations displayed
+         *      * No (new) messages displayed
 	 *
 	 * @return void
 	 */
-	public function testOverviewIsUnpopulatedByDefault()
-	{
+	public function testOverviewIsUnpopulatedByDefault(){
                 $this->be($this->Oberbazi);
                 
                 $response = $this->call('GET', '/');
@@ -62,19 +71,30 @@ class MatchManagementTest extends TestCase {
                 $this->assertContains("Du bist keinem Match beigetreten.", $response->getContent());
                 $this->assertContains("Keine Spiel-Einladungen :(", $response->getContent());
 	}
+        
+        
+        
+        
+ 
+        /**********************
+         * 
+         *  Complex "Match creation"
+         * 
+         **********************/
+        
+        
 
 	/**
-	 * Test: A user, that has not joined any match can create a new match.
-         *       Subsequently he is redirected to join the new match.
+	 * Test: A user, that is not currently joined any match, can create a new match.
+         *       He is automatically joined to his new match.
          * Expectations:
-         *      * The user is redirected to the join match page for the match he has just created
-         *      * Another user sees a match invitation on his overview page.
+         *      * The user is redirected to his overview page, where he sees his match running
 	 *
 	 * @return void
 	 */
-	public function testUnjoinedUserCanCreateMatch()
-	{
-                $this->createMatch($this->Oberbazi, [
+        
+	public function testUnjoinedUserCanCreateMatchAndAutomaticallyJoins(){
+                /*$this->createMatch($this->Oberbazi, [
                     "name" => "Mein Subber-Match",
                     "invited_players" => "Subberbazi, SoEinBazi, ChAoT, ",
                     "message" => "Auf gehts Bazis!"
@@ -85,173 +105,103 @@ class MatchManagementTest extends TestCase {
                 
                 $this->assertResponseOk();
                 $this->assertContains("Auf gehts Bazis!", $subberbaziOverviewResponse->getContent());
-                $this->assertContains("Join match &#039;Mein Subber-Match&#039;", $subberbaziOverviewResponse->getContent());
+                $this->assertContains("Join match &#039;Mein Subber-Match&#039;", $subberbaziOverviewResponse->getContent());*/
         }
-
         
-	/**
-	 * Test: A user can be invited to many matches, but can only join one.
-         *       When joining a match, other invitations are rejected automatically.
+        
+        
+        /**
+	 * Test: A user, that is currently joined a match, cannot join another match
+         * Expectations:
+         *      * The user is redirected back with a corresponding error message
 	 *
 	 * @return void
 	 */
-        public function testJoiningAMatchRejectsOtherInvitations() {
-            
-                /*
-                 * Create first test match
-                 */
-            
-                $this->createMatch($this->Oberbazi, [
-                    "name" => "Oberbazis-Match",
-                    "invited_players" => "SoEinBazi, ChAoT",
-                    "message" => "Mein_Match_(Oberbazi)!"
-                ]);
-            
-                /*
-                 * Create second test match
-                 */
-            
-                $this->createMatch($this->Subberbazi, [
-                    "name" => "Subberbazis-Match",
-                    "invited_players" => "SoEinBazi, ChAoT, ",
-                    "message" => "Mein_Match_(Subberbazi)!",
-                ]);
-                
-                
-                
-                /*
-                 * Join one of the created matches as invited third user
-                 */
-                
-                $this->be($this->SoEinBazi);
-                $soEinBaziOverviewResponse = $this->call('GET', '/');
-                
-                $this->assertResponseOk();
-                $this->assertContains("Mein_Match_(Oberbazi)", $soEinBaziOverviewResponse->getContent());
-                $this->assertContains("match/join/1", $soEinBaziOverviewResponse->getContent());
-                $this->assertContains("Mein_Match_(Subberbazi)", $soEinBaziOverviewResponse->getContent());
-                $this->assertContains("match/join/2", $soEinBaziOverviewResponse->getContent());
-                
-                $this->joinMatch($this->SoEinBazi, 2);
-                
-                $soEinBaziOverviewResponse2 = $this->call('GET', '/');
-                $this->assertResponseOk();
-                $this->assertNotContains("Mein_Match_(Oberbazi)", $soEinBaziOverviewResponse2->getContent());
-                $this->assertNotContains("match/join/1", $soEinBaziOverviewResponse2->getContent());
-                $this->assertNotContains("Mein_Match_(Subberbazi)", $soEinBaziOverviewResponse2->getContent());
-                $this->assertNotContains("match/join/2", $soEinBaziOverviewResponse2->getContent());
-                
-                
-                $this->be($this->Subberbazi);
-                $subberbaziOveriewResponse = $this->call("GET", "/");
-                $this->assertContains("SoEinBazi", $subberbaziOveriewResponse->getContent());
-                
-                $this->be($this->Oberbazi);
-                $oberbaziOveriewResponse = $this->call("GET", "/");
-                $this->assertContains("Invitations were rejected", $oberbaziOveriewResponse->getContent());
-                $this->assertContains("Von SoEinBazi", $oberbaziOveriewResponse->getContent());
-                
-                
-        }
-
+        public function testJoinedUserCannotCreateMatch(){}
         
-	/**
-	 * Test: A user, who already joined a match, can not be invited to a new match.
+        
+        
+        /**
+	 * Test: When entering invalid parameters, a match cannot be created
+         * Expectations:
+         *      * The creator is redirected back to the create match form with
+         *        corresponding error message(s)
 	 *
 	 * @return void
 	 */
-        public function testJoinedUserCannotBeInvited() {
-            
-                /*
-                 * Create first test match
-                 */
-            
-                $this->createMatch($this->Oberbazi, [
-                    "name" => "Oberbazis-Match",
-                    "invited_players" => "SoEinBazi, ChAoT",
-                    "message" => "Mein_Match_(Oberbazi)!",
-                ]);
-                
-                
-                /*
-                 * Join the created match as invited user
-                 */
-                
-                $this->be($this->SoEinBazi);
-                $soEinBaziOverviewResponse = $this->call('GET', '/');
-                
-                $this->assertResponseOk();
-                $this->assertContains("Mein_Match_(Oberbazi)", $soEinBaziOverviewResponse->getContent());
-                $this->assertContains("match/join/1", $soEinBaziOverviewResponse->getContent());
-                
-                
-                
-            
-            
-                /*
-                 * Create second test match
-                 */
-                
-                $this->createMatch($this->Subberbazi, [
-                    "name" => "Subberbazis-Match",
-                    "invited_players" => "SoEinBazi, ChAoT, ",
-                    "message" => "Mein_Match_(Subberbazi)!"
-                ]);
-                
-                
-                $this->be($this->SoEinBazi);
-                $soEinBaziOverviewResponse2 = $this->call('GET', '/');
-                
-                $this->assertResponseOk();
-                $this->assertNotContains("Mein_Match_(Subberbazi)", $soEinBaziOverviewResponse2->getContent());
-                $this->assertNotContains("match/join/2", $soEinBaziOverviewResponse2->getContent());
-            
-            
-            
-        }
-
+        public function testMatchCannotBeCreatedWithWrongParameters(){}
         
-	/**
-	 * Test: A user, who already joined a match, can not create a new match.
+        
+        
+        
+        /**********************
+         * 
+         *  Complex "Match joining":
+         * 
+         **********************/
+        
+        
+        
+        /**
+	 * Test: A user, that is not currently joined to a match, can join a match
+         *      in state "waiting"
+         * Expectations:
+         *      * The user is redirected back with a corresponding error message
 	 *
 	 * @return void
 	 */
-        public function testJoinedUserCannotCreateNewMatch() {
-            
-            
-            
-        }
-
+        public function testUnjoinedUserCanJoinAWaitingMatch(){}
         
-	/**
-	 * Test: A user, who created a match, can
-         *       * invite users after the match was created
-         *       * administrate the match
-         *       * cancel the match
+        
+        
+        /**
+	 * Test: A user, that is currently joined a match, cannot join another match
+         * Expectations:
+         *      * The user is redirected back with a corresponding error message
 	 *
 	 * @return void
 	 */
-        public function testMatchCreatorCanAdministrateMatch() {
-            
-            
-            
-        }
-
+        public function testJoinedUserCannotJoinAnyMatch(){}
         
-	/**
-	 * Test: A user, who created a match, can not
-         *       * invite users after the match was created
-         *       * administrate the match
-         *       * cancel the match
-	 *
-	 * @return void
-	 */
-        public function testNonMatchCreatorCannotAdministrateMatch() {
-            
-            
-            
-        }
+        public function testUserCannotJoinAStartedMatch(){}
         
+        public function testUserCannotJoinACancelledMatch(){}
+        
+        
+        
+        
+        /**********************
+         * 
+         *  Complex "Match administration":
+         * 
+         **********************/
+        
+        
+         public function testOnlyCreatorCanAdministrateMatch(){}
+         
+         public function testOnlyCreatorCanStartMatch(){}
+         
+         public function testOnlyCreatorCanCancelMatch(){}
+         
+         public function testMatchCannotBeAdministratedWithWrongParameters(){}
+        
+        
+        
+        
+        /**********************
+         * 
+         *  Complex "Match inviting":
+         * 
+         **********************/
+        
+        
+         public function testUserCanBeInvited(){}
+         
+         public function testJoinedUserCannotBeInvited(){}
+                 
+                 
+                 
+                 
         
         /*
          * 
@@ -292,20 +242,6 @@ class MatchManagementTest extends TestCase {
                 $newMatch = Match::all()->last();
                 $this->assertRedirectedToRoute('match.join.init', ['id' => $newMatch->id]);
             
-        }
-        
-        
-        private function joinMatch($asUser, $matchId) {
-            
-                $this->be($asUser);
-            
-                $this->call('GET', '/match/join/'.$matchId);
-                $this->assertResponseOk();
-                
-                $this->call('POST', '/match/join/'.$matchId, [
-                    "_token" => Session::token()
-                ]);
-                $this->assertRedirectedToRoute('match.goto');
         }
 
 }
