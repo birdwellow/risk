@@ -51,7 +51,7 @@ class Match extends Model {
         
     public function invitedFromJoins()
     {
-        return $this->hasMany('Game\Model\UserJoinMatch', 'invited_by_user_id', 'id');
+        return $this->hasMany('Game\Model\Invitation', 'invited_by_user_id', 'id');
     }
     
     

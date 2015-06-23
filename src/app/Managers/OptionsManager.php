@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Game\Exceptions\GameException;
+use Illuminate\Support\Facades\File;
 
 /**
  * Description of MatchManager
@@ -12,54 +13,6 @@ use Game\Exceptions\GameException;
 class OptionsManager {
     
     
-    protected $sessionColorschemeToken = "colorscheme";
-    
-    protected $fallbackColorscheme = "classic";
-
-    protected $allowedColorschemes = [
-        "classic" => "Classic",
-        "coldwar" => "Cold War",
-    ];
-    
-    
-    public function getAllowedColorschemes() {
-        
-            return $this->allowedColorschemes;
-        
-    }
-    
-    
-    public function isCollorschemeAllowed($colorscheme) {
-        
-            return isset($this->allowedColorschemes[$colorscheme]);
-        
-    }
-    
-    
-    public function setUserColorscheme($user) {
-        
-            if($user && $user->colorscheme){
-                Session::set($this->sessionColorschemeToken, $user->colorscheme);
-            }
-        
-    }
-    
-    
-    public function setFallbackColorscheme(){
-            
-            if(!Session::get($this->sessionColorschemeToken)){
-                Session::set($this->sessionColorschemeToken, $this->fallbackColorscheme);
-            }
-            
-    }
-    
-    
-    public function setDefaultColorscheme(){
-            
-            Session::set($this->sessionColorschemeToken, $this->fallbackColorscheme);
-            
-    }
-    
     
     public function saveOptions($user, $optionInputs){
         
@@ -67,12 +20,10 @@ class OptionsManager {
                 [
                     'username' => $optionInputs['username'],
                     'email' => $optionInputs['email'],
-                    'colorscheme' => $optionInputs['colorscheme'],
                 ],
                 [
                     'username' => 'required|min:5',
                     'email' => 'required|email',
-                    'colorscheme' => 'in:'.  implode(",", array_keys($this->allowedColorschemes)),
                 ]
             );
             if($validator->fails()){
@@ -85,7 +36,6 @@ class OptionsManager {
         
             $user->name = $optionInputs['username'];
             $user->email = $optionInputs['email'];
-            $user->colorscheme = $optionInputs['colorscheme'];
             
             $user->save();
             

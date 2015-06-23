@@ -37,9 +37,7 @@ class UserController extends Controller {
 
         public function options()
 	{
-                $allowedColorschemes = $this->optionsManager->getAllowedColorschemes();
-		return view('user.options')
-                        ->with("colorSchemeValues", $allowedColorschemes);
+		return view('user.options');
 	}
         
         public function optionsSave()
@@ -48,15 +46,12 @@ class UserController extends Controller {
                 $optionInputs = array(
                     "username" => Request::input('name'),
                     "email" => Request::input('email'),
-                    "colorscheme" => Request::input('colorScheme'),
                     "avatar" => Request::file('avatar')
                 );
                 
                 try{
                     
                     $this->optionsManager->saveOptions($user, $optionInputs);
-                
-                    Session::set("colorscheme", Request::input('colorScheme'));
 
                     return $this->options()->with(
                             "message",

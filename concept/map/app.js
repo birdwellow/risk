@@ -100,6 +100,7 @@ var Dicer = {
 			x: 100,
 			y: 100
 		});
+		/*
 		this.background = new Kinetic.Rect({
 			x: 0,
 			y: 0,
@@ -127,6 +128,7 @@ var Dicer = {
 
 		});
 		this.group.add(this.background);
+		*/
 		this.diceLayer.add(this.group);
 		for(var i = 0; i < playerDiceNum; i++){
 			this.playerDice[i] = new Dicer.Die({

@@ -40,15 +40,6 @@
 
                                                 <div class="form-group">
                                                         <label class="col-md-4 control-label">
-                                                                {{ Lang::get('message.field.match.closed') }}
-                                                        </label>
-                                                        <div class="col-md-6">
-                                                                <input type="checkbox" name="closed" />
-                                                        </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                        <label class="col-md-4 control-label">
                                                         </label>
                                                         <div class="col-md-6">
                                                                <input type="text" id="invitation_helper" placeholder="{{ Lang::get('message.placeholder.search') }}" />
@@ -71,8 +62,8 @@
                                                         </label>
                                                         <div class="col-md-6">
                                                                 <textarea
-                                                                    id="invitation_message"
-                                                                    name="invitation_message"
+                                                                    id="message"
+                                                                    name="message"
                                                                     placeholder="{{ Lang::get('message.placeholder.invitation.message') }}"></textarea>
                                                         </div>
                                                 </div>

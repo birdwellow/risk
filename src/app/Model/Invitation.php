@@ -2,11 +2,9 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserJoinMatch extends Model {
+class Invitation extends Model {
 
-    protected $table = 'user_join_match';
-
-    protected $fillable = ['status', 'basecolor'];
+    protected $fillable = ['status'];
     
     
     public function invitedBy()

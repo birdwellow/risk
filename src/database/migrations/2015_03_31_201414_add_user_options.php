@@ -15,7 +15,6 @@ class AddUserOptions extends Migration {
                 Schema::table('users', function(Blueprint $table)
                 {
                         $table->string('language');
-                        $table->string('colorscheme');
                 });
 	}
 
@@ -29,7 +28,6 @@ class AddUserOptions extends Migration {
                 Schema::table('users', function(Blueprint $table)
                 {
                         $table->dropColumn('language');
-                        $table->dropColumn('colorscheme');
                 });
 	}
 

@@ -105,7 +105,6 @@ return [
 	'attributes' => [
             'username' => "Username",
             'email' => "E-Mail",
-            'colorscheme' => "Schema",
         ],
 
 ];

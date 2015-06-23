@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserJoinMatchTable extends Migration {
+class CreateInvitationsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateUserJoinMatchTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('user_join_match', function(Blueprint $table)
+		Schema::create('invitations', function(Blueprint $table)
 		{
 			$table->increments('id');
                         
@@ -25,11 +25,9 @@ class CreateUserJoinMatchTable extends Migration {
                         $table->integer('invited_by_user_id')->unsigned();
                         $table->foreign('invited_by_user_id')->references('id')->on('users');
                         
-                        $table->string('basecolor');
-                        
                         $table->string('status');
                         
-                        $table->string('invitation_message');
+                        $table->string('message');
 			
                         $table->timestamps();
 		});
@@ -42,7 +40,7 @@ class CreateUserJoinMatchTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('user_join_match');
+		Schema::drop('invitations');
 	}
 
 }

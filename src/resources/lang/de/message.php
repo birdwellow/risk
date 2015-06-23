@@ -40,7 +40,8 @@ return [
         'button.register' => "Registrierung",
         'button.send.password.reset.link' => "Passwort-Reset-Link schicken",
         'button.password.reset' => "Passwort zur&uuml;cksetzen",
-        'button.match.create' => "Start",    
+        'button.match.create' => "Start",
+        'button.match.join' => "Beitreten",
     
         'field.username' => "Username",
         'field.email' => "E-Mail-Addresse",
@@ -84,6 +85,7 @@ return [
         'title.password.reset' => "Passwort zur&uuml;cksetzen",
         'title.register' => "Registrierung",
         'title.init.match' => "Neues Match erstellen",
+        'title.join.match' => "Match &quot;:matchName&quot; beitreten",
         'title.administrate.match' => "Match ':matchName' verwalten",
         'title.overview.matches' => "Laufende Matches",
         'title.overview.yourmatch' => "Dein Match",

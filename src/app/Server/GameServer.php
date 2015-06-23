@@ -68,17 +68,20 @@ class GameServer implements GameServerInterface {
         if(!$user instanceof User){
             return;
         }
+        if($user->joinid !== $joinId){
+            return;
+        }
+        
         $user->joinid = null;
         $user->save();
         
         $joinedMatch = $user->joinedMatch;
-        $joinedMatchId = $joinedMatch->id;
         
         if(!$this->connections->contains($conn)){
         
-            $match = $this->getMatchById($joinedMatchId);
+            $match = $this->getMatchById($joinedMatch->id);
             if($match == null){
-                $match = $joinedMatchId;
+                $match = $joinedMatch;
             }
 
             if($match !== null && $user !== null){

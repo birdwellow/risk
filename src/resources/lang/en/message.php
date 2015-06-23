@@ -41,6 +41,7 @@ return [
         'button.send.password.reset.link' => "Send Password Reset Link",
         'button.password.reset' => "Reset password",
         'button.match.create' => "Create",
+        'button.match.join' => "Join",
     
     
         'field.username' => "User Name",
@@ -86,6 +87,7 @@ return [
         'title.password.reset' => "Reset Password",
         'title.register' => "Register",
         'title.init.match' => "Create a new Match",
+        'title.join.match' => "Join Match &quot;:matchName&quot;",
         'title.administrate.match' => "Administrate Match ':matchName'",
         'title.overview.matches' => "Running Matches",
         'title.overview.yourmatch' => "Your Match",

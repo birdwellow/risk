@@ -70,30 +70,6 @@
                                                 </div>
                                     
                                         </div>
-                                    
-                                        <div class="section">
-                                                <h2>
-                                                        {{ Lang::get('message.title.game.settings') }}
-                                                </h2>
-                                                <div class="form-group">
-                                                        <label class="col-md-4 control-label">
-                                                                {{ Lang::get('message.field.user.theme') }}
-                                                        </label>
-                                                        <div class="col-md-6">
-                                                                <select name="colorScheme" id="theme-select" >
-                                                                    @foreach($colorSchemeValues as $key => $value)
-                                                                        <option value="{{ $key }}"
-                                                                                @if($key == Auth::user()->colorscheme)
-                                                                                    selected
-                                                                                @endif
-                                                                        >
-                                                                            {{ $value }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                        </div>
-                                                </div>
-                                        </div>
                                         
                                         <input type="submit" value="{{ Lang::get('message.button.save') }}" class="btn btn-primary" >
                                 </form>

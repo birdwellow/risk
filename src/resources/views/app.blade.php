@@ -8,7 +8,6 @@
 	<title>{{ Lang::get('message.title') }}</title>
 
 	<link href="/css/common.css" rel="stylesheet">
-	<link id="css-theme" href="/css/theme_{{ Session::get("colorscheme") }}.css" rel="stylesheet">
 	<link href="/css/jquery-ui.css" rel="stylesheet">
 
         <script src="/js/thirdparty/jquery.min.js" defer="defer"></script>

@@ -64,10 +64,10 @@
                                                         <div class="col-md-6">
                                                                 <select name="maxusers" id="maxusers">
                                                                         <option value="2">2</option>
-                                                                        <option value="2">3</option>
-                                                                        <option value="2">4</option>
-                                                                        <option value="2">5</option>
-                                                                        <option value="2" selected="">6</option>
+                                                                        <option value="3">3</option>
+                                                                        <option value="4">4</option>
+                                                                        <option value="5">5</option>
+                                                                        <option value="6" selected="">6</option>
                                                                 </select>
                                                         </div>
                                                 </div>
@@ -104,10 +104,10 @@
                                                         </label>
                                                         <div class="col-md-6">
                                                                 <textarea
-                                                                    id="invitation_message"
-                                                                    name="invitation_message"
+                                                                    id="message"
+                                                                    name="message"
                                                                     placeholder="{{ Lang::get('message.placeholder.invitation.message') }}"
-                                                                >{{ old('invitation_message') }}</textarea>
+                                                                >{{ old('message') }}</textarea>
                                                         </div>
                                                 </div>
                                         </div>

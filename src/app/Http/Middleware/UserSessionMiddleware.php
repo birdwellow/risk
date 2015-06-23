@@ -1,10 +1,7 @@
 <?php namespace Game\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\App;
 use Game\Managers\LanguageManager;
 use Game\Managers\OptionsManager;
 
@@ -31,10 +28,7 @@ class UserSessionMiddleware {
 	 * @return mixed
 	 */
 	public function handle($request, Closure $next)
-	{
-                $this->optionsManager->setDefaultColorscheme();
-                $this->optionsManager->setUserColorscheme(Auth::user());
-                
+	{       
                 $this->languageManager->setUserLocale(Auth::user());
                 $this->languageManager->setFallbackLocale();
                 $this->languageManager->setAppLocale();

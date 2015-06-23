@@ -10,7 +10,7 @@ use Game\Exceptions\GameException;
 use Game\Handlers\Messages\ErrorFeedback;
 use Game\Handlers\Messages\WarnFeedback;
 use Game\Handlers\Messages\SuccessFeedback;
-use \Game\Model\UserJoinMatch;
+use \Game\Model\Invitation;
 
 class MatchController extends Controller {
     
@@ -28,10 +28,8 @@ class MatchController extends Controller {
 	{
                 $matches = $this->matchManager->getMatches();
                 $user = Auth::user();
-                $invitations = UserJoinMatch::where("user_id", "=", Auth::user()->id)
-                        ->where("status", "=", "invited")->get();
-                $rejectedInvitations = UserJoinMatch::where("invited_by_user_id", "=", Auth::user()->id)
-                        ->where("status", "=", "rejected")->get();
+                $invitations = $this->matchManager->getNewInvitationsForUser($user->id);
+                $rejectedInvitations = $this->matchManager->getRejectedInvitationsForUser($user->id);
 		return view('match.overview')
                         ->with("matches", $matches)
                         ->with("user", $user)
@@ -59,23 +57,23 @@ class MatchController extends Controller {
                 try {
                     
                     $this->matchManager->checkUserCanCreateMatch(Auth::user());
-                    $this->matchManager->createMatch(Auth::user(), [
+                    $match = $this->matchManager->createMatch(Auth::user(), [
                         "invited_players" => Request::input('invited_players'),
                         "mapName" => Request::input('mapName'),
                         "name" => Request::input('name'),
-                        "invitation_message" => Request::input('invitation_message'),
+                        "message" => Request::input('message'),
                         "closed" => Request::input('closed'),
                         "maxusers" => Request::input('maxusers')
                     ]);
                     
-                    return redirect()->route("index");
+                    return redirect()->route("match.join.confirm", $match->id);
                     
                 } catch (GameException $ex) {
                     
                     return redirect()
                                 ->back()
                                 ->withInput()
-                                ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
+                                ->with("message", new ErrorFeedback($ex->getUIMessageKey(), $ex->getCustomData()));
                     
                 }
 	}
@@ -97,13 +95,14 @@ class MatchController extends Controller {
                 }
 	}
         
-        public function match($id)
+        public function joinInit($matchId)
         {
                 try {
                     
                     $user = Auth::user();
-                    $match = $this->matchManager->goToMatch((int)$id, $user);
-                    return view('match.play')->with('match', $match);
+                    $this->matchManager->checkUserMayJoinMatch($user->id, $matchId);
+                    $match = Match::find($matchId);
+                    return view('match.join')->with('match', $match);
                     
                 } catch (GameException $ex) {
                     
@@ -112,6 +111,33 @@ class MatchController extends Controller {
                                 ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
                     
                 }
+        }
+        
+        public function joinConfirm($matchId)
+        {
+                try {
+                    
+                    $user = Auth::user();
+                    $this->matchManager->checkUserMayJoinMatch($user->id, $matchId);
+                    $this->matchManager->joinMatch((int)$matchId, $user);
+                    return redirect()
+                                ->route("match.goto");
+                    
+                } catch (GameException $ex) {
+                    
+                    return redirect()
+                                ->back()
+                                ->with("message", new ErrorFeedback($ex->getUIMessageKey()));
+                    
+                }
+        }
+        
+        public function goToMatch() {
+            
+                $user = Auth::user();
+                $match = $this->matchManager->goToMatch((int)$user->joinedMatch->id, $user);
+                return view('match.play')->with('match', $match);
+            
         }
         
         public function rejectInvitation($id)
@@ -180,7 +206,7 @@ class MatchController extends Controller {
                         $this->matchManager->checkUserCanAdministrateMatch($match, $user);
                         $this->matchManager->saveAdministratedMatch($match, $user, [
                             "invited_players" => Request::input('invited_players'),
-                            "invitation_message" => Request::input('invitation_message')
+                            "message" => Request::input('message')
                         ]);
                     }
                     return view("match.administrate")

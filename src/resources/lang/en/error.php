@@ -22,6 +22,9 @@ return [
         'user.cannot.delete.match' => "You may not cancel the match.",
         'user.cannot.administrate.match' => "You may not administrate the match.",
         'user.invalid.options' => "Your options cannot be save, since they are invalid.",
+        'user.not.invited.to.closed.match' => "Only invited users can join this match.",
+    
+        'user.create.match.wrong.parameters' => "Could not create match. Please correct your inputs.",
     
         'system.match.not.found' => "Couldn't find the match.",
 

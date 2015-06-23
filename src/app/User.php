@@ -23,7 +23,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'email', 'password', 'theme', 'language'];
+	protected $fillable = ['name', 'email', 'password', 'language'];
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -64,13 +64,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         
         public function matchJoined()
         {
-            return $this->hasMany('Game\Model\UserJoinMatch', 'user_id', 'id');
+            return $this->hasMany('Game\Model\Invitation', 'user_id', 'id');
         }
 
         
         public function invitedToJoin()
         {
-            return $this->hasMany('Game\Model\UserJoinMatch');
+            return $this->hasMany('Game\Model\Invitation');
         }
 
 }

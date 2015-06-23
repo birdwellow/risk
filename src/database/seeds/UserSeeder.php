@@ -16,29 +16,25 @@ class UserSeeder extends Seeder {
             'email' => "subber@bazi.de",
             'password' => Hash::make("pass"),
             'language' => "en",
-            'colorscheme' => "coldwar",
             'avatarfile' => "Subberbazi_5527efc91bdaf.jpg"
         ]);
         User::create([
             'name' => "Oberbazi",
             'email' => "ober@bazi.de",
             'password' => Hash::make("pass"),
-            'language' => "de",
-            'colorscheme' => "classic"
+            'language' => "de"
         ]);
         User::create([
             'name' => "SoEinBazi",
             'email' => "soein@bazi.de",
             'password' => Hash::make("pass"),
-            'language' => "de",
-            'colorscheme' => "classic"
+            'language' => "de"
         ]);
         User::create([
             'name' => "ChAoT",
             'email' => "cha@chaos.de",
             'password' => Hash::make("pass"),
-            'language' => "de",
-            'colorscheme' => "coldwar"
+            'language' => "de"
         ]);
         
     }

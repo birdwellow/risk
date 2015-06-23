@@ -64,6 +64,33 @@ function GameSocket(url){
 }
 
 
+function ControlTabs(){
+    
+    $("#tabs-left .footer-tab").each(function(key, value){
+        var id = "#" + value.id;
+        $(id).click(function(){
+            $("#tabs-left .footer-tab-body").removeClass("open");
+            $("#tabs-left .footer-tab").removeClass("open");
+            bodyId = id.replace("-head", "-body");
+            $(bodyId).addClass("open");
+            $(id).addClass("open");
+        });
+    });
+    
+    $("#tabs-right .footer-tab").each(function(key, value){
+        var id = "#" + value.id;
+        $(id).click(function(){
+            $("#tabs-right .footer-tab-body").removeClass("open");
+            $("#tabs-right .footer-tab").removeClass("open");
+            bodyId = id.replace("-head", "-body");
+            $(bodyId).addClass("open");
+            $(id).addClass("open");
+        });
+    });
+    
+}
+
+
 
 var socket = new GameSocket("ws://dev.app.risk:7778/?joinid=" + joinId);
 socket.on("chat.message", function(message){
@@ -71,3 +98,5 @@ socket.on("chat.message", function(message){
 });
 
 var chat = new Chat(socket);
+
+var controlTabs = new ControlTabs();

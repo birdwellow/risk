@@ -39,9 +39,17 @@ class GameException extends Exception {
             "message" => "error.user.cannot.administrate.match",
             "category" => "error.user"
         ],
+        "USER.NOT.INVITED.TO.CLOSED.MATCH" => [
+            "message" => "error.user.not.invited.to.closed.match",
+            "category" => "error.user"
+        ],
         "USER.INVALID.OPTIONS" => [
             "message" => "error.user.invalid.options",
             "category" => "error.user"
+        ],
+        "USER.CREATE.MATCH.WRONG.PARAMETERS" => [
+            "message" => "error.user.create.match.wrong.parameters",
+            "category" => "error.system"
         ],
         
         
