@@ -1,0 +1,14 @@
+.navbar-default .navbar-brand {
+  color: initial;
+  text-shadow: inherit;
+  font-size: inherit;
+  float: none;
+  padding: inherit;
+  line-height: inherit;
+  height: inherit;
+}
+body {
+  background: #444;
+  color: #f66;
+  font-family: Helvetica, Arial, sans-serif;
+}

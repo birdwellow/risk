@@ -11,6 +11,15 @@
 |
 */
 
+
+
+
+/*
+ * 
+ * Route Complex: Match
+ * 
+ */
+
 Route::get('/', [
     'as' => 'index',
     'uses' => 'MatchController@index'
@@ -68,6 +77,11 @@ Route::get('invitation/delete/{id}', [
 
 
 
+/*
+ * 
+ * Route Complex: User
+ * 
+ */
 
 Route::get('user/profile', [
     'as' => 'user.profile',
@@ -101,7 +115,40 @@ Route::get('lang/{lang}', [
 
 Route::get('json/users/names', [
     'as' => 'json.users/names',
-    'uses' => 'JsonRestController@allUserNames'
+    'uses' => 'JsonRestController@allUserNamesExceptCurrentUser'
+]);
+
+
+
+/*
+ * 
+ * Route Complex: Messages
+ * 
+ */
+
+Route::get('message/new', [
+    'as' => 'init.new.message',
+    'uses' => 'MessageController@initNewMessage'
+]);
+
+Route::post('message/new', [
+    'as' => 'send.new.message',
+    'uses' => 'MessageController@sendNewMessage'
+]);
+
+Route::post('message/new/{threadId}', [
+    'as' => 'send.new.thread.message',
+    'uses' => 'MessageController@sendNewThreadMessage'
+]);
+
+Route::get('messages', [
+    'as' => 'all.messages',
+    'uses' => 'MessageController@showAllThreads'
+]);
+
+Route::get('messages/{threadId}', [
+    'as' => 'thread.messages',
+    'uses' => 'MessageController@showAllThreadMessages'
 ]);
 
 

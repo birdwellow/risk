@@ -63,7 +63,7 @@
                                                         </label>
                                                         <div class="col-md-6">
                                                                 <select name="maxusers" id="maxusers">
-                                                                        <option value="2">2</option>
+                                                                        <option icon="/img/loading_small.gif" value="2">2</option>
                                                                         <option value="3">3</option>
                                                                         <option value="4">4</option>
                                                                         <option value="5">5</option>

@@ -5293,12 +5293,13 @@ a.list-group-item-danger.active:focus {
 }
 .close {
   float: right;
-  font-size: 21px;
+  font-size: 25px;
   font-weight: bold;
   line-height: 1;
   color: #fff;
   opacity: 0.5;
   filter: alpha(opacity=20);
+  margin: 0 5px;
 }
 .close:hover,
 .close:focus {
@@ -6352,16 +6353,12 @@ textarea,
 input[type="text"],
 input[type="password"],
 input[type="file"],
-select
-/*
-.tool-panel input[type="text"],
-.game-panel input[type="text"],
-.game-panel input[type="password"],
-.game-panel input[type="file"],
-.game-panel select
-*/
+select,
+input[type="userselector"],
+input[type="select"],
+button.dropdown-toggle
 {
-    width: calc(100% - 20px);
+    width: 100%;
     background-color: rgba(0,0,0,0.5);
     color: #fff;
     border: none;
@@ -6370,6 +6367,24 @@ select
     box-sizing: border-box;
     box-shadow: inset 5px 5px 5px rgba(0,0,0,0.5);
 }
+input[type="userselector"] {
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    background-image: url(/img/search.png);
+}
+input[type="select"] {
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    background-image: url(/img/message.png);
+}
+input[type="text"]:focus,
+.open button.dropdown-toggle:focus {
+    box-shadow: inset 5px 5px 5px rgba(0,0,0,0.75);
+}
+.open button.dropdown-toggle:focus {
+    color: #666;
+}
+
 .tool-panel input[type="text"]{
     margin: 10px;
 }
@@ -6394,11 +6409,6 @@ select
 .game-panel option{
     box-shadow: none;
     border: none;
-}
-
-.tool-panel input[type="text"]:focus,
-.game-panel input[type="text"]:focus{
-    box-shadow: inset 5px 5px 5px rgba(0,0,0,0.75);
 }
 
 #chatcontent{
@@ -6433,7 +6443,7 @@ select
 #modal-background {
     position: fixed;
     z-index: 10000;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.65);
     width: 100%;
     height: 100%;
 }
@@ -6461,14 +6471,18 @@ select
     text-align: right;
 }
 
-#modal-dialog.error {
-    background: rgba(255,0,0,0.5);
+#modal-dialog .btn {
+    margin-left: 5px;
 }
-#modal-dialog.warning {
-    background: rgba(255,127,0,0.5);
+
+#modal-dialog.error {
+    background: rgba(200,0,0,0.85);
+}
+#modal-dialog.warn {
+    background: rgba(255,127,0,0.85);
 }
 #modal-dialog.info {
-    background: rgba(255,255,255,0.35);
+    background-image: url("/img/classic-background.jpg");
 }
 
 .user-avatar{
@@ -6529,7 +6543,7 @@ select
 .ui-widget-header .ui-state-focus,
 .ui-state-focus{
 	border: none;
-	background: rgba(80,80,80,0.8);
+	background: rgba(0,0,0,0.5);
         color: #fff;
 }
 .ui-widget {
@@ -6558,4 +6572,97 @@ select
 .data.player > .user-avatar{
     height: 40px;
     width: 40px;
+}
+
+a > div.thread{
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+a:hover > div.thread{
+    background: rgba(255,255,255,0.15);
+}
+.thread .subject{
+    font-size: 1.3em;
+}
+.thread .sendername{
+    font-weight: bold;
+}
+.thread .messagebody{}
+
+.recipients{
+    font-size: 12px;
+    color: #ccc;
+}
+.newmessage{
+    margin-top: 20px;
+}
+.newmessage textarea{
+    height: 110px;
+}
+.usernamedisplay{
+    display: inline-block;
+    margin: 5px 5px 5px 0;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding-left: 5px;
+    background: rgba(255,255,255,0.15);
+}
+.usernamedisplay .removesymbol {
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 0 7px;
+    margin: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.usernamedisplay .removesymbol:hover {
+    background: rgba(255,255,255,0.5);
+    color: #8a6d3b;
+}
+
+.ui-menu,
+.container .dropdown-menu{
+    background-image: url("/img/classic-background.jpg");
+    border-radius: 3px;
+    border: 1px solid #fff;
+    box-shadow: 7px 7px 7px rgba(0,0,0,0.75);
+}
+.container .dropdown-menu {
+    font-size: inherit;
+    color: white;
+    width: 100%;
+    margin-top: 8px;
+    padding: 0;
+}
+.container .dropdown-menu > li {
+    display: block;
+    padding: 5px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.container .dropdown-menu > li:hover,
+.container .dropdown-menu > li:focus {
+  text-decoration: none;
+  background-color: rgba(0,0,0,0.5);
+}
+.thread.unread {
+    background-color: rgba(0,0,0,0.5);
+    border: 3px solid #fff;
+}
+.thread.unread:hover {
+    background-color: rgba(0,0,0,0.75);
+    box-shadow: inset 5px 5px 5px rgba(0,0,0,0.5);
+}
+button.dropdown-toggle {
+    text-align: right;
+}
+.dropdown-label {
+    float: left;
+}
+.drop-down-icon{
+    margin-right: 5px;
 }

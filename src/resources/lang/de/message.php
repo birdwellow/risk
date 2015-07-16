@@ -37,6 +37,7 @@ return [
     
         'button.login' => "Login",
         'button.save' => "Speichern",
+        'button.send' => "Senden",
         'button.register' => "Registrierung",
         'button.send.password.reset.link' => "Passwort-Reset-Link schicken",
         'button.password.reset' => "Passwort zur&uuml;cksetzen",
@@ -45,6 +46,7 @@ return [
     
         'field.username' => "Username",
         'field.email' => "E-Mail-Addresse",
+        'field.password' => 'Passwort',
         'field.old.password' => 'Altes Passwort',
         'field.new.password' => 'Neues Passwort',
         'field.new.password.confirmation' => "Neues Passwort best&auml;tigen",
@@ -105,6 +107,10 @@ return [
         'title.match.data' => "Match-Daten",
         'title.match.cancel' => "Match abbrechen",
     
+        'title.messages' => "Nachrichten",
+        'title.all.messages' => "Alle Nachrichten",
+        'title.new.message' => "Neue Nachricht",
+    
     
         'text.invitation.received.fromfor' => "Von :invitorName f&uuml;r ':matchName'",
         'text.invitation.rejectec.byfor' => "Von :rejectorName f&uuml;r ':matchName'",
@@ -113,5 +119,8 @@ return [
         'placeholder.search' => "Suche",
         'placeholder.invitation.message' => "Deine Einladungsnachricht",
         'placeholder.invitation.playernames' => "Username 1, Username 2, ...",
+        'placeholder.new.message' => "Deine Nachricht",
+        'placeholder.subject' => "Betreff",
+        'placeholder.searchrecipient' => "Suche Empf&auml;nger",
 
 ];

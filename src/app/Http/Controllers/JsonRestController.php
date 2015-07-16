@@ -17,20 +17,9 @@ class JsonRestController extends Controller {
 		$this->middleware('auth');
 	}
 
-	public function allUserNames()
-	{
-                $exceptNames = Request::input('selectednames');
-                $exceptNames = str_replace(" ", "", $exceptNames);
-                $ignoreNamesArray = explode(",", $exceptNames);
-                $ignoreNamesArray[] = Auth::user()->name;
-                
-                Log::info("Searching not searching ");
-                Log::info($ignoreNamesArray);
-                $userNames = $this->jsonRestManager->getAllUserNamesLikeExcept(
-                        Request::input('term'),
-                        $ignoreNamesArray
-                );
-		return json_encode($userNames);
+	public function allUserNamesExceptCurrentUser() {
+                $userNames = $this->jsonRestManager->getAllUserNames([Auth::user()->name]);
+		return $userNames;
 	}
 
 }

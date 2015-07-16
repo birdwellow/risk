@@ -37,6 +37,7 @@ return [
     
         'button.login' => "Login",
         'button.save' => "Save",
+        'button.send' => "Send",
         'button.register' => "Register",
         'button.send.password.reset.link' => "Send Password Reset Link",
         'button.password.reset' => "Reset password",
@@ -46,6 +47,7 @@ return [
     
         'field.username' => "User Name",
         'field.email' => "E-Mail Address",
+        'field.password' => 'Password',
         'field.old.password' => 'Old Password',
         'field.new.password' => 'New Password',
         'field.new.password.confirmation' => "Confirm New Password",
@@ -107,6 +109,10 @@ return [
         'title.match.data' => "Match Data",
         'title.match.cancel' => "Cancel Match",
     
+        'title.messages' => "Messages",
+        'title.all.messages' => "All Messages",
+        'title.new.message' => "New Message",
+    
     
         'text.invitation.received.fromfor' => "From :invitorName for ':matchName'",
         'text.invitation.rejectec.byfor' => "By :rejectorName for ':matchName'",
@@ -115,5 +121,8 @@ return [
         'placeholder.search' => "Search",
         'placeholder.invitation.message' => "Your invitation message",
         'placeholder.invitation.playernames' => "user_name_1, user_name_2, ...",
+        'placeholder.new.message' => "Your message",
+        'placeholder.subject' => "Subject",
+        'placeholder.searchrecipient' => "Search Recipients",
     
 ];

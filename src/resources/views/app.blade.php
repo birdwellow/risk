@@ -8,49 +8,13 @@
 	<title>{{ Lang::get('message.title') }}</title>
 
 	<link href="/css/common.css" rel="stylesheet">
+	<link href="/css/-def.css" rel="stylesheet">
 	<link href="/css/jquery-ui.css" rel="stylesheet">
 
         <script src="/js/thirdparty/jquery.min.js" defer="defer"></script>
         <script src="/js/thirdparty/jquery-ui.min.js" defer="defer"></script>
         <script src="/js/thirdparty/bootstrap.min.js" defer="defer"></script>
         <script src="/js/app.js" defer="defer"></script>
-        
-        <script defer="defer">
-        <?php
-            $dialog = session("dialog");
-        ?>
-        @if($dialog !== null)
-            var userDialog = {
-                type : "{{ $dialog["type"] }}",
-                message : "{{ Lang::get($dialog["message"]) }}",
-        @if(isset($dialog["title"]))
-                title : "{{ Lang::get($dialog["title"]) }}",
-        @endif
-        @if(isset($dialog->buttons))
-                buttons : {
-                    close: {
-                        label : "Close",
-                        callback : function(){
-                            alert("Clooose");
-                        }
-                    },
-                    action : {
-                        label : "Action",
-                        callback : function(){
-                            alert("Yay");
-                        }
-                    }
-                },
-        @endif
-        @if(isset($dialog->timeouts))
-                timeouts : {
-                    dialogTimeout : 3000,
-                    dialogFadeDuration : 300
-                }
-        @endif
-            };
-        @endif
-        </script>
         
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -59,34 +23,7 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
-<body>
-        <div id="modal">
-                <div id="modal-background">
-                </div>
-
-                <div id="modal-dialog" class="info">
-                        <div class="header">
-                                <button type="button" class="close" id="modal-closer" label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                </button>
-                                <span id="modal-dialog-title" class="title">
-                                        Modal title
-                                </span>
-                        </div>
-                        <div id="modal-dialog-body" class="body">
-                                Body
-                        </div>
-                        <div class="footer">
-                                <button class="btn btn-primary" id="modal-dialog-close" type="button">
-                                        Close
-                                </button>
-                                <button class="btn btn-primary" id="modal-dialog-action" type="button">
-                                        Save changes
-                                </button>
-                        </div>
-                </div>
-        </div>
-        
+<body>  
         
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -106,6 +43,7 @@
 				<ul class="nav navbar-nav">
 					<li>
                                                 <a href="{{ route('index') }}">
+                                                        <img src="/img/home.png">
                                                         {{ Lang::get('message.link.home') }}
                                                 </a>
                                         </li>
@@ -143,6 +81,25 @@
                                                                 </a>
                                                         </li>
                                                         @endif
+                                                </ul>
+                                        </li>
+                                        
+                                        <li class="dropdown">
+                                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                        {{ Lang::get('message.title.messages') }}
+                                                        <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu" role="menu">
+                                                        <li>
+                                                                <a href="{{ route('all.messages') }}">
+                                                                        {{ Lang::get('message.title.all.messages') }}
+                                                                </a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="{{ route('init.new.message') }}">
+                                                                        {{ Lang::get('message.title.new.message') }}
+                                                                </a>
+                                                        </li>
                                                 </ul>
                                         </li>
                                         @endif
@@ -236,7 +193,26 @@
         </div>
         @endif
     
-    
+        <!--div class="dropdown">
+                <button aria-expanded="true" data-toggle="dropdown" id="dropdownMenu1" type="button" class="btn dropdown-toggle">
+                        5.1
+                        <span class="caret"></span>
+                </button>
+                <ul aria-labelledby="dropdownMenu1" role="menu" class="dropdown-menu">
+                        <li role="presentation">
+                                <a onclick="console.log('click')" tabindex="-1" role="menuitem">Master</a>
+                        </li>
+                        <li role="presentation">
+                                <a href="http://laravel.com/docs/5.1" tabindex="-1" role="menuitem">5.1</a>
+                        </li>
+                        <li role="presentation">
+                                <a href="http://laravel.com/docs/5.0" tabindex="-1" role="menuitem">5.0</a>
+                        </li>
+                        <li role="presentation">
+                                <a href="http://laravel.com/docs/4.2" tabindex="-1" role="menuitem">4.2</a>
+                        </li>
+                </ul>
+        </div-->
 
 	@yield('content')
 

@@ -6,8 +6,9 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "5.0.*",
-		"cboden/Ratchet"    : "0.3.*",
-                "illuminate/html": "5.0.*"
+		"cboden/Ratchet": "0.3.*",
+                "illuminate/html": "5.0.*",
+                "cmgmyr/messenger": "2.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~4.0",
