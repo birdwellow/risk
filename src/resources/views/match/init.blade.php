@@ -63,7 +63,7 @@
                                                         </label>
                                                         <div class="col-md-6">
                                                                 <select name="maxusers" id="maxusers">
-                                                                        <option icon="/img/loading_small.gif" value="2">2</option>
+                                                                        <option value="2">2</option>
                                                                         <option value="3">3</option>
                                                                         <option value="4">4</option>
                                                                         <option value="5">5</option>
@@ -83,19 +83,7 @@
                                                         <label class="col-md-4 control-label">
                                                         </label>
                                                         <div class="col-md-6">
-                                                                <input type="text" id="invitation_helper" placeholder="{{ Lang::get('message.placeholder.search') }}" />
-                                                        </div>
-                                                </div>
-                                            
-                                                <div class="form-group">
-                                                        <label class="col-md-4 control-label">
-                                                        </label>
-                                                        <div class="col-md-6">
-                                                                <textarea
-                                                                    id="invited_players"
-                                                                    name="invited_players"
-                                                                    placeholder="{{ Lang::get('message.placeholder.invitation.playernames') }}"
-                                                                >{{ old('invited_players') }}</textarea>
+                                                                <input value="{{ old('invited_players') }}" name="invited_players" type="userselector" placeholder="{{ Lang::get('message.placeholder.search') }}" />
                                                         </div>
                                                 </div>
 

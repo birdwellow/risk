@@ -43,7 +43,7 @@
 				<ul class="nav navbar-nav">
 					<li>
                                                 <a href="{{ route('index') }}">
-                                                        <img src="/img/home.png">
+                                                        <img class="icon" src="/img/home.png">
                                                         {{ Lang::get('message.link.home') }}
                                                 </a>
                                         </li>
@@ -86,6 +86,7 @@
                                         
                                         <li class="dropdown">
                                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                        <img class="icon" src="/img/message.png">
                                                         {{ Lang::get('message.title.messages') }}
                                                         <span class="caret"></span>
                                                 </a>

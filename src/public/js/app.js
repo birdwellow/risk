@@ -76,6 +76,11 @@ $(document).ready(function(){
         var element = $(value);
         new DropDown(element);
     });
+
+    $('input[type="checkbox"]').each(function(index, value){
+        var element = $(value);
+        new CheckBox(element);
+    });
     
     /*setTimeout(function(){
         $(".alert-success").fadeOut(1000, function(){
@@ -84,6 +89,43 @@ $(document).ready(function(){
     }, 3000);*/
 });
 
+
+function CheckBox(baseInput) {
+    
+    var selfpointer = this;
+    
+    this._checked;
+    var iconCheckedSrc = "/img/checkbox-true.png";
+    var iconUncheckedSrc = "/img/checkbox-false.png";
+    baseInput.hide();
+    this._checkIcon = HTML.make("img", "", "icon");
+    
+    this.set = function(check){
+        if(check){
+            this._checked = true;
+            this._checkIcon.attr("src", iconCheckedSrc);
+            baseInput.attr("checked", "true");
+        } else {
+            this._checked = false;
+            this._checkIcon.attr("src", iconUncheckedSrc);
+            baseInput.removeAttr("checked");
+        }
+    };
+    
+    this.set( (baseInput.attr("checked")) );
+    
+    baseInput.after(this._checkIcon);
+    
+    this._checkIcon.click(function(){
+        selfpointer.set(!selfpointer._checked);
+    });
+    
+    var id = baseInput.attr("id");
+    var label = $("label[for='" + id + "']");
+    label.click(function(){
+        selfpointer.set(!selfpointer._checked);
+    });
+}
 
 function DropDown(baseInput){
     
@@ -297,6 +339,10 @@ function Dialog(config){
 
 function UserSelector(baseInput){
     
+    baseInput.addClass("loading");
+    
+    baseInput.wrap("<div class='userselector-wrapper'></div>");
+    
     var marginTop = 7;
     
     this.sourceURL = "/json/users/names";
@@ -407,5 +453,6 @@ function UserSelector(baseInput){
                     return false;
                 }
             });
+        baseInput.removeClass("loading");
     });
 }

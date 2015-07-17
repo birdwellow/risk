@@ -27,9 +27,7 @@
                                             
                                                 <div class="form-group">
                                                         <div class="col-md-10 col-md-offset-1">
-                                                                <div class="">
-                                                                        <input name="usernames" type="userselector" placeholder="{{ Lang::get('message.placeholder.searchrecipient') }}" />
-                                                                </div>
+                                                                <input name="usernames" type="userselector" placeholder="{{ Lang::get('message.placeholder.searchrecipient') }}" />
                                                         </div>
                                                 </div>
 

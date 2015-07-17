@@ -6354,7 +6354,8 @@ input[type="text"],
 input[type="password"],
 input[type="file"],
 select,
-input[type="userselector"],
+/*input[type="userselector"],*/
+.userselector-wrapper,
 input[type="select"],
 button.dropdown-toggle
 {
@@ -6367,11 +6368,33 @@ button.dropdown-toggle
     box-sizing: border-box;
     box-shadow: inset 5px 5px 5px rgba(0,0,0,0.5);
 }
-input[type="userselector"] {
+input[type="userselector"]{
+    background: none;
+    color: #fff;
+    border: none;
+    padding: 5px;
+    width: 100%;
     background-position: right 10px center;
     background-repeat: no-repeat;
     background-image: url(/img/search.png);
 }
+input.loading {
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    background-image: url(/img/loading_small.gif);
+}
+.userselector-wrapper
+{
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    padding: 0;
+    border-radius: 2px;
+    box-sizing: border-box;
+    box-shadow: inset 5px 5px 5px rgba(0,0,0,0.5);
+}
+
 input[type="select"] {
     background-position: right 10px center;
     background-repeat: no-repeat;
@@ -6602,7 +6625,7 @@ a:hover > div.thread{
 }
 .usernamedisplay{
     display: inline-block;
-    margin: 5px 5px 5px 0;
+    margin: 5px 0 5px 5px;
     border: 1px solid #fff;
     border-radius: 5px;
     padding-left: 5px;
@@ -6665,4 +6688,15 @@ button.dropdown-toggle {
 }
 .drop-down-icon{
     margin-right: 5px;
+}
+img.icon {
+    margin: -7px 3px 0 0;
+}
+.checkFrameUUUU{
+    padding: 12px;
+    background-image: url("/img/checkbox-true.png");
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin-top: 5px;
 }
