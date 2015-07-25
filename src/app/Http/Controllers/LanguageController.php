@@ -1,13 +1,12 @@
 <?php namespace Game\Http\Controllers;
 
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Game\Managers\LanguageManager;
 
 class LanguageController extends Controller {
 
     
-    protected $languageManager;
+        protected $languageManager;
     
     
 	/*
@@ -24,20 +23,24 @@ class LanguageController extends Controller {
 	 *
 	 * @return void
 	 */
-	public function __construct(LanguageManager $languageManager)
-	{
+	public function __construct(LanguageManager $languageManager) {
+                
                 $this->languageManager = $languageManager;
+                
 	}
 
+        
+        
 	/**
 	 * Set the current locale and return
 	 *
 	 * @return Response
 	 */
-	public function switchTo($lang)
-	{
-            $this->languageManager->setGlobalLocale($lang, Auth::user());
-            return redirect()->back();
+	public function switchTo($lang) {
+            
+                $this->languageManager->setGlobalLocale($lang, Auth::user());
+                return redirect()->back();
+                
 	}
 
 }

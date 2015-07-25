@@ -9,55 +9,17 @@
 <div class="container">
     
         <div class="col-md-8 col-md-offset-0">
-            @if(!$user->joinedMatch)
                 <div class="panel panel-default">
-                        <div class="panel-heading">{{ Lang::get('message.title.overview.nomatch') }}</div>
-                </div>
-            
-                <div class="panel panel-default">
-                    @if(!count($invitations))
+                    @if(!$user->joinedMatch)
                         <div class="panel-heading">
-                                {{ Lang::get('message.title.overview.noinvitations') }}
+                            {{ Lang::get('message.title.overview.nomatch') }}
                         </div>
                     @else
-                        <div class="panel-heading">
-                                {{ Lang::get('message.title.overview.invitations') }}
-                        </div>
-                
-                        <div class="panel-body">
-                                <table>
-                                    @foreach($invitations as $invitation)
-                                        <tr>
-                                                <td style="width:20%;">
-                                                        {{ $invitation->invitedBy->name }}
-                                                </td>
-                                                <td style="width:40%;">
-                                                        {{ $invitation->message }}
-                                                </td>
-                                                <td style="width:40%; text-align: right;">
-                                                        <a href="{{ route('match.join.init', $invitation->match->id) }}">
-                                                                {{ Lang::get('message.link.match.join', ['matchName' => $invitation->match->name]) }}
-                                                        </a>
-                                                        &nbsp;&nbsp;&nbsp;
-                                                        <a class="warn" href="{{ route('invitation.reject', $invitation->id) }}">
-                                                                {{ Lang::get('message.link.invitation.reject') }}
-                                                        </a>
-                                                </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-                        </div>
-                    @endif
-                </div>
-            @else
-                <div class="panel panel-default">
                         <div class="panel-heading">
                                 {{ Lang::get('message.title.overview.yourmatch') }}
                         </div>
                         
                         <div class="panel-body">
-                            
-                            @if($user->joinedMatch)
                                 <table>
                                         <tr>
                                                 <td>
@@ -98,41 +60,71 @@
                                 <a class="action btn btn-primary right table" href="{{ route('match.goto') }}">
                                     Go to match
                                 </a>
-                            @endif
                         </div>
+            
+                    @endif
                 </div>
+
             
-            @endif
-            
-            @if(count($rejectedInvitations))
                 <div class="panel panel-default">
                         <div class="panel-heading">
-                                Invitations were rejected
+                                <a href="{{ route('all.threads') }}">
+                                        @if(count($unreadThreads) == 0)
+                                            {{ Lang::get("message.text.no.new.messages") }}
+                                        @elseif(count($unreadThreads) == 1)
+                                            <img class="icon" src="/img/message.png">
+                                            {{ Lang::get("message.title.new.message") }}
+                                        @elseif(count($unreadThreads) >= 1)
+                                            <img class="icon" src="/img/message.png">
+                                            {{ Lang::get("message.title.new.messages", ["number" => count($unreadThreads)]) }}
+                                        @endif
+                                </a>
                         </div>
-
                         <div class="panel-body">
-                                <table>
-                                    @foreach($rejectedInvitations as $rejectedInvitation)
-                                        <tr>
-                                                <td>
-                                                        {{
-                                                            Lang::get("message.text.invitation.rejectec.byfor", [
-                                                                "rejectorName" => $rejectedInvitation->user->name,
-                                                                "matchName" => $rejectedInvitation->match->name
-                                                            ])
-                                                        }}
-                                                </td>
-                                                <td style="text-align: right;">
-                                                        <a class="warn" href="{{ route('invitation.delete', $rejectedInvitation->id) }}">
-                                                                {{ Lang::get('message.link.invitation.delete') }}
-                                                        </a>
-                                                </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
+                                @if(count($unreadThreads))
+                                        @foreach($unreadThreads as $thread)
+                                                <a href="{{ route('thread.allmessages', $thread->id) }}">
+                                                    <div class="thread unread media alert">
+                                                        <div class="subject">
+                                                            {{ $thread->subject }}
+                                                        </div>
+                                                        <div class="recipients">
+                                                            <?php
+                                                                $participantsString = "";
+                                                                foreach($thread->participants as $index => $participant){
+                                                                    if($index > 0){
+                                                                        $participantsString .= ", ";
+                                                                    }
+                                                                    $participantsString .= $participant->user->name;
+                                                                }
+                                                            ?>
+                                                            {{ $participantsString }}
+                                                        </div>
+
+                                                        @if($thread->latestMessage())
+                                                            <div class="latestmessagesummary">
+                                                                    @if($thread->latestMessage()->user->avatarfile)
+                                                                        <img src="/img/avatars/{{ $thread->latestMessage()->user->avatarfile }}" class="user-avatar icon">
+                                                                    @else
+                                                                        <img src="/img/avatars/default.png" class="user-avatar icon">
+                                                                    @endif
+                                                                <span class="sendername">{{ $thread->latestMessage()->user->name }}</span>:
+                                                                <span class="messagebody">
+                                                                    {{ str_limit($thread->latestMessage()->body, 100) }}
+                                                                </span>
+                                                            </div>
+                                                        @else
+                                                            <div class="latestmessagesummary">
+                                                                <span class="sendername"></span>
+                                                                <span class="messagebody"></span>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </a>
+                                        @endforeach
+                                @endif
                         </div>
                 </div>
-            @endif
         </div>
     
         <div class="col-md-4 col-md-offset-0">

@@ -3,10 +3,16 @@
                         <div class="panel-heading">
                             {{ $thread->subject }}
                             <div class="recipients">
-                                @foreach($thread->participants as $index => $participant)
-                                    {{ $participant->user->name }}
-                                @endforeach
-                                
+                                <?php
+                                    $participantsString = "";
+                                    foreach($thread->participants as $index => $participant){
+                                        if($index > 0){
+                                            $participantsString .= ", ";
+                                        }
+                                        $participantsString .= $participant->user->name;
+                                    }
+                                ?>
+                                {{ $participantsString }}
                                 <a class="mini-button" href="javascript:UI.toggle('#addUsersToThread')">+</a>
                             </div>
                             

@@ -26,9 +26,16 @@
                                                     {{ str_limit($currentThread->subject, 20) }}
                                                 </div>
                                                 <div class="recipients">
-                                                    @foreach($currentThread->participants as $index => $participant)
-                                                        {{ $participant->user->name }}
-                                                    @endforeach
+                                                    <?php
+                                                        $participantsString = "";
+                                                        foreach($currentThread->participants as $index => $participant){
+                                                            if($index > 0){
+                                                                $participantsString .= ", ";
+                                                            }
+                                                            $participantsString .= $participant->user->name;
+                                                        }
+                                                    ?>
+                                                    {{ $participantsString }}
                                                 </div>
                                                 
                                                 @if($currentThread->latestMessage())

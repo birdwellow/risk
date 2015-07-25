@@ -1,47 +1,76 @@
 <?php namespace Game\Http\Controllers;
 
-use \Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\File;
-use Game\Managers\LanguageManager;
+
 use Game\Managers\OptionsManager;
+use Game\Managers\MatchManager;
+use Game\Managers\MessageManager;
 use Game\Exceptions\GameException;
 use Game\Handlers\Messages\ErrorFeedback;
 use Game\Handlers\Messages\SuccessFeedback;
 
+
+
 class UserController extends Controller {
     
-        protected $languageManager;
-        
         protected $optionsManager;
+        protected $matchManager;
+        protected $messageManager;
 
 
-        public function __construct(LanguageManager $languageManager, OptionsManager $optionsManager)
-	{
-		$this->optionsManager = $optionsManager;
-                $this->languageManager = $languageManager;
+        public function __construct(OptionsManager $optionsManager, MatchManager $matchManager, MessageManager $messageManager) {
+		
                 $this->middleware('auth');
+                $this->optionsManager = $optionsManager;
+                $this->matchManager = $matchManager;
+                $this->messageManager = $messageManager;
+                
 	}
 
-	public function profile()
-	{
+        
+        
+	public function index() {
+            
+                $matches = $this->matchManager->getMatches();
+                $user = Auth::user();
+                $invitations = $this->matchManager->getNewInvitationsForUser($user->id);
+                $rejectedInvitations = $this->matchManager->getRejectedInvitationsForUser($user->id);
+                $unreadThreads = $this->messageManager->getUnreadThreadsForUser($user);
+		return view('user.overview')
+                        ->with("matches", $matches)
+                        ->with("user", $user)
+                        ->with("invitations", $invitations)
+                        ->with("rejectedInvitations", $rejectedInvitations)
+                        ->with("unreadThreads", $unreadThreads);
+	}
+
+        
+        
+	public function profile() {
+            
                 $user = Auth::user();
 		return view('user.profile')->with("user", $user);
 	}
         
-        public function profileSave()
-        {
+        
+        
+        public function profileSave() 
+                {
                 return $this->profile();
         }
 
-        public function options()
-	{
+        
+        
+        public function options() {
+            
 		return view('user.options');
 	}
         
-        public function optionsSave()
-        {
+        
+        
+        public function optionsSave() {
+            
                 $user = Auth::user();
                 $optionInputs = array(
                     "username" => Request::input('name'),
@@ -66,7 +95,9 @@ class UserController extends Controller {
                 }
         }
         
-        public function passwordSave(){
+        
+        
+        public function passwordSave() {
             
                 $user = Auth::user();
                 $passwordInputs = array(

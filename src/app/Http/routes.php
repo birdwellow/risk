@@ -13,17 +13,60 @@
 
 
 
+/*
+ * 
+ * Route Complex: User
+ * 
+ */
+
+Route::get('/', [
+    'as' => 'index',
+    'uses' => 'UserController@index'
+]);
+
+Route::get('user/profile', [
+    'as' => 'user.profile',
+    'uses' => 'UserController@profile'
+]);
+
+Route::post('user/profile', [
+    'as' => 'user.profile.save',
+    'uses' => 'UserController@profileSave'
+]);
+
+Route::get('user/options', [
+    'as' => 'user.options',
+    'uses' => 'UserController@options'
+]);
+
+Route::post('user/options', [
+    'as' => 'user.options.save',
+    'uses' => 'UserController@optionsSave'
+]);
+
+Route::post('user/password', [
+    'as' => 'user.password.save',
+    'uses' => 'UserController@passwordSave'
+]);
+
+Route::get('lang/{lang}', [
+    'as' => 'switch.language',
+    'uses' => 'LanguageController@switchTo'
+]);
+
+Route::get('json/users/names', [
+    'as' => 'json.users/names',
+    'uses' => 'JsonRestController@allUserNamesExceptCurrentUser'
+]);
+
+
+
 
 /*
  * 
  * Route Complex: Match
  * 
  */
-
-Route::get('/', [
-    'as' => 'index',
-    'uses' => 'MatchController@index'
-]);
 
 Route::get('match/new', [
     'as' => 'match.new',
@@ -73,49 +116,6 @@ Route::get('invitation/reject/{id}', [
 Route::get('invitation/delete/{id}', [
     'as' => 'invitation.delete',
     'uses' => 'MatchController@deleteInvitation'
-]);
-
-
-
-/*
- * 
- * Route Complex: User
- * 
- */
-
-Route::get('user/profile', [
-    'as' => 'user.profile',
-    'uses' => 'UserController@profile'
-]);
-
-Route::post('user/profile', [
-    'as' => 'user.profile.save',
-    'uses' => 'UserController@profileSave'
-]);
-
-Route::get('user/options', [
-    'as' => 'user.options',
-    'uses' => 'UserController@options'
-]);
-
-Route::post('user/options', [
-    'as' => 'user.options.save',
-    'uses' => 'UserController@optionsSave'
-]);
-
-Route::post('user/password', [
-    'as' => 'user.password.save',
-    'uses' => 'UserController@passwordSave'
-]);
-
-Route::get('lang/{lang}', [
-    'as' => 'switch.language',
-    'uses' => 'LanguageController@switchTo'
-]);
-
-Route::get('json/users/names', [
-    'as' => 'json.users/names',
-    'uses' => 'JsonRestController@allUserNamesExceptCurrentUser'
 ]);
 
 

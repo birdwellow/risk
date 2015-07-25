@@ -149,6 +149,15 @@ class MessageManager {
     }
     
     
+    public function getUnreadThreadsForUser($user) {
+
+            $threads = Thread::forUserWithNewMessages($user->id);
+
+            return $threads;
+        
+    }
+    
+    
     public function getThreadForUser($user, $threadId, $markAsRead = true) {
          
             $thread = Thread::find($threadId);

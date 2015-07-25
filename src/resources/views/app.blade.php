@@ -55,13 +55,8 @@
                                                         <span class="caret"></span>
                                                 </a>
                                                 <ul class="dropdown-menu" role="menu">
-                                                        <li>
-                                                                <a href="{{ route('index') }}">
-                                                                        {{ Lang::get('message.link.match.overview') }}
-                                                                </a>
-                                                        </li>
                                                         
-                                                        @if(!Auth::user()->joinedMatch)
+                                                        @if(Auth::user()->joinedMatch)
                                                         <li>
                                                                 <a href="{{ route('match.new') }}">
                                                                         {{ Lang::get('message.link.match.new') }}
@@ -69,7 +64,7 @@
                                                         </li>
                                                         @else
                                                         <li>
-                                                                <a class="inactive">
+                                                                <a class="inactive" onclick="UI.error('{{ Lang::get("error.user.already.joined") }}', '{{ Lang::get("error.user") }}', 'OK')">
                                                                         {{ Lang::get('message.link.match.new') }}
                                                                 </a>
                                                         </li>

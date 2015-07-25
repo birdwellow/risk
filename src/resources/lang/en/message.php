@@ -119,11 +119,14 @@ return [
         'title.all.messages' => "All Messages",
         'title.all.threads' => "All message threads",
         'title.new.thread' => "New Thread",
+        'title.new.messages' => "New messages in :number threads",
+        'title.new.message' => "New message in a thread",
         'title.message.firstthreadmessage' => "First message",
     
     
         'text.invitation.received.fromfor' => "From :invitorName for ':matchName'",
         'text.invitation.rejectec.byfor' => "By :rejectorName for ':matchName'",
+        'text.no.new.messages' => "No new messages.",
     
     
         'placeholder.search' => "Search",

@@ -6615,6 +6615,9 @@ a > div.thread{
     border-radius: 5px;
     cursor: pointer;
 }
+a > div.thread.unread{
+    background: rgba(0,0,0,0.5);
+}
 a:hover > div.thread{
     box-shadow: inset 4px 4px 4px rgba(0,0,0,0.5);
 }
@@ -6760,4 +6763,7 @@ a.newmessages {
 .wait-img {
     position: absolute;
     margin-top: 25%;
+}
+.panel-default {
+    margin-bottom: 20px;
 }
