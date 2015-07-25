@@ -43,6 +43,7 @@ return [
         'button.password.reset' => "Reset password",
         'button.match.create' => "Create",
         'button.match.join' => "Join",
+        'button.add' => "Add",
     
     
         'field.username' => "User Name",
@@ -71,6 +72,11 @@ return [
     
         'field.user.theme' => "Theme",
         'field.user.language' => "Language",
+    
+        'field.message.thread.subject' => "Title",
+        'field.message.text' => "Your Message",
+        'field.message.thread.recipients' => "Recipients",
+        'field.message.thread.reuseexistingthread' => "If it exists, use an old thread with the same users",
     
     
         'error.userinput' => "There were some problems with your input.",
@@ -111,7 +117,9 @@ return [
     
         'title.messages' => "Messages",
         'title.all.messages' => "All Messages",
-        'title.new.message' => "New Message",
+        'title.all.threads' => "All message threads",
+        'title.new.thread' => "New Thread",
+        'title.message.firstthreadmessage' => "First message",
     
     
         'text.invitation.received.fromfor' => "From :invitorName for ':matchName'",
@@ -119,6 +127,7 @@ return [
     
     
         'placeholder.search' => "Search",
+        'placeholder.addusers' => "Add recipients",
         'placeholder.invitation.message' => "Your invitation message",
         'placeholder.invitation.playernames' => "user_name_1, user_name_2, ...",
         'placeholder.new.message' => "Your message",

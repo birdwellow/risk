@@ -38,9 +38,10 @@
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<div class="checkbox">
-									<label>
-										<input type="checkbox" name="remember"> {{ Lang::get('message.link.remember.login') }}
-									</label>
+                                                                        <input type="checkbox" name="remember" id="remember">
+                                                                        <label for="remember">
+                                                                            {{ Lang::get('message.link.remember.login') }}
+                                                                        </label>
 								</div>
 							</div>
 						</div>

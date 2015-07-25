@@ -17,6 +17,7 @@ return [
         'system' => "Internal Error",
     
     
+        'user.not.participant.of.thread' => "You are not a participant of the thread.",
         'user.already.joined' => "You already joined a match.",
         'user.already.joined.another.match' => "You already joined another match.",
         'user.cannot.delete.match' => "You may not cancel the match.",
@@ -28,7 +29,11 @@ return [
         'user.password.invalid' => "The entered new password does not match the password policies.",
     
         'user.create.match.wrong.parameters' => "Could not create match. Please correct your inputs.",
+        'user.new.message.wrong.parameters' => "Please enter a message.",
+        'user.no.valid.subject.specified' => "Please enter a subject. It must be between 6 - 32 characters.",
+        'user.no.users.selected' => "You did not select any users.",
     
-        'system.match.not.found' => "Couldn't find the match.",
+        'system.match.not.found' => "Could not find match.",
+        'system.thread.not.found' => "Could not find thread.",
 
 ];

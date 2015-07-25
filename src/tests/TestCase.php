@@ -5,9 +5,14 @@ use Game\User;
 use Game\Model\Match;
 use Game\Model\Invitation;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
+        protected static $keepTables = array(
+            "migrations",
+        );
+    
 	/**
 	 * Creates the application.
 	 *
@@ -47,7 +52,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
         
         static function tearDownAfterClass() {
             
-                self::resetDb();
+                //self::resetDb();
                 parent::tearDownAfterClass();
             
         }
@@ -66,9 +71,14 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
             
                 DB::statement("SET foreign_key_checks=0");
                 
-                DB::table('users')->truncate();
-                DB::table('matches')->truncate();
-                DB::table('invitations')->truncate();
+                foreach (DB::select('SHOW TABLES') as $table) {
+                    $tableNames[] = array_values((array)$table)[0];
+                }
+                foreach($tableNames as $tableName) {
+                    if(!in_array($tableName, self::$keepTables)){
+                        DB::table($tableName)->truncate();
+                    }
+                }
                 
                 DB::statement("SET foreign_key_checks=1");
                 

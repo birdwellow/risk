@@ -23,6 +23,10 @@ class GameException extends Exception {
 
     protected static $errorData = [
         
+        "USER.NOT.PARTICIPANT.OF.THREAD" => [
+            "message" => "error.user.not.participant.of.thread",
+            "category" => "error.user"
+        ],
         "USER.ALREADY.JOINED" => [
             "message" => "error.user.already.joined",
             "category" => "error.user"
@@ -51,6 +55,18 @@ class GameException extends Exception {
             "message" => "error.user.create.match.wrong.parameters",
             "category" => "error.user"
         ],
+        "USER.NEW.MESSAGE.WRONG.PARAMETERS" => [
+            "message" => "error.user.new.message.wrong.parameters",
+            "category" => "error.user"
+        ],
+        "NO.USERS.SELECTED" => [
+            "message" => "error.user.no.users.selected",
+            "category" => "error.user"
+        ],
+        "NO.VALID.SUBJECT.SPECIFIED" => [
+            "message" => "error.user.no.valid.subject.specified",
+            "category" => "error.user"
+        ],
         "USER.WRONG.OLDPASSWORD" => [
             "message" => "error.user.wrong.old.password",
             "category" => "error.user"
@@ -67,6 +83,10 @@ class GameException extends Exception {
         
         "MATCH.NOT.FOUND" => [
             "message" => "error.system.match.not.found",
+            "category" => "error.system"
+        ],
+        "THREAD.NOT.FOUND" => [
+            "message" => "error.system.thread.not.found",
             "category" => "error.system"
         ],
         

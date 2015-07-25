@@ -1,5 +1,39 @@
 var UI = {
     
+    init : function() {
+        
+        $('input[type="userselector"]').each(function(index, value){
+            var element = $(value);
+            new UserSelector(element);
+        });
+
+        $('select').each(function(index, value){
+            var element = $(value);
+            new DropDown(element);
+        });
+
+        $('input[type="checkbox"]').each(function(index, value){
+            var element = $(value);
+            new CheckBox(element);
+        });
+
+        /*setTimeout(function(){
+            $(".alert-success").fadeOut(1000, function(){
+                $(".alert-success").hide();
+            });
+        }, 3000);*/
+        
+    },
+    
+    toggle : function (selector){
+        element = $(selector);
+        if(element.is(":visible")){
+            element.hide();
+        } else {
+            element.show();
+        }
+    },
+    
     error : function(message, title, closeLabel){
         
         var config = {
@@ -46,10 +80,47 @@ var UI = {
         };
         this.infoDialog = new Dialog(config);
         
-    }
+    },
+    
+    setLoading : function(element, isLoading) {
+        
+        if(isLoading == false){
+            element.find(".wait-modal").remove();
+        } else {
+            var waitPanel = HTML.make("div", "", "wait-modal");
+            var waitImg = HTML.make("img", "", "wait-img").attr("src", "/img/loading_big.gif");
+            waitPanel.append(waitImg);
+            element.prepend(waitPanel);
+        }
+        
+    },
+    
+    loadContentFromTo : function(url, selector) {
+        
+        var element = $(selector);
+        this.setLoading(element, true);
+        
+        $.get(url, function (data) {
+            element.html(data);
+            UI.init();
+        });
+        
+    },
     
     
 };
+
+function loadThread (threadId, referrer) {
+    
+    $("a.selected").removeClass("selected");
+    $(referrer).addClass("selected");
+    $(referrer).find("img.icon").remove();
+    $(referrer).find("div.unread").removeClass("unread");
+    
+    var url = "/ajax/thread/part/" + threadId;
+    UI.loadContentFromTo(url, "#thread");
+    
+}
 
 var HTML = {
 
@@ -67,26 +138,8 @@ var HTML = {
 
 $(document).ready(function(){
 
-    $('input[type="userselector"]').each(function(index, value){
-        var element = $(value);
-        new UserSelector(element);
-    });
+    UI.init();
     
-    $('select').each(function(index, value){
-        var element = $(value);
-        new DropDown(element);
-    });
-
-    $('input[type="checkbox"]').each(function(index, value){
-        var element = $(value);
-        new CheckBox(element);
-    });
-    
-    /*setTimeout(function(){
-        $(".alert-success").fadeOut(1000, function(){
-            $(".alert-success").hide();
-        });
-    }, 3000);*/
 });
 
 
@@ -455,4 +508,11 @@ function UserSelector(baseInput){
             });
         baseInput.removeClass("loading");
     });
+    
+    var preselectedUserNames = baseInput.val().split(",");
+    for(var i = 0; i < preselectedUserNames.length; i++){
+        var userName = preselectedUserNames[i];
+        this.addUserName(userName);
+    }
+    baseInput.val("");
 }

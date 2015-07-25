@@ -5,36 +5,12 @@ use Game\Model\Match;
 use Illuminate\Support\Facades\Session;
 
 
-        /*
-         * The MatchManagment must fulfill the following tests:
-         *      Complex "Overview":
-         *      * testOverviewIsUnpopulatedByDefault                The overview page must be unpopulated by default
-         * 
-         *      Complex "Match creation":
-         *      - testUnjoinedUserCanCreateMatchAndAutomaticallyJoins
-         *                                                          An unjoined user can create a match
-         *      - testJoinedUserCannotCreateMatch                   A joined user cannot create a match
-         *      - testMatchCannotBeCreatedWithWrongParameters       A match cannot be created when entering invalid parameters
-         * 
-         *      Complex "Match joining":
-         *      - testUnjoinedUserCanJoinAWaitingMatch              An unjoined user can join a waiting match
-         *      - testJoinedUserCannotJoinAnyMatch                  A joined user cannot join any match
-         *      - testUserCannotJoinAStartedMatch                   A user cannot join a started match
-         *      - testUserCannotJoinACancelledMatch                 A user cannot join a cancelled match
-         * 
-         *      Complex "Match administration":
-         *      - testOnlyCreatorCanAdministrateMatch               A match can only be administrated by its creator
-         *      - testOnlyCreatorCanStartMatch                      A match can only be started by its creator
-         *      - testOnlyCreatorCanCancelMatch                     A match can only be cancelled by its creator
-         *      - testMatchCannotBeAdministratedWithWrongParameters A match cannot be adminstrated with invalid parameters
-         * 
-         *      Complex "Match inviting":
-         *      - testUserCanBeInvited                              A user can be invited to a game by sending a Join link via message
-         *      - testJoinedUserCannotBeInvited                     A user, that already joined another match, cannot be invited and the match creator sees a warning
-         */
 
 class MatchManagementTest extends TestCase {
     
+        
+        protected $Subberbazi, $Oberbazi, $SoEinBazi, $ChAoT;
+        
     
         public function setUp() {
                 
@@ -209,7 +185,7 @@ class MatchManagementTest extends TestCase {
          * 
          */
         
-        private function createMatch($asUser, $withParameters = array()){
+        private function createStandardTestMatch($asUser, $withParameters = array()){
             
                 $this->be($asUser);
                 $createMatchResponse = $this->call('GET', '/match/new');

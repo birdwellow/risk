@@ -3,24 +3,11 @@
 use Game\User;
 
 
-        /*
-         * The UserOptionsManagement must fulfill the following tests:
-         *      Complex "Language":
-         *      - testUserCanSwitchLanguagePersistently         A user can switch the language any time, is redirected
-         *                                                      back and the language is saved
-         * 
-         *      Complex "User Data":
-         *      - testUserCanSetOnlyValidUsernames              A user can configure only valid user names
-         *      - testUserCanSetUsernamesOnlyWhenNotJoined      A user can only change his user name when he is not joined to a match
-         *      - testUserCanSetOnlyValidEmailAddress           A user can configure only a valid email address
-         *      - testUserCanUseOnlyValidAvatarFiles            A user can upload only valid avatar files
-         * 
-         *      Complex "Password":
-         *      - testUserCanSetOnlyValidPasswords              A user can set only valid passwords
-         * 
-         */
 
 class UserOptionsManagementTest extends TestCase {
+    
+        
+        protected $Subberbazi, $Oberbazi, $SoEinBazi, $ChAoT;
     
     
         public function setUp() {
@@ -28,6 +15,9 @@ class UserOptionsManagementTest extends TestCase {
                 parent::setUp();
             
                 $this->Subberbazi = User::find(1);
+                $this->Oberbazi = User::find(2);
+                $this->SoEinBazi = User::find(3);
+                $this->ChAoT = User::find(4);
                 
         }
         

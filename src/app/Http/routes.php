@@ -126,29 +126,39 @@ Route::get('json/users/names', [
  * 
  */
 
-Route::get('message/new', [
-    'as' => 'init.new.message',
-    'uses' => 'MessageController@initNewMessage'
+Route::get('thread/new', [
+    'as' => 'new.thread.init',
+    'uses' => 'MessageController@initNewThreadWithNewMessage'
 ]);
 
-Route::post('message/new', [
-    'as' => 'send.new.message',
-    'uses' => 'MessageController@sendNewMessage'
+Route::post('thread/new', [
+    'as' => 'new.thread.create',
+    'uses' => 'MessageController@newThreadWithNewMessage'
 ]);
 
-Route::post('message/new/{threadId}', [
-    'as' => 'send.new.thread.message',
-    'uses' => 'MessageController@sendNewThreadMessage'
+Route::post('thread/newmessage/{threadId}', [
+    'as' => 'thread.newmessage',
+    'uses' => 'MessageController@newMessageInThread'
 ]);
 
-Route::get('messages', [
-    'as' => 'all.messages',
+Route::get('threads', [
+    'as' => 'all.threads',
     'uses' => 'MessageController@showAllThreads'
 ]);
 
-Route::get('messages/{threadId}', [
-    'as' => 'thread.messages',
-    'uses' => 'MessageController@showAllThreadMessages'
+Route::get('thread/{threadId}', [
+    'as' => 'thread.allmessages',
+    'uses' => 'MessageController@showThread'
+]);
+
+Route::post('thread/addusers/{threadId}', [
+    'as' => 'thread.addusers',
+    'uses' => 'MessageController@addUsers'
+]);
+
+Route::get('ajax/thread/part/{threadId}', [
+    'as' => 'ajax.thread.part',
+    'uses' => 'MessageController@loadThreadPart'
 ]);
 
 

@@ -43,6 +43,7 @@ return [
         'button.password.reset' => "Passwort zur&uuml;cksetzen",
         'button.match.create' => "Start",
         'button.match.join' => "Beitreten",
+        'button.add' => "Hinzuf&uuml;gen",
     
         'field.username' => "Username",
         'field.email' => "E-Mail-Addresse",
@@ -69,6 +70,11 @@ return [
     
         'field.user.theme' => "Schema",
         'field.user.language' => "Sprache",
+    
+        'field.message.thread.subject' => "Titel",
+        'field.message.text' => "Deine Nachricht",
+        'field.message.thread.recipients' => "Empf&auml;nger",
+        'field.message.thread.reuseexistingthread' => "Alten Thread mit denselben Usern verwenden, falls es einen gibt",
     
     
         'error.userinput' => "Es gab einen Fehler mit deinen Daten.",
@@ -109,7 +115,9 @@ return [
     
         'title.messages' => "Nachrichten",
         'title.all.messages' => "Alle Nachrichten",
-        'title.new.message' => "Neue Nachricht",
+        'title.all.threads' => "Alle Nachrichten-Threads",
+        'title.new.thread' => "Neuer Thread",
+        'title.message.firstthreadmessage' => "Erste Nachricht",
     
     
         'text.invitation.received.fromfor' => "Von :invitorName f&uuml;r ':matchName'",
@@ -117,6 +125,7 @@ return [
     
     
         'placeholder.search' => "Suche",
+        'placeholder.addusers' => "Empf&auml;nger hinzuf&uuml;gen",
         'placeholder.invitation.message' => "Deine Einladungsnachricht",
         'placeholder.invitation.playernames' => "Username 1, Username 2, ...",
         'placeholder.new.message' => "Deine Nachricht",

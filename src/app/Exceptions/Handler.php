@@ -2,6 +2,8 @@
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Game\Exceptions\GameException;
+use Game\Handlers\Messages\ErrorFeedback;
 
 class Handler extends ExceptionHandler {
 
@@ -11,7 +13,8 @@ class Handler extends ExceptionHandler {
 	 * @var array
 	 */
 	protected $dontReport = [
-		'Symfony\Component\HttpKernel\Exception\HttpException'
+		'Symfony\Component\HttpKernel\Exception\HttpException',
+                'Game\Exceptions\GameException'
 	];
 
 	/**
@@ -36,7 +39,13 @@ class Handler extends ExceptionHandler {
 	 */
 	public function render($request, Exception $e)
 	{
-		return parent::render($request, $e);
+		if($e instanceof GameException){
+                    return redirect()
+                            ->back()
+                            ->withInput()
+                            ->with("message", new ErrorFeedback( $e->getUIMessageKey() ) );
+                }
+                return parent::render($request, $e);
 	}
 
 }

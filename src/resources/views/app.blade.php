@@ -50,6 +50,7 @@
                                         @if (Auth::check())
                                         <li class="dropdown">
                                                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                        <img class="icon" src="/img/matches.png">
                                                         {{ Lang::get('message.title.matches') }}
                                                         <span class="caret"></span>
                                                 </a>
@@ -85,20 +86,30 @@
                                         </li>
                                         
                                         <li class="dropdown">
-                                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                            
+                                                <?php
+                                                    $newMessagesCount = Auth::user()->newMessagesCount();
+                                                    $class = ($newMessagesCount ? "newmessages " : "");
+                                                ?>
+                                                <a class="{{ $class }}dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                                         <img class="icon" src="/img/message.png">
+                                                        @if($newMessagesCount)
+                                                            <span class="newmessagescount">
+                                                            {{ $newMessagesCount }}
+                                                            </span>
+                                                        @endif
                                                         {{ Lang::get('message.title.messages') }}
                                                         <span class="caret"></span>
                                                 </a>
                                                 <ul class="dropdown-menu" role="menu">
                                                         <li>
-                                                                <a href="{{ route('all.messages') }}">
+                                                                <a href="{{ route('all.threads') }}">
                                                                         {{ Lang::get('message.title.all.messages') }}
                                                                 </a>
                                                         </li>
                                                         <li>
-                                                                <a href="{{ route('init.new.message') }}">
-                                                                        {{ Lang::get('message.title.new.message') }}
+                                                                <a href="{{ route('new.thread.init') }}">
+                                                                        {{ Lang::get('message.title.new.thread') }}
                                                                 </a>
                                                         </li>
                                                 </ul>
@@ -143,6 +154,8 @@
                                                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                                             @if( Auth::user()->avatarfile )
                                                                 <img class="user-avatar" src="/img/avatars/{{ Auth::user()->avatarfile }}" />
+                                                            @else
+                                                                <img class="user-avatar" src="/img/avatars/default.png">
                                                             @endif
                                                             {{ Auth::user()->name }}
                                                             <span class="caret"></span>
@@ -150,16 +163,19 @@
 							<ul class="dropdown-menu" role="menu">
 								<li>
                                                                         <a href="{{ route('user.profile') }}">
+                                                                            <img class="icon-s" src="/img/profile-s.png">
                                                                             {{ Lang::get('message.link.profile') }}
                                                                         </a>
                                                                 </li>
 								<li>
                                                                         <a href="{{ route('user.options') }}">
+                                                                            <img class="icon-s" src="/img/options-s.png">
                                                                             {{ Lang::get('message.link.options') }}
                                                                         </a>
                                                                 </li>
 								<li class="logout">
                                                                         <a href="/auth/logout">
+                                                                            <img class="icon-s" src="/img/logout-s.png">
                                                                             {{ Lang::get('message.link.logout') }}
                                                                         </a>
                                                                 </li>
@@ -179,7 +195,7 @@
         <?php $message = ( session('message') ? session('message') : $message); ?>
         
         <div class="container">
-                <div class="col-md-10 col-md-offset-1 alert alert-{{ $message->type }}">
+                <div class="col-md-12 col-md-offset-1 alert alert-{{ $message->type }}">
                         {{ Lang::get($message->messageKey) }}
                         @if (isset($message->hints) && $message->hints)
                             <ul>
@@ -193,27 +209,6 @@
                 </div>
         </div>
         @endif
-    
-        <!--div class="dropdown">
-                <button aria-expanded="true" data-toggle="dropdown" id="dropdownMenu1" type="button" class="btn dropdown-toggle">
-                        5.1
-                        <span class="caret"></span>
-                </button>
-                <ul aria-labelledby="dropdownMenu1" role="menu" class="dropdown-menu">
-                        <li role="presentation">
-                                <a onclick="console.log('click')" tabindex="-1" role="menuitem">Master</a>
-                        </li>
-                        <li role="presentation">
-                                <a href="http://laravel.com/docs/5.1" tabindex="-1" role="menuitem">5.1</a>
-                        </li>
-                        <li role="presentation">
-                                <a href="http://laravel.com/docs/5.0" tabindex="-1" role="menuitem">5.0</a>
-                        </li>
-                        <li role="presentation">
-                                <a href="http://laravel.com/docs/4.2" tabindex="-1" role="menuitem">4.2</a>
-                        </li>
-                </ul>
-        </div-->
 
 	@yield('content')
 

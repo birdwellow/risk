@@ -25,19 +25,19 @@
                                             </h2>
                                             
                                             <div class="form-group">
-                                                    <label class="col-md-4 control-label">
+                                                    <label class="col-md-3 control-label">
                                                             {{ Lang::get('message.field.match.name') }}
                                                     </label>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-9">
                                                             <input type="text" name="name" value="{{ old('name') }}"/>
                                                     </div>
                                             </div>
 
                                             <div class="form-group">
-                                                    <label class="col-md-4 control-label">
+                                                    <label class="col-md-3 control-label">
                                                             {{ Lang::get('message.field.match.map') }}
                                                     </label>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-9">
                                                             <select name="mapName" id="mapname-select">
                                                                 @foreach($mapNames as $mapName)
                                                                     <option value="{{ $mapName }}">
@@ -49,19 +49,19 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-4 control-label">
+                                                <label class="col-md-3 control-label">
                                                         {{ Lang::get('message.field.match.closed') }}
                                                 </label>
-                                                <div class="col-md-6">
+                                                <div class="col-md-9">
                                                         <input type="checkbox" name="closed"/>
                                                 </div>
                                             </div>
 
                                                 <div class="form-group">
-                                                        <label class="col-md-4 control-label">
+                                                        <label class="col-md-3 control-label">
                                                               {{ Lang::get('message.field.match.maxusers') }}
                                                         </label>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-9">
                                                                 <select name="maxusers" id="maxusers">
                                                                         <option value="2">2</option>
                                                                         <option value="3">3</option>
@@ -80,21 +80,21 @@
                                                 </h2>
                                             
                                                 <div class="form-group">
-                                                        <label class="col-md-4 control-label">
+                                                        <label class="col-md-3 control-label">
                                                         </label>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-9">
                                                                 <input value="{{ old('invited_players') }}" name="invited_players" type="userselector" placeholder="{{ Lang::get('message.placeholder.search') }}" />
                                                         </div>
                                                 </div>
 
                                                 <div class="form-group">
-                                                        <label class="col-md-4 control-label">
+                                                        <label class="col-md-3 control-label">
+                                                            {{ Lang::get('message.placeholder.invitation.message') }}
                                                         </label>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-9">
                                                                 <textarea
                                                                     id="message"
                                                                     name="message"
-                                                                    placeholder="{{ Lang::get('message.placeholder.invitation.message') }}"
                                                                 >{{ old('message') }}</textarea>
                                                         </div>
                                                 </div>
