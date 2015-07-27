@@ -6,10 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
         
 	<title>{{ Lang::get('message.title') }}</title>
-
-	<link href="/css/common.css" rel="stylesheet">
-	<link href="/css/-def.css" rel="stylesheet">
+        
+	<link href="/css/bootstrap.css" rel="stylesheet">
+	<link href="/css/bootstrap-theme.css" rel="stylesheet">
 	<link href="/css/jquery-ui.css" rel="stylesheet">
+	<link href="/css/common.css" rel="stylesheet">
+	<link href="/css/-DEF.css" rel="stylesheet">
 
         <script src="/js/thirdparty/jquery.min.js" defer="defer"></script>
         <script src="/js/thirdparty/jquery-ui.min.js" defer="defer"></script>
@@ -56,7 +58,7 @@
                                                 </a>
                                                 <ul class="dropdown-menu" role="menu">
                                                         
-                                                        @if(Auth::user()->joinedMatch)
+                                                        @if(!Auth::user()->joinedMatch)
                                                         <li>
                                                                 <a href="{{ route('match.new') }}">
                                                                         {{ Lang::get('message.link.match.new') }}
@@ -190,7 +192,7 @@
         <?php $message = ( session('message') ? session('message') : $message); ?>
         
         <div class="container">
-                <div class="col-md-12 col-md-offset-1 alert alert-{{ $message->type }}">
+                <div class="col-md-10 col-md-offset-1 alert alert-{{ $message->type }}">
                         {{ Lang::get($message->messageKey) }}
                         @if (isset($message->hints) && $message->hints)
                             <ul>

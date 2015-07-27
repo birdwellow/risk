@@ -13,10 +13,10 @@
                                     }
                                 ?>
                                 {{ $participantsString }}
-                                <a class="mini-button" href="javascript:UI.toggle('#addUsersToThread')">+</a>
+                                <a class="mini-button" href="javascript:UI.toggle('#add-users')">+</a>
                             </div>
                             
-                            <div id="addUsersToThread">
+                            <div id="add-users">
                                 
                                 <form method="POST" action="{{ route('thread.addusers', $thread->id) }}" class="form-horizontal" role="form" >
 
