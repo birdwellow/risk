@@ -136,7 +136,7 @@ Route::post('thread/new', [
     'uses' => 'MessageController@newThreadWithNewMessage'
 ]);
 
-Route::post('thread/newmessage/{threadId}', [
+Route::post('thread/{threadId}/newmessage', [
     'as' => 'thread.newmessage',
     'uses' => 'MessageController@newMessageInThread'
 ]);
@@ -151,12 +151,12 @@ Route::get('thread/{threadId}', [
     'uses' => 'MessageController@showThread'
 ]);
 
-Route::post('thread/addusers/{threadId}', [
+Route::post('thread/{threadId}/addusers', [
     'as' => 'thread.addusers',
     'uses' => 'MessageController@addUsers'
 ]);
 
-Route::get('ajax/thread/part/{threadId}', [
+Route::get('thread/{threadId}/ajaxpart', [
     'as' => 'ajax.thread.part',
     'uses' => 'MessageController@loadThreadPart'
 ]);

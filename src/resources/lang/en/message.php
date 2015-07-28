@@ -44,6 +44,8 @@ return [
         'button.match.create' => "Create",
         'button.match.join' => "Join",
         'button.add' => "Add",
+        'button.yes' => "Yes",
+        'button.no' => "No",
     
     
         'field.username' => "User Name",

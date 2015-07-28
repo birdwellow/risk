@@ -44,6 +44,8 @@ return [
         'button.match.create' => "Start",
         'button.match.join' => "Beitreten",
         'button.add' => "Hinzuf&uuml;gen",
+        'button.yes' => "Ja",
+        'button.no' => "Nein",
     
         'field.username' => "Username",
         'field.email' => "E-Mail-Addresse",

@@ -82,13 +82,36 @@ var UI = {
         
     },
     
+    confirmRedirect : function(url, message, title, abortLabel, confirmLabel){
+        
+        var config = {
+            allowCloseOnBackground : false,
+            type : "warn",
+            message : message,
+            title : title || "Confirm",
+            buttons : {
+                close: {
+                    label : abortLabel || "Cancel"
+                },
+                action : {
+                    label : confirmLabel || "OK",
+                    callback : function(){
+                        UI.goto(url);
+                    }
+                }
+            }
+        };
+        this.warnDialog = new Dialog(config);
+        
+    },
+    
     setLoading : function(element, isLoading) {
         
         if(isLoading == false){
             element.find(".wait-modal").remove();
         } else {
-            var waitPanel = HTML.make("div", "", "wait-modal");
-            var waitImg = HTML.make("img", "", "wait-img").attr("src", "/img/loading_big.gif");
+            var waitPanel = HTML.make("div", "wait-modal");
+            var waitImg = HTML.make("img", "wait-img").attr("src", "/img/loading_big.gif");
             waitPanel.append(waitImg);
             element.prepend(waitPanel);
         }
@@ -107,6 +130,12 @@ var UI = {
         
     },
     
+    goto : function(url) {
+        
+        document.location.href = url;
+        
+    },
+    
     
 };
 
@@ -117,7 +146,7 @@ function loadThread (threadId, referrer) {
     $(referrer).find("img.icon").remove();
     $(referrer).find("div.unread").removeClass("unread");
     
-    var url = "/ajax/thread/part/" + threadId;
+    var url = "/thread/" + threadId + "/ajaxpart";
     UI.loadContentFromTo(url, "#thread");
     
 }
@@ -126,11 +155,17 @@ var HTML = {
 
     body : $(document.body),
     
-    make : function(tagname, id, classes, type){
-        var element = $(document.createElement(tagname))
-                .attr("id", id)
-                .attr("class", classes)
-                .attr("type", type);
+    make : function(tagname, classes, id, type){
+        var element = $(document.createElement(tagname));
+        if(classes){
+            element.attr("class", classes);
+        }
+        if(id){
+            element.attr("id", id);
+        }
+        if(type){
+            element.attr("type", type);
+        }
         return element;
     }
     
@@ -151,7 +186,7 @@ function CheckBox(baseInput) {
     var iconCheckedSrc = "/img/checkbox-true.png";
     var iconUncheckedSrc = "/img/checkbox-false.png";
     baseInput.hide();
-    this._checkIcon = HTML.make("img", "", "icon");
+    this._checkIcon = HTML.make("img", "icon");
     
     this.set = function(check){
         if(check){
@@ -183,24 +218,24 @@ function CheckBox(baseInput) {
 function DropDown(baseInput){
     
     baseInput.hide();
-    var dropDown = HTML.make("div", baseInput.attr("id"), "dropdown");
+    var dropDown = HTML.make("div", "dropdown", baseInput.attr("id"));
     baseInput.after(dropDown);
     
     this.selectedOption = null;
     var selfpointer = this;
     this.options = baseInput.find("option");
     
-    var button = HTML.make("button", "", "dropdown-toggle")
+    var button = HTML.make("button", "dropdown-toggle")
             .attr("aria-expanded", "true")
             .attr("data-toggle", "dropdown")
             .attr("aria-expanded", "true");
-    this._buttonLabel = HTML.make("span", "", "dropdown-label");
-    var buttonCaret = HTML.make("span", "", "caret");
+    this._buttonLabel = HTML.make("span", "dropdown-label");
+    var buttonCaret = HTML.make("span", "caret");
     button
             .append(this._buttonLabel)
             .append(buttonCaret);
     
-    var list = HTML.make("ul", "", "dropdown-menu")
+    var list = HTML.make("ul", "dropdown-menu")
             .attr("role", "menu");
     
     this._hidden = HTML.make("input")
@@ -235,7 +270,7 @@ function DropDown(baseInput){
         var li = HTML.make("li")
                 .attr("role", "presentation");
         if(hasIcons){
-            var icon = HTML.make("img", "", "drop-down-icon").attr("src", $(option).attr("icon"));
+            var icon = HTML.make("img", "drop-down-icon").attr("src", $(option).attr("icon"));
             li.append(icon);
         }
         li.append(option.label);
@@ -285,28 +320,28 @@ function Dialog(config){
     */
     
     if(!Dialog._initiated){
-        Dialog._stack = HTML.make("div", "modal");
-        Dialog._background = HTML.make("div", "modal-background");
+        Dialog._stack = HTML.make("div", "", "modal");
+        Dialog._background = HTML.make("div", "", "modal-background");
         Dialog._stack.append(Dialog._background);
         HTML.body.prepend(Dialog._stack);
         Dialog._initiated = true;
     }
-    this._header = HTML.make("div", "", "header");
-    this._body = HTML.make("div", "", "body");
-    this._footer = HTML.make("div", "", "footer");
-    Dialog._dialog = HTML.make("div", "modal-dialog")
+    this._header = HTML.make("div", "header");
+    this._body = HTML.make("div", "body");
+    this._footer = HTML.make("div", "footer");
+    Dialog._dialog = HTML.make("div", "", "modal-dialog")
             .append(this._header)
             .append(this._body)
             .append(this._footer)
             .appendTo(Dialog._stack);
-    this._closer = HTML.make("button", "", "close").html("&times;");
-    this._title = HTML.make("span", "", "title");
+    this._closer = HTML.make("button", "close").html("&times;");
+    this._title = HTML.make("span", "title");
     this._header.append(this._closer);
     this._header.append(this._title);
     
     
-    this._close = HTML.make("button", "", "btn btn-primary");
-    this._action = HTML.make("button", "", "btn btn-primary");
+    this._close = HTML.make("button", "btn btn-primary");
+    this._action = HTML.make("button", "btn btn-primary");
     this._footer.append(this._close);
     this._footer.append(this._action);
     
@@ -339,7 +374,7 @@ function Dialog(config){
     this._body.html(message);
     
     if(textInput){
-        this._textInput = HTML.make("input", textInput.id, "", "text");
+        this._textInput = HTML.make("input", "", textInput.id, "text");
         this._body.append(this._textInput);
         if(textInput.textAfter){
             this._body.append(textInput.textAfter);
@@ -444,11 +479,9 @@ function UserSelector(baseInput){
         for(var i = 0; i < this.usernames.length; i++){
             var userName = this.usernames[i];
             if(userName !== ""){
-                var nameDisplay = HTML.make("div")
-                        .attr("class", "usernamedisplay")
+                var nameDisplay = HTML.make("div", "usernamedisplay")
                         .html(userName);
-                var removeSymbol = HTML.make("span")
-                        .attr("class", "removesymbol")
+                var removeSymbol = HTML.make("span", "removesymbol")
                         .html("&times;");
                 removeSymbol.click({userName: userName}, function(event){
                     _selfpointer.removeUserName(event.data.userName);

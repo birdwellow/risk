@@ -39,13 +39,14 @@ class MatchManagementTest extends TestCase {
 	 * @return void
 	 */
 	public function testOverviewIsUnpopulatedByDefault(){
+            
                 $this->be($this->Oberbazi);
                 
                 $response = $this->call('GET', '/');
 
 		$this->assertResponseOk();
                 $this->assertContains("Du bist keinem Match beigetreten.", $response->getContent());
-                $this->assertContains("Keine Spiel-Einladungen :(", $response->getContent());
+                
 	}
         
         

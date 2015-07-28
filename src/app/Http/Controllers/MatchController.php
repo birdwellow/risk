@@ -32,7 +32,7 @@ class MatchController extends Controller {
                 $user = Auth::user();
                 $invitations = $this->matchManager->getNewInvitationsForUser($user->id);
                 $rejectedInvitations = $this->matchManager->getRejectedInvitationsForUser($user->id);
-		return view('match.overview')
+		return view('user.overview')
                         ->with("matches", $matches)
                         ->with("user", $user)
                         ->with("invitations", $invitations)

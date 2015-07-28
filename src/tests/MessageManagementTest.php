@@ -50,15 +50,10 @@ class MessageManagementTest extends TestCase {
                 $this->assertContains("Test_Subject", $subberbaziThread1Response->getContent());
                 $this->assertContains('onclick="loadThread(1, this)"', $subberbaziThread1Response->getContent());
 
-
-                $this->be($this->ChAoT);
                 $chaotAllThreadsResponse = $this->call("GET", "threads");
-
                 $this->assertResponseOk();
                 $this->assertContains("Test_Subject", $chaotAllThreadsResponse->getContent());
                 $this->assertContains('onclick="loadThread(1, this)"', $chaotAllThreadsResponse->getContent());
-                //$this->assertContains('class="newmessagescount">', $chaotAllThreadsResponse->getContent());
-
 
                 $this->be($this->SoEinBazi);
                 $soeinbaziAllThreadsResponse = $this->call("GET", "threads");
@@ -67,6 +62,41 @@ class MessageManagementTest extends TestCase {
                 $this->assertNotContains("Test_Subject", $soeinbaziAllThreadsResponse->getContent());
                 $this->assertNotContains('onclick="loadThread(1,"', $soeinbaziAllThreadsResponse->getContent());
                 $this->assertNotContains('class="newmessagescount">', $soeinbaziAllThreadsResponse->getContent());
+            
+        }
+        
+        
+        
+        /**
+	 * Test: User creates a new thread with the first message
+         * Expectations:
+         *      * A new thread is created
+         *      * All selected participients can see the message, too
+         *      * Other users cannot see the message
+	 *
+	 * @return void
+	 */
+	public function testUserSeesNewMessagesInHisOverview(){
+            
+                $this->be($this->ChAoT);
+                $chaotOverViewResponseEmpty = $this->call("GET", "/");
+                $this->assertContains("Keine neuen Nachrichten", $chaotOverViewResponseEmpty->getContent());
+                
+                
+                $this->createStandardTestThread($this->Subberbazi);
+
+
+                $this->be($this->ChAoT);
+                $chaotOverViewResponseOneNewMessage = $this->call("GET", "/");
+                $this->assertContains("Neue Nachricht in einem Thread", $chaotOverViewResponseOneNewMessage->getContent());
+                
+                
+                $this->createStandardTestThread($this->Oberbazi);
+                
+                
+                $this->be($this->ChAoT);
+                $chaotOverViewResponseTwoNewMessages = $this->call("GET", "/");
+                $this->assertContains("Neue Nachrichten in 2 Threads", $chaotOverViewResponseTwoNewMessages->getContent());
             
         }
         
@@ -89,7 +119,7 @@ class MessageManagementTest extends TestCase {
                 $this->assertResponseOk();
                 $this->assertNotContains("OberbazisMessage", $startResponse->getContent());
                 
-                $this->call("POST", "/thread/newmessage/1", [
+                $this->call("POST", "/thread/1/newmessage", [
                     "message" => "OberbazisMessage",
                     "_token" => csrf_token(),
                 ]);
@@ -121,7 +151,7 @@ class MessageManagementTest extends TestCase {
                 $this->assertNotContains("SoEinBazi", $startResponse->getContent());
                 $this->assertNotContains("ChAoT", $startResponse->getContent());
                 
-                $this->call("POST", "/thread/addusers/1", [
+                $this->call("POST", "/thread/1/addusers", [
                     "usernames" => "SoEinBazi,ChAoT",
                     "_token" => csrf_token(),
                 ]);
@@ -204,7 +234,7 @@ class MessageManagementTest extends TestCase {
                 $this->call("GET", "/thread/1");
                 $this->assertResponseOk();
 
-                $this->call("POST", "thread/newmessage/1", [
+                $this->call("POST", "thread/1/newmessage", [
                     "message" => "",
                     "_token" => csrf_token()
                 ]);
@@ -231,7 +261,7 @@ class MessageManagementTest extends TestCase {
                 $this->call("GET", "/thread/1");
                 $this->assertResponseOk();
 
-                $this->call("POST", "thread/addusers/1", [
+                $this->call("POST", "thread/1/addusers", [
                     "usernames" => "",
                     "_token" => csrf_token()
                 ]);
@@ -282,7 +312,7 @@ class MessageManagementTest extends TestCase {
                 $this->call("GET", "/threads");
                 $this->assertResponseOk();
 
-                $this->call("POST", "thread/newmessage/1", [
+                $this->call("POST", "thread/1/newmessage", [
                     "message" => "Hey there",
                     "_token" => csrf_token()
                 ]);
@@ -309,7 +339,7 @@ class MessageManagementTest extends TestCase {
                 $this->call("GET", "/threads");
                 $this->assertResponseOk();
 
-                $this->call("POST", "thread/addusers/1", [
+                $this->call("POST", "thread/1/addusers", [
                     "usernames" => "Oberbazi,ChAoT",
                     "_token" => csrf_token()
                 ]);
@@ -376,7 +406,7 @@ class MessageManagementTest extends TestCase {
                 $this->call("GET", "/threads");
                 $this->assertResponseOk();
                 
-                $this->call("POST", "/thread/newmessage/1", [
+                $this->call("POST", "/thread/1/newmessage", [
                     "message" => "Not_allowed_message",
                     "_token" => Session::token()
                 ]);
@@ -414,7 +444,7 @@ class MessageManagementTest extends TestCase {
                 $this->call("GET", "/threads");
                 $this->assertResponseOk();
                 
-                $response = $this->call("POST", "/thread/addusers/1", [
+                $response = $this->call("POST", "/thread/1/addusers", [
                     "usernames" => "ChAoT,SoEinBazi",
                     "_token" => Session::token()
                 ]);

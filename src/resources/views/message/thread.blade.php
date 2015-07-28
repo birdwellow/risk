@@ -16,7 +16,7 @@
                                 <a class="mini-button" href="javascript:UI.toggle('#add-users')">+</a>
                             </div>
                             
-                            <div id="add-users">
+                            <div id="add-users" style="display: none;">
                                 
                                 <form method="POST" action="{{ route('thread.addusers', $thread->id) }}" class="form-horizontal" role="form" >
 
@@ -28,7 +28,7 @@
                                                 <input type="userselector" name="usernames" placeholder="{{ Lang::get("message.placeholder.addusers") }}">
                                             </td>
                                             <td class="slave-cell">
-                                                <input type="submit" value="+" class="btn btn-primary" />
+                                                <input type="submit" value="{{ Lang::get("message.button.add") }}" class="btn btn-primary" />
                                             <td>
                                         </tr>
                                     </table>

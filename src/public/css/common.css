@@ -50,7 +50,7 @@
         background-color: rgba(0,0,0,0.5);
     }
     .panel-default {
-        margin-bottom: 20px;
+        bottom: 20px;
         border-color: inherit;
     }
     .panel-heading {
@@ -97,7 +97,7 @@
         padding-left: 5px;
     }
     .slave-cell .btn-primary {
-        padding: 6px 12px;
+        padding: 6px 12px !important;
     }
     
     
@@ -203,18 +203,18 @@
 ****************************************************/
     
     ::-webkit-input-placeholder { /* WebKit browsers */
-        color:    #666;
+        color: #666;
     }
     :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-       color:    #666;
+       color: #666;
        opacity:  1;
     }
     ::-moz-placeholder { /* Mozilla Firefox 19+ */
-       color:    #666;
+       color: #666;
        opacity:  1;
     }
     :-ms-input-placeholder { /* Internet Explorer 10+ */
-       color:    #666;
+       color: #666;
     }
     .form-control {
         height: 42px;
@@ -245,6 +245,14 @@
     }
     .btn {
         font-size: inherit;
+    }
+    .btn-default,
+    .btn-primary,
+    .btn-success,
+    .btn-info,
+    .btn-warning,
+    .btn-danger{
+        box-shadow: none;
     }
     .btn-default:hover,
     .btn-default:focus,
@@ -364,12 +372,14 @@
         margin: 10px;
     }
     .mini-button{
-        background: rgba(255,255,255,0.25);
         padding: 0 5px;
         border-radius: 5px;
+        border: 1px solid #fff;
+        margin-left: 5px;
+        margin-top: -5px;
     }
     .mini-button:hover{
-        background: rgba(255,255,255,0.5);
+        background: rgba(0,0,0,0.5);
     }
     .usernamedisplay{
         display: inline-block;
@@ -389,7 +399,6 @@
     }
     .usernamedisplay .removesymbol:hover {
         background: rgba(255,255,255,0.5);
-        color: #8a6d3b;
     }
     .dropdown-toggle {
         cursor: pointer;
@@ -471,10 +480,12 @@
     .alert-error .alert-link {
         color: #843534;
     }
-    a.warn{
+    input.warn,
+    input.warn{
         color: #d9534f;
     }
-    a.warn:hover{
+    input.warn:hover,
+    input.warn:hover{
         color: #ea645f;
     }
     a.action{
@@ -484,7 +495,7 @@
         color: #4da94e;
     }
     .warning-small{
-        font-size: 14px;
+        font-size: 0.8em;
         line-height: 100%;
         color: #d9534f;
         margin-top: 10px;
@@ -539,10 +550,11 @@
         padding: 10px;
     }
     #modal-dialog .footer {
-        text-align: right;
+        text-align: center;
     }
     #modal-dialog .btn {
-        margin-left: 5px;
+        margin: 0 5px;
+        min-width: 100px;
     }
     #modal-dialog.error {
         background: rgba(200,0,0,0.85);
@@ -756,9 +768,6 @@
     }
     .thread.unread {
         background-color: rgba(0, 0, 0, 0.5);
-    }
-    #add-users {
-        display: none;
     }
     a.newmessages {
         background: rgba(0,0,0,0.5);

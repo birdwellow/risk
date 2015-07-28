@@ -80,9 +80,12 @@
                                                         </label>
                                                     
                                                         <div class="col-md-6 control">
-                                                                <a class="warn btn btn-primary" href="{{ route("match.cancel", $match->id) }}">
-                                                                      {{ Lang::get('message.link.match.cancel') }}
-                                                                </a>
+                                                                <input
+                                                                        type="button"
+                                                                        class="warn btn btn-primary"
+                                                                        onclick="UI.confirmRedirect('{{ route("match.cancel", $match->id) }}', '{{ Lang::get('message.field.match.cancel') }}', '{{ Lang::get('message.title.match.cancel') }}', '{{ Lang::get('message.button.no') }}', '{{ Lang::get('message.button.yes') }}');"
+                                                                        value="{{ Lang::get('message.link.match.cancel') }}">
+                                                                </input>
                                                                 <br>
                                                                 <div class="warning-small">
                                                                     {{ Lang::get('message.field.match.cancel.warning') }}
