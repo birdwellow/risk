@@ -338,6 +338,20 @@
         box-sizing: border-box;
         box-shadow: inset 5px 5px 5px rgba(0,0,0,0.5);
     }
+    .invalid {
+        background-color: rgba(127,0,0,0.5) !important;
+        color: #fbb !important;
+        border: 2px solid #f88 !important;
+        padding: 3px !important;
+        background-position: right 10px center;
+        background-repeat: no-repeat;
+        background-image: url(/img/error.png);
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5) inset, 0 0 5px rgba(255, 127, 127, 0.9) !important;
+    }
+    .invalid input[type="userselector"]{
+        background-image: none;
+        padding: 0 !important;
+    }
     input[type="userselector"]{
         background: none;
         color: #fff;
@@ -379,7 +393,7 @@
         margin-top: -5px;
     }
     .mini-button:hover{
-        background: rgba(0,0,0,0.5);
+        background: rgba(255,255,255,0.25);
     }
     .usernamedisplay{
         display: inline-block;

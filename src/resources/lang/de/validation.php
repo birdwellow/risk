@@ -20,6 +20,7 @@ return [
 	"alpha_dash"           => ":attribute darf nur Buchstaben, Nummern und Schr&auml;gstriche enthalten.",
 	"alpha_num"            => ":attribute darf nur Buchstaben und Nummern enthalten.",
 	"array"                => ":attribute muss ein Feld (Array) sein.",
+        "auth"                 => ":attribute ist nicht g&uuml;ltig.",
 	"before"               => ":attribute muss ein Datum vor :date sein.",
 	"between"              => [
 		"numeric" => ":attribute muss zwischen :min und :max sein.",
@@ -64,6 +65,7 @@ return [
 	"required_without"     => ":attribute wird ben&ouml;tigt, wenn :values nicht gesetzt ist.",
 	"required_without_all" => ":attribute wird ben&ouml;tigt, wenn keiner von :values are present.",
 	"same"                 => ":attribute und m&uuml;ssen :other &uuml;bereinstimmen.",
+        "selected"             => "Keine :attribute ausgew&auml;hlt.",
 	"size"                 => [
 		"numeric" => ":attribute muss :size gro&szlig; sein.",
 		"file"    => ":attribute muss :size kilobyte gro&szlig; sein.",

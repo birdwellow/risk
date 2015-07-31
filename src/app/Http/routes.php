@@ -21,37 +21,27 @@
 
 Route::get('/', [
     'as' => 'index',
-    'uses' => 'UserController@index'
+    'uses' => 'AccountController@index'
 ]);
 
-Route::get('user/profile', [
-    'as' => 'user.profile',
-    'uses' => 'UserController@profile'
-]);
-
-Route::post('user/profile', [
-    'as' => 'user.profile.save',
-    'uses' => 'UserController@profileSave'
-]);
-
-Route::get('user/options', [
+Route::get('options', [
     'as' => 'user.options',
-    'uses' => 'UserController@options'
+    'uses' => 'AccountController@options'
 ]);
 
-Route::post('user/options', [
+Route::post('options', [
     'as' => 'user.options.save',
-    'uses' => 'UserController@optionsSave'
+    'uses' => 'AccountController@optionsSave'
 ]);
 
-Route::post('user/password', [
+Route::post('changepassword', [
     'as' => 'user.password.save',
-    'uses' => 'UserController@passwordSave'
+    'uses' => 'AccountController@passwordSave'
 ]);
 
-Route::get('lang/{lang}', [
+Route::get('switchlanguage/{lang}', [
     'as' => 'switch.language',
-    'uses' => 'LanguageController@switchTo'
+    'uses' => 'AccountController@switchToLanguage'
 ]);
 
 Route::get('json/users/names', [
@@ -106,16 +96,6 @@ Route::get('match/administrate/{id}', [
 Route::post('match/administrate/{id}', [
     'as' => 'match.administrate.save',
     'uses' => 'MatchController@saveAdministrate'
-]);
-
-Route::get('invitation/reject/{id}', [
-    'as' => 'invitation.reject',
-    'uses' => 'MatchController@rejectInvitation'
-]);
-
-Route::get('invitation/delete/{id}', [
-    'as' => 'invitation.delete',
-    'uses' => 'MatchController@deleteInvitation'
 ]);
 
 

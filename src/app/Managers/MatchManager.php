@@ -65,11 +65,9 @@ class MatchManager {
     }
     
     
-    public function getMatches($criteria = array()){
+    public function getAllMatches(){
         
-        if(count($criteria) == 0){
-            return Match::all();
-        }
+        return Match::all();
         
     }
     

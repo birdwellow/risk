@@ -21,10 +21,10 @@
                                             
                                                 <div class="form-group">
                                                         <label class="col-md-3 control-label">
-                                                                {{ Lang::get('message.field.message.thread.subject') }}
+                                                                {{ Lang::get('message.field.thread.subject') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <input value="{{ old('subject') }}" type="text" name="subject" />
+                                                                <input value="{{ old('subject') }}" type="text" name="subject" class="{{ invalid('thread.subject') }}" />
                                                         </div>
                                                 </div>
                                             
@@ -35,7 +35,7 @@
                                                         <div class="col-md-9">
                                                                 <input type="checkbox" id="reusethread" name="reusethread" />
                                                                 <label for="reusethread">
-                                                                    {{ Lang::get('message.field.message.thread.reuseexistingthread') }}
+                                                                    {{ Lang::get('message.field.thread.reuseexistingthread') }}
                                                                 </label>
                                                         </div>
                                                 </div>
@@ -49,10 +49,10 @@
                                             
                                                 <div class="form-group">
                                                         <label class="col-md-3 control-label">
-                                                                {{ Lang::get('message.field.message.thread.recipients') }}
+                                                                {{ Lang::get('message.field.thread.recipients') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <input value="{{ old('usernames') }}" name="usernames" type="userselector" />
+                                                                <input value="{{ old('usernames') }}" name="usernames" type="userselector" class="{{ invalid('thread.recipients') }}" />
                                                         </div>
                                                 </div>
 

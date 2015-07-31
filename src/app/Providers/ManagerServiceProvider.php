@@ -9,9 +9,10 @@ class ManagerServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function boot()
-	{
+	public function boot() {
+            
 		//
+            
 	}
 
 	/**
@@ -19,23 +20,16 @@ class ManagerServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function register()
-	{
+	public function register() {
+            
             $this->app->bind("MatchManager", function(){
                 return new \Game\Managers\MatchManager();
             });
             
-            $this->app->bind("LanguageManager", function(){
-                return new \Game\Managers\LanguageManager();
+            $this->app->bind("AccountManager", function(){
+                return new \Game\Managers\AccountManager();
             });
             
-            $this->app->bind("OptionsManager", function(){
-                return new \Game\Managers\OptionsManager();
-            });
-            
-            $this->app->bind("JsonRestManager", function(){
-                return new \Game\Managers\JsonRestManager();
-            });
 	}
 
 }

@@ -52,7 +52,7 @@ return [
         'field.password' => 'Passwort',
         'field.old.password' => 'Altes Passwort',
         'field.new.password' => 'Neues Passwort',
-        'field.new.password.confirmation' => "Neues Passwort best&auml;tigen",
+        'field.new.password_confirmation' => "Neues Passwort best&auml;tigen",
         'field.avatar.file' => "Avatar-File",
     
         'field.match.name' => "Name",
@@ -73,10 +73,10 @@ return [
         'field.user.theme' => "Schema",
         'field.user.language' => "Sprache",
     
-        'field.message.thread.subject' => "Titel",
-        'field.message.text' => "Deine Nachricht",
-        'field.message.thread.recipients' => "Empf&auml;nger",
-        'field.message.thread.reuseexistingthread' => "Alten Thread mit denselben Usern verwenden, falls es einen gibt",
+        'field.thread.subject' => "Titel",
+        'field.thread.recipients' => "Empf&auml;nger",
+        'field.thread.reuseexistingthread' => "Alten Thread mit denselben Usern verwenden, falls es einen gibt",
+        'field.message.text' => "Nachricht",
     
     
         'error.userinput' => "Es gab einen Fehler mit deinen Daten.",
@@ -108,6 +108,7 @@ return [
         'title.home' => "Home",
         'title.matches' => "Matches",
         'title.user.profile' => "User-Profil",
+        'title.user.options' => "User-Optionen",
         'title.user.data' => "User-Daten",
         'title.user.password' => "Passwort",
         'title.game.settings' => "Spiel-Optionen",

@@ -159,12 +159,6 @@
                                                         </a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-                                                                        <a href="{{ route('user.profile') }}">
-                                                                            <img class="icon-s" src="/img/profile-s.png">
-                                                                            {{ Lang::get('message.link.profile') }}
-                                                                        </a>
-                                                                </li>
-								<li>
                                                                         <a href="{{ route('user.options') }}">
                                                                             <img class="icon-s" src="/img/options-s.png">
                                                                             {{ Lang::get('message.link.options') }}
@@ -185,13 +179,12 @@
 		</div>
             
 	</nav>
-    
-
+        
         @if (session()->has('message') || isset($message))
         
         <?php $message = ( session('message') ? session('message') : $message); ?>
         
-        <div class="container">
+        <div class="container" id="alert-container">
                 <div class="col-md-10 col-md-offset-1 alert alert-{{ $message->type }}">
                         {{ Lang::get($message->messageKey) }}
                         @if (isset($message->hints) && $message->hints)

@@ -53,7 +53,7 @@ return [
         'field.password' => 'Password',
         'field.old.password' => 'Old Password',
         'field.new.password' => 'New Password',
-        'field.new.password.confirmation' => "Confirm New Password",
+        'field.new.password_confirmation' => "Confirm New Password",
         'field.avatar.file' => "Avatar File",
     
         'field.match.name' => "Name",
@@ -75,10 +75,10 @@ return [
         'field.user.theme' => "Theme",
         'field.user.language' => "Language",
     
-        'field.message.thread.subject' => "Title",
-        'field.message.text' => "Your Message",
-        'field.message.thread.recipients' => "Recipients",
-        'field.message.thread.reuseexistingthread' => "If it exists, use an old thread with the same users",
+        'field.thread.subject' => "Title",
+        'field.message.text' => "Message",
+        'field.thread.recipients' => "Recipients",
+        'field.thread.reuseexistingthread' => "If it exists, use an old thread with the same users",
     
     
         'error.userinput' => "There were some problems with your input.",
@@ -110,6 +110,7 @@ return [
         'title.home' => "Home",
         'title.matches' => "Matches",
         'title.user.profile' => "User Profile",
+        'title.user.options' => "User Options",
         'title.user.data' => "User Data",
         'title.user.password' => "Password",
         'title.game.settings' => "Game Settings",

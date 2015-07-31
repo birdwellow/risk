@@ -2,21 +2,17 @@
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Game\Managers\LanguageManager;
-use Game\Managers\OptionsManager;
+use Game\Managers\AccountManager;
 
 class UserSessionMiddleware {
     
     
-        protected $languageManager;
-        
-        protected $optionsManager;
+        protected $accountManager;
 
 
-        public function __construct(LanguageManager $languageManager, OptionsManager $optionsManager) {
+        public function __construct(AccountManager $accountManager) {
 
-            $this->languageManager = $languageManager;
-            $this->optionsManager = $optionsManager;
+            $this->accountManager = $accountManager;
             
         }
 
@@ -27,13 +23,12 @@ class UserSessionMiddleware {
 	 * @param  \Closure  $next
 	 * @return mixed
 	 */
-	public function handle($request, Closure $next)
-	{       
-                $this->languageManager->setUserLocale(Auth::user());
-                $this->languageManager->setFallbackLocale();
-                $this->languageManager->setAppLocale();
+	public function handle($request, Closure $next) {
+            
+                $this->accountManager->setAppLocale(Auth::user());
                 
 		return $next($request);
+                
 	}
 
 }

@@ -1,16 +1,12 @@
 @extends('app')
 
 @section('content')
-    
-<script>
-    var username = "{{ $user->name }}";
-</script>
 
 <div class="container">
     
         <div class="col-md-8 col-md-offset-0">
                 <div class="panel panel-default">
-                    @if(!$user->joinedMatch)
+                    @if(!Auth::user()->joinedMatch)
                         <div class="panel-heading">
                             {{ Lang::get('message.title.overview.nomatch') }}
                         </div>
@@ -26,7 +22,7 @@
                                                         {{ Lang::get('message.field.match.name') }}
                                                 </td>
                                                 <td class="data">
-                                                        {{ $user->joinedMatch->name }}
+                                                        {{ Auth::user()->joinedMatch->name }}
                                                 </td>
                                         </tr>
                                         <tr>
@@ -34,7 +30,7 @@
                                                         {{ Lang::get('message.field.match.joinedusers') }}
                                                 </td>
                                                 <td class="data">
-                                                    @foreach($user->joinedMatch->joinedUsers as $joinedUser)
+                                                    @foreach(Auth::user()->joinedMatch->joinedUsers as $joinedUser)
                                                         {{ $joinedUser->name }}
                                                     @endforeach
                                                 </td>
@@ -44,7 +40,7 @@
                                                         {{ Lang::get('message.field.match.startdate') }}
                                                 </td>
                                                 <td class="data">
-                                                        {{ $user->joinedMatch->created_at }}
+                                                        {{ Auth::user()->joinedMatch->created_at }}
                                                 </td>
                                         </tr>
                                         <tr>
@@ -52,7 +48,7 @@
                                                         {{ Lang::get('message.field.match.createdby') }}
                                                 </td>
                                                 <td class="data">
-                                                        {{ $user->joinedMatch->createdBy->name }}
+                                                        {{ Auth::user()->joinedMatch->createdBy->name }}
                                                 </td>
                                         </tr>
                                 </table>

@@ -37,7 +37,7 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ Lang::get('message.field.password.confirmation') }}</label>
+							<label class="col-md-4 control-label">{{ Lang::get('message.field.password_confirmation') }}</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="password_confirmation">
 							</div>

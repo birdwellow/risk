@@ -195,7 +195,7 @@ class MessageManagementTest extends TestCase {
                 ]);
                 $this->assertRedirectedTo("thread/new");
                 $errorResponse1 = $this->call("GET", "thread/new");
-                $this->assertContains("Please enter a subject.", $errorResponse1->getContent());
+                $this->assertContains("The Title field is required.", $errorResponse1->getContent());
                 
                 $this->createStandardTestThread($this->Subberbazi, [
                     "subject" => "This is a test subject",
@@ -205,7 +205,7 @@ class MessageManagementTest extends TestCase {
                 ]);
                 $this->assertRedirectedTo("thread/new");
                 $errorResponse2 = $this->call("GET", "thread/new");
-                $this->assertContains("You did not select any users.", $errorResponse2->getContent());
+                $this->assertContains("No Recipients selected.", $errorResponse2->getContent());
                 $this->assertContains("This is a test subject", $errorResponse2->getContent());
                 
                 $this->createStandardTestThread($this->Subberbazi, [
@@ -241,7 +241,7 @@ class MessageManagementTest extends TestCase {
                 $this->assertRedirectedTo("thread/1");
                 
                 $subberbaziErrorResponse = $this->call("GET", "/threads");
-                $this->assertContains("Please enter a message.", $subberbaziErrorResponse->getContent());
+                $this->assertContains("The Message field is required.", $subberbaziErrorResponse->getContent());
                 
         }
         
@@ -268,7 +268,8 @@ class MessageManagementTest extends TestCase {
                 $this->assertRedirectedTo("thread/1");
                 
                 $subberbaziErrorResponse = $this->call("GET", "/threads");
-                $this->assertContains("You did not select any users.", $subberbaziErrorResponse->getContent());
+                $this->assertContains("No users could be added.", $subberbaziErrorResponse->getContent());
+                $this->assertContains("No Recipients selected.", $subberbaziErrorResponse->getContent());
                 
         }
         

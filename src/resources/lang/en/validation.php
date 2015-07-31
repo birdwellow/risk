@@ -20,6 +20,7 @@ return [
 	"alpha_dash"           => "The :attribute may only contain letters, numbers, and dashes.",
 	"alpha_num"            => "The :attribute may only contain letters and numbers.",
 	"array"                => "The :attribute must be an array.",
+        "auth"                 => "The :attribute is not valid.",
 	"before"               => "The :attribute must be a date before :date.",
 	"between"              => [
 		"numeric" => "The :attribute must be between :min and :max.",
@@ -64,6 +65,7 @@ return [
 	"required_without"     => "The :attribute field is required when :values is not present.",
 	"required_without_all" => "The :attribute field is required when none of :values are present.",
 	"same"                 => "The :attribute and :other must match.",
+        "selected"             => "No :attribute selected.",
 	"size"                 => [
 		"numeric" => "The :attribute must be :size.",
 		"file"    => "The :attribute must be :size kilobytes.",

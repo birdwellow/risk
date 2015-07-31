@@ -40,10 +40,14 @@ class Handler extends ExceptionHandler {
 	public function render($request, Exception $e)
 	{
 		if($e instanceof GameException){
+                    $errorFeedback = new ErrorFeedback(
+                            $e->getUIMessageKey(),
+                            $e->getCustomData()
+                    );
                     return redirect()
                             ->back()
                             ->withInput()
-                            ->with("message", new ErrorFeedback( $e->getUIMessageKey() ) );
+                            ->with("message", $errorFeedback );
                 }
                 return parent::render($request, $e);
 	}

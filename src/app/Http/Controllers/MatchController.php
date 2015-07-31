@@ -28,7 +28,7 @@ class MatchController extends Controller {
         
 	public function index() {
             
-                $matches = $this->matchManager->getMatches();
+                $matches = $this->matchManager->getAllMatches();
                 $user = Auth::user();
                 $invitations = $this->matchManager->getNewInvitationsForUser($user->id);
                 $rejectedInvitations = $this->matchManager->getRejectedInvitationsForUser($user->id);

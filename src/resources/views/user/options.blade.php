@@ -10,7 +10,7 @@
     
         <div class="col-md-10 col-md-offset-1">
                 <div class="panel panel-default game-panel">
-                        <div class="panel-heading">{{ Lang::get('message.title.user.profile') }}</div>
+                        <div class="panel-heading">{{ Lang::get('message.title.user.options') }}</div>
 
                         <div class="panel-body">
                                     
@@ -28,7 +28,7 @@
                                                                 {{ Lang::get('message.field.username') }}
                                                         </label>
                                                         <div class="col-md-6">
-                                                                <input type="text" name="name" value="{{ Auth::user()->name }}" />
+                                                                <input type="text" name="name" value="{{ oldordefault('name', Auth::user()->name) }}" class="{{ invalid('username') }}"/>
                                                         </div>
                                                 </div>
 
@@ -37,7 +37,7 @@
                                                                 {{ Lang::get('message.field.email') }}
                                                         </label>
                                                         <div class="col-md-6">
-                                                                <input type="text" name="email" value="{{ Auth::user()->email }}" />
+                                                                <input type="text" name="email" value="{{ oldordefault('email', Auth::user()->email) }}" class="{{ invalid('email') }}"/>
                                                         </div>
                                                 </div>
 
@@ -85,7 +85,7 @@
                                                 
                                                 <div class="form-group">
                                                     <label class="col-md-4 control-label">
-                                                            {{ Lang::get('message.field.new.password.confirmation') }}
+                                                            {{ Lang::get('message.field.new.password_confirmation') }}
                                                     </label>
                                                     <div class="col-md-6">
                                                             {!! Form::password('newpasswordconfirm') !!}

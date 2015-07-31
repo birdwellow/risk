@@ -148,6 +148,7 @@ function loadThread (threadId, referrer) {
     
     var url = "/thread/" + threadId + "/ajaxpart";
     UI.loadContentFromTo(url, "#thread");
+    $("#alert-container").hide();
     
 }
 
@@ -427,9 +428,12 @@ function Dialog(config){
 
 function UserSelector(baseInput){
     
+    var classes = baseInput.attr("class");
+    baseInput.attr("class", "");
+    
     baseInput.addClass("loading");
     
-    baseInput.wrap("<div class='userselector-wrapper'></div>");
+    baseInput.wrap("<div class='" + classes + " userselector-wrapper'></div>");
     
     var marginTop = 7;
     

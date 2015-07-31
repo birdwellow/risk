@@ -25,7 +25,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <input type="userselector" name="usernames" placeholder="{{ Lang::get("message.placeholder.addusers") }}">
+                                                <input type="userselector" name="usernames" placeholder="{{ Lang::get("message.placeholder.addusers") }}" class="{{ invalid('thread.recipients') }}">
                                             </td>
                                             <td class="slave-cell">
                                                 <input type="submit" value="{{ Lang::get("message.button.add") }}" class="btn btn-primary" />
@@ -65,7 +65,7 @@
 
                                         <div class="form-group">
                                             <div class="col-md-12">
-                                                    <textarea id="message" name="message"></textarea>
+                                                    <textarea id="message" name="message" class="{{ invalid('message.text') }}"></textarea>
                                             </div>
                                         </div>
 

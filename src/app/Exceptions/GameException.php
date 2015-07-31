@@ -48,35 +48,27 @@ class GameException extends Exception {
             "category" => "error.user"
         ],
         "USER.INVALID.OPTIONS" => [
-            "message" => "error.user.invalid.options",
+            "message" => "error.user.options.notsaved",
             "category" => "error.user"
         ],
         "USER.CREATE.MATCH.WRONG.PARAMETERS" => [
             "message" => "error.user.create.match.wrong.parameters",
             "category" => "error.user"
         ],
-        "USER.NEW.MESSAGE.WRONG.PARAMETERS" => [
-            "message" => "error.user.new.message.wrong.parameters",
+        "USER.PASSWORDNOTCHANGED" => [
+            "message" => "error.user.password.notchanged",
             "category" => "error.user"
         ],
-        "NO.USERS.SELECTED" => [
-            "message" => "error.user.no.users.selected",
+        "USER.THREADNOTCREATED" => [
+            "message" => "error.user.thread.notcreated",
             "category" => "error.user"
         ],
-        "NO.VALID.SUBJECT.SPECIFIED" => [
-            "message" => "error.user.no.valid.subject.specified",
+        "USER.MESSAGENOTSENT" => [
+            "message" => "error.user.message.notsent",
             "category" => "error.user"
         ],
-        "USER.WRONG.OLDPASSWORD" => [
-            "message" => "error.user.wrong.old.password",
-            "category" => "error.user"
-        ],
-        "USER.PASSWORDCONFIRMATION.NOT.MATCHING" => [
-            "message" => "error.user.passwordconfirmation.not.matching",
-            "category" => "error.user"
-        ],
-        "USER.PASSWORDINVALID" => [
-            "message" => "error.user.password.invalid",
+        "USER.USERSNOTADDEDTOTHREAD" => [
+            "message" => "error.user.thread.nousersadded",
             "category" => "error.user"
         ],
         

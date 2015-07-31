@@ -1,25 +1,25 @@
 <?php namespace Game\Http\Controllers;
 
-use \Illuminate\Support\Facades\Auth;
-use \Illuminate\Support\Facades\Log;
-use Game\User;
-use Illuminate\Support\Facades\Request;
-use Game\Managers\JsonRestManager;
+use Illuminate\Support\Facades\Auth;
+use Game\Managers\UserManager;
 
 class JsonRestController extends Controller {
     
-        protected $jsonRestManager;
+        protected $userManager;
 
 
-        public function __construct(JsonRestManager $jsonRestManager)
-	{
-                $this->jsonRestManager = $jsonRestManager;
+        public function __construct(UserManager $userManager) {
+            
+                $this->userManager = $userManager;
 		$this->middleware('auth');
+                
 	}
 
 	public function allUserNamesExceptCurrentUser() {
-                $userNames = $this->jsonRestManager->getAllUserNames([Auth::user()->name]);
+            
+                $userNames = $this->userManager->getAllUserNames([Auth::user()->name]);
 		return $userNames;
+                
 	}
 
 }
