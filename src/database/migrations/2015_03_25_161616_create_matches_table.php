@@ -22,12 +22,14 @@ class CreateMatchesTable extends Migration {
                         $table->string('name');
                         $table->integer('cardChangeBonusLevel');
 			$table->timestamps();
+                        $table->integer('thread_id')->unsigned();
+                        $table->foreign('thread_id')->references('id')->on('threads');
 		});
                 
                 Schema::table('users', function(Blueprint $table)
                 {
                         $table->integer('joined_match_id')->nullable()->unsigned();
-                        //$table->foreign('joined_match_id')->references('id')->on('matches');
+                        $table->foreign('joined_match_id')->references('id')->on('matches');
                 });
 	}
 
@@ -38,6 +40,11 @@ class CreateMatchesTable extends Migration {
 	 */
 	public function down()
 	{
+                Schema::table('users', function(Blueprint $table)
+                {
+                        $table->dropForeign('users_joined_match_id_foreign');
+                        $table->dropColumn('joined_match_id');
+                });
 		Schema::drop('matches');
 	}
 

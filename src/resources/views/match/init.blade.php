@@ -15,7 +15,7 @@
                         </div>
 
                         <div class="panel-body">
-                                <form method="POST" action="{{ route('match.create') }}" class="form-horizontal" role="form" >
+                                <form method="POST" action="{{ route('match.new.create') }}" class="form-horizontal" role="form" >
                                     
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 

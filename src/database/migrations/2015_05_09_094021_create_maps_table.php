@@ -33,9 +33,13 @@ class CreateMapsTable extends Migration {
 	 */
 	public function down()
 	{
-                DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+                Schema::table('matches', function(Blueprint $table)
+                {
+                        $table->dropForeign('matches_map_id_foreign');
+                        $table->dropColumn('map_id');
+                });
+                
 		Schema::drop('maps');
-                DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 }

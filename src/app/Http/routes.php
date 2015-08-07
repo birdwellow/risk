@@ -63,19 +63,19 @@ Route::get('match/new', [
     'uses' => 'MatchController@init'
 ]);
 
-Route::post('match/create', [
-    'as' => 'match.create',
+Route::post('match/new', [
+    'as' => 'match.new.create',
     'uses' => 'MatchController@create'
-]);
-
-Route::get('match/join/{id}', [
-    'as' => 'match.join.init',
-    'uses' => 'MatchController@joinInit'
 ]);
 
 Route::get('match', [
     'as' => 'match.goto',
     'uses' => 'MatchController@goToMatch'
+]);
+
+Route::get('match/join/{id}', [
+    'as' => 'match.join.init',
+    'uses' => 'MatchController@joinInit'
 ]);
 
 Route::post('match/join/{id}', [

@@ -26,21 +26,6 @@ class MatchController extends Controller {
 
         
         
-	public function index() {
-            
-                $matches = $this->matchManager->getAllMatches();
-                $user = Auth::user();
-                $invitations = $this->matchManager->getNewInvitationsForUser($user->id);
-                $rejectedInvitations = $this->matchManager->getRejectedInvitationsForUser($user->id);
-		return view('user.overview')
-                        ->with("matches", $matches)
-                        ->with("user", $user)
-                        ->with("invitations", $invitations)
-                        ->with("rejectedInvitations", $rejectedInvitations);
-	}
-
-        
-        
 	public function init() {
                 $this->matchManager->checkUserCanCreateMatch(Auth::user());
                 $mapNames = $this->matchManager->getMapNames();
@@ -74,7 +59,7 @@ class MatchController extends Controller {
                 $user = Auth::user();
                 $this->matchManager->checkUserCanDeleteMatch($id, $user);
                 $this->matchManager->deleteMatch($id, $user);
-                return $this->index();
+                return redirect("index")->with("message", new SuccessFeedback("Cancelled"));
 
 	}
         
@@ -110,30 +95,6 @@ class MatchController extends Controller {
                 return view('match.play')->with('match', $match);
             
         }
-        
-        
-        
-        public function rejectInvitation($id) {
-                    
-                $user = Auth::user();
-                $this->matchManager->rejectInvitation((int)$id, $user);
-                return redirect()
-                            ->back()
-                            ->with("message", new WarnFeedback("message.warning.invitation.rejected"));
-
-        }
-        
-        
-        
-        public function deleteInvitation($id) {
-                    
-                $user = Auth::user();
-                $this->matchManager->deleteInvitation((int)$id, $user);
-                return redirect()
-                            ->back()
-                            ->with("message", new SuccessFeedback("message.success.invitation.deleted"));
-
-        }
     
     
         
@@ -163,14 +124,6 @@ class MatchController extends Controller {
                             ->with("match", $match)
                             ->with("message", new SuccessFeedback("message.success.matchdata.save"));
 
-        }
-        
-        
-        
-        public function cancelMatch($id) {
-            
-                return redirect("index")->with("message", new SuccessFeedback("Cancelled"));
-            
         }
 
 }

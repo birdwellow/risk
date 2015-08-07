@@ -50,7 +50,7 @@
         background-color: rgba(0,0,0,0.5);
     }
     .panel-default {
-        bottom: 20px;
+        margin-bottom: 20px;
         border-color: inherit;
     }
     .panel-heading {

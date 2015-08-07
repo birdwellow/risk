@@ -10,6 +10,9 @@
                         <div class="panel-heading">
                             {{ Lang::get('message.title.overview.nomatch') }}
                         </div>
+                    
+                        <div class="panel-body">
+                        </div>
                     @else
                         <div class="panel-heading">
                                 {{ Lang::get('message.title.overview.yourmatch') }}

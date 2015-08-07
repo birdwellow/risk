@@ -70,7 +70,7 @@
                                                             {{ Lang::get('input.user_password') }}
                                                     </label>
                                                     <div class="col-md-6">
-                                                            {!! Form::password('user_password') !!}
+                                                            <input type="password" class="{{ invalid('user_password') }}" name="user_password">
                                                     </div>
                                                 </div>
 
@@ -79,7 +79,7 @@
                                                             {{ Lang::get('input.new_user_password') }}
                                                     </label>
                                                     <div class="col-md-6">
-                                                            {!! Form::password('new_user_password') !!}
+                                                            <input type="password" class="{{ invalid('new_user_password') }}" name="new_user_password">
                                                     </div>
                                                 </div>
                                                 
@@ -88,7 +88,7 @@
                                                             {{ Lang::get('input.new_user_password_confirmation') }}
                                                     </label>
                                                     <div class="col-md-6">
-                                                            {!! Form::password('new_user_password_confirmation') !!}
+                                                            <input type="password" class="{{ invalid('new_user_password_confirmation') }}" name="new_user_password_confirmation">
                                                     </div>
                                                 </div>
 
