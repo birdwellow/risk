@@ -143,7 +143,49 @@ Route::get('thread/{threadId}/ajaxpart', [
 
 
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+Route::get('auth/login', [
+    'as' => 'show.login',
+    'uses' => 'AuthController@showLogin'
+]);
+
+Route::post('auth/login', [
+    'as' => 'login',
+    'uses' => 'AuthController@login'
+]);
+
+Route::get('auth/register', [
+    'as' => 'show.register',
+    'uses' => 'AuthController@showRegister'
+]);
+
+Route::post('auth/register', [
+    'as' => 'register',
+    'uses' => 'AuthController@register'
+]);
+
+Route::get('auth/logout', [
+    'as' => 'logout',
+    'uses' => 'AuthController@logout'
+]);
+
+
+
+Route::get('password/email', [
+    'as' => 'passwordreset.emailform',
+    'uses' => 'PasswordController@getEmail'
+]);
+
+Route::post('password/email', [
+    'as' => 'passwordreset.sendemail',
+    'uses' => 'PasswordController@postEmail'
+]);
+
+Route::get('password/reset/{token}', [
+    'as' => 'passwordreset.confirm',
+    'uses' => 'PasswordController@getReset'
+]);
+
+Route::post('password/reset', [
+    'as' => 'passwordreset.perform',
+    'uses' => 'PasswordController@postReset'
 ]);

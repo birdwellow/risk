@@ -2,9 +2,13 @@
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\App;
+use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\MessageBag;
 
+use Game\User;
 use Game\Services\PolicyComplianceService;
+use Game\Exceptions\GameException;
 
 /**
  * Description of MatchManager
@@ -14,15 +18,17 @@ use Game\Services\PolicyComplianceService;
 class AccountManager {
     
         protected $validator;
+        protected $passwords;
 
         protected $sessionLangToken = "language";
         protected $fallbackLocale = "en";
         protected $allowedLocales = ["en", "de"];
         
         
-        public function __construct(PolicyComplianceService $validator) {
+        public function __construct(PolicyComplianceService $validator, PasswordBroker $passwords) {
                 
                 $this->validator = $validator;
+                $this->passwords = $passwords;
                 
         }
         
@@ -31,29 +37,29 @@ class AccountManager {
             
                 $attributes = array();
                 if($user->name !== $userName){
-                    $attributes["username"] = $userName;
+                    $attributes["new_user_name"] = $userName;
                 }
                 if($user->email !== $userEmail){
-                    $attributes["email"] = $userEmail;
+                    $attributes["new_user_email"] = $userEmail;
                 }
                 
-                $this->validator->check($attributes, "USER.INVALID.OPTIONS");
+                $this->validator->check($attributes, "INVALID.OPTIONS");
             
         }
         
         
-        protected function checkPasswordData($email, $oldPassword, $newPassword, $newPasswordConfirm){
+        protected function checkPasswordData($email, $password, $newPassword, $newPasswordConfirm){
                 
                 $attributes = [
-                    "old.password" => [
-                        $oldPassword,
+                    "user_password" => [
+                        $password,
                         "auth:" . $email
                     ],
-                    "new.password" => $newPassword,
-                    "new.password_confirmation" => $newPasswordConfirm,
+                    "new_user_password" => $newPassword,
+                    "new_user_password_confirmation" => $newPasswordConfirm,
                 ];
                 
-                $this->validator->check($attributes, "USER.PASSWORDNOTCHANGED");
+                $this->validator->check($attributes, "PASSWORD.NOT.CHANGED");
             
         }
         
@@ -77,7 +83,7 @@ class AccountManager {
         }
 
 
-        public function setAppLocale($user) {
+        public function getUserAppLocale($user) {
             
                 if($user && $user->language){
                     Session::set($this->sessionLangToken, $user->language);
@@ -86,23 +92,23 @@ class AccountManager {
                 if(!Session::get($this->sessionLangToken)){
                     Session::set($this->sessionLangToken, $this->fallbackLocale);
                 }
-
-                App::setLocale(Session::get($this->sessionLangToken));
+                
+                return Session::get($this->sessionLangToken);
                 
         }
 
         
         public function changeOptionsForUser($user, $options){
 
-                $newUserName = $options['name'];
-                $newUserEmail = $options['email'];
+                $newUserName = $options['new_user_name'];
+                $newUserEmail = $options['new_user_email'];
                 
                 $this->checkUserOptionsForUser($user, $newUserName, $newUserEmail);
                 
                 $user->name = $newUserName;
                 $user->email = $newUserEmail;
 
-                $newUserAvatarFile = ( isset($options['avatar']) ? $options['avatar'] : null);
+                $newUserAvatarFile = ( isset($options['new_user_avatarfile']) ? $options['new_user_avatarfile'] : null);
                 if($newUserAvatarFile && $newUserAvatarFile->isValid()){
                     
                     $oldAvatarFileName = $user->avatarfile;
@@ -123,16 +129,103 @@ class AccountManager {
 
         public function changePasswordForUser($user, $passwordData) {
 
-                $newPassword = $passwordData["newpassword"];
-                $newPasswordConfirm = $passwordData["newpasswordconfirm"];
-                $oldPassword = $passwordData["oldpassword"];
+                $newPassword = $passwordData["new_user_password"];
+                $newPasswordConfirm = $passwordData["new_user_password_confirmation"];
+                $password = $passwordData["user_password"];
                 
-                $this->checkPasswordData($user->email, $oldPassword, $newPassword, $newPasswordConfirm);
+                $this->checkPasswordData($user->email, $password, $newPassword, $newPasswordConfirm);
                 
                 $user->password = bcrypt($newPassword);
                 $user->save();
                 
         }
-    
+        
+        
+        public function checkUserCredentials($email, $password) {
+            
+                $attributes = [
+                    "user_email" => $email,
+                    "user_password" => [
+                        $password,
+                        "auth:" . $email
+                    ],
+                ];
+                $this->validator->check($attributes, "LOGIN.ERROR");
+            
+        }
+        
+        
+        public function registerNewUserWith($username, $email, $password, $passwordConfirmation) {
+            
+                $this->validator->check([
+                    "new_user_name" => $username,
+                    "new_user_email" => $email,
+                    "new_user_password" => $password,
+                    "new_user_password_confirmation" => $passwordConfirmation,
+                ], "REGISTRATION.ERROR");
+                
+                return User::create([
+                    'name' => $username,
+                    'email' => $email,
+                    'password' => bcrypt($password),
+		]);
+	
+        }
+        
+        
+        public function sendPasswordResetLink($email) {
+            
+		$this->validator->check(['user_email' => $email], "PASSWORDRESET.EMAIL.NOT.SENT");
+
+                $msg = null;
+		$result = $this->passwords->sendResetLink(
+                        ["email" => $email],
+                        function($message) {
+                            $msg = $message;
+                            $message->subject(trans("passwords.resetemail.subject"));
+                        }
+                );
+                
+		if ($result == PasswordBroker::INVALID_USER) {
+                        Session::flash("invalidfields", ["user_email"]);
+                        throw new GameException("USER.NOT.FOUND.BY.EMAIL");
+                }
+                
+                return PasswordBroker::RESET_LINK_SENT;
+            
+        }
+        
+        
+        public function resetPassword($token, $email, $password, $passwordConfirmation) {
+            
+		$this->validator->check([
+			'password_reset_token' => $token,
+			'user_email' => $email,
+			'new_user_password' => $password,
+			'new_user_password_confirmation' => $passwordConfirmation,
+		], "PASSWORD.NOT.CHANGED");
+                
+                $credentials = [
+			'email' => $email,
+                        'password' => $password,
+                        'password_confirmation' => $passwordConfirmation,
+                        'token' => $token
+		];
+                
+                $result = $this->passwords->reset(
+                        $credentials,
+                        function($user, $password) {
+                            $user->password = bcrypt($password);
+                            $user->save();
+                            Auth::login($user);
+                        }
+		);
+
+		if ($result == PasswordBroker::PASSWORD_RESET) {
+			return $result;
+                }
+                
+                throw new GameException("PASSWORD.NOT.CHANGED", new MessageBag([trans($result)]));
+        }
     
 }

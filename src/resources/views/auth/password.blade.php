@@ -7,30 +7,14 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">{{ Lang::get('message.title.password.reset') }}</div>
 				<div class="panel-body">
-					@if (session('status'))
-						<div class="alert alert-success">
-							{{ session('status') }}
-						</div>
-					@endif
-
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							{{ Lang::get('message.error.userinput') }}<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
 
 					<form class="form-horizontal" role="form" method="POST" action="/password/email">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ Lang::get('message.field.email') }}</label>
+							<label class="col-md-4 control-label">{{ Lang::get('input.user_email') }}</label>
 							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<input type="email" class="{{ invalid('user_email') }} form-control" name="user_email" value="{{ old('user_email') }}">
 							</div>
 						</div>
 

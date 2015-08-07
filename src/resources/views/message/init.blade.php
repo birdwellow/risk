@@ -21,10 +21,10 @@
                                             
                                                 <div class="form-group">
                                                         <label class="col-md-3 control-label">
-                                                                {{ Lang::get('message.field.thread.subject') }}
+                                                                {{ Lang::get('input.thread_subject') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <input value="{{ old('subject') }}" type="text" name="subject" class="{{ invalid('thread.subject') }}" />
+                                                                <input value="{{ old('thread_subject') }}" type="text" name="thread_subject" class="{{ invalid('thread_subject') }}" />
                                                         </div>
                                                 </div>
                                             
@@ -33,9 +33,9 @@
                                                                 
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <input type="checkbox" id="reusethread" name="reusethread" />
-                                                                <label for="reusethread">
-                                                                    {{ Lang::get('message.field.thread.reuseexistingthread') }}
+                                                                <input type="checkbox" id="thread_reuseexistingthread" name="thread_reuseexistingthread" />
+                                                                <label for="thread_reuseexistingthread">
+                                                                    {{ Lang::get('input.thread_reuseexistingthread') }}
                                                                 </label>
                                                         </div>
                                                 </div>
@@ -49,19 +49,19 @@
                                             
                                                 <div class="form-group">
                                                         <label class="col-md-3 control-label">
-                                                                {{ Lang::get('message.field.thread.recipients') }}
+                                                                {{ Lang::get('input.thread_recipients') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <input value="{{ old('usernames') }}" name="usernames" type="userselector" class="{{ invalid('thread.recipients') }}" />
+                                                                <input value="{{ old('thread_recipients') }}" name="thread_recipients" type="userselector" class="{{ invalid('thread_recipients') }}" />
                                                         </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                         <label class="col-md-3 control-label">
-                                                                {{ Lang::get('message.field.message.text') }}
+                                                                {{ Lang::get('input.thread_message_text') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <textarea id="message" name="message">{{ old('message') }}</textarea>
+                                                                <textarea name="thread_message_text" class="{{ invalid('thread_message_text') }}">{{ old('thread_message_text') }}</textarea>
                                                         </div>
                                                 </div>
                                             

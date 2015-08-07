@@ -1,8 +1,11 @@
 <?php namespace Game\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+
 use Game\Managers\AccountManager;
+
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class UserSessionMiddleware {
     
@@ -25,7 +28,8 @@ class UserSessionMiddleware {
 	 */
 	public function handle($request, Closure $next) {
             
-                $this->accountManager->setAppLocale(Auth::user());
+                $userLocale = $this->accountManager->getUserAppLocale(Auth::user());
+                App::setLocale($userLocale);
                 
 		return $next($request);
                 

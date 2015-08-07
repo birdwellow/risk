@@ -14,7 +14,6 @@ return [
 
         
 	'link.password.forgotten' => "Passwort vergessen?",
-        'link.remember.login' => "Login merken",
         'link.match.join' => "Match ':matchName' beitreten",
         'link.invitation.reject' => "Einladung ablehnen",
         'link.invitation.delete' => "Delete",
@@ -46,38 +45,6 @@ return [
         'button.add' => "Hinzuf&uuml;gen",
         'button.yes' => "Ja",
         'button.no' => "Nein",
-    
-        'field.username' => "Username",
-        'field.email' => "E-Mail-Addresse",
-        'field.password' => 'Passwort',
-        'field.old.password' => 'Altes Passwort',
-        'field.new.password' => 'Neues Passwort',
-        'field.new.password_confirmation' => "Neues Passwort best&auml;tigen",
-        'field.avatar.file' => "Avatar-File",
-    
-        'field.match.name' => "Name",
-        'field.match.map' => "Karte",
-        'field.match.closed' => "Nur eingeladene Spieler?",
-        'field.match.maxusers' => "Maximale Spielerzahl",
-        'field.match.joinedusers' => "Spieler",
-        'field.match.startdate' => "Er&ouml;ffnet",
-        'field.match.createdby' => "Ersteller",
-        'field.match.invite' => "Einladen",
-        'field.match.invitationmessage' => "Deine Einladungs-Nachricht",
-        'field.match.cancel' => "Willst du dieses Match abbrechen?",
-        'field.match.cancel.warning' => "Danach werden alle Spieler wieder neue "
-            ."Matches er&ouml;ffnen oder beitreten k&ouml;nnen. Dies sollte aber "
-            ."nur getan werden, wenn zuvor alle Mitspielern zugestimmt haben oder "
-            ."wenn ein oder mehr Spieler eine zu lange Zeit nicht mehr aktiv waren.",
-    
-        'field.user.theme' => "Schema",
-        'field.user.language' => "Sprache",
-    
-        'field.thread.subject' => "Titel",
-        'field.thread.recipients' => "Empf&auml;nger",
-        'field.thread.reuseexistingthread' => "Alten Thread mit denselben Usern verwenden, falls es einen gibt",
-        'field.message.text' => "Nachricht",
-    
     
         'error.userinput' => "Es gab einen Fehler mit deinen Daten.",
         

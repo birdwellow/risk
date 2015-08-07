@@ -25,28 +25,28 @@
 
                                                 <div class="form-group">
                                                         <label class="col-md-4 control-label">
-                                                                {{ Lang::get('message.field.username') }}
+                                                                {{ Lang::get('input.new_user_name') }}
                                                         </label>
                                                         <div class="col-md-6">
-                                                                <input type="text" name="name" value="{{ oldordefault('name', Auth::user()->name) }}" class="{{ invalid('username') }}"/>
+                                                                <input type="text" name="new_user_name" value="{{ oldordefault('new_user_name', Auth::user()->name) }}" class="{{ invalid('new_user_name') }}"/>
                                                         </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                         <label class="col-md-4 control-label">
-                                                                {{ Lang::get('message.field.email') }}
+                                                                {{ Lang::get('input.new_user_email') }}
                                                         </label>
                                                         <div class="col-md-6">
-                                                                <input type="text" name="email" value="{{ oldordefault('email', Auth::user()->email) }}" class="{{ invalid('email') }}"/>
+                                                                <input type="text" name="new_user_email" value="{{ oldordefault('new_user_email', Auth::user()->email) }}" class="{{ invalid('new_user_email') }}"/>
                                                         </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                         <label class="col-md-4 control-label">
-                                                                {{ Lang::get('message.field.avatar.file') }}
+                                                                {{ Lang::get('input.new_user_avatarfile') }}
                                                         </label>
                                                         <div class="col-md-6">
-                                                                <input type="file" name="avatar" accept="image/*">
+                                                                <input type="file" name="new_user_avatarfile" accept="image/*">
                                                         </div>
                                                 </div>
 
@@ -67,28 +67,28 @@
 
                                                 <div class="form-group">
                                                     <label class="col-md-4 control-label">
-                                                            {{ Lang::get('message.field.old.password') }}
+                                                            {{ Lang::get('input.user_password') }}
                                                     </label>
                                                     <div class="col-md-6">
-                                                            {!! Form::password('oldpassword') !!}
+                                                            {!! Form::password('user_password') !!}
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label class="col-md-4 control-label">
-                                                            {{ Lang::get('message.field.new.password') }}
+                                                            {{ Lang::get('input.new_user_password') }}
                                                     </label>
                                                     <div class="col-md-6">
-                                                            {!! Form::password('newpassword') !!}
+                                                            {!! Form::password('new_user_password') !!}
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="form-group">
                                                     <label class="col-md-4 control-label">
-                                                            {{ Lang::get('message.field.new.password_confirmation') }}
+                                                            {{ Lang::get('input.new_user_password_confirmation') }}
                                                     </label>
                                                     <div class="col-md-6">
-                                                            {!! Form::password('newpasswordconfirm') !!}
+                                                            {!! Form::password('new_user_password_confirmation') !!}
                                                     </div>
                                                 </div>
 

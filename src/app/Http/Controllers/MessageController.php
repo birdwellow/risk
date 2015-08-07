@@ -42,7 +42,7 @@ class MessageController extends Controller {
             $this->messageManager->newMessage(
                     $thread,
                     Auth::user(),
-                    Input::get("message")
+                    Input::get("thread_message_text")
             );
 
             return redirect()->back();
@@ -53,21 +53,21 @@ class MessageController extends Controller {
 
     public function newThreadWithNewMessage() {
 
-            $userNameArray = explode(",", Input::get('usernames'));
+            $userNameArray = explode(",", Input::get('thread_recipients'));
             $recipients = $this->userManager->findUsersForNames($userNameArray);
 
             $thread = $this->messageManager->newThread(
-                    Input::get('subject'),
+                    Input::get('thread_subject'),
                     Auth::user(),
                     $recipients,
-                    Input::get('reusethread')
+                    Input::get('thread_reuseexistingthread')
             );
 
-            if(trim(Input::get('message'))){
+            if(trim(Input::get('thread_message_text'))){
                 $this->messageManager->newMessage(
                         $thread,
                         Auth::user(),
-                        Input::get('message')
+                        Input::get('thread_message_text')
                 );
             }
 
@@ -115,7 +115,7 @@ class MessageController extends Controller {
             $user = Auth::user();
             $thread = $this->messageManager->getThreadForUser(Auth::user(), $threadId);
             
-            $userNameArray = explode(",", Input::get("usernames"));
+            $userNameArray = explode(",", Input::get("thread_recipients"));
             $userArray = $this->userManager->findUsersForNames($userNameArray);
 
             $this->messageManager->addUsersToThread($user, $userArray, $thread);

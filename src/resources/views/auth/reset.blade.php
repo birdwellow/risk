@@ -23,23 +23,23 @@
 						<input type="hidden" name="token" value="{{ $token }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ Lang::get('message.field.email') }}</label>
+							<label class="col-md-4 control-label">{{ Lang::get('input.user_email') }}</label>
 							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<input type="email" class="{{ invalid('user_email') }} form-control" name="user_email" value="{{ old('user_email') }}">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ Lang::get('message.field.password') }}</label>
+							<label class="col-md-4 control-label">{{ Lang::get('input.new_user_password') }}</label>
 							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
+								<input type="password" class="{{ invalid('new_user_password') }} form-control" name="new_user_password">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ Lang::get('message.field.password_confirmation') }}</label>
+							<label class="col-md-4 control-label">{{ Lang::get('input.new_user_password_confirmation') }}</label>
 							<div class="col-md-6">
-								<input type="password" class="form-control" name="password_confirmation">
+								<input type="password" class="{{ invalid('new_user_password_confirmation') }} form-control" name="new_user_password_confirmation">
 							</div>
 						</div>
 

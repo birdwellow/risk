@@ -26,7 +26,7 @@
                                             
                                             <div class="form-group">
                                                     <label class="col-md-3 control-label">
-                                                            {{ Lang::get('message.field.match.name') }}
+                                                            {{ Lang::get('input.match.name') }}
                                                     </label>
                                                     <div class="col-md-9">
                                                             <input type="text" name="name" value="{{ old('name') }}"/>
@@ -35,7 +35,7 @@
 
                                             <div class="form-group">
                                                     <label class="col-md-3 control-label">
-                                                            {{ Lang::get('message.field.match.map') }}
+                                                            {{ Lang::get('input.match.map') }}
                                                     </label>
                                                     <div class="col-md-9">
                                                             <select name="mapName" id="mapname-select">
@@ -50,7 +50,7 @@
 
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label">
-                                                        {{ Lang::get('message.field.match.closed') }}
+                                                        {{ Lang::get('input.match.closed') }}
                                                 </label>
                                                 <div class="col-md-9">
                                                         <input type="checkbox" name="closed"/>
@@ -59,7 +59,7 @@
 
                                                 <div class="form-group">
                                                         <label class="col-md-3 control-label">
-                                                              {{ Lang::get('message.field.match.maxusers') }}
+                                                              {{ Lang::get('input.match.maxusers') }}
                                                         </label>
                                                         <div class="col-md-9">
                                                                 <select name="maxusers" id="maxusers">

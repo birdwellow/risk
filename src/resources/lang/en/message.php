@@ -14,7 +14,6 @@ return [
 
 
 	'link.password.forgotten' => "Forgot Your Password?",
-        'link.remember.login' => "Remember me",
         'link.match.join' => "Join match ':matchName'",
         'link.invitation.reject' => "Reject invitation",
         'link.invitation.delete' => "Delete",
@@ -46,40 +45,6 @@ return [
         'button.add' => "Add",
         'button.yes' => "Yes",
         'button.no' => "No",
-    
-    
-        'field.username' => "User Name",
-        'field.email' => "E-Mail Address",
-        'field.password' => 'Password',
-        'field.old.password' => 'Old Password',
-        'field.new.password' => 'New Password',
-        'field.new.password_confirmation' => "Confirm New Password",
-        'field.avatar.file' => "Avatar File",
-    
-        'field.match.name' => "Name",
-        'field.match.map' => "Map",
-        'field.match.closed' => "Only invited users?",
-        'field.match.maxusers' => "Maximum User Count",
-        'field.match.map' => "Map",
-        'field.match.joinedusers' => "Players",
-        'field.match.startdate' => "Started",
-        'field.match.createdby' => "Created by",
-        'field.match.invite' => "Invite",
-        'field.match.invitationmessage' => "Your invitation message",
-        'field.match.cancel' => "Do you want to cancel this match?",
-        'field.match.cancel.warning' => "Afterwards, all players will be able to "
-            ."join or create new matches againg. However, this should "
-            ."only be done if all players agreed or one or more players haven't "
-            ."been active for some time.",
-    
-        'field.user.theme' => "Theme",
-        'field.user.language' => "Language",
-    
-        'field.thread.subject' => "Title",
-        'field.message.text' => "Message",
-        'field.thread.recipients' => "Recipients",
-        'field.thread.reuseexistingthread' => "If it exists, use an old thread with the same users",
-    
     
         'error.userinput' => "There were some problems with your input.",
     

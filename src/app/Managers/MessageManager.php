@@ -41,7 +41,7 @@ class MessageManager {
                     }
                 }
 
-                throw new GameException("USER.NOT.PARTICIPANT.OF.THREAD");
+                throw new GameException("NOT.PARTICIPANT.OF.THREAD");
 
         }
 
@@ -53,8 +53,8 @@ class MessageManager {
                 
                 $messageText = trim($messageText);
                 $this->validator->check([
-                        "message.text" => $messageText
-                    ], "USER.MESSAGENOTSENT");
+                        "thread_message_text" => $messageText
+                    ], "MESSAGE.NOT.SENT");
 
                 return Message::create([
                     'thread_id' => $thread->id,
@@ -68,10 +68,10 @@ class MessageManager {
         public function newThread($subject, $creatorUser, $recipientUsersArray, $returnOldThreadIfExisting) {
 
                 $attributes = [
-                    "thread.subject" => $subject,
-                    "thread.recipients" => sizeof($recipientUsersArray),
+                    "thread_subject" => $subject,
+                    "thread_recipients" => sizeof($recipientUsersArray),
                 ];
-                $this->validator->check($attributes, "USER.THREADNOTCREATED");
+                $this->validator->check($attributes, "THREAD.NOT.CREATED");
 
                 if($returnOldThreadIfExisting){
 
@@ -184,9 +184,9 @@ class MessageManager {
         public function addUsersToThread($user, $userArray, $thread){
 
                 $attributes = [
-                    "thread.recipients" => sizeof($userArray),
+                    "thread_recipients" => sizeof($userArray),
                 ];
-                $this->validator->check($attributes, "USER.USERSNOTADDEDTOTHREAD");
+                $this->validator->check($attributes, "USERS.NOT.ADDED.TO.THREAD");
 
                 $this->checkUserParticipantOfThread($user, $thread);
 

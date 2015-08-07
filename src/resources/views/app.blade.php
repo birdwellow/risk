@@ -11,7 +11,7 @@
 	<link href="/css/bootstrap-theme.css" rel="stylesheet">
 	<link href="/css/jquery-ui.css" rel="stylesheet">
 	<link href="/css/common.css" rel="stylesheet">
-	<link href="/css/-DEF.css" rel="stylesheet">
+	<link href="/css/DEF.css" rel="stylesheet">
 
         <script src="/js/thirdparty/jquery.min.js" defer="defer"></script>
         <script src="/js/thirdparty/jquery-ui.min.js" defer="defer"></script>
@@ -66,7 +66,7 @@
                                                         </li>
                                                         @else
                                                         <li>
-                                                                <a class="inactive" onclick="UI.error('{{ Lang::get("error.user.already.joined") }}', '{{ Lang::get("error.user") }}', 'OK')">
+                                                                <a class="inactive" onclick="UI.error('{{ Lang::get("error.already.joined") }}', '{{ Lang::get("error.user") }}', 'OK')">
                                                                         {{ Lang::get('message.link.match.new') }}
                                                                 </a>
                                                         </li>

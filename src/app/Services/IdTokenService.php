@@ -1,17 +1,16 @@
-<?php namespace Game\Model;
+<?php namespace Game\Services;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- * Description of UUID
- */
-class UUID {
+class IdTokenService {
     
-    public static function v3($namespace, $name) {
+    public static function createUUID($base = ""){
+        
+        $initialUUID = "1546058f-5a25-4334-85ae-e68f2a44bbaf";
+        return self::v5($initialUUID, $base);
+        
+    }
+    
+    private static function v3($namespace, $name) {
         if(!self::is_valid($namespace)) return false;
 
         // Get hexadecimal components of namespace
@@ -50,7 +49,7 @@ class UUID {
         );
     }
 
-    public static function v4() {
+    private static function v4() {
         return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
 
             // 32 bits for "time_low"
@@ -73,7 +72,7 @@ class UUID {
         );
     }
 
-    public static function v5($namespace, $name) {
+    private static function v5($namespace, $name) {
         if(!self::is_valid($namespace)) return false;
 
         // Get hexadecimal components of namespace

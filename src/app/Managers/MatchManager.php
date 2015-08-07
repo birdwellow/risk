@@ -5,7 +5,7 @@ use Game\Model\Match;
 use Game\Exceptions\GameException;
 use \Illuminate\Support\Facades\Session;
 use \Illuminate\Support\Facades\Log;
-use Game\Model\UUID;
+use Game\Services\IdTokenService;
 use Game\Model\Invitation;
 use Game\Model\Map;
 use Illuminate\Support\Facades\Validator;
@@ -21,7 +21,7 @@ class MatchManager {
     public function checkUserCanCreateMatch($user) {
         
             if($user->joinedMatch !== null){
-                throw new GameException("USER.ALREADY.JOINED");
+                throw new GameException("ALREADY.JOINED");
             }
         
     }
@@ -31,7 +31,7 @@ class MatchManager {
         
             $match = Match::find($matchId);
             if($match && $user->id !== $match->createdBy->id){
-                throw new GameException("USER.CANNOT.DELETE.MATCH");
+                throw new GameException("CANNOT.DELETE.MATCH");
             }
         
     }
@@ -40,7 +40,7 @@ class MatchManager {
     public function checkUserCanAdministrateMatch($match, $user) {
         
             if($match && $user->id !== $match->createdBy->id){
-                throw new GameException("USER.CANNOT.DELETE.MATCH");
+                throw new GameException("CANNOT.DELETE.MATCH");
             }
         
     }
@@ -53,13 +53,13 @@ class MatchManager {
                 $userInvitedForMatch = $this->isUserInvitedForMatch($userId, $matchId);
                 
                 if(!$userIsMatchCreator && !$userInvitedForMatch){
-                    throw new GameException("USER.NOT.INVITED.TO.CLOSED.MATCH");
+                    throw new GameException("NOT.INVITED.TO.CLOSED.MATCH");
                 }
             }
             
             $user = Match::find($userId);
             if($user && $user->joinedMatch !== null){
-                throw new GameException("USER.ALREADY.JOINED");
+                throw new GameException("ALREADY.JOINED");
             }
         
     }
@@ -89,7 +89,7 @@ class MatchManager {
             if($validator->fails()){
                 \Illuminate\Support\Facades\Log::info($validator->messages());
                 throw new GameException(
-                        "USER.CREATE.MATCH.WRONG.PARAMETERS",
+                        "CREATE.MATCH.WRONG.PARAMETERS",
                         $validator->messages()
                 );
             }
@@ -166,7 +166,7 @@ class MatchManager {
             if($match == null){
                 throw new GameException("MATCH.NOT.FOUND");
             } else {
-                $user->joinid = UUID::v5("1546058f-5a25-4334-85ae-e68f2a44bbaf", $user->name);
+                $user->joinid = IdTokenService::createUUID($user->name);
                 $user->save();
                 
                 return $match;

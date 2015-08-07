@@ -19,7 +19,7 @@
                                 <table>
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('message.field.match.name') }}
+                                                        {{ Lang::get('input.match.name') }}
                                                 </td>
                                                 <td class="data">
                                                         {{ Auth::user()->joinedMatch->name }}
@@ -27,7 +27,7 @@
                                         </tr>
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('message.field.match.joinedusers') }}
+                                                        {{ Lang::get('input.match.joinedusers') }}
                                                 </td>
                                                 <td class="data">
                                                     @foreach(Auth::user()->joinedMatch->joinedUsers as $joinedUser)
@@ -37,7 +37,7 @@
                                         </tr>
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('message.field.match.startdate') }}
+                                                        {{ Lang::get('input.match.startdate') }}
                                                 </td>
                                                 <td class="data">
                                                         {{ Auth::user()->joinedMatch->created_at }}
@@ -45,7 +45,7 @@
                                         </tr>
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('message.field.match.createdby') }}
+                                                        {{ Lang::get('input.match.createdby') }}
                                                 </td>
                                                 <td class="data">
                                                         {{ Auth::user()->joinedMatch->createdBy->name }}
@@ -133,13 +133,13 @@
                                 <table>
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('message.field.match.name') }}
+                                                        {{ Lang::get('input.match.name') }}
                                                 </td>
                                                 <td>
-                                                        {{ Lang::get('message.field.match.joinedusers') }}
+                                                        {{ Lang::get('input.match.joinedusers') }}
                                                 </td>
                                                 <td>
-                                                        {{ Lang::get('message.field.match.startdate') }}
+                                                        {{ Lang::get('input.match.startdate') }}
                                                 </td>
                                         </tr>
 

@@ -120,7 +120,7 @@ class MessageManagementTest extends TestCase {
                 $this->assertNotContains("OberbazisMessage", $startResponse->getContent());
                 
                 $this->call("POST", "/thread/1/newmessage", [
-                    "message" => "OberbazisMessage",
+                    "thread_message_text" => "OberbazisMessage",
                     "_token" => csrf_token(),
                 ]);
                 $this->assertRedirectedTo("thread/1");
@@ -142,7 +142,7 @@ class MessageManagementTest extends TestCase {
         public function testUserCanAddUsersToThread(){
             
                 $this->createStandardTestThread($this->Subberbazi, [
-                    "usernames" => "Oberbazi"
+                    "thread_recipients" => "Oberbazi"
                 ]);
                 
                 $this->be($this->Oberbazi);
@@ -152,7 +152,7 @@ class MessageManagementTest extends TestCase {
                 $this->assertNotContains("ChAoT", $startResponse->getContent());
                 
                 $this->call("POST", "/thread/1/addusers", [
-                    "usernames" => "SoEinBazi,ChAoT",
+                    "thread_recipients" => "SoEinBazi,ChAoT",
                     "_token" => csrf_token(),
                 ]);
                 $this->assertRedirectedTo("thread/1");
@@ -188,9 +188,9 @@ class MessageManagementTest extends TestCase {
         public function testUserCanotCreateNewThreadWithInvalidInputs(){
                 
                 $this->createStandardTestThread($this->Subberbazi, [
-                    "subject" => "",
-                    "usernames" => "",
-                    "message" => "",
+                    "thread_subject" => "",
+                    "thread_recipients" => "",
+                    "thread_message_text" => "",
                     "_token" => csrf_token()
                 ]);
                 $this->assertRedirectedTo("thread/new");
@@ -198,9 +198,9 @@ class MessageManagementTest extends TestCase {
                 $this->assertContains("The Title field is required.", $errorResponse1->getContent());
                 
                 $this->createStandardTestThread($this->Subberbazi, [
-                    "subject" => "This is a test subject",
-                    "usernames" => "",
-                    "message" => "",
+                    "thread_subject" => "This is a test subject",
+                    "thread_recipients" => "",
+                    "thread_message_text" => "",
                     "_token" => csrf_token()
                 ]);
                 $this->assertRedirectedTo("thread/new");
@@ -209,9 +209,9 @@ class MessageManagementTest extends TestCase {
                 $this->assertContains("This is a test subject", $errorResponse2->getContent());
                 
                 $this->createStandardTestThread($this->Subberbazi, [
-                    "subject" => "This is a test subject",
-                    "usernames" => "Oberbazi,ChAoT",
-                    "message" => "",
+                    "thread_subject" => "This is a test subject",
+                    "thread_recipients" => "Oberbazi,ChAoT",
+                    "thread_message_text" => "",
                     "_token" => csrf_token()
                 ]);
                 $this->assertRedirectedTo("thread/1");
@@ -235,7 +235,7 @@ class MessageManagementTest extends TestCase {
                 $this->assertResponseOk();
 
                 $this->call("POST", "thread/1/newmessage", [
-                    "message" => "",
+                    "thread_message_text" => "",
                     "_token" => csrf_token()
                 ]);
                 $this->assertRedirectedTo("thread/1");
@@ -262,13 +262,13 @@ class MessageManagementTest extends TestCase {
                 $this->assertResponseOk();
 
                 $this->call("POST", "thread/1/addusers", [
-                    "usernames" => "",
+                    "thread_recipients" => "",
                     "_token" => csrf_token()
                 ]);
                 $this->assertRedirectedTo("thread/1");
                 
                 $subberbaziErrorResponse = $this->call("GET", "/threads");
-                $this->assertContains("No users could be added.", $subberbaziErrorResponse->getContent());
+                $this->assertContains("No users were added.", $subberbaziErrorResponse->getContent());
                 $this->assertContains("No Recipients selected.", $subberbaziErrorResponse->getContent());
                 
         }
@@ -314,7 +314,7 @@ class MessageManagementTest extends TestCase {
                 $this->assertResponseOk();
 
                 $this->call("POST", "thread/1/newmessage", [
-                    "message" => "Hey there",
+                    "thread_message_text" => "Hey there",
                     "_token" => csrf_token()
                 ]);
                 $this->assertRedirectedTo("threads");
@@ -341,7 +341,7 @@ class MessageManagementTest extends TestCase {
                 $this->assertResponseOk();
 
                 $this->call("POST", "thread/1/addusers", [
-                    "usernames" => "Oberbazi,ChAoT",
+                    "thread_recipients" => "Oberbazi,ChAoT",
                     "_token" => csrf_token()
                 ]);
                 $this->assertRedirectedTo("threads");
@@ -371,7 +371,7 @@ class MessageManagementTest extends TestCase {
 	public function testNonParticipantCannotSeeThread(){
             
                 $this->createStandardTestThread($this->Subberbazi, [
-                    "usernames" => "Oberbazi,ChAoT"
+                    "thread_recipients" => "Oberbazi,ChAoT"
                 ]);
                 
                 $this->be($this->SoEinBazi);
@@ -399,7 +399,7 @@ class MessageManagementTest extends TestCase {
 	public function testNonParticipantCannotPostMessageInThread(){
             
                 $this->createStandardTestThread($this->Subberbazi, [
-                    "usernames" => "Oberbazi"
+                    "thread_recipients" => "Oberbazi"
                 ]);
                 
                 $this->be($this->SoEinBazi);
@@ -408,7 +408,7 @@ class MessageManagementTest extends TestCase {
                 $this->assertResponseOk();
                 
                 $this->call("POST", "/thread/1/newmessage", [
-                    "message" => "Not_allowed_message",
+                    "thread_message_text" => "Not_allowed_message",
                     "_token" => Session::token()
                 ]);
                 $this->assertRedirectedTo("threads");
@@ -437,7 +437,7 @@ class MessageManagementTest extends TestCase {
 	public function testNonParticipantCannotAddUsersToThread(){
             
                 $this->createStandardTestThread($this->Subberbazi, [
-                    "usernames" => "Oberbazi"
+                    "thread_recipients" => "Oberbazi"
                 ]);
                 
                 $this->be($this->SoEinBazi);
@@ -446,7 +446,7 @@ class MessageManagementTest extends TestCase {
                 $this->assertResponseOk();
                 
                 $response = $this->call("POST", "/thread/1/addusers", [
-                    "usernames" => "ChAoT,SoEinBazi",
+                    "thread_recipients" => "ChAoT,SoEinBazi",
                     "_token" => Session::token()
                 ]);
                 $this->assertRedirectedTo("threads");
@@ -476,17 +476,17 @@ class MessageManagementTest extends TestCase {
                 $this->call("GET", "/thread/new");
                 $this->assertResponseOk();
                 
-                if(!isset($withParameters["subject"])){
-                    $withParameters["subject"] = "Test_Subject";
+                if(!isset($withParameters["thread_subject"])){
+                    $withParameters["thread_subject"] = "Test_Subject";
                 }
-                if(!isset($withParameters["usernames"])){
-                    $withParameters["usernames"] = "Oberbazi,ChAoT";
+                if(!isset($withParameters["thread_recipients"])){
+                    $withParameters["thread_recipients"] = "Oberbazi,ChAoT";
                 }
-                if(!isset($withParameters["message"])){
-                    $withParameters["message"] = "This_is_a_test_message";
+                if(!isset($withParameters["thread_message_text"])){
+                    $withParameters["thread_message_text"] = "This_is_a_test_message";
                 }
-                if(!isset($withParameters["reusethread"])){
-                    $withParameters["reusethread"] = null;
+                if(!isset($withParameters["thread_reuseexistingthread"])){
+                    $withParameters["thread_reuseexistingthread"] = null;
                 }
                 $withParameters["_token"] = csrf_token();
                 

@@ -22,30 +22,30 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ Lang::get('message.field.username') }}</label>
+							<label class="col-md-4 control-label">{{ Lang::get('input.new_user_name') }}</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
+								<input type="text" class="{{ invalid("new_user_name") }} form-control" name="new_user_name" value="{{ old('new_user_name') }}">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ Lang::get('message.field.email') }}</label>
+							<label class="col-md-4 control-label">{{ Lang::get('input.new_user_email') }}</label>
 							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<input type="email" class="{{ invalid("new_user_email") }} form-control" name="new_user_email" value="{{ old('new_user_email') }}">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ Lang::get('message.field.password') }}</label>
+							<label class="col-md-4 control-label">{{ Lang::get('input.new_user_password') }}</label>
 							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
+								<input type="password" class="{{ invalid("new_user_password") }} form-control" name="new_user_password">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">{{ Lang::get('message.field.password_confirmation') }}</label>
+							<label class="col-md-4 control-label">{{ Lang::get('input.new_user_password_confirmation') }}</label>
 							<div class="col-md-6">
-								<input type="password" class="form-control" name="password_confirmation">
+								<input type="password" class="{{ invalid("new_user_password_confirmation") }} form-control" name="new_user_password_confirmation">
 							</div>
 						</div>
 

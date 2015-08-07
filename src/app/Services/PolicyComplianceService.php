@@ -13,13 +13,30 @@ class PolicyComplianceService {
     
         protected $policies = [
             
-                "username" => "unique:users,name|required|min:5|max:32|alpha_dash",
-                "email" => "unique:users|required|email",
-                "new.password" => "required|min:4|max:20_alpha_dash|confirmed",
-                "old.password" => "required",
-                "message.text" => "required",
-                "thread.subject" => "required|min:6|max:32",
-                "thread.recipients" => "selected"
+            
+            /*
+             * Policies for registering and changing users
+             */
+                "new_user_name" => "unique:users,name|required|min:5|max:32|alpha_dash",
+                "new_user_email" => "unique:users,email|required|email",
+                "new_user_password" => "required|min:6|max:20_alpha_dash|confirmed",
+                "new_user_password_confirmation" => "",
+                "new_user_avatarfile" => "",
+                "password_reset_token" => "required",
+            
+            /*
+             * Policies for login
+             */
+                "user_email" => "required|email",
+                "user_password" => "required",
+            
+            /*
+             * Policies for the messaging component
+             */
+                "thread_subject" => "required|min:6|max:32",
+                "thread_recipients" => "selected",
+                "thread_message_text" => "required",
+                "thread_reuseexistingthread" => "",
             
         ];
 
@@ -69,7 +86,7 @@ class PolicyComplianceService {
                     }
                     $rules[$name] = $rule;
                     
-                    $attributeNames[$name] = Lang::get("message.field." . $name);
+                    $attributeNames[$name] = Lang::get("input." . $name);
 
                 }
                 
@@ -78,6 +95,7 @@ class PolicyComplianceService {
 
                 if($validator->fails()){
                     Session::flash("invalidfields", array_keys($validator->failed()));
+                    
                     throw new GameException(
                             $errorKey,
                             $validator->messages(),

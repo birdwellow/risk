@@ -23,62 +23,78 @@ class GameException extends Exception {
 
     protected static $errorData = [
         
-        "USER.NOT.PARTICIPANT.OF.THREAD" => [
-            "message" => "error.user.not.participant.of.thread",
+        "NOT.PARTICIPANT.OF.THREAD" => [
+            "message" => "error.not.participant.of.thread",
             "category" => "error.user"
         ],
-        "USER.ALREADY.JOINED" => [
-            "message" => "error.user.already.joined",
+        "ALREADY.JOINED" => [
+            "message" => "error.already.joined",
             "category" => "error.user"
         ],
-        "USER.ALREADY.JOINED.ANOTHER.MATCH" => [
-            "message" => "error.user.already.joined.another.match",
+        "ALREADY.JOINED.ANOTHER.MATCH" => [
+            "message" => "error.already.joined.another.match",
             "category" => "error.user"
         ],
-        "USER.CANNOT.DELETE.MATCH" => [
-            "message" => "error.user.cannot.delete.match",
+        "CANNOT.DELETE.MATCH" => [
+            "message" => "error.cannot.delete.match",
             "category" => "error.user"
         ],
-        "USER.CANNOT.ADMINISTRATE.MATCH" => [
-            "message" => "error.user.cannot.administrate.match",
+        "CANNOT.ADMINISTRATE.MATCH" => [
+            "message" => "error.cannot.administrate.match",
             "category" => "error.user"
         ],
-        "USER.NOT.INVITED.TO.CLOSED.MATCH" => [
-            "message" => "error.user.not.invited.to.closed.match",
+        "NOT.INVITED.TO.CLOSED.MATCH" => [
+            "message" => "error.not.invited.to.closed.match",
             "category" => "error.user"
         ],
-        "USER.INVALID.OPTIONS" => [
-            "message" => "error.user.options.notsaved",
+        "INVALID.OPTIONS" => [
+            "message" => "error.options.notsaved",
             "category" => "error.user"
         ],
-        "USER.CREATE.MATCH.WRONG.PARAMETERS" => [
-            "message" => "error.user.create.match.wrong.parameters",
+        "CREATE.MATCH.WRONG.PARAMETERS" => [
+            "message" => "error.create.match.wrong.parameters",
             "category" => "error.user"
         ],
-        "USER.PASSWORDNOTCHANGED" => [
-            "message" => "error.user.password.notchanged",
+        "PASSWORD.NOT.CHANGED" => [
+            "message" => "error.password.notchanged",
             "category" => "error.user"
         ],
-        "USER.THREADNOTCREATED" => [
-            "message" => "error.user.thread.notcreated",
+        "THREAD.NOT.CREATED" => [
+            "message" => "error.thread.notcreated",
             "category" => "error.user"
         ],
-        "USER.MESSAGENOTSENT" => [
-            "message" => "error.user.message.notsent",
+        "MESSAGE.NOT.SENT" => [
+            "message" => "error.message.notsent",
             "category" => "error.user"
         ],
-        "USER.USERSNOTADDEDTOTHREAD" => [
-            "message" => "error.user.thread.nousersadded",
+        "USERS.NOT.ADDED.TO.THREAD" => [
+            "message" => "error.thread.nousersadded",
+            "category" => "error.user"
+        ],
+        "LOGIN.ERROR" => [
+            "message" => "error.login.credentials.invalid",
+            "category" => "error.user"
+        ],
+        "REGISTRATION.ERROR" => [
+            "message" => "error.registration.data.invalid",
+            "category" => "error.user"
+        ],
+        "PASSWORDRESET.EMAIL.NOT.SENT" => [
+            "message" => "error.passwordreset.email.not.sent",
             "category" => "error.user"
         ],
         
         
         "MATCH.NOT.FOUND" => [
-            "message" => "error.system.match.not.found",
+            "message" => "error.match.not.found",
             "category" => "error.system"
         ],
         "THREAD.NOT.FOUND" => [
-            "message" => "error.system.thread.not.found",
+            "message" => "error.thread.not.found",
+            "category" => "error.system"
+        ],
+        "USER.NOT.FOUND.BY.EMAIL" => [
+            "message" => "error.user.not.found.by.email",
             "category" => "error.system"
         ],
         

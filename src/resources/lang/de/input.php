@@ -7,135 +7,40 @@ return [
 	| UI Language Lines
 	|--------------------------------------------------------------------------
 	|
-	| The following language lines contain the normal messages for the
-        | User Interface
+	| The following language lines contain the names and labels of the inputs
 	|
 	*/
-
-        
-	'link.password.forgotten' => "Passwort vergessen?",
-        'link.remember.login' => "Login merken",
-        'link.match.join' => "Match ':matchName' beitreten",
-        'link.invitation.reject' => "Einladung ablehnen",
-        'link.invitation.delete' => "Delete",
-        'link.home' => "Home",
-        'link.match.overview' => "&Uuml;bersicht",
-        'link.match.new' => "Neues Match",
-        'link.match.cancel' => "Match abbrechen",
-        'link.match.administrate' => "':matchName' verwalten",
-        'link.login' => "Login",
-        'link.logout' => "Logout",
-        'link.register' => "Registrieren",
-        'link.profile' => "Profil",
-        'link.options' => "Optionen",
-        'link.match.invitations' => "Einladungen",
+    
+        'new_user_name' => "Username",
+        'new_user_email' => "E-Mail-Addresse",
+        'new_user_password' => 'Neues Passwort',
+        'new_user_password_confirmation' => "Neues Passwort best&auml;tigen",
+        'new_user_avatarfile' => "Avatar-File",
+    
+        'user_email' => "E-Mail-Addresse",
+        'user_password' => 'Passwort',
+        'user_remember_login' => "Login merken",
+    
+        'thread_subject' => "Titel",
+        'thread_recipients' => "Empf&auml;nger",
+        'thread_reuseexistingthread' => "Alten Thread mit denselben Usern verwenden, falls es einen gibt",
+        'thread_message_text' => "Nachricht",
     
     
-        'name.language.en' => "English",
-        'name.language.de' => "Deutsch",
     
-    
-        'button.login' => "Login",
-        'button.save' => "Speichern",
-        'button.send' => "Senden",
-        'button.register' => "Registrierung",
-        'button.send.password.reset.link' => "Passwort-Reset-Link schicken",
-        'button.password.reset' => "Passwort zur&uuml;cksetzen",
-        'button.match.create' => "Start",
-        'button.match.join' => "Beitreten",
-        'button.add' => "Hinzuf&uuml;gen",
-        'button.yes' => "Ja",
-        'button.no' => "Nein",
-    
-        'field.username' => "Username",
-        'field.email' => "E-Mail-Addresse",
-        'field.password' => 'Passwort',
-        'field.old.password' => 'Altes Passwort',
-        'field.new.password' => 'Neues Passwort',
-        'field.new.password_confirmation' => "Neues Passwort best&auml;tigen",
-        'field.avatar.file' => "Avatar-File",
-    
-        'field.match.name' => "Name",
-        'field.match.map' => "Karte",
-        'field.match.closed' => "Nur eingeladene Spieler?",
-        'field.match.maxusers' => "Maximale Spielerzahl",
-        'field.match.joinedusers' => "Spieler",
-        'field.match.startdate' => "Er&ouml;ffnet",
-        'field.match.createdby' => "Ersteller",
-        'field.match.invite' => "Einladen",
-        'field.match.invitationmessage' => "Deine Einladungs-Nachricht",
-        'field.match.cancel' => "Willst du dieses Match abbrechen?",
-        'field.match.cancel.warning' => "Danach werden alle Spieler wieder neue "
+        'match_name' => "Name",
+        'match_map' => "Karte",
+        'match_closed' => "Nur eingeladene Spieler?",
+        'match_maxusers' => "Maximale Spielerzahl",
+        'match_joinedusers' => "Spieler",
+        'match_startdate' => "Er&ouml;ffnet",
+        'match_createdby' => "Ersteller",
+        'match_invite' => "Einladen",
+        'match_invitationmessage' => "Deine Einladungs-Nachricht",
+        'match_cancel' => "Willst du dieses Match abbrechen?",
+        'match_cancel_warning' => "Danach werden alle Spieler wieder neue "
             ."Matches er&ouml;ffnen oder beitreten k&ouml;nnen. Dies sollte aber "
             ."nur getan werden, wenn zuvor alle Mitspielern zugestimmt haben oder "
             ."wenn ein oder mehr Spieler eine zu lange Zeit nicht mehr aktiv waren.",
-    
-        'field.user.theme' => "Schema",
-        'field.user.language' => "Sprache",
-    
-        'field.thread.subject' => "Titel",
-        'field.thread.recipients' => "Empf&auml;nger",
-        'field.thread.reuseexistingthread' => "Alten Thread mit denselben Usern verwenden, falls es einen gibt",
-        'field.message.text' => "Nachricht",
-    
-    
-        'error.userinput' => "Es gab einen Fehler mit deinen Daten.",
-        
-        'warning.invitation.rejected' => "Du hast die Einladung abgelehnt.",
-    
-        'success.userinput.save' => "Deine Daten wurden gespeichert.",
-        'success.password.changed' => "Dein Passwort wurde ge&auml;ndert.",
-        'success.matchdata.save' => "Die Match-Daten wurden gespeichert.",
-        'success.invitation.deleted' => "Die Einladung wurde gel&ouml;scht.",
-    
-    
-        'email.password.reset.link.click' => "Hier klicken um das Passwort zur&uuml;ckzusetzen",
-    
-    
-        'title' => "Risiko",
-        'title.login' => "Login",
-        'title.password.reset' => "Passwort zur&uuml;cksetzen",
-        'title.register' => "Registrierung",
-        'title.init.match' => "Neues Match erstellen",
-        'title.join.match' => "Match &quot;:matchName&quot; beitreten",
-        'title.administrate.match' => "Match ':matchName' verwalten",
-        'title.overview.matches' => "Laufende Matches",
-        'title.overview.yourmatch' => "Dein Match",
-        'title.overview.nomatch' => "Du bist keinem Match beigetreten.",
-        'title.overview.invitations' => "Du wurdest eingeladen",
-        'title.overview.noinvitations' => "Keine Spiel-Einladungen :(",
-        'title.match.chat' => "Chat",
-        'title.home' => "Home",
-        'title.matches' => "Matches",
-        'title.user.profile' => "User-Profil",
-        'title.user.options' => "User-Optionen",
-        'title.user.data' => "User-Daten",
-        'title.user.password' => "Passwort",
-        'title.game.settings' => "Spiel-Optionen",
-        'title.match.invitations' => "Spieler einladen",
-        'title.match.data' => "Match-Daten",
-        'title.match.cancel' => "Match abbrechen",
-    
-        'title.messages' => "Nachrichten",
-        'title.all.messages' => "Alle Nachrichten",
-        'title.all.threads' => "Alle Nachrichten-Threads",
-        'title.new.thread' => "Neuer Thread",
-        'title.new.messages' => "Neue Nachrichten in :number Threads",
-        'title.new.message' => "Neue Nachricht in einem Thread",
-        'title.message.firstthreadmessage' => "Erste Nachricht",
-    
-    
-        'text.invitation.received.fromfor' => "Von :invitorName f&uuml;r ':matchName'",
-        'text.invitation.rejectec.byfor' => "Von :rejectorName f&uuml;r ':matchName'",
-        'text.no.new.messages' => "Keine neuen Nachrichten.",
-    
-    
-        'placeholder.search' => "Suche",
-        'placeholder.addusers' => "Empf&auml;nger hinzuf&uuml;gen",
-        'placeholder.invitation.message' => "Deine Einladungsnachricht",
-        'placeholder.invitation.playernames' => "Username 1, Username 2, ...",
-        'placeholder.new.message' => "Deine Nachricht",
-        'placeholder.subject' => "Betreff",
-        'placeholder.searchrecipient' => "Suche Empf&auml;nger",
 
 ];

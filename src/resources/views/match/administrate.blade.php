@@ -25,7 +25,7 @@
 
                                                 <div class="form-group">
                                                         <label class="col-md-4 control-label">
-                                                                {{ Lang::get('message.field.match.closed') }}
+                                                                {{ Lang::get('input.match.closed') }}
                                                         </label>
                                                         <div class="col-md-6">
                                                                 <input type="checkbox" name="closed" />
@@ -76,19 +76,19 @@
                                             
                                                 <div class="form-group">
                                                         <label class="col-md-4 control-label">
-                                                                {{ Lang::get('message.field.match.cancel') }}
+                                                                {{ Lang::get('input.match.cancel') }}
                                                         </label>
                                                     
                                                         <div class="col-md-6 control">
                                                                 <input
                                                                         type="button"
                                                                         class="warn btn btn-primary"
-                                                                        onclick="UI.confirmRedirect('{{ route("match.cancel", $match->id) }}', '{{ Lang::get('message.field.match.cancel') }}', '{{ Lang::get('message.title.match.cancel') }}', '{{ Lang::get('message.button.no') }}', '{{ Lang::get('message.button.yes') }}');"
+                                                                        onclick="UI.confirmRedirect('{{ route("match.cancel", $match->id) }}', '{{ Lang::get('input.match.cancel') }}', '{{ Lang::get('message.title.match.cancel') }}', '{{ Lang::get('message.button.no') }}', '{{ Lang::get('message.button.yes') }}');"
                                                                         value="{{ Lang::get('message.link.match.cancel') }}">
                                                                 </input>
                                                                 <br>
                                                                 <div class="warning-small">
-                                                                    {{ Lang::get('message.field.match.cancel.warning') }}
+                                                                    {{ Lang::get('input.match.cancel.warning') }}
                                                                 </div>
                                                         </div>
                                                 </div>

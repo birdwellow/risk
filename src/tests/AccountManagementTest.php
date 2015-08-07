@@ -118,8 +118,8 @@ class AccountManagementTest extends TestCase {
             
             $this->call("GET", "/options");
             $response = $this->call("POST", "/options", [
-                "name" => "",
-                "email" => "subber@bazi.de",
+                "new_user_name" => "",
+                "new_user_email" => "subber@bazi.de",
                 "_token" => csrf_token()
             ]);
             $this->assertRedirectedTo("options");
@@ -129,8 +129,8 @@ class AccountManagementTest extends TestCase {
             
             $this->call("GET", "/options");
             $response = $this->call("POST", "/options", [
-                "name" => "Sub",
-                "email" => "subber@bazi.de",
+                "new_user_name" => "Sub",
+                "new_user_email" => "subber@bazi.de",
                 "_token" => csrf_token()
             ]);
             $this->assertRedirectedTo("options");
@@ -140,8 +140,8 @@ class AccountManagementTest extends TestCase {
             
             $this->call("GET", "/options");
             $response = $this->call("POST", "/options", [
-                "name" => "Sub",
-                "email" => "subber@bazi.de",
+                "new_user_name" => "Sub",
+                "new_user_email" => "subber@bazi.de",
                 "_token" => csrf_token()
             ]);
             $this->assertRedirectedTo("options");
