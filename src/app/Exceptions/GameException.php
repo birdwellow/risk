@@ -98,6 +98,11 @@ class GameException extends Exception {
             "category" => "error.system"
         ],
         
+        "MATCH.CLOSED" => [
+            "message" => "error.match.closed",
+            "category" => "error.system"
+        ],
+        
     ];
     
     

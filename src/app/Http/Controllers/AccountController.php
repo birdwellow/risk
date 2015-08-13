@@ -1,12 +1,14 @@
 <?php namespace Game\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
-
 use Game\Managers\AccountManager;
 use Game\Managers\MatchManager;
 use Game\Managers\MessageManager;
 use Game\Handlers\Messages\SuccessFeedback;
+
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -15,14 +17,18 @@ class AccountController extends Controller {
         protected $accountManager;
         protected $matchManager;
         protected $messageManager;
+        
 
-
-        public function __construct(AccountManager $accountManager, MatchManager $matchManager, MessageManager $messageManager) {
+        public function __construct(
+                AccountManager $accountManager,
+                MatchManager $matchManager,
+                MessageManager $messageManager) {
 		
-                $this->middleware('auth');
                 $this->accountManager = $accountManager;
                 $this->matchManager = $matchManager;
                 $this->messageManager = $messageManager;
+                
+                $this->middleware('auth');
                 
 	}
 
@@ -50,9 +56,28 @@ class AccountController extends Controller {
         public function optionsSave() {
             
                 $user = Auth::user();
-                $options = Request::all();
-                    
-                $this->accountManager->changeOptionsForUser($user, $options);
+                
+                $newUserName = Input::get('new_user_name');
+                $newUserEmail = Input::get('new_user_email');
+                $newUserAvatarFile = Input::get('new_user_avatarfile');
+                
+                $attributes = array();
+                if($user->name !== $newUserName){
+                    $attributes["new_user_name"] = $newUserName;
+                }
+                if($user->email !== $newUserEmail){
+                    $attributes["new_user_email"] = $newUserEmail;
+                }
+                if($newUserAvatarFile){
+                    $attributes["new_user_avatarfile"] = $newUserAvatarFile;
+                }
+                $this->check($attributes, "INVALID.OPTIONS");
+                
+                $this->accountManager->setNameForUser($user, $newUserName);
+                $this->accountManager->setEmailForUser($user, $newUserEmail);
+                if($newUserAvatarFile){
+                    $this->accountManager->setAvatarFileForUser($user, $newUserAvatarFile);
+                }
 
                 return redirect()->back()->with(
                         "message",
@@ -64,9 +89,22 @@ class AccountController extends Controller {
         public function passwordSave() {
             
                 $user = Auth::user();
-                $passwordInputs = Request::all();
-                  
-                $this->accountManager->changePasswordForUser($user, $passwordInputs);
+                
+                $password = Input::get("user_password");
+                $newPassword = Input::get("new_user_password");
+                $newPasswordConfirm = Input::get("new_user_password_confirmation");
+                
+                $attributes = [
+                    "user_password" => [
+                        $password,
+                        "auth:" . $user->email
+                    ],
+                    "new_user_password" => $newPassword,
+                    "new_user_password_confirmation" => $newPasswordConfirm,
+                ];
+                $this->check($attributes, "PASSWORD.NOT.CHANGED");
+                
+                $this->accountManager->setPasswordForUser($user, $password);
 
                 return redirect()->back()->with(
                         "message",

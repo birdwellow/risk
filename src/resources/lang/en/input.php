@@ -29,13 +29,13 @@ return [
     
     
         'match_name' => "Name",
-        'match_map' => "Map",
-        'match_closed' => "Only invited users?",
-        'match_maxusers' => "Maximum User Count",
+        'match_map_name' => "Map",
+        'match_maximum_users' => "Maximum User Count",
         'match_joinedusers' => "Players",
         'match_startdate' => "Started",
         'match_createdby' => "Created by",
         'match_invite' => "Invite",
+        'match_invited_users' => "Users",
         'match_invitationmessage' => "Your invitation message",
         'match_cancel' => "Do you want to cancel this match?",
         'match_cancel_warning' => "Afterwards, all players will be able to "

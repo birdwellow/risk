@@ -3,12 +3,11 @@
 use Game\User;
 use Game\Model\Match;
 use Game\Exceptions\GameException;
-use \Illuminate\Support\Facades\Session;
-use \Illuminate\Support\Facades\Log;
 use Game\Services\IdTokenService;
 use Game\Model\Invitation;
 use Game\Model\Map;
-use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Support\Facades\Log;
 
 /**
  * Description of MatchManager
@@ -18,7 +17,16 @@ use Illuminate\Support\Facades\Validator;
 class MatchManager {
     
     
-    public function checkUserCanCreateMatch($user) {
+    const MATCHSTATE_WAITING_FOR_PLAYERJOINS = "match.waitingforjoins";
+    const MATCHSTATE_START = "match.started";
+
+
+    public function __construct() {
+        
+    }
+    
+    
+    public function checkUserMayCreateMatch($user) {
         
             if($user->joinedMatch !== null){
                 throw new GameException("ALREADY.JOINED");
@@ -27,37 +35,25 @@ class MatchManager {
     }
     
     
-    public function checkUserCanDeleteMatch($matchId, $user) {
+    public function checkUserCanDeleteMatch($user, $match) {
         
-            $match = Match::find($matchId);
-            if($match && $user->id !== $match->createdBy->id){
+            if($user->id !== $match->createdBy->id){
                 throw new GameException("CANNOT.DELETE.MATCH");
             }
         
     }
     
     
-    public function checkUserCanAdministrateMatch($match, $user) {
+    public function checkUserCanAdministrateMatch($user, $match) {
         
-            if($match && $user->id !== $match->createdBy->id){
+            if($user->id !== $match->createdBy->id){
                 throw new GameException("CANNOT.DELETE.MATCH");
             }
         
     }
     
-    public function checkUserMayJoinMatch($userId, $matchId) {
+    public function checkUserMayJoinMatch($user) {
         
-            $match = Match::find($matchId);
-            if($match->closed){
-                $userIsMatchCreator = ($match->createdBy->id == $userId);
-                $userInvitedForMatch = $this->isUserInvitedForMatch($userId, $matchId);
-                
-                if(!$userIsMatchCreator && !$userInvitedForMatch){
-                    throw new GameException("NOT.INVITED.TO.CLOSED.MATCH");
-                }
-            }
-            
-            $user = Match::find($userId);
             if($user && $user->joinedMatch !== null){
                 throw new GameException("ALREADY.JOINED");
             }
@@ -72,106 +68,57 @@ class MatchManager {
     }
     
     
-    public function createMatch($user, $inputs) {
-        
-            $validator = Validator::make(
-                [
-                    'name' => $inputs['name'],
-                    'maxusers' => $inputs['maxusers'],
-                    'mapName' => $inputs['mapName'],
-                ],
-                [
-                    'name' => 'required|min:6|max:32|unique:matches',
-                    'maxusers' => 'required|integer|min:2|max:6',
-                    'mapName' => 'required|in:'.  implode(",", $this->getMapNames()),
-                ]
-            );
-            if($validator->fails()){
-                \Illuminate\Support\Facades\Log::info($validator->messages());
-                throw new GameException(
-                        "CREATE.MATCH.WRONG.PARAMETERS",
-                        $validator->messages()
-                );
-            }
+    public function createMatch($name, $mapName, $maxUsers, $creatorUser) {
 
             $match = new Match();
-            $match->name = $inputs['name'];
-            $match->createdBy()->associate($user);
-            $match->closed = ($inputs["closed"] !== null);
-            $match->maxusers = $inputs["maxusers"];
-            $map = Map::where("name", $inputs['mapName'])->first();
+            $match->name = $name;
+            $match->createdBy()->associate($creatorUser);
+            $match->maxusers = $maxUsers;
+            $token = IdTokenService::createToken();
+            while(Match::where("joinid", $token)->first()){
+                $token = IdTokenService::createToken();
+            }
+            $match->joinid = $token;
+            $match->state = self::MATCHSTATE_WAITING_FOR_PLAYERJOINS;
+            $map = Map::where("name", $mapName)->first();
             $match->map()->associate($map);
             
             $match->save();
             
-
-            $invitedPlayersInput = str_replace(", ", ",", $inputs['invited_players']);
-            $invitedPlayerNames = explode(",", $invitedPlayersInput);
-            $invitationMessage = $inputs['message'];
-            foreach ($invitedPlayerNames as $invitedPlayerName){
-                $foundPlayer = User::where("name", $invitedPlayerName)->first();
-                if($foundPlayer){
-                    $userJoinMatch = new Invitation();
-                    $userJoinMatch->status = "invited";
-                    $userJoinMatch->invitedBy()->associate($user);
-                    $userJoinMatch->user()->associate($foundPlayer);
-                    $userJoinMatch->match()->associate($match);
-                    $userJoinMatch->message = $invitationMessage;
-                    $userJoinMatch->save();
-                }
-            }
-            
-            $user->joinedMatch()->associate($match);
-            $user->save();
             return $match;
             
     }
     
-    public function deleteMatch($id) {
+    public function cancelMatch($match) {
         
-            $match = Match::find($id);
-            if(!$match){
-                throw new GameException("MATCH.NOT.FOUND");
-            } else {
-                foreach ($match->joinedUsers() as $joinedUser) {
-                    $joinedUser->joinedMatch()->detach();
-                }
-                foreach ($this->getAllInvitationsForMatch($id) as $invitation){
-                    $invitation->delete();
-                }
-                
-                $match->delete();
+            foreach ($match->joinedUsers() as $joinedUser) {
+                $joinedUser->joinedMatch()->detach();
             }
-        
+
+            $match->delete();
+            
     }
     
-    public function joinMatch($matchId, $user){
-            
-            $invitation = $this->getNewInvitationForUserAndMatch($user->id, $matchId);
+    public function joinUserToMatch($match, $user) {
         
-            if($invitation !== null){
-                $this->resolveInvitation($invitation->id, $user);
+            if($match->state !== self::MATCHSTATE_WAITING_FOR_PLAYERJOINS){
+                throw new GameException("MATCH.CLOSED");
             }
-            $this->rejectAllInvitationsForUser($user);
-
-            $match = Match::find($matchId);
             $user->joinedMatch()->associate($match);
             $user->save();
             
+            if(count($match->joinedUsers()) >= $match->maxusers){
+                $this->startMatch($match);
+            }
+
+            
     }
     
-    public function goToMatch($id, $user) {
+    public function startMatch($match){
         
-            $match = Match::find($id);
-            if($match == null){
-                throw new GameException("MATCH.NOT.FOUND");
-            } else {
-                $user->joinid = IdTokenService::createUUID($user->name);
-                $user->save();
+            $match->state = self::MATCHSTATE_START;
+            $match->save();
                 
-                return $match;
-            }
-        
     }
     
     public function rejectInvitation($id, $user) {
@@ -268,39 +215,38 @@ class MatchManager {
 
     }
     
-    public function getNewInvitationsForUser($userId){
+    
+    public function getMatchForId($id){
         
-        return Invitation::where("user_id", "=", $userId)
-                        ->where("status", "=", "invited")->get();
+        $match = Match::find($id);
+        if(!$match) {
+            throw new GameException("MATCH.NOT.FOUND");
+        }
+        return $match;
         
     }
     
-    public function getAllInvitationsForMatch($matchId){
+    
+    public function getMatchForJoinId($joinId){
         
-        return Invitation::where("match_id", "=", $matchId)->get();
+        $match = Match::where("joinid", $joinId)->first();
+        if(!$match) {
+            throw new GameException("MATCH.NOT.FOUND");
+        }
+        return $match;
+        
         
     }
     
-    public function getNewInvitationForUserAndMatch($userId, $matchId){
-        
-        return Invitation::where("user_id", "=", $userId)
-                        ->where("status", "=", "invited")
-                        ->where("match_id", "=", $matchId)->first();
-        
-    }
     
-    public function isUserInvitedForMatch($userId, $matchId){
+    public function getMatchForUser($user){
         
-        return (Invitation::where("user_id", "=", $userId)
-                        ->where("status", "=", "invited")
-                        ->where("match_id", "=", $matchId)->first() !== null);
+        $match = $user->joinedMatch;
+        if(!$match) {
+            throw new GameException("MATCH.NOT.FOUND");
+        }
+        return $match;
         
-    }
-    
-    public function getRejectedInvitationsForUser($userId){
-        
-        return Invitation::where("invited_by_user_id", "=", $userId)
-                        ->where("status", "=", "rejected")->get();
         
     }
     

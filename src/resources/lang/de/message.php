@@ -47,16 +47,11 @@ return [
         'button.no' => "Nein",
     
         'error.userinput' => "Es gab einen Fehler mit deinen Daten.",
-        
-        'warning.invitation.rejected' => "Du hast die Einladung abgelehnt.",
     
         'success.userinput.save' => "Deine Daten wurden gespeichert.",
         'success.password.changed' => "Dein Passwort wurde ge&auml;ndert.",
         'success.matchdata.save' => "Die Match-Daten wurden gespeichert.",
-        'success.invitation.deleted' => "Die Einladung wurde gel&ouml;scht.",
-    
-    
-        'email.password.reset.link.click' => "Hier klicken um das Passwort zur&uuml;ckzusetzen",
+        'success.match.cancelled' => "Match wurde abgebrochen.",
     
     
         'title' => "Risiko",
@@ -92,9 +87,12 @@ return [
         'title.message.firstthreadmessage' => "Erste Nachricht",
     
     
-        'text.invitation.received.fromfor' => "Von :invitorName f&uuml;r ':matchName'",
-        'text.invitation.rejectec.byfor' => "Von :rejectorName f&uuml;r ':matchName'",
         'text.no.new.messages' => "Keine neuen Nachrichten.",
+    
+    
+        'label.match.players' => "Mitspieler",
+        'label.match.date.start' => "Startdatum",
+        'label.match.creator.name' => "Erstellt von",
     
     
         'placeholder.search' => "Suche",

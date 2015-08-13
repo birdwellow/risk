@@ -29,13 +29,13 @@ return [
     
     
         'match_name' => "Name",
-        'match_map' => "Karte",
-        'match_closed' => "Nur eingeladene Spieler?",
-        'match_maxusers' => "Maximale Spielerzahl",
+        'match_map_name' => "Karte",
+        'match_maximum_users' => "Maximale Spielerzahl",
         'match_joinedusers' => "Spieler",
         'match_startdate' => "Er&ouml;ffnet",
         'match_createdby' => "Ersteller",
         'match_invite' => "Einladen",
+        'match_invited_users' => "Users",
         'match_invitationmessage' => "Deine Einladungs-Nachricht",
         'match_cancel' => "Willst du dieses Match abbrechen?",
         'match_cancel_warning' => "Danach werden alle Spieler wieder neue "

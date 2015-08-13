@@ -73,6 +73,8 @@ class PasswordController extends Controller {
 	public function postEmail(Request $request) {
             
                 $email = $request->get("user_email");
+            
+		$this->check(['user_email' => $email], "PASSWORDRESET.EMAIL.NOT.SENT");
                 
                 $result = $this->accountManager->sendPasswordResetLink($email);
                 
@@ -111,6 +113,13 @@ class PasswordController extends Controller {
                 $email = $request->get("user_email");
                 $password = $request->get("new_user_password");
                 $passwordConfirmation = $request->get("new_user_password_confirmation");
+            
+		$this->validator->check([
+			'password_reset_token' => $token,
+			'user_email' => $email,
+			'new_user_password' => $password,
+			'new_user_password_confirmation' => $passwordConfirmation,
+		], "PASSWORD.NOT.CHANGED");
                 
                 $result = $this->accountManager->resetPassword($token, $email, $password, $passwordConfirmation);
                 

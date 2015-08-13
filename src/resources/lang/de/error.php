@@ -23,7 +23,6 @@ return [
         'cannot.delete.match' => "Du darfst das Spiel nicht beenden.",
         'cannot.administrate.match' => "Du darfst das Spiel nicht verwalten.",
         'options.notsaved' => "Deine Optionen konnten nicht gespeichert werden.",
-        'not.invited.to.closed.match' => "Nur eingeladene Spieler können diesem Spiel beitreten.",
         'password.notchanged' => "Das Passwort konnte nicht ge&auml;ndert werden.",
         'thread.notcreated' => "Thread konnte nicht erstellt werden.",
         'message.notsent' => "Nachricht konnte nicht gesendet werden.",
@@ -43,5 +42,6 @@ return [
     
         'passwordreset.email.not.sent' => "Konnte Passwort-Reset-Link nicht schicken.",
     
+        'match.closed' => "Leider kann dem Match kein weiterer Spieler mehr beitreten.",
 
 ];

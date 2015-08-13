@@ -51,7 +51,7 @@
                                                 @endif
                                             <span class="sendername">{{ $message->user->name }}</span>:
                                             <span class="messagebody">
-                                                {{ $message->body }}
+                                                {!! $message->body !!}
                                             </span>
                                         </div>
                                     </a>

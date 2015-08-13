@@ -64,6 +64,13 @@ class AuthController extends Controller {
                 $password = $request->get("new_user_password");
                 $passwordConfirmation = $request->get("new_user_password_confirmation");
                 
+                $this->check([
+                    "new_user_name" => $username,
+                    "new_user_email" => $email,
+                    "new_user_password" => $password,
+                    "new_user_password_confirmation" => $passwordConfirmation,
+                ], "REGISTRATION.ERROR");
+                
                 $newUser = $this->accountManager->registerNewUserWith($username, $email, $password, $passwordConfirmation);
             
             	Auth::login($newUser);
@@ -95,7 +102,14 @@ class AuthController extends Controller {
                 $password = $request->get("user_password");
                 $remember = $request->has('user_remember_login');
                 
-                $this->accountManager->checkUserCredentials($email, $password);
+                $attributes = [
+                    "user_email" => $email,
+                    "user_password" => [
+                        $password,
+                        "auth:" . $email
+                    ],
+                ];
+                $this->check($attributes, "LOGIN.ERROR");
                 
                 $credentials = [
                     "email" => $email,

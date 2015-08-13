@@ -62,16 +62,4 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return $this->belongsTo('Game\Model\Match', 'joined_match_id', 'id');
         }
 
-        
-        public function matchJoined()
-        {
-            return $this->hasMany('Game\Model\Invitation', 'user_id', 'id');
-        }
-
-        
-        public function invitedToJoin()
-        {
-            return $this->hasMany('Game\Model\Invitation');
-        }
-
 }

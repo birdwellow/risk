@@ -23,7 +23,7 @@
                                                         <img class="icon" src="/img/message.png">
                                                     @else
                                                     @endif
-                                                    {{ str_limit($currentThread->subject, 20) }}
+                                                    {{ str_limit(strip_tags($currentThread->subject, 20)) }}
                                                 </div>
                                                 <div class="recipients">
                                                     <?php
@@ -47,7 +47,7 @@
                                                             @endif
                                                         <span class="sendername">{{ $currentThread->latestMessage()->user->name }}:</span>
                                                         <span class="messagebody">
-                                                            {{ str_limit($currentThread->latestMessage()->body, 12) }}
+                                                            {{ str_limit(strip_tags($currentThread->latestMessage()->body, 12)) }}
                                                         </span>
                                                     </div>
                                                 @else

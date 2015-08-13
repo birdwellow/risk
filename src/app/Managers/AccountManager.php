@@ -8,6 +8,7 @@ use Illuminate\Support\MessageBag;
 
 use Game\User;
 use Game\Services\PolicyComplianceService;
+use Game\Services\IdTokenService;
 use Game\Exceptions\GameException;
 
 /**
@@ -17,7 +18,6 @@ use Game\Exceptions\GameException;
  */
 class AccountManager {
     
-        protected $validator;
         protected $passwords;
 
         protected $sessionLangToken = "language";
@@ -25,42 +25,10 @@ class AccountManager {
         protected $allowedLocales = ["en", "de"];
         
         
-        public function __construct(PolicyComplianceService $validator, PasswordBroker $passwords) {
+        public function __construct(PasswordBroker $passwords) {
                 
-                $this->validator = $validator;
                 $this->passwords = $passwords;
                 
-        }
-        
-        
-        protected function checkUserOptionsForUser($user, $userName, $userEmail){
-            
-                $attributes = array();
-                if($user->name !== $userName){
-                    $attributes["new_user_name"] = $userName;
-                }
-                if($user->email !== $userEmail){
-                    $attributes["new_user_email"] = $userEmail;
-                }
-                
-                $this->validator->check($attributes, "INVALID.OPTIONS");
-            
-        }
-        
-        
-        protected function checkPasswordData($email, $password, $newPassword, $newPasswordConfirm){
-                
-                $attributes = [
-                    "user_password" => [
-                        $password,
-                        "auth:" . $email
-                    ],
-                    "new_user_password" => $newPassword,
-                    "new_user_password_confirmation" => $newPasswordConfirm,
-                ];
-                
-                $this->validator->check($attributes, "PASSWORD.NOT.CHANGED");
-            
         }
         
         
@@ -96,27 +64,34 @@ class AccountManager {
                 return Session::get($this->sessionLangToken);
                 
         }
+        
+        
+        public function setNameForUser($user, $name) {
+            
+                $user->name = $name;
+                $user->save();
+            
+        }
+        
+        
+        public function setEmailForUser($user, $email) {
+            
+                $user->email = $email;
+                $user->save();
+            
+        }
 
         
-        public function changeOptionsForUser($user, $options){
+        public function setAvatarFileForUser($user, $avatarFile){
 
-                $newUserName = $options['new_user_name'];
-                $newUserEmail = $options['new_user_email'];
-                
-                $this->checkUserOptionsForUser($user, $newUserName, $newUserEmail);
-                
-                $user->name = $newUserName;
-                $user->email = $newUserEmail;
-
-                $newUserAvatarFile = ( isset($options['new_user_avatarfile']) ? $options['new_user_avatarfile'] : null);
-                if($newUserAvatarFile && $newUserAvatarFile->isValid()){
+                if($avatarFile->isValid()){
                     
                     $oldAvatarFileName = $user->avatarfile;
-                    $newUserAvatarFileName = $user->name . "_" . uniqid() . "." . $newUserAvatarFile->getClientOriginalExtension();
+                    $newUserAvatarFileName = $user->name . "_" . uniqid() . "." . $avatarFile->getClientOriginalExtension();
                     
                     $fileManager = new FileManager();
                     
-                    $fileManager->saveAvatarFileAs($newUserAvatarFile, $newUserAvatarFileName);
+                    $fileManager->saveAvatarFileAs($avatarFile, $newUserAvatarFileName);
                     $user->avatarfile = $newUserAvatarFileName;
 
                     $fileManager->deleteAvatarFile($oldAvatarFileName);
@@ -127,42 +102,15 @@ class AccountManager {
         }
 
 
-        public function changePasswordForUser($user, $passwordData) {
-
-                $newPassword = $passwordData["new_user_password"];
-                $newPasswordConfirm = $passwordData["new_user_password_confirmation"];
-                $password = $passwordData["user_password"];
+        public function setPasswordForUser($user, $password) {
                 
-                $this->checkPasswordData($user->email, $password, $newPassword, $newPasswordConfirm);
-                
-                $user->password = bcrypt($newPassword);
+                $user->password = bcrypt($password);
                 $user->save();
                 
         }
         
         
-        public function checkUserCredentials($email, $password) {
-            
-                $attributes = [
-                    "user_email" => $email,
-                    "user_password" => [
-                        $password,
-                        "auth:" . $email
-                    ],
-                ];
-                $this->validator->check($attributes, "LOGIN.ERROR");
-            
-        }
-        
-        
         public function registerNewUserWith($username, $email, $password, $passwordConfirmation) {
-            
-                $this->validator->check([
-                    "new_user_name" => $username,
-                    "new_user_email" => $email,
-                    "new_user_password" => $password,
-                    "new_user_password_confirmation" => $passwordConfirmation,
-                ], "REGISTRATION.ERROR");
                 
                 return User::create([
                     'name' => $username,
@@ -174,8 +122,6 @@ class AccountManager {
         
         
         public function sendPasswordResetLink($email) {
-            
-		$this->validator->check(['user_email' => $email], "PASSWORDRESET.EMAIL.NOT.SENT");
 
                 $msg = null;
 		$result = $this->passwords->sendResetLink(
@@ -197,13 +143,6 @@ class AccountManager {
         
         
         public function resetPassword($token, $email, $password, $passwordConfirmation) {
-            
-		$this->validator->check([
-			'password_reset_token' => $token,
-			'user_email' => $email,
-			'new_user_password' => $password,
-			'new_user_password_confirmation' => $passwordConfirmation,
-		], "PASSWORD.NOT.CHANGED");
                 
                 $credentials = [
 			'email' => $email,
@@ -226,6 +165,14 @@ class AccountManager {
                 }
                 
                 throw new GameException("PASSWORD.NOT.CHANGED", new MessageBag([trans($result)]));
+        }
+        
+        
+        public function setSocketJoinId($user) {
+        
+                $user->joinid = IdTokenService::createUUID($user->name);
+                $user->save();
+            
         }
     
 }

@@ -49,7 +49,7 @@
                                         </tr>
                                 </table>
                             
-                                <form method="POST" action="{{ route('match.join.confirm', $match->id) }}" class="form-horizontal" role="form" >
+                                <form method="POST" action="{{ route('match.join.confirm', $match->joinid) }}" class="form-horizontal" role="form" >
 
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         

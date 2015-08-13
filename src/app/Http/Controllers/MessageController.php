@@ -39,10 +39,15 @@ class MessageController extends Controller {
         
             $thread = $this->messageManager->getThreadForUser(Auth::user(), $threadId);
 
+            $messageText = trim(Input::get("thread_message_text"));
+            $this->check([
+                    "thread_message_text" => $messageText
+                ], "MESSAGE.NOT.SENT");
+            
             $this->messageManager->newMessage(
                     $thread,
                     Auth::user(),
-                    Input::get("thread_message_text")
+                    $messageText
             );
 
             return redirect()->back();
@@ -53,11 +58,18 @@ class MessageController extends Controller {
 
     public function newThreadWithNewMessage() {
 
+            $threadSubject = trim(Input::get('thread_subject'));
             $userNameArray = explode(",", Input::get('thread_recipients'));
             $recipients = $this->userManager->findUsersForNames($userNameArray);
 
+            $attributes = [
+                "thread_subject" => $threadSubject,
+                "thread_recipients" => sizeof($recipients),
+            ];
+            $this->check($attributes, "THREAD.NOT.CREATED");
+                
             $thread = $this->messageManager->newThread(
-                    Input::get('thread_subject'),
+                    $threadSubject,
                     Auth::user(),
                     $recipients,
                     Input::get('thread_reuseexistingthread')
@@ -67,7 +79,7 @@ class MessageController extends Controller {
                 $this->messageManager->newMessage(
                         $thread,
                         Auth::user(),
-                        Input::get('thread_message_text')
+                        trim(Input::get('thread_message_text'))
                 );
             }
 
@@ -117,6 +129,11 @@ class MessageController extends Controller {
             
             $userNameArray = explode(",", Input::get("thread_recipients"));
             $userArray = $this->userManager->findUsersForNames($userNameArray);
+
+            $attributes = [
+                "thread_recipients" => sizeof($userArray),
+            ];
+            $this->check($attributes, "USERS.NOT.ADDED.TO.THREAD");
 
             $this->messageManager->addUsersToThread($user, $userArray, $thread);
 

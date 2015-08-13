@@ -38,12 +38,15 @@ class PolicyComplianceService {
                 "thread_message_text" => "required",
                 "thread_reuseexistingthread" => "",
             
+            /*
+             * Policies for the match component
+             */
+                "match_name" => "required|min:6|max:32",
+                "match_map_name" => "required",
+                "match_maximum_users" => "required|integer|between:2,6",
+                "match_invited_users" => "selected",
+            
         ];
-
-
-        public function __construct() {
-
-        }
 
 
         public function check($attributes, $errorKey = "") {

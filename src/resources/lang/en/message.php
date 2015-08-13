@@ -48,15 +48,10 @@ return [
     
         'error.userinput' => "There were some problems with your input.",
     
-        'warning.invitation.rejected' => "You rejected the invitation.",
-    
         'success.userinput.save' => "Your data was stored.",
         'success.password.changed' => "Your password was changed.",
         'success.matchdata.save' => "Your match data was saved.",
-        'success.invitation.deleted' => "The Invitation was deleted.",
-    
-    
-        'email.password.reset.link.click' => "Click here to reset your password",
+        'success.match.cancelled' => "Match was cancelled.",
     
     
         'title' => "Risk",
@@ -92,9 +87,12 @@ return [
         'title.message.firstthreadmessage' => "First message",
     
     
-        'text.invitation.received.fromfor' => "From :invitorName for ':matchName'",
-        'text.invitation.rejectec.byfor' => "By :rejectorName for ':matchName'",
         'text.no.new.messages' => "No new messages.",
+    
+    
+        'label.match.players' => "Players",
+        'label.match.date.start' => "Start date",
+        'label.match.creator.name' => "Created by",
     
     
         'placeholder.search' => "Search",

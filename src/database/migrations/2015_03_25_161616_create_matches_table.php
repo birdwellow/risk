@@ -15,15 +15,16 @@ class CreateMatchesTable extends Migration {
 		Schema::create('matches', function(Blueprint $table)
 		{
 			$table->increments('id');
+                        $table->string('name');
+                        $table->string('state');
                         $table->integer('created_by_user_id')->unsigned();
                         $table->foreign('created_by_user_id')->references('id')->on('users');
-                        $table->boolean('closed');
+                        $table->integer('thread_id')->nullable()->unsigned();
+                        $table->foreign('thread_id')->references('id')->on('threads');
+                        $table->string('joinid');
                         $table->integer('maxusers');
-                        $table->string('name');
                         $table->integer('cardChangeBonusLevel');
 			$table->timestamps();
-                        $table->integer('thread_id')->unsigned();
-                        $table->foreign('thread_id')->references('id')->on('threads');
 		});
                 
                 Schema::table('users', function(Blueprint $table)

@@ -3,6 +3,13 @@
 
 class IdTokenService {
     
+    protected static $tokenBase = "1546058f-5a25-4334-85ae-e68f2a44bbaf";
+    
+    public static function createToken() {
+        $random = rand(43, 55610989);
+        return md5(self::$tokenBase . $random);
+    }
+    
     public static function createUUID($base = ""){
         
         $initialUUID = "1546058f-5a25-4334-85ae-e68f2a44bbaf";

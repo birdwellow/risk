@@ -26,19 +26,19 @@
                                             
                                             <div class="form-group">
                                                     <label class="col-md-3 control-label">
-                                                            {{ Lang::get('input.match.name') }}
+                                                            {{ Lang::get('input.match_name') }}
                                                     </label>
                                                     <div class="col-md-9">
-                                                            <input type="text" name="name" value="{{ old('name') }}"/>
+                                                            <input class="{{ invalid('match_name') }}" type="text" name="match_name" value="{{ old('match_name') }}"/>
                                                     </div>
                                             </div>
 
                                             <div class="form-group">
                                                     <label class="col-md-3 control-label">
-                                                            {{ Lang::get('input.match.map') }}
+                                                            {{ Lang::get('input.match_map_name') }}
                                                     </label>
                                                     <div class="col-md-9">
-                                                            <select name="mapName" id="mapname-select">
+                                                            <select class="{{ invalid('match_map_name') }}" name="match_map_name" id="match_map_name">
                                                                 @foreach($mapNames as $mapName)
                                                                     <option value="{{ $mapName }}">
                                                                             {{ $mapName }}
@@ -49,28 +49,19 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label">
-                                                        {{ Lang::get('input.match.closed') }}
-                                                </label>
-                                                <div class="col-md-9">
-                                                        <input type="checkbox" name="closed"/>
-                                                </div>
+                                                    <label class="col-md-3 control-label">
+                                                          {{ Lang::get('input.match_maximum_users') }}
+                                                    </label>
+                                                    <div class="col-md-9">
+                                                            <select class="{{ invalid('match_maximum_users') }}" name="match_maximum_users" id="match_maximum_users">
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                    <option value="6" selected="">6</option>
+                                                            </select>
+                                                    </div>
                                             </div>
-
-                                                <div class="form-group">
-                                                        <label class="col-md-3 control-label">
-                                                              {{ Lang::get('input.match.maxusers') }}
-                                                        </label>
-                                                        <div class="col-md-9">
-                                                                <select name="maxusers" id="maxusers">
-                                                                        <option value="2">2</option>
-                                                                        <option value="3">3</option>
-                                                                        <option value="4">4</option>
-                                                                        <option value="5">5</option>
-                                                                        <option value="6" selected="">6</option>
-                                                                </select>
-                                                        </div>
-                                                </div>
 
                                         </div>
                                     
@@ -81,9 +72,10 @@
                                             
                                                 <div class="form-group">
                                                         <label class="col-md-3 control-label">
+                                                            {{ Lang::get('input.match_invited_users') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <input value="{{ old('invited_players') }}" name="invited_players" type="userselector" placeholder="{{ Lang::get('message.placeholder.search') }}" />
+                                                                <input class="{{ invalid('match_invited_users') }}" value="{{ old('match_invited_users') }}" name="match_invited_users" type="userselector" placeholder="{{ Lang::get('message.placeholder.search') }}" />
                                                         </div>
                                                 </div>
 

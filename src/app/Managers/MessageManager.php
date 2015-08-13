@@ -20,13 +20,11 @@ use Illuminate\Support\Facades\Log;
 class MessageManager {
     
     
-        protected $validator;
         protected $userManager;
 
 
-        public function __construct(PolicyComplianceService $validator, UserManager $userManager) {
+        public function __construct(UserManager $userManager) {
 
-                $this->validator = $validator;
                 $this->userManager = $userManager;
 
         }
@@ -51,11 +49,6 @@ class MessageManager {
 
                 $this->checkUserParticipantOfThread($user, $thread);
                 
-                $messageText = trim($messageText);
-                $this->validator->check([
-                        "thread_message_text" => $messageText
-                    ], "MESSAGE.NOT.SENT");
-
                 return Message::create([
                     'thread_id' => $thread->id,
                     'user_id' => $user->id,
@@ -66,12 +59,6 @@ class MessageManager {
 
 
         public function newThread($subject, $creatorUser, $recipientUsersArray, $returnOldThreadIfExisting) {
-
-                $attributes = [
-                    "thread_subject" => $subject,
-                    "thread_recipients" => sizeof($recipientUsersArray),
-                ];
-                $this->validator->check($attributes, "THREAD.NOT.CREATED");
 
                 if($returnOldThreadIfExisting){
 
@@ -182,11 +169,6 @@ class MessageManager {
 
 
         public function addUsersToThread($user, $userArray, $thread){
-
-                $attributes = [
-                    "thread_recipients" => sizeof($userArray),
-                ];
-                $this->validator->check($attributes, "USERS.NOT.ADDED.TO.THREAD");
 
                 $this->checkUserParticipantOfThread($user, $thread);
 

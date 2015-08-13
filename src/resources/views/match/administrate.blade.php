@@ -22,15 +22,6 @@
                                                 <h2>
                                                         {{ Lang::get('message.title.match.data') }}
                                                 </h2>
-
-                                                <div class="form-group">
-                                                        <label class="col-md-4 control-label">
-                                                                {{ Lang::get('input.match.closed') }}
-                                                        </label>
-                                                        <div class="col-md-6">
-                                                                <input type="checkbox" name="closed" />
-                                                        </div>
-                                                </div>
                                         </div>
 
                                         <div class="section">
