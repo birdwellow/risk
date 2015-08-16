@@ -37,7 +37,7 @@ class AccountController extends Controller {
             
                 $user = Auth::user();
                 $unreadThreads = $this->messageManager->getUnreadThreadsForUser($user);
-                $matches = $this->matchManager->getAllMatches();
+                $matches = $this->matchManager->getAllPublicMatches();
                 
 		return view('user.overview')
                         ->with("matches", $matches)

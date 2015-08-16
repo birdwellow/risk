@@ -243,6 +243,29 @@
         margin-bottom: 0;
         padding-top: 7px;
     }
+    .control-label-display {
+        margin-bottom: 0;
+        text-align: right;
+    }
+    .inactive {
+        color: #bbb;
+    }
+    .status {
+        border-radius: 5px;
+        padding: 5px 15px;
+        float: left;
+    }
+    .status.started {
+        background: #3c763d;
+    }
+    .status.waitingforjoins {
+        background: rgba(255,127,0,0.85);
+    }
+    .namemarker{
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 1.5em;
+    }
     .btn {
         font-size: inherit;
     }
@@ -337,6 +360,10 @@
         border-radius: 2px;
         box-sizing: border-box;
         box-shadow: inset 5px 5px 5px rgba(0,0,0,0.5);
+    }
+    .button-container{
+        margin-top: 20px;
+        text-align: right;
     }
     .invalid {
         background-color: rgba(127,0,0,0.5) !important;
@@ -507,6 +534,11 @@
     }
     a.action:hover{
         color: #4da94e;
+    }
+    .info-small{
+        font-size: 0.8em;
+        line-height: 100%;
+        margin-top: 10px;
     }
     .warning-small{
         font-size: 0.8em;

@@ -4,7 +4,7 @@
 
 <div class="container">
     
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default game-panel">
                         <div class="panel-heading">
                             {{ Lang::get('message.title.join.match', ['matchName'=>$match->name]) }}
@@ -15,7 +15,7 @@
                                 <table>
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('input.match.name') }}
+                                                        {{ Lang::get('message.label.match.name') }}
                                                 </td>
                                                 <td class="data">
                                                         {{ $match->name }}
@@ -23,17 +23,24 @@
                                         </tr>
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('input.match.joinedusers') }}
+                                                        {{ Lang::get('message.label.match.players') }}
                                                 </td>
                                                 <td class="data">
-                                                    @foreach($match->joinedUsers as $joinedUser)
-                                                        {{ $joinedUser->name }}
-                                                    @endforeach
+                                                    <?php
+                                                        $joinedUsersString = "";
+                                                        foreach($match->joinedUsers as $index => $joinedUser){
+                                                            if($index > 0){
+                                                                $joinedUsersString .= ", ";
+                                                            }
+                                                            $joinedUsersString .= $joinedUser->name;
+                                                        }
+                                                    ?>
+                                                    {{ $joinedUsersString }}
                                                 </td>
                                         </tr>
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('input.match.startdate') }}
+                                                        {{ Lang::get('message.label.match.date.start') }}
                                                 </td>
                                                 <td class="data">
                                                         {{ $match->created_at }}
@@ -41,7 +48,7 @@
                                         </tr>
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('input.match.createdby') }}
+                                                        {{ Lang::get('message.label.match.creator.name') }}
                                                 </td>
                                                 <td class="data">
                                                         {{ $match->createdBy->name }}

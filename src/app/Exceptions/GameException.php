@@ -43,8 +43,8 @@ class GameException extends Exception {
             "message" => "error.cannot.administrate.match",
             "category" => "error.user"
         ],
-        "NOT.INVITED.TO.CLOSED.MATCH" => [
-            "message" => "error.not.invited.to.closed.match",
+        "ONLY.INVITED.USERS" => [
+            "message" => "error.only.invited.users",
             "category" => "error.user"
         ],
         "INVALID.OPTIONS" => [
@@ -53,6 +53,10 @@ class GameException extends Exception {
         ],
         "CREATE.MATCH.WRONG.PARAMETERS" => [
             "message" => "error.create.match.wrong.parameters",
+            "category" => "error.user"
+        ],
+        "ADMINISTRATE.MATCH.WRONG.PARAMETERS" => [
+            "message" => "error.administrate.match.wrong.parameters",
             "category" => "error.user"
         ],
         "PASSWORD.NOT.CHANGED" => [

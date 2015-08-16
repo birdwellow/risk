@@ -29,18 +29,25 @@ return [
     
     
         'match_name' => "Name",
+        'match_public' => "Match &ouml;ffentlich anzeigen?",
+        'match_public.info' => "Alle angemeldeten User k&ouml;nnen das Match dann finden und beitreten.",
         'match_map_name' => "Karte",
         'match_maximum_users' => "Maximale Spielerzahl",
-        'match_joinedusers' => "Spieler",
+        'match_joinedusers' => "Beigetretene User",
         'match_startdate' => "Er&ouml;ffnet",
         'match_createdby' => "Ersteller",
         'match_invite' => "Einladen",
         'match_invited_users' => "Users",
         'match_invitationmessage' => "Deine Einladungs-Nachricht",
         'match_cancel' => "Willst du dieses Match abbrechen?",
-        'match_cancel_warning' => "Danach werden alle Spieler wieder neue "
-            ."Matches er&ouml;ffnen oder beitreten k&ouml;nnen. Dies sollte aber "
-            ."nur getan werden, wenn zuvor alle Mitspielern zugestimmt haben oder "
-            ."wenn ein oder mehr Spieler eine zu lange Zeit nicht mehr aktiv waren.",
+        'match_cancel_warning_pt1' => "Danach werden alle Spieler wieder neue "
+            ."Matches er&ouml;ffnen oder beitreten k&ouml;nnen.",
+        'match_cancel_warning_pt2' => "Dies sollte aber nur getan werden, wenn "
+            . "zuvor alle Mitspielern zugestimmt haben oder wenn ein oder mehr "
+            . "Spieler eine zu lange Zeit nicht mehr aktiv waren.",
+    
+        'match_state' => "Status",
+        'match_state.waitingforjoins' => "Warte auf weitere Mitspieler",
+        'match_state.started' => "Gestartet",
 
 ];

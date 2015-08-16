@@ -1,11 +1,10 @@
 <?php namespace Game\Http\Controllers;
 
-use Game\Model\Match;
 use Game\Managers\MatchManager;
 use Game\Managers\MessageManager;
 use Game\Managers\UserManager;
 use Game\Managers\AccountManager;
-use Game\Services\PolicyComplianceService;
+use Game\Handlers\Messages\SuccessFeedback;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
@@ -38,10 +37,11 @@ class MatchController extends Controller {
 
         
         
-	public function init() {
+	public function createMatchForm() {
             
                 $user = Auth::user();
                 $this->matchManager->checkUserMayCreateMatch($user);
+                
                 $mapNames = $this->matchManager->getMapNames();
                 return view('match.init')
                         ->with("mapNames", $mapNames);
@@ -50,12 +50,13 @@ class MatchController extends Controller {
 
         
         
-	public function create() {
+	public function createMatch() {
                 
                 $user = Auth::user();
                 $matchName = trim((string) Input::get('match_name'));
                 $mapName = (string) Input::get('match_map_name');
                 $maxUsers = (int) Input::get('match_maximum_users');
+                $isPublic = (boolean) Input::has('match_public');
                 $invitationMessage = trim((string) Input::get("message"));
                 $userNameArray = explode(",", (string) Input::get("match_invited_users"));
                 $invitedUsersArray = $this->userManager->findUsersForNames($userNameArray);
@@ -71,23 +72,22 @@ class MatchController extends Controller {
                     "match_invited_users" => sizeof($invitedUsersArray),
                     "match_maximum_users" => $maxUsers
                 ], "CREATE.MATCH.WRONG.PARAMETERS");
-                
-                $match = $this->matchManager->createMatch(
-                        $matchName,
-                        $mapName,
-                        $maxUsers,
-                        $user
-                );
 
                 $thread = $this->messageManager->newThread(
-                        "Match '" . $match->name . "'",
+                        "Match '" . $matchName . "'",
                         $user,
                         $invitedUsersArray,
                         true
                 );
                 
-                $match->thread()->associate($thread);
-                $match->save();
+                $match = $this->matchManager->createMatch(
+                        $matchName,
+                        $mapName,
+                        $maxUsers,
+                        $user,
+                        $thread,
+                        $isPublic
+                );
 
                 $this->messageManager->newMessage(
                         $thread,
@@ -103,48 +103,37 @@ class MatchController extends Controller {
         
         
         
-        public function joinInit($joinId) {
+        public function joinMatchForm($joinId) {
                     
                 $user = Auth::user();
-                $this->matchManager->checkUserMayJoinMatch($user);
-                
                 $match = $this->matchManager->getMatchForJoinId($joinId);
+                
+                $this->matchManager->checkUserMayJoinMatch($user, $match);
                 return view('match.join')->with('match', $match);
                     
         }
         
         
         
-        public function joinConfirm($joinId) {
+        public function joinMatch($joinId) {
             
                 $user = Auth::user();
-                $this->matchManager->checkUserMayJoinMatch($user);
-                
                 $match = $this->matchManager->getMatchForJoinId($joinId);
+                
+                $this->matchManager->checkUserMayJoinMatch($user, $match);
+
                 $this->matchManager->joinUserToMatch($match, $user);
+                
+                $this->messageManager->newMessage(
+                    $match->thread,
+                    $user,
+                    $user->name . " joined '". $match->name . "'"
+                );
+                
                 return redirect()
                             ->route("match.goto");
-
-        }
-
-        
-        
-	public function cancel($id) {
-            
-                $user = Auth::user();                
-                $match = $this->matchManager->getMatchForId($id);
-                $this->matchManager->checkUserCanDeleteMatch($user, $match);
-
-                $this->matchManager->cancelMatch($match);
                 
-                $thread = $match->thread;
-                if($thread){
-                    $this->messageManager->newMessage($thread, $user, "Match " . $match->name . " was cancelled");
-                }
-                return redirect("index")
-                        ->with("message", new SuccessFeedback("message.success.match.cancelled"));
-
-	}
+        }
         
         
         
@@ -160,39 +149,96 @@ class MatchController extends Controller {
     
     
         
-        public function administrate($id) {
+        public function administrateMatchForm() {
             
                 $user = Auth::user();
-                $match = $this->matchManager->getMatchForId($id);
+                $match = $user->joinedMatch;
                 $this->matchManager->checkUserCanAdministrateMatch($user, $match);
+                $thread = $match->thread;
                 return view("match.administrate")
-                            ->with("match", $match);
+                            ->with("match", $match)
+                            ->with("thread", $thread);
                     
 	}
 
 
         
-        public function saveAdministrate($id) {
+        public function administrateMatchSave() {
 
                 $user = Auth::user();
-                $match = $this->matchManager->getMatchForId($id);
+                $match = $user->joinedMatch;
                 $this->matchManager->checkUserCanAdministrateMatch($user, $match);
-                $this->matchManager->saveAdministratedMatch($match, $user, [
-                    "invited_players" => Input::get('invited_players'),
-                    "message" => Input::get('message')
-                ]);
                 
-                return view("match.administrate")
-                            ->with("match", $match)
+                $maxUsers = (int) Input::get('match_maximum_users');
+                $isPublic = Input::has('match_public');
+                Log::info("Public: " . $isPublic);
+                
+                $this->check([
+                    "match_maximum_users" => $maxUsers
+                ], "ADMINISTRATE.MATCH.WRONG.PARAMETERS");
+                
+                $this->matchManager->changeMatchData($match, $maxUsers, $isPublic);
+                
+                return redirect()
+                            ->back()
                             ->with("message", new SuccessFeedback("message.success.matchdata.save"));
 
         }
         
         
+        
+        public function inviteUsers() {
+
+                $user = Auth::user();
+                $match = $user->joinedMatch;
+                $this->matchManager->checkUserCanAdministrateMatch($user, $match);
+                
+                $userNames = Input::get('match_invited_users');
+                $userNameArray = explode(",", $userNames);
+                $userArray = $this->userManager->findUsersForNames($userNameArray);
+                
+                $thread = $match->thread;
+                
+                $this->messageManager->addUsersToThread($user, $userArray, $thread);
+                
+                foreach($userArray as $invitedUser){
+                    $this->messageManager->newMessage($thread, $invitedUser, $invitedUser->name . " invited.");
+                }
+            
+                if(count($userArray)){
+                    $this->messageManager->newMessage($thread, $user, $this->createJoinMatchThreadMessage("", $match));
+                }
+                
+                return redirect()
+                        ->back()
+                        ->with("message", new SuccessFeedback("message.success.users.invited"));
+            
+        }
+
+        
+        
+	public function cancelMatch() {
+            
+                $user = Auth::user();
+                $match = $user->joinedMatch;
+                $thread = $match->thread;
+                $this->matchManager->checkUserCanDeleteMatch($user, $match);
+                
+                $this->matchManager->cancelMatch($match);
+                
+                if($thread){
+                    $this->messageManager->newMessage($thread, $user, "Match " . $match->name . " was cancelled");
+                }
+                return redirect()->route("index")
+                        ->with("message", new SuccessFeedback("message.success.match.cancelled"));
+
+	}
+        
+        
         protected function createJoinMatchThreadMessage($message, $match) {
             
                 return  "<br>"
-                        . '<a class="joinlink" target="_blank" href="/match/join/' . $match->joinid . '\">'
+                        . '<a class="joinlink" href="/match/join/' . $match->joinid . '">'
                         . '<img src="/img/matches.png"> '
                         . "Join '" . $match->name . "'"
                         . "</a>"

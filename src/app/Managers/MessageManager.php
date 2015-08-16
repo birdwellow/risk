@@ -8,7 +8,6 @@ use Carbon\Carbon;
 
 use Game\Managers\UserManager;
 use Game\Exceptions\GameException;
-use Game\Services\PolicyComplianceService;
 
 use Illuminate\Support\Facades\Log;
 
@@ -49,11 +48,15 @@ class MessageManager {
 
                 $this->checkUserParticipantOfThread($user, $thread);
                 
-                return Message::create([
+                $message = Message::create([
                     'thread_id' => $thread->id,
                     'user_id' => $user->id,
                     'body' => $messageText,
                 ]);
+                
+                $thread->markAsRead($user->id);
+                
+                return $message;
 
         }
 

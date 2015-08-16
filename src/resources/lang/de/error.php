@@ -32,6 +32,7 @@ return [
         'new.message.wrong.parameters' => "Bitte gib eine Nachricht ein.",
         'no.valid.subject.specified' => "Bitte gib einen g&uuml;ltigen Betreff an. Er muss zwischen 6 - 32 Zeichen lang sein.",
         'no.users.selected' => "Du hast keine User ausgew&auml;hlt.",
+        'administrate.match.wrong.parameters' => "Die Match-Daten konnten nicht ge&auml;ndert werden. Bitte korrigiere deine Eingaben.",
     
         'match.not.found' => "Spiel konnte nicht gefunden werden.",
         'thread.not.found' => "Thread konnte nicht gefunden werden.",
@@ -43,5 +44,6 @@ return [
         'passwordreset.email.not.sent' => "Konnte Passwort-Reset-Link nicht schicken.",
     
         'match.closed' => "Leider kann dem Match kein weiterer Spieler mehr beitreten.",
+        'only.invited.users' => "Dem Match k&ouml;nnen nur eingeladene User beitreten.",
 
 ];

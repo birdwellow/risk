@@ -15,46 +15,86 @@
                         </div>
                     @else
                         <div class="panel-heading">
-                                {{ Lang::get('message.title.overview.yourmatch') }}
+                            {{ Lang::get('message.title.overview.yourmatch') }}: <div class="namemarker">{{ Auth::user()->joinedMatch->name }}</div>
                         </div>
                         
                         <div class="panel-body">
                                 <table>
+                                            
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('input.match_name') }}
+                                                        {{ Lang::get('input.match_state') }}
                                                 </td>
-                                                <td class="data">
-                                                        {{ Auth::user()->joinedMatch->name }}
+                                                <td>
+                                                        <div class="status {{ Auth::user()->joinedMatch->state }}">
+                                                            {{ Lang::get('input.match_state.' . Auth::user()->joinedMatch->state) }}
+                                                        </div>
                                                 </td>
                                         </tr>
+                                        
                                         <tr>
                                                 <td>
                                                         {{ Lang::get('message.label.match.players') }}
                                                 </td>
                                                 <td class="data">
-                                                    @foreach(Auth::user()->joinedMatch->joinedUsers as $joinedUser)
-                                                        {{ $joinedUser->name }}
-                                                    @endforeach
+                                                    <?php
+                                                        $joinedUsersString = "";
+                                                        foreach(Auth::user()->joinedMatch->joinedUsers as $index => $joinedUser){
+                                                            if($index > 0){
+                                                                $joinedUsersString .= ", ";
+                                                            }
+                                                            $joinedUsersString .= $joinedUser->name;
+                                                        }
+                                                    ?>
+                                                    {{ $joinedUsersString }} ({{ count(Auth::user()->joinedMatch->joinedUsers) }}/{{ Auth::user()->joinedMatch->maxusers }})
                                                 </td>
                                         </tr>
+                                        
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('message.label.match.date.start') }}
+                                                        {{ Lang::get('input.match_map_name') }}
                                                 </td>
                                                 <td class="data">
-                                                        {{ date("d M Y, H:m:s", strtotime(Auth::user()->joinedMatch->created_at)) }}
+                                                        {{ Auth::user()->joinedMatch->map->name }}
                                                 </td>
                                         </tr>
+                                        
+                                        <tr>
+                                                <td>
+                                                        {{ Lang::get('message.label.match.public') }}
+                                                </td>
+                                                <td class="data">
+                                                        @if(Auth::user()->joinedMatch->public)
+                                                            {{ Lang::get('message.button.yes') }}
+                                                        @else
+                                                            {{ Lang::get('message.button.no') }}
+                                                        @endif
+                                                </td>
+                                        </tr>
+                                        
                                         <tr>
                                                 <td>
                                                         {{ Lang::get('message.label.match.creator.name') }}
                                                 </td>
                                                 <td class="data">
                                                         {{ Auth::user()->joinedMatch->createdBy->name }}
+                                                        ({{ date("d M Y, H:m:s", strtotime(Auth::user()->joinedMatch->created_at)) }})
+                                                </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                                <td>
+                                                        Thread
+                                                </td>
+                                                <td class="data">
+                                                        <a href="{{ route('thread.allmessages', Auth::user()->joinedMatch->thread->id) }}">
+                                                            &quot;{{ Auth::user()->joinedMatch->thread->subject }}&quot;
+                                                        </a>
                                                 </td>
                                         </tr>
                                 </table>
+                            
+                                <br>
                             
                                 <a class="action btn btn-primary right table" href="{{ route('match.goto') }}">
                                     Go to match

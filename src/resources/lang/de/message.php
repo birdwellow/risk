@@ -15,8 +15,6 @@ return [
         
 	'link.password.forgotten' => "Passwort vergessen?",
         'link.match.join' => "Match ':matchName' beitreten",
-        'link.invitation.reject' => "Einladung ablehnen",
-        'link.invitation.delete' => "Delete",
         'link.home' => "Home",
         'link.match.overview' => "&Uuml;bersicht",
         'link.match.new' => "Neues Match",
@@ -27,7 +25,6 @@ return [
         'link.register' => "Registrieren",
         'link.profile' => "Profil",
         'link.options' => "Optionen",
-        'link.match.invitations' => "Einladungen",
     
     
         'name.language.en' => "English",
@@ -52,6 +49,7 @@ return [
         'success.password.changed' => "Dein Passwort wurde ge&auml;ndert.",
         'success.matchdata.save' => "Die Match-Daten wurden gespeichert.",
         'success.match.cancelled' => "Match wurde abgebrochen.",
+        'success.users.invited' => "User eingeladen.",
     
     
         'title' => "Risiko",
@@ -64,8 +62,6 @@ return [
         'title.overview.matches' => "Laufende Matches",
         'title.overview.yourmatch' => "Dein Match",
         'title.overview.nomatch' => "Du bist keinem Match beigetreten.",
-        'title.overview.invitations' => "Du wurdest eingeladen",
-        'title.overview.noinvitations' => "Keine Spiel-Einladungen :(",
         'title.match.chat' => "Chat",
         'title.home' => "Home",
         'title.matches' => "Matches",
@@ -93,12 +89,18 @@ return [
         'label.match.players' => "Mitspieler",
         'label.match.date.start' => "Startdatum",
         'label.match.creator.name' => "Erstellt von",
+        'label.match.name' => "Name",
+        'label.match.public' => "&Ouml;ffentlich",
+        'label.match.invitedusers' => "Eingeladene User",
+        'label.match.cancel.warning-pt1' => "Danach werden alle Spieler wieder neue "
+            ."Matches er&ouml;ffnen oder beitreten k&ouml;nnen.",
+        'label.match.cancel.warning-pt2' => "Dies sollte aber nur getan werden, wenn "
+            . "zuvor alle Mitspielern zugestimmt haben oder wenn ein oder mehr "
+            . "Spieler eine zu lange Zeit nicht mehr aktiv waren.",
     
     
         'placeholder.search' => "Suche",
         'placeholder.addusers' => "Empf&auml;nger hinzuf&uuml;gen",
-        'placeholder.invitation.message' => "Deine Einladungsnachricht",
-        'placeholder.invitation.playernames' => "Username 1, Username 2, ...",
         'placeholder.new.message' => "Deine Nachricht",
         'placeholder.subject' => "Betreff",
         'placeholder.searchrecipient' => "Suche Empf&auml;nger",

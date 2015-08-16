@@ -60,12 +60,12 @@ Route::get('json/users/names', [
 
 Route::get('match/new', [
     'as' => 'match.new',
-    'uses' => 'MatchController@init'
+    'uses' => 'MatchController@createMatchForm'
 ]);
 
 Route::post('match/new', [
     'as' => 'match.new.create',
-    'uses' => 'MatchController@create'
+    'uses' => 'MatchController@createMatch'
 ]);
 
 Route::get('match', [
@@ -75,27 +75,32 @@ Route::get('match', [
 
 Route::get('match/join/{id}', [
     'as' => 'match.join.init',
-    'uses' => 'MatchController@joinInit'
+    'uses' => 'MatchController@joinMatchForm'
 ]);
 
 Route::post('match/join/{id}', [
     'as' => 'match.join.confirm',
-    'uses' => 'MatchController@joinConfirm'
+    'uses' => 'MatchController@joinMatch'
 ]);
 
-Route::get('match/cancel/{id}', [
+Route::get('match/cancel', [
     'as' => 'match.cancel',
-    'uses' => 'MatchController@cancel'
+    'uses' => 'MatchController@cancelMatch'
 ]);
 
-Route::get('match/administrate/{id}', [
+Route::get('match/administrate', [
     'as' => 'match.administrate',
-    'uses' => 'MatchController@administrate'
+    'uses' => 'MatchController@administrateMatchForm'
 ]);
 
-Route::post('match/administrate/{id}', [
+Route::post('match/administrate', [
     'as' => 'match.administrate.save',
-    'uses' => 'MatchController@saveAdministrate'
+    'uses' => 'MatchController@administrateMatchSave'
+]);
+
+Route::post('match/inviteusers', [
+    'as' => 'match.administrate.inviteusers',
+    'uses' => 'MatchController@inviteUsers'
 ]);
 
 
@@ -108,12 +113,12 @@ Route::post('match/administrate/{id}', [
 
 Route::get('thread/new', [
     'as' => 'new.thread.init',
-    'uses' => 'MessageController@initNewThreadWithNewMessage'
+    'uses' => 'MessageController@newThreadWithNewMessageForm'
 ]);
 
 Route::post('thread/new', [
     'as' => 'new.thread.create',
-    'uses' => 'MessageController@newThreadWithNewMessage'
+    'uses' => 'MessageController@createNewThreadWithNewMessage'
 ]);
 
 Route::post('thread/{threadId}/newmessage', [

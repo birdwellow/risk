@@ -27,7 +27,7 @@ class MessageController extends Controller {
 
     
     
-    public function initNewThreadWithNewMessage() {
+    public function newThreadWithNewMessageForm() {
 
             return view("message.init");
             
@@ -56,7 +56,7 @@ class MessageController extends Controller {
     
     
 
-    public function newThreadWithNewMessage() {
+    public function createNewThreadWithNewMessage() {
 
             $threadSubject = trim(Input::get('thread_subject'));
             $userNameArray = explode(",", Input::get('thread_recipients'));

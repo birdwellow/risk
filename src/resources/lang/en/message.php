@@ -15,8 +15,6 @@ return [
 
 	'link.password.forgotten' => "Forgot Your Password?",
         'link.match.join' => "Join match ':matchName'",
-        'link.invitation.reject' => "Reject invitation",
-        'link.invitation.delete' => "Delete",
         'link.home' => "Home",
         'link.match.overview' => "Overview",
         'link.match.new' => "New Match",
@@ -27,7 +25,6 @@ return [
         'link.register' => "Register",
         'link.profile' => "Profile",
         'link.options' => "Options",
-        'link.invitations' => "Invitations",
         
     
         'name.language.en' => "English",
@@ -52,6 +49,7 @@ return [
         'success.password.changed' => "Your password was changed.",
         'success.matchdata.save' => "Your match data was saved.",
         'success.match.cancelled' => "Match was cancelled.",
+        'success.users.invited' => "Users invited.",
     
     
         'title' => "Risk",
@@ -64,8 +62,6 @@ return [
         'title.overview.matches' => "Running Matches",
         'title.overview.yourmatch' => "Your Match",
         'title.overview.nomatch' => "You are not joined to a match.",
-        'title.overview.invitations' => "You have been invited",
-        'title.overview.noinvitations' => "No match invitations.",
         'title.match.chat' => "Chat",
         'title.home' => "Home",
         'title.matches' => "Matches",
@@ -93,12 +89,13 @@ return [
         'label.match.players' => "Players",
         'label.match.date.start' => "Start date",
         'label.match.creator.name' => "Created by",
+        'label.match.name' => "Name",
+        'label.match.public' => "Public",
+        'label.match.invitedusers' => "Invited Users",
     
     
         'placeholder.search' => "Search",
         'placeholder.addusers' => "Add recipients",
-        'placeholder.invitation.message' => "Your invitation message",
-        'placeholder.invitation.playernames' => "user_name_1, user_name_2, ...",
         'placeholder.new.message' => "Your message",
         'placeholder.subject' => "Subject",
         'placeholder.searchrecipient' => "Search Recipients",

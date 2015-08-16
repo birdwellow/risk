@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="cache-control" content="no-store">
         
 	<title>{{ Lang::get('message.title') }}</title>
         
@@ -74,7 +75,7 @@
                                                         
                                                         @if(Auth::user()->createdMatch)
                                                         <li>
-                                                                <a href="{{ route('match.administrate', Auth::user()->createdMatch->id) }}">
+                                                                <a href="{{ route('match.administrate') }}">
                                                                         {{ Lang::get('message.link.match.administrate', ['matchName'=>Auth::user()->createdMatch->name]) }}
                                                                 </a>
                                                         </li>

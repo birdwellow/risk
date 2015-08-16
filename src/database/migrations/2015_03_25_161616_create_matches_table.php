@@ -17,6 +17,7 @@ class CreateMatchesTable extends Migration {
 			$table->increments('id');
                         $table->string('name');
                         $table->string('state');
+                        $table->boolean('public');
                         $table->integer('created_by_user_id')->unsigned();
                         $table->foreign('created_by_user_id')->references('id')->on('users');
                         $table->integer('thread_id')->nullable()->unsigned();

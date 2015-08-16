@@ -32,6 +32,18 @@
                                                             <input class="{{ invalid('match_name') }}" type="text" name="match_name" value="{{ old('match_name') }}"/>
                                                     </div>
                                             </div>
+                                            
+                                            <div class="form-group">
+                                                    <label class="col-md-3 control-label-display" for="match_public">
+                                                            {{ Lang::get('input.match_public') }}
+                                                            <div class="info-small">
+                                                                ({{ Lang::get('input.match_public.info') }})
+                                                            </div>
+                                                    </label>
+                                                    <div class="col-md-9">
+                                                        <input type="checkbox" id="match_public" value="public" name="match_public" {{ ( old('match_public') ? "checked" : "" ) }}>
+                                                    </div>
+                                            </div>
 
                                             <div class="form-group">
                                                     <label class="col-md-3 control-label">
@@ -81,7 +93,7 @@
 
                                                 <div class="form-group">
                                                         <label class="col-md-3 control-label">
-                                                            {{ Lang::get('message.placeholder.invitation.message') }}
+                                                            {{ Lang::get('input.match_invitationmessage') }}
                                                         </label>
                                                         <div class="col-md-9">
                                                                 <textarea

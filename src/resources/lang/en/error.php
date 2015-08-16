@@ -32,6 +32,7 @@ return [
         'new.message.wrong.parameters' => "Please enter a message.",
         'no.valid.subject.specified' => "Please enter a subject. It must be between 6 - 32 characters.",
         'no.users.selected' => "You did not select any users.",
+        'administrate.match.wrong.parameters' => "Could not change match data. Please correct your inputs.",
     
         'match.not.found' => "Could not find match.",
         'thread.not.found' => "Could not find thread.",
@@ -43,5 +44,6 @@ return [
         'passwordreset.email.not.sent' => "Couldn't send password reset link.",
     
         'match.closed' => "Unfortunately, no more players can join this match.",
+        'only.invited.users' => "Only invited users can join this match.",
 
 ];

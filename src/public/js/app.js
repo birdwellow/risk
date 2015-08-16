@@ -1,3 +1,7 @@
+function log(arg){
+    console.log(arg);
+}
+    
 var UI = {
     
     init : function() {
@@ -86,7 +90,7 @@ var UI = {
         
         var config = {
             allowCloseOnBackground : false,
-            type : "warn",
+            type : "info",
             message : message,
             title : title || "Confirm",
             buttons : {
@@ -181,37 +185,38 @@ $(document).ready(function(){
 
 function CheckBox(baseInput) {
     
+    baseInput.hide();
+    
     var selfpointer = this;
     
     this._checked;
     var iconCheckedSrc = "/img/checkbox-true.png";
     var iconUncheckedSrc = "/img/checkbox-false.png";
-    baseInput.hide();
+    
     this._checkIcon = HTML.make("img", "icon");
+    
+    var id = baseInput.attr("id");
+    this._label = $("label[for='" + id + "']");
     
     this.set = function(check){
         if(check){
             this._checked = true;
             this._checkIcon.attr("src", iconCheckedSrc);
-            baseInput.attr("checked", "true");
+            baseInput.prop("checked", true);
         } else {
             this._checked = false;
             this._checkIcon.attr("src", iconUncheckedSrc);
-            baseInput.removeAttr("checked");
+            baseInput.prop("checked", false);
         }
     };
-    
-    this.set( (baseInput.attr("checked")) );
+    this.set( (baseInput.prop("checked")) );
     
     baseInput.after(this._checkIcon);
     
-    this._checkIcon.click(function(){
-        selfpointer.set(!selfpointer._checked);
+    baseInput.change(function(e){
+        selfpointer.set(baseInput.prop("checked"));
     });
-    
-    var id = baseInput.attr("id");
-    var label = $("label[for='" + id + "']");
-    label.click(function(){
+    this._checkIcon.click(function(){
         selfpointer.set(!selfpointer._checked);
     });
 }
