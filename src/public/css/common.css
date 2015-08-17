@@ -99,6 +99,9 @@
     .slave-cell .btn-primary {
         padding: 6px 12px !important;
     }
+    td.placeholder {
+        height: 10px;
+    }
     
     
 
@@ -738,9 +741,40 @@
 
 
 /****************************************************
-    Icons & Avatars
+    Labels, Icons & Avatars
 ****************************************************/
     
+    img.icon {
+        margin: -7px 3px 0 0;
+    }
+    img.icon-s {
+        margin: -3px 3px 0 0;
+    }
+    .user-label {
+        padding: 2px 5px;
+        border-radius: 2px;
+        display: inline-block;
+        margin: 0 5px 5px 0;
+    }
+    .thread .user-label,
+    .message .user-label {
+        font-weight: bold;
+        text-decoration: underline;
+        padding-right: 0;
+        margin-right: 0;
+    }
+    a > .user-label {
+        background: rgba(0,0,0,0.25);
+        border: 1px solid rgba(255,255,255,1);
+    }
+    a > .user-label:hover {
+        background: rgba(0,0,0,0.5);
+    }
+    .user-label img.icon {
+        margin: 0 5px 0 0;
+    }
+    .user-name {
+    }
     .user-avatar{
         max-height: 40px;
         max-width: 40px;
@@ -753,17 +787,12 @@
         margin-right: 5px;
         border-radius: 2px;
     }
-    .user-avatar.icon-s{
+    .user-avatar.icon-s,
+    .user-label.small .user-avatar.icon{
         max-height: 20px;
         max-width: 20px;
         margin-right: 5px;
         border-radius: 2px;
-    }
-    img.icon {
-        margin: -7px 3px 0 0;
-    }
-    img.icon-s {
-        margin: -3px 3px 0 0;
     }
 
 

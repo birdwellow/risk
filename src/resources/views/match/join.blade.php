@@ -26,16 +26,9 @@
                                                         {{ Lang::get('message.label.match.players') }}
                                                 </td>
                                                 <td class="data">
-                                                    <?php
-                                                        $joinedUsersString = "";
-                                                        foreach($match->joinedUsers as $index => $joinedUser){
-                                                            if($index > 0){
-                                                                $joinedUsersString .= ", ";
-                                                            }
-                                                            $joinedUsersString .= $joinedUser->name;
-                                                        }
-                                                    ?>
-                                                    {{ $joinedUsersString }}
+                                                    @foreach($match->joinedUsers as $joinedUser)
+                                                        {!! userlabel($joinedUser) !!}
+                                                    @endforeach
                                                 </td>
                                         </tr>
                                         <tr>

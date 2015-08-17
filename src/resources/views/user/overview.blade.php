@@ -33,20 +33,17 @@
                                         </tr>
                                         
                                         <tr>
+                                            <td colspan="2" class="placeholder"></td>
+                                        </tr>
+                                        
+                                        <tr>
                                                 <td>
-                                                        {{ Lang::get('message.label.match.players') }}
+                                                        {{ Lang::get('message.label.match.players') }} ({{ count(Auth::user()->joinedMatch->joinedUsers) }}/{{ Auth::user()->joinedMatch->maxusers }})
                                                 </td>
                                                 <td class="data">
-                                                    <?php
-                                                        $joinedUsersString = "";
-                                                        foreach(Auth::user()->joinedMatch->joinedUsers as $index => $joinedUser){
-                                                            if($index > 0){
-                                                                $joinedUsersString .= ", ";
-                                                            }
-                                                            $joinedUsersString .= $joinedUser->name;
-                                                        }
-                                                    ?>
-                                                    {{ $joinedUsersString }} ({{ count(Auth::user()->joinedMatch->joinedUsers) }}/{{ Auth::user()->joinedMatch->maxusers }})
+                                                    @foreach(Auth::user()->joinedMatch->joinedUsers as $joinedUser)
+                                                        {!! userlabel($joinedUser) !!}
+                                                    @endforeach
                                                 </td>
                                         </tr>
                                         
@@ -77,7 +74,7 @@
                                                         {{ Lang::get('message.label.match.creator.name') }}
                                                 </td>
                                                 <td class="data">
-                                                        {{ Auth::user()->joinedMatch->createdBy->name }}
+                                                        {!! userlabel(Auth::user()->joinedMatch->createdBy) !!}
                                                         ({{ date("d M Y, H:m:s", strtotime(Auth::user()->joinedMatch->created_at)) }})
                                                 </td>
                                         </tr>
@@ -142,12 +139,7 @@
 
                                                         @if($thread->latestMessage())
                                                             <div class="latestmessagesummary">
-                                                                    @if($thread->latestMessage()->user->avatarfile)
-                                                                        <img src="/img/avatars/{{ $thread->latestMessage()->user->avatarfile }}" class="user-avatar icon">
-                                                                    @else
-                                                                        <img src="/img/avatars/default.png" class="user-avatar icon">
-                                                                    @endif
-                                                                <span class="sendername">{{ $thread->latestMessage()->user->name }}</span>:
+                                                                {!! userlabel($thread->latestMessage()->user, false) !!}:
                                                                 <span class="messagebody">
                                                                     {{ str_limit(strip_tags($thread->latestMessage()->body, 100)) }}
                                                                 </span>

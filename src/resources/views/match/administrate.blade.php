@@ -103,16 +103,9 @@
                                                             {{ Lang::get('input.match_joinedusers') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                            <?php
-                                                                $joinedUsersString = "";
-                                                                foreach($match->joinedUsers as $index => $joinedUser){
-                                                                    if($index > 0){
-                                                                        $joinedUsersString .= ", ";
-                                                                    }
-                                                                    $joinedUsersString .= $joinedUser->name;
-                                                                }
-                                                            ?>
-                                                            {{ $joinedUsersString }}
+                                                            @foreach($match->joinedUsers as $joinedUser)
+                                                                {!! userlabel($joinedUser) !!}
+                                                            @endforeach
                                                         </div>
                                                 </div>
                                             
@@ -121,16 +114,9 @@
                                                             {{ Lang::get('message.label.match.invitedusers') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                            <?php
-                                                                $invitedUsersString = "";
-                                                                foreach($thread->participants as $index => $participant){
-                                                                    if($index > 0){
-                                                                        $invitedUsersString .= ", ";
-                                                                    }
-                                                                    $invitedUsersString .= $participant->user->name;
-                                                                }
-                                                            ?>
-                                                            {{ $invitedUsersString }}
+                                                            @foreach($thread->participants as $participant)
+                                                                {!! userlabel($participant->user) !!}
+                                                            @endforeach
                                                         </div>
                                                 </div>
                                             

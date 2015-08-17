@@ -40,12 +40,7 @@
                                                 
                                                 @if($currentThread->latestMessage())
                                                     <div class="latestmessagesummary">
-                                                            @if($currentThread->latestMessage()->user->avatarfile)
-                                                                <img src="/img/avatars/{{ $currentThread->latestMessage()->user->avatarfile }}" class="user-avatar icon">
-                                                            @else
-                                                                <img src="/img/avatars/default.png" class="user-avatar icon">
-                                                            @endif
-                                                        <span class="sendername">{{ $currentThread->latestMessage()->user->name }}:</span>
+                                                        {!! userlabel($currentThread->latestMessage()->user, false) !!}:
                                                         <span class="messagebody">
                                                             {{ str_limit(strip_tags($currentThread->latestMessage()->body, 12)) }}
                                                         </span>
