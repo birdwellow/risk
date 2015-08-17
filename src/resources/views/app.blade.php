@@ -73,6 +73,20 @@
                                                         </li>
                                                         @endif
                                                         
+                                                        @if(!Auth::user()->joinedMatch)
+                                                        <li>
+                                                                <a href="{{ route('match.search') }}">
+                                                                        {{ Lang::get('message.title.search.match') }}
+                                                                </a>
+                                                        </li>
+                                                        @else
+                                                        <li>
+                                                                <a class="inactive" onclick="UI.error('{{ Lang::get("error.already.joined") }}', '{{ Lang::get("error.user") }}', 'OK')">
+                                                                        {{ Lang::get('message.title.search.match') }}
+                                                                </a>
+                                                        </li>
+                                                        @endif
+                                                        
                                                         @if(Auth::user()->createdMatch)
                                                         <li>
                                                                 <a href="{{ route('match.administrate') }}">

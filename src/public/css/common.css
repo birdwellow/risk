@@ -102,6 +102,9 @@
     td.placeholder {
         height: 10px;
     }
+    td.delimiter {
+        border-top: 1px solid #fff;
+    }
     
     
 
@@ -251,7 +254,7 @@
         text-align: right;
     }
     .inactive {
-        color: #bbb;
+        color: rgba(255,255,255,0.5);
     }
     .status {
         border-radius: 5px;
@@ -542,6 +545,7 @@
         font-size: 0.8em;
         line-height: 100%;
         margin-top: 10px;
+        color: rgba(255,255,255,0.5);
     }
     .warning-small{
         font-size: 0.8em;

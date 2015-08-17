@@ -1,10 +1,6 @@
 @extends('app')
 
 @section('content')
-    
-<script>
-    var username = "{{ Auth::user()->name }}";
-</script>
 
 <div class="container">
     

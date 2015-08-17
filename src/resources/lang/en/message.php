@@ -73,6 +73,9 @@ return [
         'title.match.invitations' => "Invite users",
         'title.match.data' => "Match Data",
         'title.match.cancel' => "Cancel Match",
+        'title.search.match' => "Search Open Matches",
+        'title.search.match.help' => "Only public Matches are displayed, "
+                . "that are still waiting for players.",
     
         'title.messages' => "Messages",
         'title.all.messages' => "All Messages",

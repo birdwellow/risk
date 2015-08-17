@@ -1,10 +1,6 @@
 @extends('app')
 
 @section('content')
-    
-<script>
-    var username = "{{ Auth::user()->name }}";
-</script>
 
 <div class="container">
     
@@ -27,7 +23,7 @@
                                                         <label class="col-md-3 control-label-display">
                                                                 {{ Lang::get('input.match_name') }}
                                                         </label>
-                                                        <div class="col-md-9 inactive">
+                                                        <div class="col-md-9">
                                                                 {{ $match->name }}
                                                         </div>
                                                 </div>
@@ -59,7 +55,7 @@
                                                         <label class="col-md-3 control-label-display">
                                                                 {{ Lang::get('input.match_map_name') }}
                                                         </label>
-                                                        <div class="col-md-9 inactive">
+                                                        <div class="col-md-9">
                                                                 {{ $match->map->name }}
                                                         </div>
                                                 </div>

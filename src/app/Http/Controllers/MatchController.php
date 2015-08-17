@@ -233,6 +233,16 @@ class MatchController extends Controller {
                         ->with("message", new SuccessFeedback("message.success.match.cancelled"));
 
 	}
+
+        
+        
+	public function searchMatch() {
+                
+                $waitingMatches = $this->matchManager->getAllPublicWaitingMatches();
+                return view("match.search")
+                        ->with("matches", $waitingMatches);
+                
+        }
         
         
         protected function createJoinMatchThreadMessage($message, $match) {

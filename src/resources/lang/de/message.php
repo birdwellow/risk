@@ -73,6 +73,9 @@ return [
         'title.match.invitations' => "Spieler einladen",
         'title.match.data' => "Match-Daten",
         'title.match.cancel' => "Match abbrechen",
+        'title.search.match' => "Offene Matches suchen",
+        'title.search.match.help' => "Es werden nur &ouml;ffentliche Matches angezeigt, "
+                . "die noch auf Mitspieler warten.",
     
         'title.messages' => "Nachrichten",
         'title.all.messages' => "Alle Nachrichten",

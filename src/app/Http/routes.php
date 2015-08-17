@@ -103,6 +103,11 @@ Route::post('match/inviteusers', [
     'uses' => 'MatchController@inviteUsers'
 ]);
 
+Route::get('match/search', [
+    'as' => 'match.search',
+    'uses' => 'MatchController@searchMatch'
+]);
+
 
 
 /*

@@ -87,6 +87,16 @@ class MatchManager {
             return Match::where("public", true)->get();
 
         }
+
+
+        public function getAllPublicWaitingMatches(){
+
+            return Match
+                ::where("public", true)
+                ->where("state", self::MATCHSTATE_WAITING_FOR_PLAYERJOINS)
+                ->get();
+
+        }
         
         
         public function getMapNames() {
