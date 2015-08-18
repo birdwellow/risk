@@ -231,13 +231,13 @@ function DropDown(baseInput){
     var selfpointer = this;
     this.options = baseInput.find("option");
     
-    var button = HTML.make("button", "dropdown-toggle")
+    this._button = HTML.make("button", "dropdown-toggle")
             .attr("aria-expanded", "true")
             .attr("data-toggle", "dropdown")
             .attr("aria-expanded", "true");
     this._buttonLabel = HTML.make("span", "dropdown-label");
     var buttonCaret = HTML.make("span", "caret");
-    button
+    this._button
             .append(this._buttonLabel)
             .append(buttonCaret);
     
@@ -247,7 +247,7 @@ function DropDown(baseInput){
     this._hidden = HTML.make("input")
             .attr("name", baseInput.attr("name"))
             .attr("type", "hidden");
-    dropDown.append(button);
+    dropDown.append(this._button);
     dropDown.append(list);
     dropDown.append(this._hidden);
     
@@ -259,6 +259,8 @@ function DropDown(baseInput){
             this._hidden.val(option.label);
         }
         this._buttonLabel.html(option.label);
+        var buttonLabelClass = "dropdown-toggle";
+        this._button.attr("class", buttonLabelClass + " " + $(option).attr("class"));
     };
     
     var hasIcons = false;
@@ -280,6 +282,7 @@ function DropDown(baseInput){
             li.append(icon);
         }
         li.append(option.label);
+        li.attr("class", $(option).attr("class"));
         list.append(li);
         li.click({option: option}, function(event){
             selfpointer.select(event.data.option);

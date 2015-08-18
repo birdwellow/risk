@@ -20,6 +20,7 @@ return [
         'not.participant.of.thread' => "You are not a participant of the thread.",
         'already.joined' => "You already joined a match.",
         'already.joined.another.match' => "You already joined another match.",
+        'join.match.wrong.parameters' => "You could not yet join the match. Please correct your inputs.",
         'cannot.delete.match' => "You may not cancel the match.",
         'cannot.administrate.match' => "You may not administrate the match.",
         'options.notsaved' => "Your options were not saved.",

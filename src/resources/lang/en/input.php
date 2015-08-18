@@ -38,6 +38,13 @@ return [
         'match_createdby' => "Created by",
         'match_invite' => "Invite",
         'match_invited_users' => "Users",
+        'match_user_colorscheme' => "Your match color",
+            'match_user_colorscheme.red' => "Red",
+            'match_user_colorscheme.blue' => "Blue",
+            'match_user_colorscheme.yellow' => "Yellow",
+            'match_user_colorscheme.green' => "Green",
+            'match_user_colorscheme.black' => "Black",
+            'match_user_colorscheme.white' => "White",
         'match_invitationmessage' => "Your invitation message",
         'match_cancel' => "Do you want to cancel this match?",
         'match_cancel_warning_pt1' => "Afterwards, all players will be able to "

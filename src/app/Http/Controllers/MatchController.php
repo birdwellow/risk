@@ -95,9 +95,7 @@ class MatchController extends Controller {
                         $this->createJoinMatchThreadMessage($invitationMessage, $match)
                 );
 
-                $this->matchManager->joinUserToMatch($match, $user);
-
-                return redirect()->route("index");
+                return redirect()->route("match.join.init", $match->joinid);
                     
 	}
         
@@ -109,7 +107,12 @@ class MatchController extends Controller {
                 $match = $this->matchManager->getMatchForJoinId($joinId);
                 
                 $this->matchManager->checkUserMayJoinMatch($user, $match);
-                return view('match.join')->with('match', $match);
+                
+                $untakenColorSchemes = $this->matchManager->getUntakenColorSchemesForMatch($match);
+                
+                return view('match.join')
+                        ->with('match', $match)
+                        ->with('colorSchemes', $untakenColorSchemes);
                     
         }
         
@@ -121,8 +124,17 @@ class MatchController extends Controller {
                 $match = $this->matchManager->getMatchForJoinId($joinId);
                 
                 $this->matchManager->checkUserMayJoinMatch($user, $match);
+                
+                $colorScheme = (string) Input::get('match_user_colorscheme');
+        
+                $this->check([
+                    "match_user_colorscheme" => [
+                        $colorScheme,
+                        "in:" . implode(",", $this->matchManager->getUntakenColorSchemesForMatch($match))
+                    ]
+                ], "JOIN.MATCH.WRONG.PARAMETERS");
 
-                $this->matchManager->joinUserToMatch($match, $user);
+                $this->matchManager->joinUserToMatch($match, $user, $colorScheme);
                 
                 $this->messageManager->newMessage(
                     $match->thread,

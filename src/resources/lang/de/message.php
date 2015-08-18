@@ -57,7 +57,7 @@ return [
         'title.password.reset' => "Passwort zur&uuml;cksetzen",
         'title.register' => "Registrierung",
         'title.init.match' => "Neues Match erstellen",
-        'title.join.match' => "Match &quot;:matchName&quot; beitreten",
+        'title.join.match' => "Match beitreten",
         'title.administrate.match' => "Match ':matchName' verwalten",
         'title.overview.matches' => "Laufende Matches",
         'title.overview.yourmatch' => "Dein Match",

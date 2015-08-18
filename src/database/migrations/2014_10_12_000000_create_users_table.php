@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration {
                         $table->string('joinid');
                         $table->string('avatarfile');
                         $table->string('language');
+                        $table->string('matchcolor');
+                        $table->integer('matchorder');
 		});
 	}
 

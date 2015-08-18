@@ -57,7 +57,7 @@ return [
         'title.password.reset' => "Reset Password",
         'title.register' => "Register",
         'title.init.match' => "Create a new Match",
-        'title.join.match' => "Join Match &quot;:matchName&quot;",
+        'title.join.match' => "Join Match",
         'title.administrate.match' => "Administrate Match ':matchName'",
         'title.overview.matches' => "Running Matches",
         'title.overview.yourmatch' => "Your Match",

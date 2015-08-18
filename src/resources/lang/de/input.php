@@ -38,6 +38,13 @@ return [
         'match_createdby' => "Ersteller",
         'match_invite' => "Einladen",
         'match_invited_users' => "Users",
+        'match_user_colorscheme' => "Deine Match-Farbe",
+            'match_user_colorscheme.red' => "Rot",
+            'match_user_colorscheme.blue' => "Blau",
+            'match_user_colorscheme.yellow' => "Gelb",
+            'match_user_colorscheme.green' => "Gr&uuml;n",
+            'match_user_colorscheme.black' => "Schwarz",
+            'match_user_colorscheme.white' => "Wei&szlig;",
         'match_invitationmessage' => "Deine Einladungs-Nachricht",
         'match_cancel' => "Willst du dieses Match abbrechen?",
         'match_cancel_warning_pt1' => "Danach werden alle Spieler wieder neue "

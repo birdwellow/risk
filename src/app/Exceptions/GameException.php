@@ -55,6 +55,10 @@ class GameException extends Exception {
             "message" => "error.create.match.wrong.parameters",
             "category" => "error.user"
         ],
+        "JOIN.MATCH.WRONG.PARAMETERS" => [
+            "message" => "error.join.match.wrong.parameters",
+            "category" => "error.user"
+        ],
         "ADMINISTRATE.MATCH.WRONG.PARAMETERS" => [
             "message" => "error.administrate.match.wrong.parameters",
             "category" => "error.user"

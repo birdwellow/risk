@@ -17,6 +17,16 @@ class MatchManager {
     
         const MATCHSTATE_WAITING_FOR_PLAYERJOINS = "waitingforjoins";
         const MATCHSTATE_START = "started";
+        
+        
+        const COLORSCHEMES = [
+            "red",
+            "blue",
+            "yellow",
+            "green", 
+            "black",
+            "white",
+        ];
 
 
         public function __construct() {
@@ -145,6 +155,22 @@ class MatchManager {
 
 
         }
+        
+        
+        public function getUntakenColorSchemesForMatch($match) {
+            
+            $takenColorSchemes = array();
+            
+            $users = $match->joinedUsers;
+            foreach($users as $user){
+                array_push($takenColorSchemes, $user->matchcolor);
+            }
+            
+            $allowedColorSchemes = array_diff(self::COLORSCHEMES, $takenColorSchemes);
+            
+            return $allowedColorSchemes;
+            
+        }
 
 
         public function createMatch($name, $mapName, $maxUsers, $creatorUser, $thread, $isPublic) {
@@ -171,12 +197,13 @@ class MatchManager {
         }
 
         
-        public function joinUserToMatch($match, $user) {
+        public function joinUserToMatch($match, $user, $colorScheme) {
 
                 if($match->state !== self::MATCHSTATE_WAITING_FOR_PLAYERJOINS){
                     throw new GameException("MATCH.CLOSED");
                 }
                 $user->joinedMatch()->associate($match);
+                $user->matchcolor = $colorScheme;
                 $user->save();
 
                 if(count($match->joinedUsers) >= $match->maxusers){

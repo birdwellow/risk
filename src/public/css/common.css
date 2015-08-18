@@ -741,6 +741,49 @@
     #chatinput{
         margin: 10px;
     }
+    .matchUserColorScheme.sample {
+        padding: 10px;
+        margin: 5px;
+        color: white;
+    }
+    .matchUserColorScheme.red {
+        background: rgba(255,0,0,0.35);
+    }
+        .container .dropdown-menu > li.matchUserColorScheme.red:hover {
+            background: rgba(255,0,0,0.85);
+        }
+    .matchUserColorScheme.blue {
+        background: rgba(0,50,255,0.35);
+    }
+        .container .dropdown-menu > li.matchUserColorScheme.blue:hover {
+            background: rgba(0,50,255,0.85);
+        }
+    .matchUserColorScheme.yellow {
+        background: rgba(127,127,0,0.35);
+    }
+        .container .dropdown-menu > li.matchUserColorScheme.yellow:hover {
+            background: rgba(177,177,0,0.85);
+        }
+    .matchUserColorScheme.green {
+        background: rgba(0,185,0,0.35);
+    }
+        .container .dropdown-menu > li.matchUserColorScheme.green:hover {
+            background: rgba(0,185,0,0.85);
+        }
+    .matchUserColorScheme.black {
+        background: rgba(0,0,0,0.6);
+    }
+        .container .dropdown-menu > li.matchUserColorScheme.black:hover {
+            background: #000;
+        }
+    .matchUserColorScheme.white {
+        color: black;
+        background: rgba(255,255,255,0.35);
+    }
+        .container .dropdown-menu > li.matchUserColorScheme.white:hover {
+            background: rgba(255,255,255,0.85);
+        }
+    
 
 
 

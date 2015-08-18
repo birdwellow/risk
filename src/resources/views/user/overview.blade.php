@@ -15,7 +15,8 @@
                         </div>
                     @else
                         <div class="panel-heading">
-                            {{ Lang::get('message.title.overview.yourmatch') }}: <div class="namemarker">{{ Auth::user()->joinedMatch->name }}</div>
+                            {{ Lang::get('message.title.overview.yourmatch') }}:
+                            <div class="namemarker">{{ Auth::user()->joinedMatch->name }}</div>
                         </div>
                         
                         <div class="panel-body">

@@ -45,6 +45,7 @@ class PolicyComplianceService {
                 "match_map_name" => "required",
                 "match_maximum_users" => "required|integer|between:2,6",
                 "match_invited_users" => "selected",
+                "match_user_colorscheme" => "required",
             
         ];
 

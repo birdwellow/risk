@@ -20,6 +20,7 @@ return [
         'not.participant.of.thread' => "Du bist nicht Teilnehmer des Threads.",
         'already.joined' => "Du bist bereits einem Spiel beigetreten.",
         'already.joined.another.match' => "Du bist bereits einem anderen Spiel beigetreten.",
+        'join.match.wrong.parameters' => "Du konntest dem Match noch nicht beitreten, bitte korrigiere deine Eingaben.",
         'cannot.delete.match' => "Du darfst das Spiel nicht beenden.",
         'cannot.administrate.match' => "Du darfst das Spiel nicht verwalten.",
         'options.notsaved' => "Deine Optionen konnten nicht gespeichert werden.",
