@@ -203,9 +203,12 @@ class MatchManager {
                     throw new GameException("MATCH.CLOSED");
                 }
                 $user->joinedMatch()->associate($match);
+                $user->save();
+                $match->load("joinedUsers");
+                
                 $user->matchcolor = $colorScheme;
                 $user->save();
-
+                
                 if(count($match->joinedUsers) >= $match->maxusers){
                     $this->startMatch($match);
                 }
@@ -218,6 +221,7 @@ class MatchManager {
 
                 foreach ($match->joinedUsers as $joinedUser) {
                     $result = $joinedUser->joinedMatch()->dissociate();
+                    $joinedUser->matchorder = 0;
                     $joinedUser->save();
                 }
 
@@ -228,8 +232,22 @@ class MatchManager {
         
         public function startMatch($match){
 
+                $um = new UserManager();
+            
+                $i = 1;
+                $joinedUsers = $match->joinedUsers;
+                Log::info($um->extractUserIdsFromUsers($joinedUsers));
+                $shuffledJoinedUsers = $joinedUsers->shuffle();
+                Log::info($um->extractUserIdsFromUsers($shuffledJoinedUsers));
+                foreach($shuffledJoinedUsers as $randomJoinedUser){
+                    $randomJoinedUser->matchorder = $i;
+                    $randomJoinedUser->save();
+                    $i++;
+                }
+                
                 $match->state = self::MATCHSTATE_START;
                 $match->save();
+                
 
         }
 
