@@ -49,7 +49,7 @@
                                                             <select class="{{ invalid('match_map_name') }}" name="match_map_name" id="match_map_name">
                                                                 @foreach($mapNames as $mapName)
                                                                     <option value="{{ $mapName }}">
-                                                                            {{ $mapName }}
+                                                                            {{ Lang::get('input.match_map_name.' . $mapName) }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>

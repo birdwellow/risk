@@ -49,14 +49,21 @@ class Match extends Model {
     }
     
     
-    public function map()
-    {
-        return $this->belongsTo('Game\Model\Map', 'map_id', 'id');
-    }
-    
-    
     public function thread()
     {
         return $this->belongsTo('Cmgmyr\Messenger\Models\Thread', 'thread_id', 'id');
     }
+    
+
+    public function continents()
+    {
+        return $this->hasMany('Game\Model\Continent', 'match_id', 'id');
+    }
+    
+    
+    public function activePlayer()
+    {
+        return $this->belongsTo('Game\User', 'active_player_id', 'id');
+    }
+    
 }

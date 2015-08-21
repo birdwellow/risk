@@ -27,6 +27,12 @@ class MatchManager {
             "black",
             "white",
         ];
+        
+        protected $mapTemplates = [
+            "earth",
+            "middle_earth",
+            "after_apocalypse"
+        ];
 
 
         public function __construct() {
@@ -111,12 +117,7 @@ class MatchManager {
         
         public function getMapNames() {
 
-            $maps = Map::all();
-            $mapNames = array();
-            foreach ($maps as $map) {
-                $mapNames[] = $map->name;
-            }
-            return $mapNames;
+            return $this->mapTemplates;
 
         }
 
@@ -184,10 +185,9 @@ class MatchManager {
                 while(Match::where("joinid", $token)->first()){
                     $token = IdTokenService::createToken();
                 }
+                $match->mapname = $mapName;
                 $match->joinid = $token;
                 $match->state = self::MATCHSTATE_WAITING_FOR_PLAYERJOINS;
-                $map = Map::where("name", $mapName)->first();
-                $match->map()->associate($map);
                 $match->thread()->associate($thread);
                 
                 $match->save();
@@ -231,14 +231,10 @@ class MatchManager {
 
         
         public function startMatch($match){
-
-                $um = new UserManager();
             
                 $i = 1;
                 $joinedUsers = $match->joinedUsers;
-                Log::info($um->extractUserIdsFromUsers($joinedUsers));
                 $shuffledJoinedUsers = $joinedUsers->shuffle();
-                Log::info($um->extractUserIdsFromUsers($shuffledJoinedUsers));
                 foreach($shuffledJoinedUsers as $randomJoinedUser){
                     $randomJoinedUser->matchorder = $i;
                     $randomJoinedUser->save();

@@ -56,7 +56,7 @@
                                                                 {{ Lang::get('input.match_map_name') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                                {{ $match->map->name }}
+                                                                {{ Lang::get('input.match_map_name.' . $match->mapname) }}
                                                         </div>
                                                 </div>
 

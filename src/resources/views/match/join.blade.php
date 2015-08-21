@@ -31,7 +31,7 @@
                                                                 {{ Lang::get('input.match_map_name') }}
                                                         </td>
                                                         <td class="data">
-                                                                {{ $match->map->name }}
+                                                                {{ Lang::get('input.match_map_name.' . $match->mapname) }}
                                                         </td>
                                                 </tr>
                                                 <tr>

@@ -61,5 +61,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         {
             return $this->belongsTo('Game\Model\Match', 'joined_match_id', 'id');
         }
+        
+        
+        public function isActive()
+        {
+            $activePlayer = $this->belongsTo('Game\Model\Match', 'joined_match_id', 'id');
+            return ( $activePlayer->id == $this->id );
+        }
+    
+
+        public function regions()
+        {
+            return $this->hasMany('Game\Model\Region', 'owner_id', 'id');
+        }
+    
+
+        public function continents()
+        {
+            return $this->hasMany('Game\Model\Continent', 'owner_id', 'id');
+        }
+    
+
+        public function cards()
+        {
+            return $this->hasMany('Game\Model\Region', 'card_owner_id', 'id');
+        }
 
 }

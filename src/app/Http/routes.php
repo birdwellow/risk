@@ -199,3 +199,11 @@ Route::post('password/reset', [
     'as' => 'passwordreset.perform',
     'uses' => 'PasswordController@postReset'
 ]);
+
+
+
+
+Route::get('test', [
+    'as' => 'test.route',
+    'uses' => 'TestController@perform'
+]);

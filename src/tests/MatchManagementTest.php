@@ -203,8 +203,8 @@ class MatchManagementTest extends TestCase {
                 if(!isset($withParameters["maxusers"])){
                     $withParameters["maxusers"] = 6;
                 }
-                if(!isset($withParameters["mapName"])){
-                    $withParameters["mapName"] = "Earth";
+                if(!isset($withParameters["match_map_name"])){
+                    $withParameters["match_map_name"] = "middle_earth";
                 }
                 if(!isset($withParameters["invited_players"])){
                     $withParameters["invited_players"] = "";

@@ -53,7 +53,7 @@
                                                         {{ Lang::get('input.match_map_name') }}
                                                 </td>
                                                 <td class="data">
-                                                        {{ Auth::user()->joinedMatch->map->name }}
+                                                        {{ Lang::get('input.match_map_name.' . Auth::user()->joinedMatch->mapname) }}
                                                 </td>
                                         </tr>
                                         
