@@ -18,7 +18,7 @@ class CreateMatchesTable extends Migration {
                         $table->string('name');
                         $table->string('state');
                         $table->string('roundphase');
-                        $table->integer('active_player_id')->unsigned();
+                        $table->integer('active_player_id')->nullable()->unsigned();
                         $table->foreign('active_player_id')->references('id')->on('users');
                         $table->boolean('public');
                         $table->integer('created_by_user_id')->unsigned();

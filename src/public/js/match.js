@@ -14,12 +14,12 @@ function Chat(socket){
     
     this.send = function(msg){
         self._socket.send("chat.message", msg);
-        self.receive(msg, username);
+        self.receive(msg, user);
     };
     
-    this.receive = function(msg, username){
+    this.receive = function(msg, user){
         var chatContentHtml = self._output.html();
-        self._output.html(chatContentHtml + "<div class='message'>" + username + ": " + msg + "</div>");
+        self._output.html(chatContentHtml + "<div style='color: " + user.color + "'>" + user.name + ": " + msg + "</div>");
         self._output.animate({ scrollTop: self._output[0].scrollHeight }, "slow");
     };
 };
@@ -94,7 +94,7 @@ function ControlTabs(){
 
 var socket = new GameSocket("ws://dev.app.risk:7778/?joinid=" + joinId);
 socket.on("chat.message", function(message){
-    chat.receive(message.data, message.username);
+    chat.receive(message.data, message.user);
 });
 
 var chat = new Chat(socket);

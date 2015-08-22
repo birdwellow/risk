@@ -21,6 +21,19 @@ var UI = {
             new CheckBox(element);
         });
 
+        $('*[toggle-for]').each(function(index, value){
+            var toggle = $(value);
+            var targetId = toggle.attr("toggle-for");
+            toggle.click(function(){
+                var visible = UI.toggle("#"+targetId);
+                if(visible){
+                    toggle.addClass("active");
+                } else {
+                    toggle.removeClass("active");
+                }
+            });
+        });
+
         /*setTimeout(function(){
             $(".alert-success").fadeOut(1000, function(){
                 $(".alert-success").hide();
@@ -32,9 +45,11 @@ var UI = {
     toggle : function (selector){
         element = $(selector);
         if(element.is(":visible")){
-            element.hide();
+            element.hide("blind", 250);
+            return false;
         } else {
-            element.show();
+            element.show("blind", 250);
+            return true;
         }
     },
     

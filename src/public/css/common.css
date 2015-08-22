@@ -53,6 +53,9 @@
         margin-bottom: 20px;
         border-color: inherit;
     }
+    .panel-default.navbar-fixed-bottom {
+        margin-bottom: 0px;
+    }
     .panel-heading {
         border-bottom: inherit;
         color: #fff;
@@ -625,53 +628,94 @@
     Match View
 ****************************************************/
     
-    #footer {
-        position:absolute;
-        bottom: 0;
+    #game-map{
+        height: 600px;
+        text-align: center;
         width: 100%;
+        padding-left: 410px;
     }
-    #footer .col-md-8,
-    #footer .col-md-4,
-    #footer .col-md-12 {
-        padding: 0;
+    .navbar-left.panel{
+        background: none;
+        width: 400px;
     }
-    #footer .panel-heading,
-    #footer .panel{
-        border-radius: 0;
+
+    #playmodule-togglebar {
+        background: rgba(0,0,0,0.25);
+        padding: 5px;
+        border-radius: 0 3px 3px 0;
     }
-    .footer-tab{
-        padding: 14px;
-        display: inline;
-        cursor: pointer;
+    .toggle-btn {
+        vertical-align: middle;
+        text-align: center;
+        margin-bottom: 0;
+        padding: 5px 10px;
+        background: none;
         border: none;
+        border-radius: 3px;
     }
-    .footer-tab:hover{
-        background: rgba(0,0,0,0.75);
+    .toggle-btn:hover {
+        padding: 6px 9px 4px 11px;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.35) inset;
     }
-    #footer .panel-body{
+    .toggle-btn.active {
+        padding: 8px 7px 2px 13px;
+        background: rgba(0,0,0,0.25);
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5) inset;
+    }
+    .toggle-btn.changed {
+        background: rgba(255,255,255,0.5);
+        animation: changed 2s linear infinite;
+    }
+    @keyframes changed {
+        0% { background: none }
+        50% { background: rgba(255,255,255,0.5) }
+        100% { background: none }
+    }
+    #playmodule-container {
+        margin-top: 5px;
+    }
+    .playmodule {
+        margin: 5px 0 5px 5px;
+        background: rgba(0,0,0,0.5);
+        border-radius: 3px;
+        padding-bottom: 1px;
+    }
+    .ui-effects-wrapper .playmodule {
+        margin: 0 0 0 5px;
+    }
+    .playmodule .header {
+        margin: 0 2%;
+        padding: 5px 5px 1px 5px;
+        border-bottom: 1px solid #fff;
+    }
+    .playmodule .body {
+        margin: 2%;
+        font-size: 0.75em;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    #chatcontent{
         height: 200px;
     }
-    .footer-tab-body{
-        display: none;
+    #chatinput{
+        margin: 2%;
+        width: 96%;
     }
-    .footer-tab-body.open{
-        display: block;
-    }
-    .footer-tab.open{
-        background: rgba(0,0,0,0.5);
+    #cardcontainer{
+        padding: 15px;
     }
     .card {
         border: 2px solid #fff;
         border-radius: 7px;
-        padding: 7px;
-        float: left;
-        width: 120px;
-        margin: 0 20px 0 0;
+        padding: 5px;
+        display: inline-block;
+        margin: 0 -35px 5px 0;
         cursor: pointer;
+        background-image: url("/img/classic-background.jpg");
     }
-    .card:hover{
-        background: rgba(255,255,255,0.25);
-        margin: -5px 25px 5px -5px;
+    .card:hover,
+    .card.selected{
+        margin: 0 5px 5px 0;
         box-shadow: 10px 10px 5px rgba(0,0,0,0.5);
     }
     .card .body {
@@ -682,8 +726,8 @@
         text-align: center;
     }
     .card .symbol{
-        width:100px;
-        height:100px;
+        width: 70px;
+        height: 70px;
     }
     .card.europe .body {
         background: #4b4;
@@ -695,17 +739,24 @@
         background: #553700;
     }
     .card .symbol.category-1{
-        background: url(/img/symbols/infantry.png);
+        background: rgba(0, 0, 0, 0) url("/img/symbols/infantry.png") repeat scroll 0 0 / cover;
     }
     .card .symbol.category-2{
-        background: url(/img/symbols/cavalry.png);
+        background: rgba(0, 0, 0, 0) url(/img/symbols/cavalry.png) repeat scroll 0 0 / cover;
     }
     .card .symbol.category-3{
-        background: url(/img/symbols/artillery.png);
+        background: rgba(0, 0, 0, 0) url(/img/symbols/artillery.png) repeat scroll 0 0 / cover;
+    }
+    
+    #statscontent{
+        height: 200px;
+    }
+    #playerscontent{
+        
     }
     .data.player > .user-avatar{
-        height: 40px;
-        width: 40px;
+        height: 24px;
+        width: 24px;
     }
     .data.player{
         padding: 5px;
@@ -731,15 +782,8 @@
     .data.player .offline{
         background: red;
     }
-    #chatcontent{
-        min-height: 200px;
-        margin: 10px;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        padding: 3px;
-    }
-    #chatinput{
-        margin: 10px;
+    #logcontent{
+        height: 100px;
     }
     .matchUserColorScheme.sample {
         padding: 10px;
