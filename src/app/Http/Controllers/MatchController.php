@@ -5,11 +5,13 @@ use Game\Managers\MessageManager;
 use Game\Managers\UserManager;
 use Game\Managers\AccountManager;
 use Game\Handlers\Messages\SuccessFeedback;
+use Game\Services\MapTemplateImplementer;
+use Game\Model\Match;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Collection;
 
 class MatchController extends Controller {
     
@@ -88,6 +90,9 @@ class MatchController extends Controller {
                         $thread,
                         $isPublic
                 );
+                
+                $mapTemplateImplementer = new MapTemplateImplementer();
+                $mapTemplateImplementer->implement($mapName, $match);
 
                 $this->messageManager->newMessage(
                         $thread,
@@ -154,6 +159,7 @@ class MatchController extends Controller {
                 $user = Auth::user();
                 $match = $this->matchManager->getMatchForUser($user);
                 $this->accountManager->setSocketJoinId($user);
+                Log::info($match->continents);
                 
                 return view('match.play')->with('match', $match);
             

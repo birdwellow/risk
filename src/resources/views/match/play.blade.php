@@ -3,11 +3,10 @@
 @section('content')
     
 <script src="/js/match.js" defer="defer"></script>
+<script src="/js/thirdparty/kinetic-v5.1.0.min.js" defer="defer"></script>
+
 <script>
-    var user = {
-        name : "{{ Auth::user()->name }}",
-        color : "{{ Auth::user()->matchcolor }}"
-    };
+    
     var joinId = "{{ Auth::user()->joinid }}";
     
 </script>
@@ -156,8 +155,6 @@
 </div>
 
 
-<div id="game-map">
-    <canvas id="map"></canvas>
-    
-</div>
+<div id="game-map"></div>
+
 @endsection

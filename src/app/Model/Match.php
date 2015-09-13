@@ -3,7 +3,6 @@
 use Illuminate\Database\Eloquent\Model;
 use SplObjectStorage;
 use Game\User;
-use Ratchet\ConnectionInterface;
 
 class Match extends Model {
 
@@ -11,7 +10,19 @@ class Match extends Model {
     
     protected $connectedUsers;
 
-
+    public function toArray()
+    {
+        $array = parent::toArray();
+        
+        $array['activePlayer'] = $this->activePlayer;
+        $array['continents'] = $this->continents;
+        $array['createdBy'] = $this->createdBy;
+        $array['joinedUsers'] = $this->joinedUsers;
+        $array['thread'] = $this->thread;
+        
+        return $array;
+    }
+    
     public function __construct(){
         parent::__construct();
         $this->connectedUsers = new SplObjectStorage();

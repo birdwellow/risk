@@ -3,10 +3,14 @@
 namespace Game\Server;
 
 use Game\Contracts\GameServerInterface;
-use Illuminate\Support\Facades\Log;
+use Game\Server\SessionData;
 use Game\Model\Match;
-use Ratchet\ConnectionInterface;
 use Game\User;
+
+use Illuminate\Support\Facades\Log;
+
+use Ratchet\ConnectionInterface;
+
 use SplObjectStorage;
 
 /**
@@ -16,12 +20,31 @@ use SplObjectStorage;
  */
 class GameServer implements GameServerInterface {
     
-    protected $connections;
+    protected $sessions;
     protected $matches;
+    protected $events;
 
     public function __construct() {
-        $this->connections = new SplObjectStorage();
+        $this->sessions = new SplObjectStorage();
         $this->matches = new SplObjectStorage();
+        $this->events = array();
+        
+        $this->on("get.all", function($sessionData){
+            $this->sendAllData($sessionData);
+        });
+        
+        /*
+        $this->on("chat.message", function($conn, $message){
+            $this->chatMessage($conn, $message);
+        });
+        */
+    }
+    
+    
+    public function on($eventName, $callback){
+        
+        $this->events[$eventName] = $callback;
+        
     }
     
     
@@ -55,9 +78,14 @@ class GameServer implements GameServerInterface {
     public function onMessage(ConnectionInterface $conn, $msg) {
         
         $message = json_decode($msg);
+        $sessionData = $this->sessions[$conn];
         
-        if($message->type == "chat.message"){
-            $this->chatMessage($conn, $message);
+        if(isset($this->events[$message->type])){
+            $callback = $this->events[$message->type];
+            if(!isset($message->data)){
+                $message->data = null;
+            }
+            $callback($sessionData, $message->data);
         }
     }
     
@@ -77,7 +105,7 @@ class GameServer implements GameServerInterface {
         
         $joinedMatch = $user->joinedMatch;
         
-        if(!$this->connections->contains($conn)){
+        if(!$this->sessions->contains($conn)){
         
             $match = $this->getMatchById($joinedMatch->id);
             if($match == null){
@@ -89,11 +117,12 @@ class GameServer implements GameServerInterface {
                 $match->connectUser($user);
                 $user->setSocket($conn);
 
-                $data = array(
-                    "user" => $user,
-                    "match" => $match
+                $data = new SessionData(
+                    $user,
+                    $match,
+                    $conn
                 );
-                $this->connections[$conn] = $data;
+                $this->sessions[$conn] = $data;
                 $this->matches->attach($match);
             }
             
@@ -104,13 +133,13 @@ class GameServer implements GameServerInterface {
     
     protected function disconnect(ConnectionInterface $conn){
         
-        if($this->connections->contains($conn)){
+        if($this->sessions->contains($conn)){
         
-            Log::info("Closing from " . count($this->connections) . " connections and " . count($this->matches) . " matches.");
+            Log::info("Closing from " . count($this->sessions) . " connections and " . count($this->matches) . " matches.");
         
-            $data = $this->connections[$conn];
-            $user = $data["user"];
-            $match = $data["match"];
+            $data = $this->sessions[$conn];
+            $user = $data->getUser();
+            $match = $data->getMatch();
             
             $match->disconnectUser($user);
             $user->disconnect();
@@ -120,12 +149,12 @@ class GameServer implements GameServerInterface {
                 $this->matches->detach($match);
             }
             
-            Log::info(count($this->connections) . " connections remaining and " . count($this->matches) . " matches remaining.");
+            Log::info(count($this->sessions) . " connections remaining and " . count($this->matches) . " matches remaining.");
         }
         
     }
 
-    
+    /*
     protected function chatMessage(ConnectionInterface $conn, $message){
         
         $data = $this->connections[$conn];
@@ -148,12 +177,30 @@ class GameServer implements GameServerInterface {
         }
         
     }
+    */
+
+    
+    protected function sendAllData(SessionData $session){
+        
+        $match = $session->getMatch();
+        $socket = $session->getSocket();
+        
+        $socket->send(
+            json_encode(
+                [
+                    "type" => "get.all",
+                    "data" => $match
+                ]
+            )
+        );
+        
+    }
     
     protected function cleanUp(ConnectionInterface $conn){
         
         $deleteConnections = new SplObjectStorage();
-        $deleteConnections[$conn] = $this->connections[$conn];
-        $this->connections->removeAll($deleteConnections);
+        $deleteConnections[$conn] = $this->sessions[$conn];
+        $this->sessions->removeAll($deleteConnections);
         
     }
     

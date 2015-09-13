@@ -6,6 +6,14 @@ class Continent extends Model {
 
     protected $fillable = ['name', 'colorscheme'];
         
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $array['regions'] = $this->regions;
+        return $array;
+    }
+    
         
     public function match()
     {

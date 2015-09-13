@@ -15,6 +15,15 @@ class Region extends Model {
         'angle',
         'pathdata',
     ];
+
+    public function toArray()
+    {
+        $array = parent::toArray();
+        
+        $array['owner'] = $this->owner;
+        
+        return $array;
+    }
                         
         
     public function continent()
@@ -25,7 +34,7 @@ class Region extends Model {
         
     public function owner()
     {
-        return $this->belongsTo('Game\Model\User', 'owner_id', 'id');
+        return $this->belongsTo('Game\User', 'owner_id', 'id');
     }
                         
         

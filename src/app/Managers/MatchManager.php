@@ -6,6 +6,7 @@ use Game\Services\IdTokenService;
 use Game\Model\Map;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Collection;
 
 /**
  * Description of MatchManager
@@ -219,6 +220,12 @@ class MatchManager {
         
         public function cancelMatch($match) {
 
+                foreach ($match->continents as $continent) {
+                    foreach ($continent->regions as $region) {
+                        $region->owner()->dissociate();
+                        $region->save();
+                    }
+                }
                 foreach ($match->joinedUsers as $joinedUser) {
                     $result = $joinedUser->joinedMatch()->dissociate();
                     $joinedUser->matchorder = 0;
@@ -241,6 +248,8 @@ class MatchManager {
                     $i++;
                 }
                 
+                $this->distrubuteRegionsRandomlyToJoinedUsers($match);
+                
                 $match->state = self::MATCHSTATE_START;
                 $match->save();
                 
@@ -258,6 +267,39 @@ class MatchManager {
                 $this->startMatch($match);
             }
 
+        }
+        
+        
+        
+        protected function distrubuteRegionsRandomlyToJoinedUsers(Match $match) {
+            
+                $joinedUsers = $match->joinedUsers;
+                $continents = $match->continents;
+                $regions = new Collection();
+                foreach ($continents as $continent){
+                    $continentRegions = $continent->regions;
+                    foreach ($continentRegions as $region){
+                        $regions->push($region);
+                    }
+                }
+                $regions->shuffle();
+                
+                $joinedUsersArray = $joinedUsers->all();
+                $index = 0;
+                foreach ($regions as $region){
+                    
+                    if($index >= count($joinedUsersArray) || !isset($joinedUsersArray[$index])){
+                        $index = 0;
+                    }
+                    
+                    $user = $joinedUsersArray[$index];
+                    
+                    $region->owner()->associate($user);
+                    $region->save();
+                    
+                    $index++;
+                    
+                }
         }
     
 }
