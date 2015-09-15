@@ -36,6 +36,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         protected $socket = null;
         
         
+        public function toString(){
+            
+        }
+
+        
         public function getSocket(){
             return $this->socket;
         }

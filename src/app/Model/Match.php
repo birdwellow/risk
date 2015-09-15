@@ -14,10 +14,21 @@ class Match extends Model {
     {
         $array = parent::toArray();
         
-        $array['activePlayer'] = $this->activePlayer;
+        unset($array["id"]);
+        unset($array["joinid"]);
+        unset($array["map_id"]);
+        unset($array["public"]);
+        unset($array["thread_id"]);
+        unset($array["active_player_id"]);
+        unset($array["created_by_user_id"]);
+        unset($array["created_at"]);
+        unset($array["updated_at"]);
+        
+        $array['activePlayer'] = "[players:id=" . ( $this->activePlayer ? $this->activePlayer->id : null ) . "]";
+        $array['createdBy'] = "[players:id=" . $this->createdBy->id . "]";
         $array['continents'] = $this->continents;
-        $array['createdBy'] = $this->createdBy;
-        $array['joinedUsers'] = $this->joinedUsers;
+        $array['regions'] = $this->regions();
+        $array['players'] = $this->joinedUsers;
         $array['thread'] = $this->thread;
         
         return $array;
@@ -69,6 +80,18 @@ class Match extends Model {
     public function continents()
     {
         return $this->hasMany('Game\Model\Continent', 'match_id', 'id');
+    }
+    
+    
+    public function regions()
+    {
+        $regions = [];
+        foreach ($this->continents as $continent) {
+            foreach ($continent->regions as $region) {
+                array_push($regions, $region);
+            }
+        }
+        return $regions;
     }
     
     

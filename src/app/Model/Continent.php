@@ -10,7 +10,17 @@ class Continent extends Model {
     public function toArray()
     {
         $array = parent::toArray();
-        $array['regions'] = $this->regions;
+        
+        unset($array["match_id"]);
+        unset($array["owner_id"]);
+        unset($array["created_at"]);
+        unset($array["updated_at"]);
+        
+        $array['regions'] = [];
+        foreach($this->regions as $region){
+            array_push($array['regions'], "[regions:id=" . $region->id . "]");
+        }
+        $array["owner"] = "[players:id=" . ( $this->owner ? $this->owner->id : null ) . "]";
         return $array;
     }
     

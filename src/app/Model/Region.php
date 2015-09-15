@@ -20,7 +20,19 @@ class Region extends Model {
     {
         $array = parent::toArray();
         
-        $array['owner'] = $this->owner;
+        unset($array["owner_id"]);
+        unset($array["card_owner_id"]);
+        unset($array["continent_id"]);
+        unset($array["created_at"]);
+        unset($array["updated_at"]);
+        
+        $array["continent"] = "[continents:id=" . $this->continent->id . "]";
+        $array["owner"] = "[players:id=" . ( $this->owner ? $this->owner->id : null ) . "]";
+        $array["cardOwner"] = "[players:id=" . ( $this->cardOwner ? $this->cardOwner->id : null ) . "]";
+        $array["neighbors"] = [];
+        foreach($this->neighbors as $neighborRegion){
+            array_push($array['neighbors'], "[regions:id=" . $neighborRegion->id . "]");
+        }
         
         return $array;
     }
@@ -40,7 +52,7 @@ class Region extends Model {
         
     public function cardOwner()
     {
-        return $this->belongsTo('Game\Model\User', 'card_owner_id', 'id');
+        return $this->belongsTo('Game\User', 'card_owner_id', 'id');
     }
                         
         

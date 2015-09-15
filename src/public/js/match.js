@@ -89,50 +89,91 @@ Model = {
 			this[index] = property;
 		}
 		
-		this.setupRelations();
+		this.setupRelationsRecursively();
+		
+		console.log(this);
 	},
 
-	setupRelations : function(){
-		this.regions = [];
-		for(var i in this.continents){
-			var continent = this.continents[i];
-			for(var j in continent.regions){
-				var region = continent.regions[j];
-				this.regions.push(region);
+	setupRelationsRecursively : function(object){
+		
+		if(!object){
+			object = this;
+		}
+		
+		for(var propertyName in object){
+			var propertyValue = object[propertyName];
+			if(this.typeOf(propertyValue) === "String"){
+				var reference = this.get(propertyValue);
+				if(! (reference === undefined) ){
+					object[propertyName] = reference;
+				}
+			}
+			else if(this.typeOf(propertyValue) === "Array"){
+				for(var key in propertyValue){
+					var arrayElement = propertyValue[key];
+					if(this.typeOf(arrayElement) === "String"){
+						var ref = this.get(arrayElement);
+						if(! (ref === undefined) ){
+							propertyValue[key] = ref;
+						}
+					} else if(this.typeOf(arrayElement) === "Object"){
+						//console.log("setupRelationsRecursively for: ");
+						//console.log(arrayElement);
+						this.setupRelationsRecursively(arrayElement);
+					}
+				}
 			}
 		}
-		this.replaceRelations(this.regions, "owner", "id", this.joinedUsers, "id");
-		console.log(this.regions);
 	},
 	
 	
-	/*
-	 * Iterates through @subjects and replaces the values/relations of @subjectFieldName
-	 * with the object in @objects, whose value of @objectFieldName matches the value of
-	 * subjectField's criterumField
-	 * Example:
-	 *	The Model.regions[].owner objects must be replaced with the corresponding
-	 *	instance of Model.joinedUsers. This replacement is done by
-	 *		Model.regions[].owner.id === Model.joinedUsers.id
-	 */
+	get : function(descriptor){
+		descriptor = descriptor.replace("[", '').replace("]", '');
 
-	replaceRelations : function (subjects, subjectFieldName, criteriumField, objects, objectField){
-		for(var index in subjects){
-			var subject = subjects[index];
-			console.log(subject);
-			var criterium = subject[subjectFieldName][criteriumField];
-			subject[subjectFieldName] = this.findObjectWith(objects, objectField, criterium);
+		var parts = descriptor.split(":");
+		var variable = parts[0];
+		var property = parts[1];
+
+		if(!property){
+			return undefined;
 		}
+
+		var propertyParts = property.split("=");
+		var propertyName = propertyParts[0];
+		var propertyValue = propertyParts[1];
+
+		var searchTarget = this[variable];
+		if(!searchTarget){
+			return searchTarget;
+		}
+
+		if(this.typeOf(searchTarget) === "Array"){
+			for(var key in searchTarget){
+				var candidate = searchTarget[key];
+				console.log(candidate);
+				var candidatePropertyValue = candidate[propertyName];
+				if(candidatePropertyValue && candidatePropertyValue == propertyValue){
+					return candidate;
+				}
+			}
+			if(propertyValue){
+				console.log("nothing found for " + descriptor);
+			}
+			return null;
+		}
+		/* else if(typeString == "[object Object]"){
+			return searchTarget;
+		}*/
+
+		return undefined;
 	},
 	
-	findObjectWith : function (objects, fieldName, value){
-		for(var index in objects){
-			var object = objects[index];
-			if(object[fieldName] === value){
-				return object;
-			}
-		}
-		return null;
+	typeOf : function (object){
+		var typeString = Object.prototype.toString.call(object);
+		var type = typeString
+			.replace("[object ", '')
+			.replace("]", '');
+		return type;
 	}
 };
 
