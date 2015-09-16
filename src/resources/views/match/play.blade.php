@@ -2,8 +2,8 @@
 
 @section('content')
     
-<script src="/js/match.js" defer="defer"></script>
 <script src="/js/thirdparty/kinetic-v5.1.0.min.js" defer="defer"></script>
+<script src="/js/match.js" defer="defer"></script>
 
 <script>
     

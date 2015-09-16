@@ -28,7 +28,7 @@ class CreateRegions extends Migration {
                         $table->integer('card_owner_id')->nullable()->unsigned();
                         $table->foreign('card_owner_id')->references('id')->on('users');
                         
-                        $table->string('svgdata');
+                        $table->longText('svgdata');
                         $table->integer('centerx');
                         $table->integer('centery');
                         $table->integer('labelcenterx');

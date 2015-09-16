@@ -12,12 +12,12 @@
 	<link href="/css/bootstrap-theme.css" rel="stylesheet">
 	<link href="/css/jquery-ui.css" rel="stylesheet">
 	<link href="/css/common.css" rel="stylesheet">
-	<link href="/css/DEF.css" rel="stylesheet">
+	<link href="/css/_DEF.css" rel="stylesheet">
 
-        <script src="/js/thirdparty/jquery.min.js" defer="defer"></script>
-        <script src="/js/thirdparty/jquery-ui.min.js" defer="defer"></script>
-        <script src="/js/thirdparty/bootstrap.min.js" defer="defer"></script>
-        <script src="/js/app.js" defer="defer"></script>
+	<script src="/js/thirdparty/jquery.min.js" defer="defer"></script>
+	<script src="/js/thirdparty/jquery-ui.min.js" defer="defer"></script>
+	<script src="/js/thirdparty/bootstrap.min.js" defer="defer"></script>
+	<script src="/js/app.js" defer="defer"></script>
         
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
