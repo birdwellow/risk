@@ -150,7 +150,6 @@ Model = {
 		if(this.typeOf(searchTarget) === "Array"){
 			for(var key in searchTarget){
 				var candidate = searchTarget[key];
-				console.log(candidate);
 				var candidatePropertyValue = candidate[propertyName];
 				if(candidatePropertyValue && candidatePropertyValue == propertyValue){
 					return candidate;

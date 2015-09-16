@@ -36,8 +36,29 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         protected $socket = null;
         
         
-        public function toString(){
+        public function toArray(){
             
+            $array = parent::toArray();
+            
+            unset($array["created_at"]);
+            unset($array["updated_at"]);
+            unset($array["joined_match_id"]);
+            unset($array["joinid"]);
+            
+            $array["regions"] = [];
+            foreach($this->regions as $region){
+                array_push($array["regions"], "[regions:id=" . $region->id . "]");
+            }
+            $array["cards"] = [];
+            foreach($this->cards as $cardRegion){
+                array_push($array["cards"], "[regions:id=" . $cardRegion . "]");
+            }
+            $array["continents"] = [];
+            foreach($this->continents as $continent){
+                array_push($array["continents"], "[continents:id=" . $continent . "]");
+            }
+            
+            return $array;
         }
 
         
