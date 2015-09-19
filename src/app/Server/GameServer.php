@@ -4,10 +4,11 @@ namespace Game\Server;
 
 use Game\Contracts\GameServerInterface;
 use Game\Server\SessionData;
-use Game\Model\Match;
 use Game\User;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Lang;
 
 use Ratchet\ConnectionInterface;
 
@@ -30,7 +31,27 @@ class GameServer implements GameServerInterface {
         $this->events = array();
         
         $this->on("get.all", function($sessionData){
+            
             $this->sendAllData($sessionData);
+        });
+        
+        $this->on("select.region", function($sessionData, $data){
+            $match = $sessionData->getMatch();
+            $user = $sessionData->getUser();
+            foreach($match->getConnectedUsers() as $connectedUser){
+                if($user !== $connectedUser){
+                    Log::info("Forwarding to " . $user->name);
+                    $connectedUser->getSocket()->send(
+                        json_encode(
+                            [
+                                "type" => "select.region",
+                                "data" => "[regions:id=" . $data . "]",
+                                "username" => $user->name
+                            ]
+                        )
+                    );
+                }
+            }
         });
         
         /*
@@ -184,6 +205,14 @@ class GameServer implements GameServerInterface {
         
         $match = $session->getMatch();
         $socket = $session->getSocket();
+        $user = $session->getUser();
+        
+        App::setLocale($user->language);
+        foreach($match->continents as $continent){
+            foreach($continent->regions as $region){
+                $region->name = Lang::get('match.region.' . $region->name);
+            }
+        }
         
         $socket->send(
             json_encode(
