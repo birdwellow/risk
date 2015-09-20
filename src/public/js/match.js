@@ -11,9 +11,9 @@ var Config = {
 			initial : {
 
 				uses : [
-					/*"mouseoverRegionPath",
-					"mouseoutRegionPath",
-					"clickRegionPath"*/
+					//"mouseoverRegionPath",
+					//"mouseoutRegionPath",
+					//"clickRegionPath"
 				],
 				
 				"mouseoverRegionPath" : function(event){
@@ -27,7 +27,6 @@ var Config = {
 				"clickRegionPath" : function(event){
 					View.Map.receive(event);
 					Controller.behave("selectTarget", event.data);
-					//console.log(event.data.model.id);
 					socket.send("select.region", event.data.model.id);
 				}
 
@@ -92,6 +91,13 @@ var Config = {
 					align : 'center'
 					//offsetY: 15
 				}
+			},
+			
+			pointers : {
+				stroke : "",
+				strokeWidth : 0,
+				speed : 0.5,
+				fillLinearGradientColorStops: [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222']
 			}
 		},
 		
@@ -138,33 +144,6 @@ var Config = {
 	}
 	
 };
-
-/*
- function Chat(socket){
- var self = this;
- this._socket = socket;
- this._input = $("#chatinput");
- this._output = $("#chatcontent");
- this._input.keypress(function(e){
- var message = self._input.val().trim();
- if(e.which == 13 && message != ""){
- self.send(message);
- self._input.val("");
- }
- });
- 
- this.send = function(msg){
- self._socket.send("chat.message", msg);
- self.receive(msg, user);
- };
- 
- this.receive = function(msg, user){
- var chatContentHtml = self._output.html();
- self._output.html(chatContentHtml + "<div style='color: " + user.color + "'>" + user.name + ": " + msg + "</div>");
- self._output.animate({ scrollTop: self._output[0].scrollHeight }, "slow");
- };
- };
- */
 
 function GameSocket(url) {
 
@@ -302,9 +281,9 @@ var Model = {
 			}
 			return null;
 		}
-		/* else if(typeString == "[object Object]"){
-			return searchTarget;
-		}*/
+		//else if(typeString == "[object Object]"){
+		//	return searchTarget;
+		//}
 
 		return undefined;
 	},
@@ -384,9 +363,9 @@ var Controller = {
 
 
 
-/*****************************
- *	CLASSES
- *****************************/
+//*****************************
+//*	CLASSES
+//*****************************
 
 
 function Event(name, data, caller){
@@ -458,6 +437,7 @@ function Map(model, config){
 	
 	this.addLayer("regionsLayer", new MapLayer());
 	this.addLayer("regionsNameLayer", new MapLayer());
+	this.addLayer("animationLayer", new MapLayer());
 	this.addLayer("troopLabelLayer", new MapLayer());
 	
 	for(var key in this.model.regions){
@@ -466,7 +446,46 @@ function Map(model, config){
 	}
 	this.mapLayers["regionsLayer"].refresh();
 	this.mapLayers["regionsNameLayer"].refresh();
+	this.mapLayers["animationLayer"].refresh();
 	this.mapLayers["troopLabelLayer"].refresh();
+	
+	this.attackFrom = function(region){
+		this.pointerConfig = {
+			start : region,
+			fillLinearGradientColorStops: [0, '#ff0', 0.05, '#ff0', 0.4, '#f00', 1, '#f00']
+		};
+		return this;
+	};
+	
+	this.troopShiftFrom = function(region){
+		this.pointerConfig = {
+			start : region,
+			fillLinearGradientColorStops: [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222']
+		};
+		return this;
+	};
+	
+	this.to = function(region){
+		if(this.pointerConfig){
+			this.pointerConfig.end = region;
+			this.pointer = new Pointer(
+				{x:this.pointerConfig.start.centerx,y:this.pointerConfig.start.centery},
+				{x:this.pointerConfig.end.centerx,y:this.pointerConfig.end.centery},
+				{fillLinearGradientColorStops: this.pointerConfig.fillLinearGradientColorStops}
+			);
+			this.mapLayers["animationLayer"].addKineticShape(this.pointer.kinetic);
+			this.pointer.animate();
+			delete this.pointerConfig;
+		}
+		
+	};
+	
+	this.clearPointers = function(){
+		this.mapLayers["animationLayer"].clear();
+		delete this.pointer;
+	};
+	
+	//this.attackFrom(Model.regions[2]).to(Model.regions[3]);
 	
 }
 
@@ -483,6 +502,11 @@ function MapLayer(){
 	};
 	
 	this.refresh = function(){
+		this.kineticLayer.draw();
+	};
+	
+	this.clear = function(){
+		this.kineticLayer.removeChildren();
 		this.kineticLayer.draw();
 	};
 	
@@ -630,3 +654,136 @@ function RegionPath(model){
 	};
 	
 }
+
+
+function Pointer(start, end, customConfig){
+	
+	var self = this;
+	
+	var vec = Math2d.fromTo(start, end);
+	vec = Math2d.normalize(vec);
+	vec = Math2d.orthogonalize(vec);
+	
+	var config = Config.view.map.pointers;
+	if(customConfig.fill){
+		config.fill = customConfig.fill;
+	}
+	if(customConfig.stroke){
+		config.stroke = customConfig.stroke;
+	}
+	if(customConfig.strokeWidth){
+		config.strokeWidth = customConfig.strokeWidth;
+	}
+	if(customConfig.fillLinearGradientColorStops){
+		config.fillLinearGradientColorStops = customConfig.fillLinearGradientColorStops;
+		config.fillLinearGradientStartPoint = {
+			x: start.x,
+			y: start.y
+		};
+		config.fillLinearGradientEndPoint = {
+			x: end.x,
+			y: end.y
+		};
+	}
+	config.points = [
+		start.x - 10 * vec[1].x,
+		start.y - 10 * vec[1].y,
+		end.x,
+		end.y,
+		start.x + 10 * vec[1].x,
+		start.y + 10 * vec[1].y
+	];
+	config.closed = true;
+			   
+	this.kinetic = new Kinetic.Line(config);
+
+	this.animate = function(){
+		var animation = new Kinetic.Animation(function(frame){
+			var duration = config.speed * 1000;
+			self.kinetic.setPoints([
+				start.x - 10 * vec[1].x,
+				start.y - 10 * vec[1].y,
+				start.x + (end.x - start.x) * frame.time/duration,
+				start.y + (end.y - start.y) * frame.time/duration,
+				start.x + 10 * vec[1].x,
+				start.y + 10 * vec[1].y
+			]);
+			self.kinetic.getLayer().drawScene();
+			if(frame.time > duration){
+				this.stop();
+			}
+		});
+		animation.start();
+	};
+	
+}
+
+
+
+var Math2d = {
+
+	distance : function(point1, point2){
+		return Math.sqrt(
+			Math.pow(point1.x - point2.x, 2)
+			+ Math.pow(point1.y - point2.y, 2)
+		);
+	},
+
+	fromTo : function(point1, point2){
+		return [
+			{x: 0, y: 0},
+			{x: point1.x - point2.x, y: point1.y - point2.y}
+		];
+	},
+
+	orthogonalize : function(vector){
+		return [
+			{x: 0, y: 0},
+			{
+				x: vector[1].y,
+				y: -vector[1].x
+			}
+		];
+	},
+
+	normalize : function(vector){
+		var length = this.distance(vector[0], vector[1]);
+		return [
+			{
+				x: vector[0].x/length,
+				y: vector[0].y/length
+			},
+			{
+				x: vector[1].x/length,
+				y: vector[1].y/length
+			}
+		];
+	},
+
+	middleOf : function(){
+		var count = 0;
+		var sumX = 0;
+		var sumY = 0;
+		for(var i = 0; i < arguments.length; i++){
+			count++;
+			var arg = arguments[i];
+			if(arg.x && arg.y){
+				sumX += arg.x;
+				sumY += arg.y;
+			}
+		}
+		var x = -1;
+		var y = -1;
+		var result = {
+			x : x,
+			y : y
+		};
+		if(count > 0){
+			result = {
+				x : Math.round(sumX/count),
+				y : Math.round(sumY/count)
+			};
+		}
+		return result;
+	}
+};
