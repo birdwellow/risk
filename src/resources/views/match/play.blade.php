@@ -3,7 +3,13 @@
 @section('content')
     
 <script src="/js/thirdparty/kinetic-v5.1.0.min.js" defer="defer"></script>
-<script src="/js/match.js" defer="defer"></script>
+
+<script src="/js/play/config.js"></script>
+<script src="/js/play/proxy.js" defer="defer"></script>
+<script src="/js/play/model.js" defer="defer"></script>
+<script src="/js/play/view.js" defer="defer"></script>
+<script src="/js/play/controller.js" defer="defer"></script>
+<script src="/js/play/utils.js" defer="defer"></script>
 
 <script>
     
