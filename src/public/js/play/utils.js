@@ -23,6 +23,42 @@ var Utils = {
 				+ Math.pow(point1.y - point2.y, 2)
 			);
 		},
+		
+		getCenteringWithin : function(point1, point2, borderWidth, borderHeight, margin){
+			if(!margin){
+				margin = 0;
+			}
+			var spreadX = Math.abs(point1.x - point2.x) + 2 * margin;
+			var spreadY = Math.abs(point1.y - point2.y) + 2 * margin;
+			var scaleX = borderWidth / spreadX;
+			var scaleY = borderHeight / spreadY;
+			var scale = Math.min(scaleX, scaleY);
+			
+			var borderCenter = {
+				x: borderWidth / 2,
+				y: borderHeight / 2
+			};
+			var pointsMiddle = this.middleOf(point1, point2);
+			var scaledPointsCenter = {
+				x: scale * pointsMiddle.x,
+				y: scale * pointsMiddle.y
+			};
+			var offset = this.fromToVector(borderCenter, scaledPointsCenter);
+			
+			return {
+				scale: scale,
+				offset: offset
+			};
+		},
+		
+		fromToVector : function(point1, point2){
+			var fromTo = this.fromTo(point1, point2);
+			var end = fromTo[1];
+			return {
+				x: -end.x,
+				y: -end.y
+			};
+		},
 
 		fromTo : function(point1, point2){
 			return [

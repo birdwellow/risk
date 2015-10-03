@@ -86,6 +86,12 @@ var Config = {
 			height : 500,
 			containerId : "game-map",
 			
+			fade : {
+				speed : 0.25,
+				targetOpacity : 0.25
+			},
+			
+			
 			regions : {
 				nameLabels : {
 					fontFamily: 'Garamond',
