@@ -193,36 +193,8 @@ function Map(model, config, context){
 				fillLinearGradientColorStops: [0, '#ff0', 0.05, '#ff0', 0.4, '#f00', 1, '#f00']
 			}
 		);
-		pointer.animate(mapLayer);
-		fadeDownMap(startRegion, endRegion);
-		delete pointerConfig;
-	}
-
-	function troopShiftFromTo(startRegion, endRegion){
-		pointer = new Pointer(
-			{
-				x: startRegion.centerx,
-				y: startRegion.centery
-			},
-			{
-				x: endRegion.centerx,
-				y: endRegion.centery
-			},
-			{
-				fillLinearGradientColorStops: [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222']
-			}
-		);
-		pointer.animate(mapLayer);
-		delete pointerConfig;
-	}
-
-	function clearPointers(){
-		mapLayer.clearPointers();
-		pointer = null;
-		fadeInMap();
-	}
-	
-	function fadeDownMap(startRegion, endRegion){
+		//pointer.animate(mapLayer);
+		actionLayer.addPointer(pointer);
 		
 		previousStartRegion = startRegion;
 		previousEndRegion = endRegion;
@@ -256,6 +228,7 @@ function Map(model, config, context){
 			
 			if(frame.time > duration){
 				this.stop();
+				pointer.scale(1);
 				mapLayer.update();
 				actionLayer.update();
 			}
@@ -280,16 +253,36 @@ function Map(model, config, context){
 			actionLayer.setScale(scale);
 			actionLayer.setOffset(offset);
 			
-			//var actionOpacity = (frame.time/duration);
-			//actionLayer.setOpacity(actionOpacity);
+			pointer.scale(process);
 			
 			mapLayer.update();
 			actionLayer.update();
 		});
 		animation.start();
+		delete pointerConfig;
 	}
-	
-	function fadeInMap(){
+
+	function troopShiftFromTo(startRegion, endRegion){
+		pointer = new Pointer(
+			{
+				x: startRegion.centerx,
+				y: startRegion.centery
+			},
+			{
+				x: endRegion.centerx,
+				y: endRegion.centery
+			},
+			{
+				fillLinearGradientColorStops: [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222']
+			}
+		);
+		pointer.animate(mapLayer);
+		delete pointerConfig;
+	}
+
+	function clearPointers(){
+		actionLayer.clearPointers();
+		pointer = null;
 		
 		var duration = Config.view.map.fade.speed * 1000;
 		
@@ -322,6 +315,8 @@ function Map(model, config, context){
 				mapLayer.addRegionPath(startRegionPath);
 				mapLayer.addRegionPath(endRegionPath);
 				mapLayer.setOpacity(1);
+				mapLayer.setScale({x:1,y:1});
+				mapLayer.setOffset({x:0, y:0});
 				actionLayer.clear();
 				mapLayer.update();
 				actionLayer.update();
@@ -346,12 +341,6 @@ function Map(model, config, context){
 			mapLayer.setOffset(offset);
 			actionLayer.setScale(scale);
 			actionLayer.setOffset(offset);
-
-			/*var newOpacity = startOpacityValue + inverseOpacityValue * (frame.time/duration);
-			mapLayer.setOpacity(newOpacity);
-			
-			var actionOpacity = Math.max(1 - (frame.time/duration), 0);
-			actionLayer.setOpacity(actionOpacity);*/
 			
 			mapLayer.update();
 			actionLayer.update();
@@ -380,15 +369,15 @@ function Map(model, config, context){
 function MapLayer(kineticStage){
 	
 	var geoLayer = new Kinetic.Layer({});
+	var animationLayer = new Kinetic.Layer({});
 	var labelLayer = new Kinetic.Layer({});
 	var troopLayer = new Kinetic.Layer({});
-	var animationLayer = new Kinetic.Layer({});
 	
 	if(kineticStage){
 		kineticStage.add(geoLayer);
+		kineticStage.add(animationLayer);
 		kineticStage.add(labelLayer);
 		kineticStage.add(troopLayer);
-		kineticStage.add(animationLayer);
 	}
 	
 	return {
@@ -410,38 +399,38 @@ function MapLayer(kineticStage){
 	
 		update : function(){
 			geoLayer.draw();
+			animationLayer.draw();
 			labelLayer.draw();
 			troopLayer.draw();
-			animationLayer.draw();
 		},
 
 		clear : function(){
 			geoLayer.removeChildren();
+			animationLayer.removeChildren();
 			labelLayer.removeChildren();
 			troopLayer.removeChildren();
-			animationLayer.removeChildren();
 			this.update();
 		},
 		
 		setOpacity : function(opacity){
 			geoLayer.opacity(opacity);
+			animationLayer.opacity(opacity);
 			labelLayer.opacity(opacity);
 			troopLayer.opacity(opacity);
-			animationLayer.opacity(opacity);
 		},
 		
 		setScale : function(scale){
 			geoLayer.scale(scale);
+			animationLayer.scale(scale);
 			labelLayer.scale(scale);
 			troopLayer.scale(scale);
-			animationLayer.scale(scale);
 		},
 		
 		setOffset : function(offset){
 			geoLayer.offset(offset);
+			animationLayer.offset(offset);
 			labelLayer.offset(offset);
 			troopLayer.offset(offset);
-			animationLayer.offset(offset);
 		}
 		
 	};
@@ -656,6 +645,17 @@ function Pointer(start, end, customConfig){
 			return kinetic;
 		},
 		
+		scale : function(scale){
+			kinetic.setPoints([
+				start.x - 10 * vec[1].x,
+				start.y - 10 * vec[1].y,
+				start.x + (end.x - start.x) * scale,
+				start.y + (end.y - start.y) * scale,
+				start.x + 10 * vec[1].x,
+				start.y + 10 * vec[1].y
+			]);
+		}/*,
+		
 		animate : function(mapLayer){
 			
 			mapLayer.addPointer(this);
@@ -677,7 +677,7 @@ function Pointer(start, end, customConfig){
 				}
 			});
 			animation.start();
-		}
+		}*/
 		
 	};
 	
