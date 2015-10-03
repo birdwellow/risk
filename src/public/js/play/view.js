@@ -75,9 +75,11 @@ function Map(model, config, context){
 	
 	var pointer = null;
 	
-	var mapLayers = [];
+	var mapLayer, actionLayer;
 	
 	var regionPaths = [];
+	
+	var previousStartRegion, previousEndRegion;
 	
 	
 	
@@ -131,10 +133,8 @@ function Map(model, config, context){
 				var regionPath = regionPaths[regionPathKey];
 				regionPath.update();
 			}
-			for(var mapLayerName in mapLayers){
-				var mapLayer = mapLayers[mapLayerName];
-				mapLayer.update();
-			}
+			mapLayer.update();
+			actionLayer.update();
 		},
 
 		fire : function(event){
@@ -153,18 +153,10 @@ function Map(model, config, context){
 		console.log(e.evt.layerX + "|" + e.evt.layerY);
 	});*/
 	
-	function addLayer (layerName, layer){
-		mapLayers[layerName] = layer;
-		mapLayers[layerName].setParent(self);
-		kineticStage.add(mapLayers[layerName].getKinetic());
-	}
-		
-	function addRegionPath (regionPath){
+	function addRegionPath(regionPath){
 		regionPaths[regionPath.getIdentifier()] = regionPath;
 		regionPath.setParent(self);
-		mapLayers["regionsLayer"].addKinetic(regionPath.getKineticPath());
-		mapLayers["regionsNameLayer"].addKinetic(regionPath.getKineticNameLabel());
-		mapLayers["troopLabelLayer"].addKinetic(regionPath.getKineticTroopLabel());
+		mapLayer.addRegionPath(regionPath);
 	}
 	
 	function getRegionPath (region){
@@ -201,7 +193,7 @@ function Map(model, config, context){
 				fillLinearGradientColorStops: [0, '#ff0', 0.05, '#ff0', 0.4, '#f00', 1, '#f00']
 			}
 		);
-		pointer.animate(mapLayers["animationLayer"]);
+		pointer.animate(mapLayer);
 		fadeDownMap(startRegion, endRegion);
 		delete pointerConfig;
 	}
@@ -220,36 +212,25 @@ function Map(model, config, context){
 				fillLinearGradientColorStops: [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222']
 			}
 		);
-		pointer.animate(mapLayers["animationLayer"]);
+		pointer.animate(mapLayer);
 		delete pointerConfig;
 	}
 
 	function clearPointers(){
-		mapLayers["animationLayer"].clear();
+		mapLayer.clearPointers();
 		pointer = null;
 		fadeInMap();
 	}
 	
 	function fadeDownMap(startRegion, endRegion){
 		
-		mapLayers["actionLayer"].clear();
-		var startRegionPath = new RegionPath(startRegion);
-		var endRegionPath = new RegionPath(endRegion);
-		startRegionPath.setParent(self);
-		startRegionPath.setState(CLICKED_STATE);
-		endRegionPath.setState(CLICKED_STATE);
-		endRegionPath.setParent(self);
-		/*startRegionPath.getKineticPath().x(100-startRegion.centerx);
-		startRegionPath.getKineticPath().y(100-startRegion.centery);
-		endRegionPath.getKineticPath().x(400-endRegion.centerx);
-		endRegionPath.getKineticPath().y(100-endRegion.centery);*/
-		mapLayers["actionLayer"].addKinetic(startRegionPath.getKineticPath());
-		//mapLayers["actionLayer"].addKinetic(startRegionPath.getKineticNameLabel());
-		//mapLayers["actionLayer"].addKinetic(startRegionPath.getKineticTroopLabel());
-		mapLayers["actionLayer"].addKinetic(endRegionPath.getKineticPath());
-		//mapLayers["actionLayer"].addKinetic(endRegionPath.getKineticNameLabel());
-		//mapLayers["actionLayer"].addKinetic(endRegionPath.getKineticTroopLabel());
+		previousStartRegion = startRegion;
+		previousEndRegion = endRegion;
 		
+		var startRegionPath = regionPaths["id=" + startRegion.id];
+		var endRegionPath = regionPaths["id=" + endRegion.id];
+		actionLayer.addRegionPath(startRegionPath);
+		actionLayer.addRegionPath(endRegionPath);
 		
 		var duration = Config.view.map.fade.speed * 1000;
 		var inverseOpacityValue = 1 - Config.view.map.fade.targetOpacity;
@@ -271,34 +252,17 @@ function Map(model, config, context){
 		var targetScale = centering.scale;
 		var targetOffset = centering.offset;
 		
-		
-		/*mapLayers["regionsLayer"].addKinetic(new Kinetic.Ellipse({
-			radius: {x: 5, y:5},
-			fill: "red",
-			x: 400,
-			y: 250
-		}));
-		mapLayers["actionLayer"].addKinetic(new Kinetic.Ellipse({
-			radius: {x: 5, y:5},
-			stroke: "yellow",
-			strokeWidth: 2,
-			x: startRegion.centerx + 0.5*(endRegion.centerx - startRegion.centerx),
-			y: startRegion.centery + 0.5*(endRegion.centery - startRegion.centery)
-		}));*/
-		
 		var animation = new Kinetic.Animation(function(frame){
 			
 			if(frame.time > duration){
 				this.stop();
+				mapLayer.update();
+				actionLayer.update();
 			}
 			
 			var process = frame.time/duration;
 
 			var opacity = 1 - inverseOpacityValue * process;
-			mapLayers["regionsLayer"].getKinetic().opacity(opacity);
-			mapLayers["regionsNameLayer"].getKinetic().opacity(opacity);
-			mapLayers["animationLayer"].getKinetic().opacity(opacity);
-			mapLayers["troopLabelLayer"].getKinetic().opacity(opacity);
 			
 			var scaleScalar = 1 + (targetScale - 1) * process;
 			var scale = {
@@ -310,18 +274,17 @@ function Map(model, config, context){
 				x: targetOffset.x * process /2,
 				y: targetOffset.y * process /2
 			};
-			mapLayers["actionLayer"].getKinetic().scale(scale);
-			mapLayers["actionLayer"].getKinetic().offset(offset);
+			mapLayer.setOpacity(opacity);
+			mapLayer.setScale(scale);
+			mapLayer.setOffset(offset);
+			actionLayer.setScale(scale);
+			actionLayer.setOffset(offset);
 			
-			var actionOpacity = (frame.time/duration);
-			mapLayers["actionLayer"].getKinetic().opacity(actionOpacity);
+			//var actionOpacity = (frame.time/duration);
+			//actionLayer.setOpacity(actionOpacity);
 			
-			
-			mapLayers["regionsLayer"].update();
-			mapLayers["regionsNameLayer"].update();
-			mapLayers["animationLayer"].update();
-			mapLayers["troopLabelLayer"].update();
-			mapLayers["actionLayer"].update();
+			mapLayer.update();
+			actionLayer.update();
 		});
 		animation.start();
 	}
@@ -333,92 +296,152 @@ function Map(model, config, context){
 		var startOpacityValue = Config.view.map.fade.targetOpacity;
 		var inverseOpacityValue = 1 - Config.view.map.fade.targetOpacity;
 		
-		var animation = new Kinetic.Animation(function(frame){
+		var centering = Utils.Math2d.getCenteringWithin(
+			{
+				x: previousStartRegion.centerx,
+				y: previousStartRegion.centery
+			},
+			{
+				x: previousEndRegion.centerx,
+				y: previousEndRegion.centery
+			},
+			config.width,
+			config.height,
+			100
+		);
 
-			var newOpacity = startOpacityValue + inverseOpacityValue * (frame.time/duration);
-			mapLayers["regionsLayer"].getKinetic().opacity(newOpacity);
-			mapLayers["regionsNameLayer"].getKinetic().opacity(newOpacity);
-			mapLayers["animationLayer"].getKinetic().opacity(newOpacity);
-			mapLayers["troopLabelLayer"].getKinetic().opacity(newOpacity);
-			
-			var actionOpacity = Math.max(1 - (frame.time/duration), 0);
-			mapLayers["actionLayer"].getKinetic().opacity(actionOpacity);
-			
-			mapLayers["regionsLayer"].update();
-			mapLayers["regionsNameLayer"].update();
-			mapLayers["animationLayer"].update();
-			mapLayers["troopLabelLayer"].update();
-			mapLayers["actionLayer"].update();
+		var targetScale = centering.scale;
+		var targetOffset = centering.offset;
+		
+		var animation = new Kinetic.Animation(function(frame){
 			
 			if(frame.time > duration){
 				this.stop();
-				mapLayers["regionsLayer"].getKinetic().opacity(1);
-				mapLayers["regionsNameLayer"].getKinetic().opacity(1);
-				mapLayers["animationLayer"].getKinetic().opacity(1);
-				mapLayers["troopLabelLayer"].getKinetic().opacity(1);
-				mapLayers["actionLayer"].clear();
+				var startRegionPath = regionPaths["id=" + previousStartRegion.id];
+				var endRegionPath = regionPaths["id=" + previousEndRegion.id];
+				mapLayer.addRegionPath(startRegionPath);
+				mapLayer.addRegionPath(endRegionPath);
+				mapLayer.setOpacity(1);
+				actionLayer.clear();
+				mapLayer.update();
+				actionLayer.update();
 			}
+			
+			var process = frame.time/duration;
+
+			var opacity = startOpacityValue + inverseOpacityValue * process;
+			
+			var scaleScalar = targetScale + (1 - targetScale) * process;
+			var scale = {
+				x: scaleScalar,
+				y: scaleScalar
+			};
+			// Best result with .../2, reason unknown
+			var offset = {
+				x: targetOffset.x * (1 - process) /2,
+				y: targetOffset.y * (1 - process) /2
+			};
+			mapLayer.setOpacity(opacity);
+			mapLayer.setScale(scale);
+			mapLayer.setOffset(offset);
+			actionLayer.setScale(scale);
+			actionLayer.setOffset(offset);
+
+			/*var newOpacity = startOpacityValue + inverseOpacityValue * (frame.time/duration);
+			mapLayer.setOpacity(newOpacity);
+			
+			var actionOpacity = Math.max(1 - (frame.time/duration), 0);
+			actionLayer.setOpacity(actionOpacity);*/
+			
+			mapLayer.update();
+			actionLayer.update();
 		});
 		animation.start();
 	}
 	
 	
 	
-	addLayer("regionsLayer", new MapLayer());
-	addLayer("regionsNameLayer", new MapLayer());
-	addLayer("animationLayer", new MapLayer());
-	addLayer("troopLabelLayer", new MapLayer());
-	addLayer("actionLayer", new MapLayer());
+	mapLayer = new MapLayer(kineticStage);
+	actionLayer = new MapLayer(kineticStage);
 	
 	for(var key in model.regions){
 		var regionPath = new RegionPath(model.regions[key]);
 		addRegionPath(regionPath);
 	}
 	
-	mapLayers["regionsLayer"].update();
-	mapLayers["regionsNameLayer"].update();
-	mapLayers["animationLayer"].update();
-	mapLayers["troopLabelLayer"].update();
-	mapLayers["actionLayer"].update();
-	
-	
+	mapLayer.update();
+	actionLayer.update();
 	
 	return self;
 	
 }
 
 
-function MapLayer(){
+function MapLayer(kineticStage){
 	
-	var parent = null;
+	var geoLayer = new Kinetic.Layer({});
+	var labelLayer = new Kinetic.Layer({});
+	var troopLayer = new Kinetic.Layer({});
+	var animationLayer = new Kinetic.Layer({});
 	
-	var kineticLayer = new Kinetic.Layer({});
+	if(kineticStage){
+		kineticStage.add(geoLayer);
+		kineticStage.add(labelLayer);
+		kineticStage.add(troopLayer);
+		kineticStage.add(animationLayer);
+	}
 	
 	return {
-	
-		addKinetic : function(kineticObject){
-			kineticLayer.add(kineticObject);
+		
+		addRegionPath : function(regionPath){
+			geoLayer.add(regionPath.getKineticPath());
+			labelLayer.add(regionPath.getKineticNameLabel());
+			troopLayer.add(regionPath.getKineticTroopLabel());
 		},
-
-		getKinetic : function(){
-			return kineticLayer;
+		
+		addPointer : function(pointer){
+			animationLayer.add(pointer.getKinetic());
 		},
-	
-		setParent : function(newParent){
-			parent = newParent;
-		},
-	
-		getParent : function(){
-			return parent;
+		
+		clearPointers : function(){
+			animationLayer.removeChildren();
+			this.update();
 		},
 	
 		update : function(){
-			kineticLayer.draw();
+			geoLayer.draw();
+			labelLayer.draw();
+			troopLayer.draw();
+			animationLayer.draw();
 		},
 
 		clear : function(){
-			kineticLayer.removeChildren();
+			geoLayer.removeChildren();
+			labelLayer.removeChildren();
+			troopLayer.removeChildren();
+			animationLayer.removeChildren();
 			this.update();
+		},
+		
+		setOpacity : function(opacity){
+			geoLayer.opacity(opacity);
+			labelLayer.opacity(opacity);
+			troopLayer.opacity(opacity);
+			animationLayer.opacity(opacity);
+		},
+		
+		setScale : function(scale){
+			geoLayer.scale(scale);
+			labelLayer.scale(scale);
+			troopLayer.scale(scale);
+			animationLayer.scale(scale);
+		},
+		
+		setOffset : function(offset){
+			geoLayer.offset(offset);
+			labelLayer.offset(offset);
+			troopLayer.offset(offset);
+			animationLayer.offset(offset);
 		}
 		
 	};
@@ -633,9 +656,9 @@ function Pointer(start, end, customConfig){
 			return kinetic;
 		},
 		
-		animate : function(layer){
+		animate : function(mapLayer){
 			
-			layer.addKinetic(kinetic);
+			mapLayer.addPointer(this);
 			
 			var animation = new Kinetic.Animation(function(frame){
 				var duration = config.speed * 1000;
@@ -647,7 +670,7 @@ function Pointer(start, end, customConfig){
 					start.x + 10 * vec[1].x,
 					start.y + 10 * vec[1].y
 				]);
-				layer.getKinetic().draw();
+				mapLayer.update();
 				
 				if(frame.time > duration){
 					this.stop();
