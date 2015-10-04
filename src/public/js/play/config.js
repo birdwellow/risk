@@ -82,7 +82,7 @@ var Config = {
 	view : {
 		map : {
 			defaultMode : 'owner',
-			width : 800,
+			width : 1000,
 			height : 500,
 			containerId : "game-map",
 			
@@ -117,7 +117,10 @@ var Config = {
 				stroke : "",
 				strokeWidth : 0,
 				speed : 0.5,
-				fillLinearGradientColorStops: [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222']
+				fillLinearGradientColorStops: {
+					attack : [0, 'rgba(255,255,0,0)', 0.25, '#ff0', 0.75, '#f00', 1, '#f00'],
+					troopshift : [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222']
+				}
 			}
 		},
 		

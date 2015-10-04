@@ -633,12 +633,51 @@
         text-align: center;
         width: 100%;
         padding-left: 410px;
+        z-index: 50;
     }
     .navbar-left.panel{
         background: none;
         width: 400px;
     }
-
+    .mapControlPanel{
+        padding: 10px;
+        background: rgba(0,0,0,0.5);
+        border-radius: 3px;
+        display: inline-block;
+        position: absolute;
+        z-index: 100;
+    }
+    .mapControlPanel.inactive{
+        opacity: 0.25;
+    }
+    .actionheader{
+        width: 500px;
+        background: rgba(0,0,0,0.5);
+        border-radius: 3px;
+        display: table;
+        z-index: 100;
+    }
+    .regionlabel{
+        width: 40%;
+        text-align: center;
+        padding: 5px;
+        display: table-cell;
+    }
+    .symbol{
+        width: 20%;
+        text-align: center;
+        padding: 5px;
+        background-color: rgba(255,255,255,0.25);
+        display: table-cell;
+    }
+    .btn.attack{
+        background-color: rgba(255,0,0,0.5);
+        margin-right: 10px;
+        display: inline-block;
+    }
+    .btn.cancel{
+        display: inline-block;
+    }
     #playmodule-togglebar {
         background: rgba(0,0,0,0.25);
         padding: 5px;

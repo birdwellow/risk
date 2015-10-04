@@ -17,5 +17,7 @@ return [
         'region.canada' => "Canada",
         'region.mexico' => "Mexico",
         'region.usa' => "USA",
+        'region.australia' => "Australia",
+        'region.newzealand' => "New Zealand",
 
 ];

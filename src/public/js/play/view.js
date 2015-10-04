@@ -114,12 +114,12 @@ function Map(model, config, context){
 					var startRegion = move.start;
 					var endRegion = move.end;
 					if(move.type === "attack"){
-						attackFromTo(startRegion, endRegion);
+						attackMoveFromTo(startRegion, endRegion);
 					} else if(move.type === "shift"){
-						troopShiftFromTo(startRegion, endRegion);
+						troopshiftMoveFromTo(startRegion, endRegion);
 					}
 				} else if(pointer && !move){
-					clearPointers();
+					endMove();
 				}
 			}
 			
@@ -128,13 +128,14 @@ function Map(model, config, context){
 		update : function(){
 			
 			this.render();
-			
+
 			for(var regionPathKey in regionPaths){
 				var regionPath = regionPaths[regionPathKey];
 				regionPath.update();
 			}
 			mapLayer.update();
 			actionLayer.update();
+			
 		},
 
 		fire : function(event){
@@ -179,21 +180,8 @@ function Map(model, config, context){
 		regionPath.setState(CLICKED_STATE);
 	}
 
-	function attackFromTo(startRegion, endRegion){
-		pointer = new Pointer(
-			{
-				x: startRegion.centerx,
-				y: startRegion.centery
-			},
-			{
-				x: endRegion.centerx,
-				y: endRegion.centery
-			},
-			{
-				fillLinearGradientColorStops: [0, '#ff0', 0.05, '#ff0', 0.4, '#f00', 1, '#f00']
-			}
-		);
-		//pointer.animate(mapLayer);
+	function attackMoveFromTo(startRegion, endRegion){
+		pointer = new ActionPointer(startRegion, endRegion, "attack");
 		actionLayer.addPointer(pointer);
 		
 		previousStartRegion = startRegion;
@@ -220,7 +208,6 @@ function Map(model, config, context){
 			config.height,
 			100
 		);
-
 		var targetScale = centering.scale;
 		var targetOffset = centering.offset;
 		
@@ -231,9 +218,10 @@ function Map(model, config, context){
 				pointer.scale(1);
 				mapLayer.update();
 				actionLayer.update();
+				attackControls.show(config.height/2, config.width/2, "top-right");
 			}
 			
-			var process = frame.time/duration;
+			var process = Math.min(frame.time/duration, 1);
 
 			var opacity = 1 - inverseOpacityValue * process;
 			
@@ -252,17 +240,16 @@ function Map(model, config, context){
 			mapLayer.setOffset(offset);
 			actionLayer.setScale(scale);
 			actionLayer.setOffset(offset);
-			
 			pointer.scale(process);
 			
 			mapLayer.update();
 			actionLayer.update();
 		});
 		animation.start();
-		delete pointerConfig;
+		pointerConfig = null;
 	}
 
-	function troopShiftFromTo(startRegion, endRegion){
+	function troopshiftMoveFromTo(startRegion, endRegion){
 		pointer = new Pointer(
 			{
 				x: startRegion.centerx,
@@ -273,14 +260,17 @@ function Map(model, config, context){
 				y: endRegion.centery
 			},
 			{
-				fillLinearGradientColorStops: [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222']
+				fillLinearGradientColorStops: config.pointers.fillLinearGradientColorStops.troopshift
 			}
 		);
 		pointer.animate(mapLayer);
-		delete pointerConfig;
+		pointerConfig = null;
 	}
 
-	function clearPointers(){
+	function endMove(){
+		
+		attackControls.hide();
+		
 		actionLayer.clearPointers();
 		pointer = null;
 		
@@ -322,7 +312,7 @@ function Map(model, config, context){
 				actionLayer.update();
 			}
 			
-			var process = frame.time/duration;
+			var process = Math.min(frame.time/duration, 1);
 
 			var opacity = startOpacityValue + inverseOpacityValue * process;
 			
@@ -353,6 +343,8 @@ function Map(model, config, context){
 	mapLayer = new MapLayer(kineticStage);
 	actionLayer = new MapLayer(kineticStage);
 	
+	var attackControls = new AttackControls(config.containerId);
+	
 	for(var key in model.regions){
 		var regionPath = new RegionPath(model.regions[key]);
 		addRegionPath(regionPath);
@@ -375,9 +367,9 @@ function MapLayer(kineticStage){
 	
 	if(kineticStage){
 		kineticStage.add(geoLayer);
-		kineticStage.add(animationLayer);
 		kineticStage.add(labelLayer);
 		kineticStage.add(troopLayer);
+		kineticStage.add(animationLayer);
 	}
 	
 	return {
@@ -598,28 +590,22 @@ function Pointer(start, end, customConfig){
 	vec = Utils.Math2d.normalize(vec);
 	vec = Utils.Math2d.orthogonalize(vec);
 	
-	var config = Config.view.map.pointers;
-	if(customConfig.fill){
-		config.fill = customConfig.fill;
-	}
-	if(customConfig.stroke){
-		config.stroke = customConfig.stroke;
-	}
-	if(customConfig.strokeWidth){
-		config.strokeWidth = customConfig.strokeWidth;
+	for(var key in Config.view.map.pointers){
+		if(!customConfig[key]){
+			customConfig[key] = Config.view.map.pointers[key];
+		}
 	}
 	if(customConfig.fillLinearGradientColorStops){
-		config.fillLinearGradientColorStops = customConfig.fillLinearGradientColorStops;
-		config.fillLinearGradientStartPoint = {
+		customConfig.fillLinearGradientStartPoint = {
 			x: start.x,
 			y: start.y
 		};
-		config.fillLinearGradientEndPoint = {
+		customConfig.fillLinearGradientEndPoint = {
 			x: end.x,
 			y: end.y
 		};
 	}
-	config.points = [
+	customConfig.points = [
 		start.x - 10 * vec[1].x,
 		start.y - 10 * vec[1].y,
 		end.x,
@@ -627,9 +613,9 @@ function Pointer(start, end, customConfig){
 		start.x + 10 * vec[1].x,
 		start.y + 10 * vec[1].y
 	];
-	config.closed = true;
+	customConfig.closed = true;
 			   
-	var kinetic = new Kinetic.Line(config);
+	var kinetic = new Kinetic.Line(customConfig);
 	
 	return {
 		
@@ -654,31 +640,98 @@ function Pointer(start, end, customConfig){
 				start.x + 10 * vec[1].x,
 				start.y + 10 * vec[1].y
 			]);
-		}/*,
-		
-		animate : function(mapLayer){
-			
-			mapLayer.addPointer(this);
-			
-			var animation = new Kinetic.Animation(function(frame){
-				var duration = config.speed * 1000;
-				kinetic.setPoints([
-					start.x - 10 * vec[1].x,
-					start.y - 10 * vec[1].y,
-					start.x + (end.x - start.x) * frame.time/duration,
-					start.y + (end.y - start.y) * frame.time/duration,
-					start.x + 10 * vec[1].x,
-					start.y + 10 * vec[1].y
-				]);
-				mapLayer.update();
-				
-				if(frame.time > duration){
-					this.stop();
-				}
-			});
-			animation.start();
-		}*/
+		}
 		
 	};
 	
+}
+
+
+function ActionPointer(startRegion, endRegion, type){
+	var start = {
+		x: startRegion.centerx,
+		y: startRegion.centery
+	};
+	var end = {
+		x: endRegion.centerx,
+		y: endRegion.centery
+	};
+	var colorStops = Config.view.map.pointers.fillLinearGradientColorStops[type];
+	var customConfig = {
+		fillLinearGradientColorStops: colorStops
+	};
+	return new Pointer(start, end, customConfig);
+}
+
+
+function MapButton(id, content, classes){
+	var element = HTML.make("button", "btn btn-primary " + classes, id);
+	if(content.indexOf(".png") !== -1 || content.indexOf(".jpg") !== -1){
+		content = HTML.make("img").attr("src", "/img/" + content);
+		element.append(content);
+	} else {
+		element.html(content);
+	}
+	element.click(function(){
+		var event = new Event(id + "Clicked");
+		Controller.listen(event);
+	});
+	return element;
+}
+
+function AttackControls(parentElementId){
+	
+	var attackConfirmButton = new MapButton("attackConfirmButton", "attack.png", "attack");
+	var attackCancelButton = new MapButton("attackCancelButton", "cancel.png", "cancel");
+	
+	var buttonPanel = HTML.make("div", "mapControlPanel", "attackControlPanel");
+	buttonPanel.append(attackConfirmButton);
+	buttonPanel.append(attackCancelButton);
+	buttonPanel.hide();
+	
+	$("#" + parentElementId).prepend(buttonPanel);
+	
+	var width = buttonPanel.width();
+	var height = buttonPanel.height();
+	
+	return {
+		
+		position : function (x, y, fromEdge){
+			if(x && y){
+				var marginString = "";
+				if(fromEdge === "top-right"){
+					marginString = x + "px 0 0 " + (y - width) + "px";
+				} else if(fromEdge === "top-left"){
+					marginString = x + "px 0 0 " + y + "px";
+				} else if(fromEdge === "bottom-right"){
+					marginString = (x - height) + "px 0 0 " + (y - width) + "px";
+				} else if(fromEdge === "bottom-left"){
+					marginString = (x - height) + "px 0 0 " + y + "px";
+				} else {
+					marginString = (x - height/2) + "px 0 0 " + (y - width/2) + "px";
+				}
+				buttonPanel.css("margin", marginString);
+			}
+		},
+		
+		show : function (x, y, fromEdge){
+			this.position(x, y, fromEdge);
+			buttonPanel.show();
+		},
+		
+		hide : function (){
+			buttonPanel.hide();
+		},
+		
+		active : function(){
+			buttonPanel.removeClass("inactive");
+			buttonPanel.children().removeClass("inactive");
+		},
+		
+		inactive : function(){
+			buttonPanel.addClass("inactive");
+			buttonPanel.children().addClass("inactive");
+		}
+		
+	};
 }

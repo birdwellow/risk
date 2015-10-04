@@ -39,7 +39,7 @@ var Controller = {
 	},
 
 	listen : function(event){
-
+		
 		var eventClosure = this.getEventClosure(event);
 		if(typeof eventClosure === 'function'){
 			var resultingState = eventClosure(event, this.context);

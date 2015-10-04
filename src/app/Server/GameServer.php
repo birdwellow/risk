@@ -210,7 +210,8 @@ class GameServer implements GameServerInterface {
         App::setLocale($user->language);
         foreach($match->continents as $continent){
             foreach($continent->regions as $region){
-                $region->name = Lang::get('match.region.' . $region->name);
+                $key = 'match.region.' . $region->name;
+                $region->name = Lang::get($key);
             }
         }
         
