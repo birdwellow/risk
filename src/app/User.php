@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Ratchet\ConnectionInterface;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
@@ -59,21 +58,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             }
             
             return $array;
-        }
-
-        
-        public function getSocket(){
-            return $this->socket;
-        }
-        
-        
-        public function setSocket(ConnectionInterface $conn){
-            $this->socket = $conn;
-        }
-        
-        
-        public function disconnect(){
-            unset($this->connection);
         }
 
         

@@ -121,19 +121,19 @@
                 <div class="body" id="playerscontent">
                     
                     <div class="data player active">
-                        <img class="user-avatar" src="/img/avatars/Subberbazi_5527efc91bdaf.jpg">
+                        <img class="user-avatar" src="/img/avatars/Subberbazi_55c23ac1e59ea.jpg">
                         <div class="state online"></div>
                         Spieler 1
                         <div></div>
                     </div>
                     <div class="data player">
-                        <img class="user-avatar" src="/img/avatars/Subberbazi_5527efc91bd.jpg">
+                        <img class="user-avatar" src="/img/avatars/SoEinBazi_55b916c7da5f4.gif">
                         <div class="state offline"></div>
                         Next Player
                         <div></div>
                     </div>
                     <div class="data player">
-                        <img class="user-avatar" src="/img/avatars/Subberbazi_5527efc91bda.jpg">
+                        <img class="user-avatar" src="/img/avatars/Oberbazi_55b7bc6e55cda.gif">
                         <div class="state online"></div>
                         Letzter_User
                         <div></div>

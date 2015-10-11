@@ -47,25 +47,14 @@ proxy.on("open", function () {
 });
 proxy.on("get.all", function (data) {
 	Model.digest(data);
+	console.log(data);
 	
 	View = new ViewInstance(Controller);
 	
 	var map = new Map(Model, Config.view.map, Controller.getContext());
 	View.addComponent(map).as("Map");
 	
-	/*
-	View.getComponent("Map").attackFrom(Model.regions[2]).to(Model.regions[3]);
-	View.getComponent("Map").mouseOverRegion(Model.regions[1]);
-	View.getComponent("Map").clickRegion(Model.regions[3]);
-	*/
-	
-	
 	Controller.switchToState("active:selecting.attack.start");
-});
-proxy.on("select.region", function (data) {
-	var region = Model.get(data);
-	var event = new Event("clickRegionPath", {model: region}, this);
-	Controller.fire(event);
 });
 proxy.on("chat.message", function (message) {
 	//chat.receive(message.data, message.user);

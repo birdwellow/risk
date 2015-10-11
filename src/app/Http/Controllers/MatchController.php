@@ -159,7 +159,6 @@ class MatchController extends Controller {
                 $user = Auth::user();
                 $match = $this->matchManager->getMatchForUser($user);
                 $this->accountManager->setSocketJoinId($user);
-                Log::info($match->continents);
                 
                 return view('match.play')->with('match', $match);
             

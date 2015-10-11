@@ -1,17 +1,12 @@
 <?php namespace Game\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use SplObjectStorage;
-use Game\User;
 
 class Match extends Model {
 
     protected $fillable = ['cardChangeBonusLevel', 'map', 'name', 'maxUsers'];
-    
-    protected $connectedUsers;
 
-    public function toArray()
-    {
+    public function toArray(){
         $array = parent::toArray();
         
         unset($array["id"]);
@@ -32,30 +27,6 @@ class Match extends Model {
         $array['thread'] = $this->thread;
         
         return $array;
-    }
-    
-    public function __construct(){
-        parent::__construct();
-        $this->connectedUsers = new SplObjectStorage();
-    }
-    
-    
-    public function connectUser(User $user){
-        if(!$this->connectedUsers->contains($user)){
-            $this->connectedUsers->attach($user);
-        }
-    }
-    
-    
-    public function disconnectUser(User $user){
-        if($this->connectedUsers->contains($user)){
-            $this->connectedUsers->detach($user);
-        }
-    }
-    
-    
-    public function getConnectedUsers(){
-        return $this->connectedUsers;
     }
     
 
