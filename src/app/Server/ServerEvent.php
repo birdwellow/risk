@@ -2,7 +2,8 @@
 
 namespace Game\Server;
 
-use Game\User;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Description of SessionData
@@ -65,13 +66,19 @@ class ServerEvent {
     
     
     public function toJson() {
-    
-        return json_encode(
-            [
-                "type" => $this->name,
-                "data" => $this->data
-            ]
-        );
         
+        $this->encodeData();
+        return json_encode([
+            "type" => $this->name,
+            "data" => $this->data
+        ]);
+    }
+    
+    protected function encodeData(){
+        foreach($this->data as $key => $value){
+            if($value instanceof Model){
+                $this->data->$key = $value->socketIdentifier();
+            }
+        }
     }
 }

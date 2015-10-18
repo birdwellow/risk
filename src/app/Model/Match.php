@@ -22,7 +22,7 @@ class Match extends Model {
         $array['activePlayer'] = "[players:id=" . ( $this->activePlayer ? $this->activePlayer->id : null ) . "]";
         $array['createdBy'] = "[players:id=" . $this->createdBy->id . "]";
         $array['continents'] = $this->continents;
-        $array['regions'] = $this->regions();
+        $array['regions'] = $this->regions;
         $array['players'] = $this->joinedUsers;
         $array['thread'] = $this->thread;
         
@@ -56,13 +56,7 @@ class Match extends Model {
     
     public function regions()
     {
-        $regions = [];
-        foreach ($this->continents as $continent) {
-            foreach ($continent->regions as $region) {
-                array_push($regions, $region);
-            }
-        }
-        return $regions;
+        return $this->hasManyThrough('Game\Model\Region', 'Game\Model\Continent');
     }
     
     

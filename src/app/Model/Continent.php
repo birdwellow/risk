@@ -18,10 +18,15 @@ class Continent extends Model {
         
         $array['regions'] = [];
         foreach($this->regions as $region){
-            array_push($array['regions'], "[regions:id=" . $region->id . "]");
+            array_push($array['regions'], $region->socketIdentifier());
         }
-        $array["owner"] = "[players:id=" . ( $this->owner ? $this->owner->id : null ) . "]";
+        $array["owner"] = ( $this->owner ? $this->owner->socketIdentifier() : null );
         return $array;
+    }
+    
+    
+    public function socketIdentifier() {
+        return "[continents:id=" . $this->id . "]";
     }
     
         

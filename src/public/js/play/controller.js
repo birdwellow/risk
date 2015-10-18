@@ -7,15 +7,6 @@ var Controller = {
 	globalStateEvents : Config.controller.globalEvents,
 
 	possibleStates : Config.controller.states,
-
-	/*transitionToState : function(stateName, stateData, modelData){
-		if(this.possibleStates[stateName]){
-			Model.update(modelData);
-			this.state = this.possibleStates[stateName];
-			this.stateData = stateData;
-			View.update();
-		}
-	},*/
 	
 	switchToState : function(newState){
 		if(this.possibleStates[newState]){
@@ -74,18 +65,19 @@ var Controller = {
 	
 	context : {
 	
-	
 		mouseOverRegion : null,
 		
-		move : {
-			type : null,
-			start : null,
-			end : null
-		},
+		moveType : null,
+		moveStart : null,
+		moveEnd : null,
 		
 		getMove : function(){
-			if(this.move.type !== null && this.move.start !== null && this.move.end !== null){
-				return this.move;
+			if(this.moveType !== null && this.moveStart !== null && this.moveEnd !== null){
+				return {
+					type: this.moveType,
+					start: this.moveStart,
+					end: this.moveEnd
+				};
 			}
 			return null;
 		}

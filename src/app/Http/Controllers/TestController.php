@@ -36,32 +36,19 @@ class TestController extends Controller {
         
 	public function perform() {
             
-                $testThread = $this->messageManager->newThread("Thread", Auth::user(), [User::find(2), User::find(3)], false);
-                $testMatch = $this->matchManager->createMatch("Match", "earth", 3, Auth::user(), $testThread, false);
-                
-                $this->matchManager->joinUserToMatch($testMatch, User::find(1), "blue");
-                $this->matchManager->joinUserToMatch($testMatch, User::find(2), "red");
-                $this->matchManager->joinUserToMatch($testMatch, User::find(3), "yellow");
-                
-                $templateImplementer = new \Game\Services\MapTemplateImplementer();
-                $templateImplementer->implement("earth", $testMatch);
-                
-                $this->matchManager->distrubuteRegionsRandomlyToJoinedUsers($testMatch);
-               
-                $testMatch->continents->each(function($continent){
-                    var_dump($continent->name . "[" . $continent->colorscheme . "]");
-                    
-                    $continent->regions->each(function($region){
-                        var_dump($region->name);
-                        
-                        var_dump("Owner: " . $region->owner->name);
-                        
-                        $region->neighbors->each(function($neighbor){
-                            var_dump("Neighbor: " . $neighbor->name);
-                        });
-                        
-                    });
-                });
+            $hits = array();
+            
+            $testString = "[regions:id=3]";
+            $regex = '/\[(.*?):(.*?)=(.*?)\]/';
+            $result = preg_match($regex, $testString, $hits);
+            unset($hits[0]);
+            
+            var_dump($hits);
+            echo $result;
+            
+            $obj = new \stdClass();
+            
+            echo ($obj->test instanceof \stdClass);
                 
 	}
 

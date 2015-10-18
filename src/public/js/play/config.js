@@ -7,17 +7,19 @@ var Config = {
 			
 			"global:sendMessage" : function(event, context){
 				console.log("send");
+			},
+			
+			"attack.perform" : function(event, context){
+				
 			}
+			
+			
 
 		},
 
 		states : {
 
-			"passive:selecting.attack.start" : {},
-			
-			"passive:selecting.attack.target" : {},
-
-			"active:selecting.attack.start" : {
+			"selecting.attack.start" : {
 				
 				"region.mouse.over" : function(event, context){
 					var region = event.data.model;
@@ -30,17 +32,17 @@ var Config = {
 
 				"region.mouse.click" : function(event, context){
 					var region = event.data.model;
-					context.move.start = region;
-					return "active:selecting.attack.target";
+					context.moveStart = region;
+					return "selecting.attack.target";
 				}
 
 			},
 			
-			"active:selecting.attack.target" : {
+			"selecting.attack.target" : {
 				
 				"region.mouse.over" : function(event, context){
 					var region = event.data.model;
-					if(region !== context.move.start){
+					if(region !== context.moveStart){
 						context.mouseOverRegion = region;
 					}
 				},
@@ -51,26 +53,27 @@ var Config = {
 
 				"region.mouse.click" : function(event, context){
 					var region = event.data.model;
-					if(region === context.move.start){
-						context.move.start = null;
-						return "active:selecting.attack.start";
+					if(region === context.moveStart){
+						context.moveStart = null;
+						return "selecting.attack.start";
 					} else {
-						context.move.end = region;
-						context.move.type = "attack";
-						return "active:confirm.attack";
+						context.moveEnd = region;
+						context.moveType = "attack";
+						return "confirm.attack";
 					}
 				}
 			},
 			
-			"active:confirm.attack" : {
+			"confirm.attack" : {
 				
-				"region.mouse.click" : function(event, context){
-					var region = event.data.model;
-					if(region === context.move.end){
-						context.move.end = null;
-						context.move.type = null;
-						return "active:selecting.attack.target";
-					}
+				"attackConfirmButton.clicked" : function(event, context){
+					proxy.send("attack.confirm");
+				},
+				
+				"attackCancelButton.clicked" : function(event, context){
+					context.moveEnd = null;
+					context.moveType = null;
+					return "selecting.attack.start";
 				}
 				
 			}

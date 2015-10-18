@@ -19,12 +19,11 @@ class SendAllDataCommand extends AbstractGameFlowControllerCommand {
     public function perform(SocketEvent $event, Match $match){
         
         App::setLocale($event->getUser()->language);
-        foreach($match->continents as $continent){
-            foreach($continent->regions as $region){
-                $key = 'match.region.' . $region->name;
-                $region->name = Lang::get($key);
-            }
+        foreach($match->regions as $region){
+            $key = 'match.region.' . $region->name;
+            $region->name = Lang::get($key);
         }
+        $match->me = "[players:id=" . $event->getUser()->id . "]";
         
         $serverEvent = new ServerEvent("get.all", $match, $match, ServerEvent::$FOR_SELF);
         return $serverEvent;

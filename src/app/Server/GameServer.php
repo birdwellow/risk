@@ -63,24 +63,27 @@ class GameServer implements GameServerInterface {
     }
     
     public function onMessage(ConnectionInterface $conn, $messageJson) {
-        
+
         $session = $this->sessions[$conn];
         
         $socketEvent = new SocketEvent($session, $messageJson);
         
         $serverEvent = $this->gameFlowController->processSocketEvent($socketEvent, $session->getMatch());
         
-        $this->sendServerEvent($serverEvent, $socketEvent->getUser());
+        if($serverEvent instanceof ServerEvent){
+            $this->sendServerEvent($serverEvent, $socketEvent->getUser());
+        }
         
     }
     
     
     protected function sendServerEvent(ServerEvent $serverEvent, User $originalSender){
+
         
         $match = $serverEvent->getMatch();
-        
-        $matchSessions = $this->matchSessions["match:id=".$match->id];
 
+        $matchSessions = $this->matchSessions["match:id=".$match->id];
+        
         foreach ($matchSessions as $session){
 
             $eventReceiver = $session->getUser();
@@ -93,7 +96,8 @@ class GameServer implements GameServerInterface {
 
             if($mustSend){
                 $socket = $session->getSocket();
-                $socket->send($serverEvent->toJson());
+                $json = $serverEvent->toJson();
+                $socket->send($json);
             }
         }
 

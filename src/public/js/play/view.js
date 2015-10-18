@@ -101,7 +101,7 @@ function Map(model, config, context){
 			
 			for(var regionIndex in model.regions){
 				var region = model.regions[regionIndex];
-				if (context.move.start === region || context.move.end === region){
+				if (context.moveStart === region || context.moveEnd === region){
 					clickRegion(region);
 				} else if(context.mouseOverRegion === region){
 					mouseOverRegion(region);
@@ -673,7 +673,7 @@ function MapButton(id, content, classes){
 		element.html(content);
 	}
 	element.click(function(){
-		var event = new Event(id + "Clicked");
+		var event = new Event(id + ".clicked");
 		Controller.listen(event);
 	});
 	return element;

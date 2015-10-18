@@ -1,61 +1,180 @@
+function DataMapper() {
+	
+	function isArray(object){
+		return Utils.Type.of(object) === "Array";
+	}
+	
+	function isObject(object){
+		return Utils.Type.of(object) === "Object";
+	}
+	
+	function isString(object){
+		return Utils.Type.of(object) === "String";
+	}
+	
+	function isIterable(object){
+		return isArray(object) || isObject(object);
+	}
+	
+	function identifier(object){
+		var fieldName = getFieldNameOf(object);
+		return "[" + fieldName + ":id=" + object.id + "]";
+	}
+	
+	function getFieldNameOf(object){
+		for(var fieldName in Model){
+			var field = Model[fieldName];
+			if(isIterable(field)){
+				for(var objKey in field){
+					if(field[objKey] === object){
+						return fieldName;
+					}
+				}
+			}
+		}
+	}
+	
+	function getModelForIdentifier(string){
+		
+		var identifierRegex = /\[(.*?):(.*?)=(.*?)\]/g;
+		var regexMatch = identifierRegex.exec(string);
+		if(!regexMatch){
+			return string;
+		}
+		var fieldName = regexMatch[1];
+		var objectProperty = regexMatch[2];
+		var objectValue = regexMatch[3];
+		var field = Model[fieldName];
+		if(!isIterable(field)){
+			return;
+		}
+		for(var key in field){
+			var object = field[key];
+			if(object[objectProperty] && object[objectProperty] == objectValue){
+				return object;
+			}
+		}
+		return string;
+	}
+
+	return {
+		
+		decode : function(data){
+			
+			if(!data){
+				return;
+			}
+			
+			for(var key in data){
+				var obj = data[key];
+				if(isString(obj)){
+					data[key] = getModelForIdentifier(obj);
+				} else if(isIterable(obj)){
+					this.decode(obj);
+				}
+			}
+			
+		},
+	
+		encode : function(data){
+			
+			if(!data){
+				return;
+			}
+			
+			var encodedData = {};
+			
+			for(var key in data){
+				var obj = data[key];
+				if(isIterable(obj)){
+					if(obj.id){
+						encodedData[key] = identifier(obj);
+					} else {
+						encodedData[key] = this.encode(obj);
+					}
+				} else if (isString(obj)) {
+					encodedData[key] = obj;
+				}
+			}
+			
+			return encodedData;
+
+		}
+	};
+	
+};
+
 
 function CommunicationProxy(url) {
+	
+	var dataMapper = new DataMapper();
+	var instance;
 
-	var self = this;
-
-	this._webSocket = new WebSocket(url);
-	this._events = new Array();
-
-	this._webSocket.addEventListener("open", function (e) {
-		if (typeof self._events["open"] == "function") {
-			self._events["open"]();
-		}
-
+	var webSocket = new WebSocket(url);
+	var events = new Array();
+	
+	webSocket.addEventListener("open", function (e) {
+		instance.send("get.all");
 	});
 
-	this._webSocket.addEventListener("close", function (e) {
+	webSocket.addEventListener("close", function (e) {
 	});
 
-	this._webSocket.addEventListener("error", function (e) {
+	webSocket.addEventListener("error", function (e) {
 	});
 
-	this._webSocket.addEventListener("message", function (e) {
+	webSocket.addEventListener("message", function (e) {
 		var message = JSON.parse(e.data);
-		if (typeof self._events[message.type] === "function") {
-			self._events[message.type](message.data);
+		if (events[message.type] && typeof events[message.type].callback === "function") {
+			if(!events[message.type].leaveEncoded){
+				dataMapper.decode(message.data);
+			}
+			events[message.type].callback(message.data);
 		}
 	});
+	
+	instance = {
 
-	this.send = function (type, data) {
-		var msg = JSON.stringify({
-			"type": type,
-			"data": data
-		});
-		self._webSocket.send(msg);
-	};
+		send : function (type) {
+			
+			var encodedData = dataMapper.encode(Controller.getContext());
+			
+			var msg = JSON.stringify({
+				"type": type,
+				"data": encodedData
+			});
+			webSocket.send(msg);
+		},
 
-	this.on = function (eventName, callback) {
-		self._events[eventName] = callback;
+		on : function (eventName, callback, leaveEncoded) {
+			events[eventName] = {
+				callback: callback,
+				leaveEncoded: leaveEncoded ? true : false
+			};
+		}
+		
 	};
+	return instance;
 
 }
 
 var proxy = new CommunicationProxy("ws://dev.app.risk:7778/?joinid=" + joinId);
 
-proxy.on("open", function () {
-	proxy.send("get.all");
-});
 proxy.on("get.all", function (data) {
 	Model.digest(data);
-	console.log(data);
 	
 	View = new ViewInstance(Controller);
 	
 	var map = new Map(Model, Config.view.map, Controller.getContext());
 	View.addComponent(map).as("Map");
 	
-	Controller.switchToState("active:selecting.attack.start");
-});
+	Controller.switchToState("selecting.attack.start");
+}, true);
+
 proxy.on("chat.message", function (message) {
 	//chat.receive(message.data, message.user);
+});
+
+proxy.on("attack.perform", function (data) {
+	console.log(data);
 });

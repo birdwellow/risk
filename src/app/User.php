@@ -32,8 +32,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
         
-        protected $socket = null;
-        
         
         public function toArray(){
             
@@ -46,18 +44,23 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             
             $array["regions"] = [];
             foreach($this->regions as $region){
-                array_push($array["regions"], "[regions:id=" . $region->id . "]");
+                array_push($array["regions"], $region->socketIdentifier());
             }
             $array["cards"] = [];
             foreach($this->cards as $cardRegion){
-                array_push($array["cards"], "[regions:id=" . $cardRegion . "]");
+                array_push($array["cards"], $cardRegion->socketIdentifier());
             }
             $array["continents"] = [];
             foreach($this->continents as $continent){
-                array_push($array["continents"], "[continents:id=" . $continent . "]");
+                array_push($array["continents"], $continent->socketIdentifier());
             }
             
             return $array;
+        }
+    
+    
+        public function socketIdentifier() {
+            return "[players:id=" . $this->id . "]";
         }
 
         

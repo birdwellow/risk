@@ -26,15 +26,20 @@ class Region extends Model {
         unset($array["created_at"]);
         unset($array["updated_at"]);
         
-        $array["continent"] = "[continents:id=" . $this->continent->id . "]";
-        $array["owner"] = "[players:id=" . ( $this->owner ? $this->owner->id : null ) . "]";
-        $array["cardOwner"] = "[players:id=" . ( $this->cardOwner ? $this->cardOwner->id : null ) . "]";
+        $array["continent"] = $this->continent->socketIdentifier();
+        $array["owner"] = ( $this->owner ? $this->owner->socketIdentifier() : null );
+        $array["cardOwner"] = ( $this->cardOwner ? $this->cardOwner->socketIdentifier() : null );
         $array["neighbors"] = [];
         foreach($this->neighbors as $neighborRegion){
-            array_push($array['neighbors'], "[regions:id=" . $neighborRegion->id . "]");
+            array_push($array['neighbors'], $neighborRegion->socketIdentifier());
         }
         
         return $array;
+    }
+    
+    
+    public function socketIdentifier() {
+        return "[regions:id=" . $this->id . "]";
     }
                         
         

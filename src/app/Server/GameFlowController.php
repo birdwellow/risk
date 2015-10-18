@@ -18,18 +18,22 @@ class GameFlowController {
     public function __construct() {
         
         $this->eventMap = [
-            "get.all" => "SendAllDataCommand"
+            "get.all" => "SendAllDataCommand",
+            "attack.confirm" => "PerformAttackCommand",
         ];
     }
     
     public function processSocketEvent(SocketEvent $event, Match $match){
         
         $eventKey = $event->getName();
-        $commandName = "Game\\Server\\Commands\\" . $this->eventMap[$eventKey];
-        $command = new $commandName();
-        $result = $command->perform($event, $match);
-        
-        return $result;
+        if(isset($this->eventMap[$eventKey])){
+            $commandName = "Game\\Server\\Commands\\" . $this->eventMap[$eventKey];
+            $command = new $commandName();
+            $result = $command->perform($event, $match);
+            return $result;
+        } else {
+            Log::warn("Event key '" . $eventKey . "' not defined");
+        }
         
     }
     
