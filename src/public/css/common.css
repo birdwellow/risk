@@ -637,7 +637,6 @@
         height: 600px;
         text-align: center;
         width: 100%;
-        z-index: 50;
     }
     @keyframes fadein {
         0% { margin-left: -400px }
@@ -648,6 +647,7 @@
         100% { margin-left: -400px }
     }
     .navbar-left.panel{
+        margin-right: 60px;
         background: none;
         width: 400px;
     }
@@ -708,7 +708,7 @@
         background: rgba(0,0,0,0.25);
         padding: 5px;
         border-radius: 0 3px 3px 0;
-        margin-right: -50px;
+        margin-right: -55px;
     }
     .toggle-btn {
         vertical-align: middle;
