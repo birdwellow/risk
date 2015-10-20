@@ -34,6 +34,29 @@ var UI = {
             });
         });
 
+        $('*[toggle-function]').each(function(index, value){
+            var toggle = $(value);
+            var callback = toggle.attr("toggle-function");
+            toggle.click(function(){
+				var active = eval(callback + "(toggle)");
+            });
+        });
+		
+		window.toggleFixSideBar = function(toggle){
+			$("#sidebar").removeClass("initial");
+			if($('#sidebar').hasClass("in")){
+				$('#sidebar').removeClass("in");
+				$('#sidebar').addClass("out");
+                toggle.removeClass("active");
+				toggle.children().attr("src","/img/in.png");
+			} else if($('#sidebar').hasClass("out")){
+				$('#sidebar').removeClass("out");
+				$('#sidebar').addClass("in");
+                toggle.addClass("active");
+				toggle.children().attr("src","/img/out.png");
+			}
+		};
+
         /*setTimeout(function(){
             $(".alert-success").fadeOut(1000, function(){
                 $(".alert-success").hide();

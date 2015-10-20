@@ -10,7 +10,7 @@ var Config = {
 			},
 			
 			"attack.perform" : function(event, context){
-				
+				context.attackResult = event.data.attackResult;
 			}
 			
 			
@@ -67,6 +67,7 @@ var Config = {
 			"confirm.attack" : {
 				
 				"attackConfirmButton.clicked" : function(event, context){
+					context.attackResult = "waiting";
 					proxy.send("attack.confirm");
 				},
 				

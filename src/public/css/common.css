@@ -628,17 +628,42 @@
     Match View
 ****************************************************/
     
+    #game-table{
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
     #game-map{
         height: 600px;
         text-align: center;
         width: 100%;
-        padding-left: 410px;
         z-index: 50;
+    }
+    @keyframes fadein {
+        0% { margin-left: -400px }
+        100% { margin-left: 0px }
+    }
+    @keyframes fadeout {
+        0% { margin-left: 0px }
+        100% { margin-left: -400px }
     }
     .navbar-left.panel{
         background: none;
         width: 400px;
     }
+    .navbar-left.panel.in.initial,
+    .navbar-left.panel.out.initial{
+        animation: none;
+    }
+    .navbar-left.panel.in{
+        margin-left: 0px;
+        animation: fadein 0.25s ease-in-out;
+    }
+    .navbar-left.panel.out{
+        margin-left: -400px;
+        animation: fadeout 0.25s ease-in-out;
+    }
+    
     .mapControlPanel{
         padding: 10px;
         background: rgba(0,0,0,0.5);
@@ -646,6 +671,7 @@
         display: inline-block;
         position: absolute;
         z-index: 100;
+        cursor: move;
     }
     .mapControlPanel.inactive{
         opacity: 0.25;
@@ -682,6 +708,7 @@
         background: rgba(0,0,0,0.25);
         padding: 5px;
         border-radius: 0 3px 3px 0;
+        margin-right: -50px;
     }
     .toggle-btn {
         vertical-align: middle;

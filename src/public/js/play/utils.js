@@ -11,6 +11,10 @@ var Utils = {
 				.replace("[object ", '')
 				.replace("]", '');
 			return type;
+		},
+		
+		is : function (object, typeName){
+			return typeName == this.of(object);
 		}
 		
 	},

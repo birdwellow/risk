@@ -130,6 +130,9 @@ function CommunicationProxy(url) {
 				dataMapper.decode(message.data);
 			}
 			events[message.type].callback(message.data);
+		} else {
+			dataMapper.decode(message.data);
+			Controller.listen(new Event(message.type, message.data, this));
 		}
 	});
 	
@@ -173,8 +176,4 @@ proxy.on("get.all", function (data) {
 
 proxy.on("chat.message", function (message) {
 	//chat.receive(message.data, message.user);
-});
-
-proxy.on("attack.perform", function (data) {
-	console.log(data);
 });

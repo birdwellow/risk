@@ -121,6 +121,17 @@ function Map(model, config, context){
 				} else if(pointer && !move){
 					endMove();
 				}
+				if(move && context.attackResult == "waiting"){
+					attackControls.inactive();
+				} else {
+					attackControls.active();
+				}
+				
+				// Prüfung ändern
+				if(Utils.Type.is(context.attackResult, "Array")){
+					console.log(context.attackResult);
+					context.attackResult = null;
+				}
 			}
 			
 		},
@@ -143,7 +154,7 @@ function Map(model, config, context){
 		}
 	};
 	
-	
+	var attackControls = new AttackControls(config.containerId);
 	
 	var kineticStage = new Kinetic.Stage({
 		container: config.containerId,
@@ -178,6 +189,14 @@ function Map(model, config, context){
 	function clickRegion(region){
 		var regionPath = getRegionPath(region);
 		regionPath.setState(CLICKED_STATE);
+	}
+
+	function waiting(){
+		attackControls.inactive();
+	}
+
+	function continuing(){
+		attackControls.active();
 	}
 
 	function attackMoveFromTo(startRegion, endRegion){
@@ -676,12 +695,18 @@ function MapButton(id, content, classes){
 		var event = new Event(id + ".clicked");
 		Controller.listen(event);
 	});
+	element.disable = function(){
+		element.prop("disabled", true);
+	};
+	element.enable = function(){
+		element.prop("disabled", false);
+	};
 	return element;
 }
 
 function AttackControls(parentElementId){
 	
-	var attackConfirmButton = new MapButton("attackConfirmButton", "attack.png", "attack");
+	var attackConfirmButton = new MapButton("attackConfirmButton", "confirm.png", "attack");
 	var attackCancelButton = new MapButton("attackCancelButton", "cancel.png", "cancel");
 	
 	var buttonPanel = HTML.make("div", "mapControlPanel", "attackControlPanel");
@@ -693,6 +718,7 @@ function AttackControls(parentElementId){
 	
 	var width = buttonPanel.width();
 	var height = buttonPanel.height();
+	buttonPanel.draggable();
 	
 	return {
 		
@@ -725,12 +751,14 @@ function AttackControls(parentElementId){
 		
 		active : function(){
 			buttonPanel.removeClass("inactive");
-			buttonPanel.children().removeClass("inactive");
+			attackConfirmButton.enable();
+			attackCancelButton.enable();
 		},
 		
 		inactive : function(){
 			buttonPanel.addClass("inactive");
-			buttonPanel.children().addClass("inactive");
+			attackConfirmButton.disable();
+			attackCancelButton.disable();
 		}
 		
 	};
