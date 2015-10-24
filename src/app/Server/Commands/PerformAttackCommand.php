@@ -2,8 +2,6 @@
 
 namespace Game\Server\Commands;
 
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 
 use Game\Server\SocketEvent;
@@ -21,12 +19,29 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
         
         $data = $event->getData();
         
-        $attackerResults = $this->generateSortedRandomResults(3);
-        $defenderResults = $this->generateSortedRandomResults(2);
+        $attackorRegion = $event->moveStart;
+        $attackorTroops = min($attackorRegion->troops, 3);
+        $defenderRegion = $event->moveEnd;
+        $defenderTroops = min($defenderRegion->troops, 2);
+        
+        $attackerResults = $this->generateSortedRandomResults($attackorTroops);
+        $defenderResults = $this->generateSortedRandomResults($defenderTroops);
         
         $data->attackResult = $this->arrangeRandomResults($attackerResults, $defenderResults);
         
-        return new ServerEvent("attack.perform", $event->getData(), $match);
+        foreach ($data->attackResult as $resultPart) {
+            if(isset($resultPart[0]) && $resultPart[0] == "win"){
+                $defenderRegion->troops--;
+                $defenderRegion->save();
+            }
+            else if(isset($resultPart[0]) && $resultPart[0] == "lose"){
+                $attackorRegion->troops--;
+                $attackorRegion->save();
+            }
+            
+        }
+        
+        return new ServerEvent("attack.result", $event->getData(), $match);
     }
     
     

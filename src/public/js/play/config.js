@@ -9,8 +9,18 @@ var Config = {
 				console.log("send");
 			},
 			
-			"attack.perform" : function(event, context){
-				context.attackResult = event.data.attackResult;
+			"attack.result" : function(event, context){
+				var attackResult = event.data.attackResult;
+				for(var i in attackResult){
+					if(attackResult[i][0]){
+						if(attackResult[i][0] === "win"){
+							attackResult[i][3] = event.data.moveEnd;
+						} if(attackResult[i][0] === "lose"){
+							attackResult[i][3] = event.data.moveStart;
+						}
+					}
+				}
+				context.attackResult = attackResult;
 			}
 			
 			
@@ -31,6 +41,7 @@ var Config = {
 				},
 
 				"region.mouse.click" : function(event, context){
+					context.mouseOverRegion = null;
 					var region = event.data.model;
 					context.moveStart = region;
 					return "selecting.attack.target";
@@ -52,6 +63,7 @@ var Config = {
 				},
 
 				"region.mouse.click" : function(event, context){
+					context.mouseOverRegion = null;
 					var region = event.data.model;
 					if(region === context.moveStart){
 						context.moveStart = null;
@@ -68,12 +80,18 @@ var Config = {
 				
 				"attackConfirmButton.clicked" : function(event, context){
 					context.attackResult = "waiting";
+					var attackorTroops = Math.min(context.moveStart.troops - 1, 3);
+					var defenderTroops = Math.min(context.moveEnd.troops, 2);
+					context.attackTroops = [attackorTroops, defenderTroops];
+					console.log(context.attackTroops);
 					proxy.send("attack.confirm");
 				},
 				
 				"attackCancelButton.clicked" : function(event, context){
 					context.moveEnd = null;
+					context.moveStart = null;
 					context.moveType = null;
+					context.mouseOverRegion = null;
 					return "selecting.attack.start";
 				}
 				

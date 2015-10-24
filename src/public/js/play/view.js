@@ -103,35 +103,35 @@ function Map(model, config, context){
 				var region = model.regions[regionIndex];
 				if (context.moveStart === region || context.moveEnd === region){
 					clickRegion(region);
+					console.log("clicked");
 				} else if(context.mouseOverRegion === region){
 					mouseOverRegion(region);
 				} else {
 					mouseOutRegion(region);
 				}
+			}
 				
-				var move = context.getMove();
-				if(!pointer && move){
-					var startRegion = move.start;
-					var endRegion = move.end;
-					if(move.type === "attack"){
-						attackMoveFromTo(startRegion, endRegion);
-					} else if(move.type === "shift"){
-						troopshiftMoveFromTo(startRegion, endRegion);
-					}
-				} else if(pointer && !move){
-					endMove();
+			var move = context.getMove();
+			if(!pointer && move){
+				var startRegion = move.start;
+				var endRegion = move.end;
+				if(move.type === "attack"){
+					attackMoveFromTo(startRegion, endRegion);
+				} else if(move.type === "shift"){
+					troopshiftMoveFromTo(startRegion, endRegion);
 				}
-				if(move && context.attackResult == "waiting"){
-					attackControls.inactive();
-				} else {
-					attackControls.active();
-				}
-				
-				// Prüfung ändern
-				if(Utils.Type.is(context.attackResult, "Array")){
-					console.log(context.attackResult);
-					context.attackResult = null;
-				}
+			} else if(pointer && !move){
+				endMove();
+			}
+			if(move && context.attackResult === "waiting" && !mapControls.diceRolling() && context.attackTroops && context.attackTroops.length === 2){
+				mapControls.diceStart(context.attackTroops[0], context.attackTroops[1]);
+			} else if(Utils.Type.is(context.attackResult, "Array")){
+				mapControls.diceEndWith(context.attackResult, function(result){
+					console.log(result);
+				});
+				context.attackResult = null;
+			} else {
+				//mapControls.active();
 			}
 			
 		},
@@ -154,13 +154,15 @@ function Map(model, config, context){
 		}
 	};
 	
-	var attackControls = new AttackControls(config.containerId);
 	
 	var kineticStage = new Kinetic.Stage({
 		container: config.containerId,
 		width: config.width,
 		height: config.height
 	});
+	
+	var mapControls = new MapControls("map-controls");
+	
 	/*kineticStage.on("mousemove", function(e){
 		console.log(e.evt.layerX + "|" + e.evt.layerY);
 	});*/
@@ -192,14 +194,17 @@ function Map(model, config, context){
 	}
 
 	function waiting(){
-		attackControls.inactive();
+		mapControls.inactive();
 	}
 
 	function continuing(){
-		attackControls.active();
+		mapControls.active();
 	}
 
 	function attackMoveFromTo(startRegion, endRegion){
+		
+		mapControls.attack();
+		
 		pointer = new ActionPointer(startRegion, endRegion, "attack");
 		actionLayer.addPointer(pointer);
 		
@@ -237,7 +242,6 @@ function Map(model, config, context){
 				pointer.scale(1);
 				mapLayer.update();
 				actionLayer.update();
-				attackControls.show(config.height/2, config.width/2, "top-right");
 			}
 			
 			var process = Math.min(frame.time/duration, 1);
@@ -269,6 +273,9 @@ function Map(model, config, context){
 	}
 
 	function troopshiftMoveFromTo(startRegion, endRegion){
+		
+		mapControls.troopShift();
+		
 		pointer = new Pointer(
 			{
 				x: startRegion.centerx,
@@ -288,7 +295,7 @@ function Map(model, config, context){
 
 	function endMove(){
 		
-		attackControls.hide();
+		mapControls.none();
 		
 		actionLayer.clearPointers();
 		pointer = null;
@@ -361,8 +368,6 @@ function Map(model, config, context){
 	
 	mapLayer = new MapLayer(kineticStage);
 	actionLayer = new MapLayer(kineticStage);
-	
-	var attackControls = new AttackControls(config.containerId);
 	
 	for(var key in model.regions){
 		var regionPath = new RegionPath(model.regions[key]);
@@ -704,62 +709,433 @@ function MapButton(id, content, classes){
 	return element;
 }
 
-function AttackControls(parentElementId){
+
+
+function MapControls(elementId){
 	
+	var base = $("#" + elementId);
+	base.addClass("mapControlPanel");
+	base.draggable({ snap: "#game-table" });
+	
+	var mode = null;
+	
+	var buttonPanel = HTML.make("div");
+	
+	var attackButtons = HTML.make("div", "control-group");
 	var attackConfirmButton = new MapButton("attackConfirmButton", "confirm.png", "attack");
 	var attackCancelButton = new MapButton("attackCancelButton", "cancel.png", "cancel");
+	attackButtons.append(attackConfirmButton);
+	attackButtons.append(attackCancelButton);
 	
-	var buttonPanel = HTML.make("div", "mapControlPanel", "attackControlPanel");
-	buttonPanel.append(attackConfirmButton);
-	buttonPanel.append(attackCancelButton);
-	buttonPanel.hide();
+	var troopShiftButtons = HTML.make("div", "control-group");
+	var shiftPlusButton = new MapButton("shiftPlusButton", "plus.png", "plus");
+	var shiftMinusButton = new MapButton("shiftMinusButton", "minus.png", "minus");
+	var shiftConfirmButton = new MapButton("shiftConfirmButton", "confirm.png", "confirm");
+	troopShiftButtons.append(shiftPlusButton);
+	troopShiftButtons.append(shiftMinusButton);
+	troopShiftButtons.append(shiftConfirmButton);
 	
-	$("#" + parentElementId).prepend(buttonPanel);
+	buttonPanel.append(attackButtons);
+	buttonPanel.append(troopShiftButtons);
+	base.append(buttonPanel);
 	
-	var width = buttonPanel.width();
-	var height = buttonPanel.height();
-	buttonPanel.draggable();
+	var dicerPanel = HTML.make("div", "control-group", "dicer");
+	base.append(dicerPanel);
+	var dicer = new Dicer(100, 100, dicerPanel);
 	
-	return {
+	var width = base.width();
+	var height = base.height();
+	
+	var self = {
 		
-		position : function (x, y, fromEdge){
-			if(x && y){
-				var marginString = "";
-				if(fromEdge === "top-right"){
-					marginString = x + "px 0 0 " + (y - width) + "px";
-				} else if(fromEdge === "top-left"){
-					marginString = x + "px 0 0 " + y + "px";
-				} else if(fromEdge === "bottom-right"){
-					marginString = (x - height) + "px 0 0 " + (y - width) + "px";
-				} else if(fromEdge === "bottom-left"){
-					marginString = (x - height) + "px 0 0 " + y + "px";
-				} else {
-					marginString = (x - height/2) + "px 0 0 " + (y - width/2) + "px";
-				}
-				buttonPanel.css("margin", marginString);
-			}
-		},
-		
-		show : function (x, y, fromEdge){
-			this.position(x, y, fromEdge);
-			buttonPanel.show();
-		},
-		
-		hide : function (){
-			buttonPanel.hide();
+		position : function (x, y){
+			base.css("margin", x + "px 0 0 " + y + "px");
 		},
 		
 		active : function(){
-			buttonPanel.removeClass("inactive");
+			base.removeClass("inactive");
 			attackConfirmButton.enable();
 			attackCancelButton.enable();
 		},
 		
 		inactive : function(){
-			buttonPanel.addClass("inactive");
+			base.addClass("inactive");
 			attackConfirmButton.disable();
 			attackCancelButton.disable();
+		},
+		
+		mode : function(newMode){
+			var style = base.attr("style");
+			if(style){
+				console.log(style);
+				style = style.replace(/height:\s*([0-9])*px;/, '').replace(/width:\s*([0-9])*px;/, '');
+				console.log(style);
+				base.attr("style", style);
+			}
+			mode = newMode;
+			attackButtons.hide();
+			troopShiftButtons.hide();
+			dicer.hide();
+			if(mode === "attack"){
+				attackButtons.show();
+				dicerPanel.show();
+			} else if(mode === "troopShift"){
+				troopShiftButtons.show();
+			}
+		},
+		
+		attack : function(){
+			this.mode("attack");
+		},
+		
+		troopShift : function(){
+			this.mode("troopShift");
+		},
+		
+		none : function(){
+			this.mode(null);
+		},
+		
+		diceRolling : function(){
+			return dicer.isRolling();
+		},
+		
+		diceStart : function(diceNumAttackor, diceNumDefender){
+			dicer.start(diceNumAttackor, diceNumDefender);
+		},
+		
+		diceEndWith : function(result, callback){
+			dicer.endWith(result, callback);
 		}
 		
 	};
+	
+	self.none();
+	
+	return self;
+}
+
+function Dicer(width, height, element){
+	
+	var private;
+	
+	var result = [];
+	var resultCallback;
+	
+	var rolling = false;
+	
+	var stage = new Kinetic.Stage({
+		container: element.attr("id"),
+		width: width,
+		height: height
+	});
+	
+	var dices = {
+		attackor: new Array(),
+		defender: new Array(),
+		pointers: new Array(),
+		
+		clear : function(){
+			delete this.attackor;
+			delete this.defender;
+			delete this.pointers;
+			this.attackor = new Array();
+			this.defender = new Array();
+			this.pointers = new Array();
+		},
+		
+		addDie : function(to){
+			var xPos = 0;
+			if (to === "defender"){
+				xPos = 60;
+			}
+			var die = new Die({
+				x : xPos,
+				y : this[to].length * 35
+			}, images, diceLayer);
+			this[to].push(die);
+		},
+		
+		nextFrame : function(time){
+			var atLeastOneRunning = false;
+			for(var i in this.attackor){
+				atLeastOneRunning |= this.attackor[i].nextFrame(time);
+			}
+			for(var i in this.defender){
+				atLeastOneRunning |= this.defender[i].nextFrame(time);
+			}
+			return atLeastOneRunning;
+		},
+		
+		stop : function(result){
+			for(var i in this.attackor){
+				this.attackor[i].stop(result[i][1]);
+			}
+			for(var i in this.defender){
+				this.defender[i].stop(result[i][2]);
+			}
+		},
+		
+		animateResult : function(result){
+			for(var i in result){
+				var success = result[i][0];
+				if(success === "win"){
+					var dicePointer = new DicePointer(
+						this.attackor[i],
+						this.defender[i],
+						true
+					);
+					diceLayer.add(dicePointer.getKinetic());
+					this.pointers.push(dicePointer);
+				} else if(success === "lose"){
+					var dicePointer = new DicePointer(
+						this.defender[i],
+						this.attackor[i],
+						false
+					);
+					diceLayer.add(dicePointer.getKinetic());
+					this.pointers.push(dicePointer);
+				} else {
+				}
+			}
+			diceLayer.draw();
+			var duration = 250;
+			var pointers = this.pointers;
+			var animation = new Kinetic.Animation(function(frame){
+			
+				if(frame.time > duration){
+					this.stop();
+					for(var i in pointers){
+						pointers[i].scale(1);
+					}
+					if(resultCallback){
+						resultCallback(result);
+					}
+				}
+
+				var process = Math.min(frame.time/duration, 1);
+				for(var i in pointers){
+					pointers[i].scale(process);
+				}
+				diceLayer.draw();
+
+			});
+			animation.start();
+		}
+	};
+	
+	var diceLayer = new Kinetic.Layer({});
+	stage.add(diceLayer);
+	
+	var images = {
+		lying : [
+			"/img/dice/die-1.png",
+			"/img/dice/die-2.png",
+			"/img/dice/die-3.png",
+			"/img/dice/die-4.png",
+			"/img/dice/die-5.png",
+			"/img/dice/die-6.png"
+		],
+		horizontal : [
+			"/img/dice/dices-1.png",
+			"/img/dice/dices-2.png",
+			"/img/dice/dices-3.png",
+			"/img/dice/dices-4.png",
+			"/img/dice/dices-5.png",
+			"/img/dice/dices-6.png"
+		],
+		vertical : [
+			"/img/dice/dicet-1.png",
+			"/img/dice/dicet-2.png",
+			"/img/dice/dicet-3.png",
+			"/img/dice/dicet-4.png",
+			"/img/dice/dicet-5.png",
+			"/img/dice/dicet-6.png"
+		]
+	};
+	
+	for(var mode in images){
+		for(var index in images[mode]){
+			var src = images[mode][index];
+			var img = new Image();
+			img.src = src;
+			images[mode][index] = img;
+		}
+	}
+	
+	function clear(){
+		dices.clear();
+		diceLayer.removeChildren();
+		diceLayer.draw();
+		resultCallback = null;
+	}
+	
+	private = {
+		
+		start : function(diceNumAttackor, diceNumDefender){
+			clear();
+			for(var i = 0; i < diceNumAttackor; i++){
+				dices.addDie("attackor");
+			}
+			for(var i = 0; i < diceNumDefender; i++){
+				dices.addDie("defender");
+			}
+			var animation = new Kinetic.Animation(function(frame){
+				var running = dices.nextFrame(frame.time);
+				diceLayer.draw();
+				if(!running){
+					this.stop();
+					dices.animateResult(result);
+				}
+			});
+			animation.start();
+			rolling = true;
+		},
+		
+		endWith : function(endResult, callback){
+			result = endResult;
+			dices.stop(result);
+			rolling = false;
+			resultCallback = callback;
+		},
+		
+		isRolling : function(){
+			return rolling;
+		},
+		
+		hide : function(){
+			element.hide();
+			clear();
+		},
+		
+		show : function(){
+			clear();
+			element.show();
+		},
+		
+		clear : function(){
+			clear();
+		}
+		
+	};
+	
+	return private;
+}
+
+function Die(position, images, layer){
+	
+	var modes = Object.keys(images);
+	var mode = 0;
+
+	function random(range){
+		return Math.ceil(range * Math.random());
+	}
+	
+	var finishFrames = 2 * random(10);
+	var terminate = false;
+	var lastFrameTime;
+	var result = -1;
+	
+	function getNextMode(){
+		if(mode === 0){
+			mode = random(2);
+		} else {
+			mode = 0;
+		}
+		if(finishFrames === 1){
+			mode = 0;
+		}
+		return modes[mode];
+	}
+	
+	function getNextNumber(){
+		var num = random(6);
+		if(finishFrames === 1){
+			num = result;
+		}
+		return num;
+	}
+	
+	var image = new Kinetic.Image({
+		x: position.x,
+		y: position.y,
+		image : images["lying"][0]
+	});
+	layer.add(image);
+	
+	return {
+		
+		getPosition : function(){
+			return position;
+		},
+		
+		x : function(){
+			return position.x;
+		},
+		
+		y : function(){
+			return position.y;
+		},
+		
+		width : function(){
+			return image.width();
+		},
+		
+		height : function(){
+			return image.height();
+		},
+		
+		nextFrame : function(time){
+			if(finishFrames <= 0){
+				return false;
+			}
+			if(time - lastFrameTime < 50){
+				return true;
+			}
+			lastFrameTime = time;
+			var nextMode = getNextMode();
+			var nextNumber = getNextNumber();
+			var nextImage = images[nextMode][nextNumber - 1];
+			image.image(nextImage);
+			if(terminate){
+				--finishFrames;
+			}
+			return true;
+		},
+		
+		stop : function(target){
+			result = target;
+			terminate = true;
+			mode = 0;
+		}
+		
+	};
+	
+}
+	
+function DicePointer(startDie, endDie, success){
+	var color = (success ? "#0f0" : "#f00");
+	var transparentColor = (success ? "rgba(0,255,0,0)" : "rgba(255,0,0,0)");
+	var startCenter = {
+		x : startDie.x() + startDie.width()/2,
+		y : startDie.y() + startDie.height()/2
+	};
+	var endCenter = {
+		x : endDie.x() + endDie.width()/2,
+		y : endDie.y() + endDie.height()/2
+	};
+	var start = {
+		x : startCenter.x + (startCenter.x > endCenter.x ? -1 : 1 ) * startDie.width()/2,
+		y : startCenter.y
+	};
+	var end = {
+		x : endCenter.x + (startCenter.x < endCenter.x ? -1 : 1 ) * endDie.width()/2,
+		y : endCenter.y
+	};
+	var config = {
+		fillLinearGradientColorStops: [0, transparentColor, 0.5, color, 1, color]
+	};
+	var pointer = new Pointer(start, end, config);
+	pointer.scale(0);
+	return pointer;
 }

@@ -627,7 +627,7 @@
 /****************************************************
     Match View
 ****************************************************/
-    
+
     #game-table{
         width: 100%;
         overflow-x: auto;
@@ -672,6 +672,8 @@
         position: absolute;
         z-index: 100;
         cursor: move;
+        text-align: center;
+        width: 140px;
     }
     .mapControlPanel.inactive{
         opacity: 0.25;
@@ -696,6 +698,10 @@
         background-color: rgba(255,255,255,0.25);
         display: table-cell;
     }
+    .control-group{
+        margin-top: 10px;
+        text-align: center;
+    }
     .btn.attack{
         background-color: rgba(255,0,0,0.5);
         margin-right: 10px;
@@ -703,6 +709,15 @@
     }
     .btn.cancel{
         display: inline-block;
+    }
+    .btn.plus{
+        margin-right: 10px;
+    }
+    .btn.minus{
+        margin-right: 10px;
+    }
+    .btn.confirm{
+        background-color: rgba(0,255,0,0.5);
     }
     #playmodule-togglebar {
         background: rgba(0,0,0,0.25);
