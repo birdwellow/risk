@@ -103,7 +103,6 @@ function Map(model, config, context){
 				var region = model.regions[regionIndex];
 				if (context.moveStart === region || context.moveEnd === region){
 					clickRegion(region);
-					console.log("clicked");
 				} else if(context.mouseOverRegion === region){
 					mouseOverRegion(region);
 				} else {
@@ -494,8 +493,8 @@ function RegionPath(model){
 	});
 
 	var nameLabelConfig = Config.view.map.regions.nameLabels;
-	nameLabelConfig.text = model.name;
-	nameLabelConfig.offsetX = model.name.length + nameLabelConfig.offsetX;
+	nameLabelConfig.text = model.label;
+	nameLabelConfig.offsetX = model.label.length + nameLabelConfig.offsetX;
 	nameLabelConfig.rotation = model.angle;
 	nameLabelConfig.data = model.pathdata;
 	nameLabelConfig.x = model.centerx;

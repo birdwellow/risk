@@ -21,7 +21,7 @@ class SendAllDataCommand extends AbstractGameFlowControllerCommand {
         App::setLocale($event->getUser()->language);
         foreach($match->regions as $region){
             $key = 'match.region.' . $region->name;
-            $region->name = Lang::get($key);
+            $region->label = Lang::get($key);
         }
         $match->me = "[players:id=" . $event->getUser()->id . "]";
         
