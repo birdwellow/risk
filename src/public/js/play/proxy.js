@@ -1,19 +1,7 @@
 function DataMapper() {
 	
-	function isArray(object){
-		return Utils.Type.of(object) === "Array";
-	}
-	
-	function isObject(object){
-		return Utils.Type.of(object) === "Object";
-	}
-	
-	function isString(object){
-		return Utils.Type.of(object) === "String";
-	}
-	
 	function isIterable(object){
-		return isArray(object) || isObject(object);
+		return Utils.Type.isArray(object) || Utils.Type.isObject(object);
 	}
 	
 	function identifier(object){
@@ -67,7 +55,7 @@ function DataMapper() {
 			
 			for(var key in data){
 				var obj = data[key];
-				if(isString(obj)){
+				if(Utils.Type.isString(obj)){
 					data[key] = getModelForIdentifier(obj);
 				} else if(isIterable(obj)){
 					this.decode(obj);
@@ -92,7 +80,7 @@ function DataMapper() {
 					} else {
 						encodedData[key] = this.encode(obj);
 					}
-				} else if (isString(obj)) {
+				} else if (Utils.Type.isString(obj)) {
 					encodedData[key] = obj;
 				}
 			}

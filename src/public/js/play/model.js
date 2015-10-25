@@ -19,21 +19,21 @@ var Model = {
 		
 		for(var propertyName in object){
 			var propertyValue = object[propertyName];
-			if(Utils.Type.of(propertyValue) === "String"){
+			if(Utils.Type.isString(propertyValue)){
 				var reference = this.get(propertyValue);
 				if(! (reference === undefined) ){
 					object[propertyName] = reference;
 				}
 			}
-			else if(Utils.Type.of(propertyValue) === "Array"){
+			else if(Utils.Type.isArray(propertyValue)){
 				for(var key in propertyValue){
 					var arrayElement = propertyValue[key];
-					if(Utils.Type.of(arrayElement) === "String"){
+					if(Utils.Type.isString(arrayElement)){
 						var ref = this.get(arrayElement);
 						if(! (ref === undefined) ){
 							propertyValue[key] = ref;
 						}
-					} else if(Utils.Type.of(arrayElement) === "Object"){
+					} else if(Utils.Type.isObject(arrayElement)){
 						this.setupRelationsRecursively(arrayElement);
 					}
 				}
@@ -62,7 +62,7 @@ var Model = {
 			return searchTarget;
 		}
 
-		if(Utils.Type.of(searchTarget) === "Array"){
+		if(Utils.Type.isArray(searchTarget)){
 			for(var key in searchTarget){
 				var candidate = searchTarget[key];
 				var candidatePropertyValue = candidate[propertyName];

@@ -17,7 +17,7 @@ var Controller = {
 	getGlobalStateEvent : function(event){
 		
 		var eventName = event.name;
-		var hasUsesArray = this.state.uses && Utils.Type.of(this.state.uses) === "Array";
+		var hasUsesArray = this.state.uses && Utils.Type.isArray(this.state.uses);
 		if(hasUsesArray){
 			for(var i in this.state.uses){
 				var globalEventName = this.state.uses[i];

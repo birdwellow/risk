@@ -15,6 +15,18 @@ var Utils = {
 		
 		is : function (object, typeName){
 			return typeName == this.of(object);
+		},
+		
+		isArray : function (obj){
+			return this.is(obj, "Array");
+		},
+		
+		isString : function (obj){
+			return this.is(obj, "String");
+		},
+		
+		isObject : function (obj){
+			return this.is(obj, "Object");
 		}
 		
 	},
