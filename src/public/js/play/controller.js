@@ -13,21 +13,6 @@ var Controller = {
 			this.state = this.possibleStates[newState];
 		}
 	},
-	
-	getGlobalStateEvent : function(event){
-		
-		var eventName = event.name;
-		var hasUsesArray = this.state.uses && Utils.Type.isArray(this.state.uses);
-		if(hasUsesArray){
-			for(var i in this.state.uses){
-				var globalEventName = this.state.uses[i];
-				if(this.globalStateEvents[globalEventName] && typeof this.globalStateEvents[eventName] == 'function'){
-					return this.globalStateEvents[globalEventName];
-				}
-			}
-		}
-		
-	},
 
 	listen : function(event){
 		
@@ -46,12 +31,8 @@ var Controller = {
 		
 		var eventName = event.name;
 		
-		var globalStateEvent = this.getGlobalStateEvent(event);
-		
 		if(this.state[eventName] && typeof this.state[eventName] === 'function'){
 			return this.state[eventName];
-		} else if (globalStateEvent){
-			return globalStateEvent;
 		} else if (this.globalStateEvents[eventName]){
 			return this.globalStateEvents[eventName];
 		}

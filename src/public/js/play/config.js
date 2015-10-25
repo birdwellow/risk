@@ -10,6 +10,9 @@ var Config = {
 			},
 			
 			"attack.result" : function(event, context){
+				context.moveType = event.data.moveType;
+				context.moveStart = event.data.moveStart;
+				context.moveEnd = event.data.moveEnd;
 				var attackResult = event.data.attackResult;
 				for(var i in attackResult){
 					if(attackResult[i][0]){
