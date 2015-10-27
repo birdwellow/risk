@@ -27,6 +27,10 @@ var Utils = {
 		
 		isObject : function (obj){
 			return this.is(obj, "Object");
+		},
+		
+		isFunction : function (obj){
+			return typeof obj === 'function';
 		}
 		
 	},
