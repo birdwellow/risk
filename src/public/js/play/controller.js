@@ -17,8 +17,8 @@ var Controller = {
 	listen : function(event){
 		
 		var eventClosure = this.getEventClosure(event);
-		if(typeof eventClosure === 'function'){
-			var resultingState = eventClosure(event, this.context);
+		if(Utils.Type.isFunction(eventClosure)){
+			var resultingState = eventClosure(this.context, event);
 		}
 		View.update();
 		if(resultingState){
@@ -29,12 +29,26 @@ var Controller = {
 	
 	getEventClosure : function(event){
 		
-		var eventName = event.name;
+		var stateClosure = this.state[event.name];
+		var globalClosure = this.globalStateEvents[event.name];
 		
-		if(this.state[eventName] && typeof this.state[eventName] === 'function'){
-			return this.state[eventName];
-		} else if (this.globalStateEvents[eventName]){
-			return this.globalStateEvents[eventName];
+		if(stateClosure){
+			return stateClosure;
+		} else if (globalClosure){
+			this.mapEventDataToContext(event);
+			return globalClosure;
+		}
+	},
+	
+	mapEventDataToContext : function(event){
+		if(!event.data){
+			return;
+		}
+		for(var key in event.data){
+			if(key === "name" || key === "data" || key === "__proto__"){
+				continue;
+			}
+			this.context[key] = event.data[key];
 		}
 	},
 	

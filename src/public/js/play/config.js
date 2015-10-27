@@ -5,25 +5,21 @@ var Config = {
 		
 		globalEvents : {
 			
-			"global:sendMessage" : function(event, context){
+			"global:sendMessage" : function(context){
 				console.log("send");
 			},
 			
-			"attack.result" : function(event, context){
-				context.moveType = event.data.moveType;
-				context.moveStart = event.data.moveStart;
-				context.moveEnd = event.data.moveEnd;
-				var attackResult = event.data.attackResult;
+			"attack.result" : function(context){
+				var attackResult = context.attackResult;
 				for(var i in attackResult){
 					if(attackResult[i][0]){
 						if(attackResult[i][0] === "win"){
-							attackResult[i][3] = event.data.moveEnd;
+							attackResult[i][3] = context.moveEnd;
 						} if(attackResult[i][0] === "lose"){
-							attackResult[i][3] = event.data.moveStart;
+							attackResult[i][3] = context.moveStart;
 						}
 					}
 				}
-				context.attackResult = attackResult;
 			}
 			
 			
@@ -34,16 +30,16 @@ var Config = {
 
 			"selecting.attack.start" : {
 				
-				"region.mouse.over" : function(event, context){
+				"region.mouse.over" : function(context, event){
 					var region = event.data.model;
 					context.mouseOverRegion = region;
 				},
 
-				"region.mouse.out" : function(event, context){
+				"region.mouse.out" : function(context, event){
 					context.mouseOverRegion = null;
 				},
 
-				"region.mouse.click" : function(event, context){
+				"region.mouse.click" : function(context, event){
 					context.mouseOverRegion = null;
 					var region = event.data.model;
 					context.moveStart = region;
@@ -54,18 +50,18 @@ var Config = {
 			
 			"selecting.attack.target" : {
 				
-				"region.mouse.over" : function(event, context){
+				"region.mouse.over" : function(context, event){
 					var region = event.data.model;
 					if(region !== context.moveStart){
 						context.mouseOverRegion = region;
 					}
 				},
 
-				"region.mouse.out" : function(event, context){
+				"region.mouse.out" : function(context, event){
 					context.mouseOverRegion = null;
 				},
 
-				"region.mouse.click" : function(event, context){
+				"region.mouse.click" : function(context, event){
 					context.mouseOverRegion = null;
 					var region = event.data.model;
 					if(region === context.moveStart){
@@ -81,7 +77,7 @@ var Config = {
 			
 			"confirm.attack" : {
 				
-				"attackConfirmButton.clicked" : function(event, context){
+				"attackConfirmButton.clicked" : function(context, event){
 					context.attackResult = "waiting";
 					var attackorTroops = Math.min(context.moveStart.troops - 1, 3);
 					var defenderTroops = Math.min(context.moveEnd.troops, 2);
@@ -90,7 +86,7 @@ var Config = {
 					proxy.send("attack.confirm");
 				},
 				
-				"attackCancelButton.clicked" : function(event, context){
+				"attackCancelButton.clicked" : function(context, event){
 					context.moveEnd = null;
 					context.moveStart = null;
 					context.moveType = null;
