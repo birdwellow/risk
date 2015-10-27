@@ -126,7 +126,15 @@ function Map(model, config, context){
 				mapControls.diceStart(context.attackTroops[0], context.attackTroops[1]);
 			} else if(Utils.Type.is(context.attackResult, "Array")){
 				mapControls.diceEndWith(context.attackResult, function(result){
-					console.log(result);
+					for(var i in result){
+						var resultPart = result[i];
+						var loserRegion = resultPart[3];
+						if(Utils.Type.isObject(loserRegion) && loserRegion.troops){
+							--loserRegion.troops;
+						}
+					}
+					context.attackResult = null;
+					View.update();
 				});
 				context.attackResult = null;
 			} else {
@@ -969,6 +977,20 @@ function Dicer(width, height, element){
 		resultCallback = null;
 	}
 	
+	function extractDiceNumber(result){
+		var numbers = [0,0];
+		for(var i in result){
+			var resultPart = result[i];
+			if(resultPart[1]){
+				++numbers[0];
+			}
+			if(resultPart[2]){
+				++numbers[1];
+			}
+		}
+		return numbers;
+	}
+	
 	private = {
 		
 		start : function(diceNumAttackor, diceNumDefender){
@@ -992,6 +1014,10 @@ function Dicer(width, height, element){
 		},
 		
 		endWith : function(endResult, callback){
+			if(!this.isRolling()){
+				var diceNumbers = extractDiceNumber(endResult);
+				this.start(diceNumbers[0], diceNumbers[1]);
+			}
 			result = endResult;
 			dices.stop(result);
 			rolling = false;
