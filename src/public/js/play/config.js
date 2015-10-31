@@ -3,26 +3,66 @@ var Config = {
 
 	controller : {
 		
-		globalEvents : {
+		utils : {
 			
-			"global:sendMessage" : function(context){
-				console.log("send");
-			},
-			
-			"attack.result" : function(context){
-				var attackResult = context.attackResult;
-				for(var i in attackResult){
-					if(attackResult[i][0]){
-						if(attackResult[i][0] === "win"){
-							attackResult[i][3] = context.moveEnd;
-						} if(attackResult[i][0] === "lose"){
-							attackResult[i][3] = context.moveStart;
+			enrichResultsWithModels : function(result, startRegion, endRegion){
+				
+				for(var i in result){
+					if(result[i][0]){
+						if(result[i][0] === "win"){
+							result[i][3] = endRegion;
+						} if(result[i][0] === "lose"){
+							result[i][3] = startRegion;
 						}
 					}
 				}
+				
 			}
 			
+		},
+		
+		globalEvents : {
 			
+			"message.send" : function(context){
+				console.log("send");
+			},
+			
+			"message.receive" : function(context){
+				console.log("received");
+			},
+			
+		},
+		
+		serverEvents : {
+			
+			"attack.result" : function(context){
+				Config.controller.utils.enrichResultsWithModels(context.attackResult, context.moveStart, context.moveEnd);
+				var result = context.attackResult;
+				context.callback = function(){
+					for(var i in result){
+						var resultPart = result[i];
+						var loserRegion = resultPart[3];
+						if(Utils.Type.isObject(loserRegion) && loserRegion.troops){
+							--loserRegion.troops;
+						}
+					}
+				}
+			},
+			
+			"attack.victory" : function(context){
+				Config.controller.utils.enrichResultsWithModels(context.attackResult, context.moveStart, context.moveEnd);
+				context.callback = function(){
+					for(var i in result){
+						var resultPart = result[i];
+						var loserRegion = resultPart[3];
+						if(Utils.Type.isObject(loserRegion) && loserRegion.troops){
+							--loserRegion.troops;
+						}
+					}
+					context.moveEnd.owner = context.moveStart.owner;
+					context.moveType = "shift";
+				}
+			}
 
 		},
 
@@ -32,7 +72,9 @@ var Config = {
 				
 				"region.mouse.over" : function(context, event){
 					var region = event.data.model;
-					context.mouseOverRegion = region;
+					if(Model.me === region.owner){
+						context.mouseOverRegion = region;
+					}
 				},
 
 				"region.mouse.out" : function(context, event){
@@ -42,8 +84,10 @@ var Config = {
 				"region.mouse.click" : function(context, event){
 					context.mouseOverRegion = null;
 					var region = event.data.model;
-					context.moveStart = region;
-					return "selecting.attack.target";
+					if(Model.me === region.owner){
+						context.moveStart = region;
+						return "selecting.attack.target";
+					}
 				}
 
 			},
@@ -52,7 +96,7 @@ var Config = {
 				
 				"region.mouse.over" : function(context, event){
 					var region = event.data.model;
-					if(region !== context.moveStart){
+					if(region !== context.moveStart && Model.me !== region.owner){
 						context.mouseOverRegion = region;
 					}
 				},
@@ -67,7 +111,7 @@ var Config = {
 					if(region === context.moveStart){
 						context.moveStart = null;
 						return "selecting.attack.start";
-					} else {
+					} else if (Model.me !== region.owner){
 						context.moveEnd = region;
 						context.moveType = "attack";
 						return "confirm.attack";

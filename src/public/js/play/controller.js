@@ -4,7 +4,9 @@ var Controller = {
 	
 	stateData : {},
 
-	globalStateEvents : Config.controller.globalEvents,
+	globalEvents : Config.controller.globalEvents,
+
+	serverEvents : Config.controller.serverEvents,
 
 	possibleStates : Config.controller.states,
 	
@@ -16,10 +18,7 @@ var Controller = {
 
 	listen : function(event){
 		
-		var eventClosure = this.getEventClosure(event);
-		if(Utils.Type.isFunction(eventClosure)){
-			var resultingState = eventClosure(this.context, event);
-		}
+		var resultingState = this.executeEventClosure(event);
 		View.update();
 		if(resultingState){
 			this.switchToState(resultingState);
@@ -27,16 +26,21 @@ var Controller = {
 
 	},
 	
-	getEventClosure : function(event){
+	executeEventClosure : function(event){
 		
+		var eventClosure;
+		
+		var globalEventClosure = this.globalEvents[event.name];
+		var serverEventClosure = this.serverEvents[event.name];
 		var stateClosure = this.state[event.name];
-		var globalClosure = this.globalStateEvents[event.name];
 		
-		if(stateClosure){
-			return stateClosure;
-		} else if (globalClosure){
+		if (globalEventClosure){
+			return globalEventClosure(this.context, event);
+		} else if (serverEventClosure){
 			this.mapEventDataToContext(event);
-			return globalClosure;
+			return serverEventClosure(this.context, event);
+		} else if(stateClosure && this.context.isClientActive()){
+			return stateClosure(this.context, event);
 		}
 	},
 	
@@ -75,6 +79,10 @@ var Controller = {
 				};
 			}
 			return null;
+		},
+		
+		isClientActive : function(){
+			return (Model.activePlayer === Model.me);
 		}
 
 	}

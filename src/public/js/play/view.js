@@ -122,30 +122,23 @@ function Map(model, config, context){
 			} else if(pointer && !move){
 				endMove();
 			}
+			
 			if(move && context.attackResult === "waiting" && !mapControls.diceRolling() && context.attackTroops && context.attackTroops.length === 2){
 				mapControls.diceStart(context.attackTroops[0], context.attackTroops[1]);
-			} else if(Utils.Type.is(context.attackResult, "Array")){
-				mapControls.diceEndWith(context.attackResult, function(result){
-					for(var i in result){
-						var resultPart = result[i];
-						var loserRegion = resultPart[3];
-						if(Utils.Type.isObject(loserRegion) && loserRegion.troops){
-							--loserRegion.troops;
-						}
-					}
-					context.attackResult = null;
-					View.update();
-				});
+			} else if(Utils.Type.isArray(context.attackResult)){
+				mapControls.diceEndWith(context.attackResult, context.callback);
 				context.attackResult = null;
-			} else {
-				//mapControls.active();
 			}
+			
+			mapControls.active(context.isClientActive());
 			
 		},
 		
 		update : function(){
 			
 			this.render();
+			
+			context.callback = null;
 
 			for(var regionPathKey in regionPaths){
 				var regionPath = regionPaths[regionPathKey];
@@ -200,19 +193,23 @@ function Map(model, config, context){
 		regionPath.setState(CLICKED_STATE);
 	}
 
-	function waiting(){
-		mapControls.inactive();
-	}
-
-	function continuing(){
-		mapControls.active();
-	}
-
 	function attackMoveFromTo(startRegion, endRegion){
 		
 		mapControls.attack();
+		moveFromTo(startRegion, endRegion, "attack");
 		
-		pointer = new ActionPointer(startRegion, endRegion, "attack");
+	}
+
+	function troopshiftMoveFromTo(startRegion, endRegion){
+		
+		mapControls.troopShift();
+		moveFromTo(startRegion, endRegion, "troopshift");
+		
+	}
+
+	function moveFromTo(startRegion, endRegion, type){
+		
+		pointer = new ActionPointer(startRegion, endRegion, type);
 		actionLayer.addPointer(pointer);
 		
 		previousStartRegion = startRegion;
@@ -276,27 +273,6 @@ function Map(model, config, context){
 			actionLayer.update();
 		});
 		animation.start();
-		pointerConfig = null;
-	}
-
-	function troopshiftMoveFromTo(startRegion, endRegion){
-		
-		mapControls.troopShift();
-		
-		pointer = new Pointer(
-			{
-				x: startRegion.centerx,
-				y: startRegion.centery
-			},
-			{
-				x: endRegion.centerx,
-				y: endRegion.centery
-			},
-			{
-				fillLinearGradientColorStops: config.pointers.fillLinearGradientColorStops.troopshift
-			}
-		);
-		pointer.animate(mapLayer);
 		pointerConfig = null;
 	}
 
@@ -759,16 +735,15 @@ function MapControls(elementId){
 			base.css("margin", x + "px 0 0 " + y + "px");
 		},
 		
-		active : function(){
-			base.removeClass("inactive");
-			attackConfirmButton.enable();
-			attackCancelButton.enable();
-		},
-		
-		inactive : function(){
-			base.addClass("inactive");
-			attackConfirmButton.disable();
-			attackCancelButton.disable();
+		active : function(isActive){
+			if(isActive){
+				buttonPanel.show();
+			} else {
+				buttonPanel.hide();
+			}
+			//base.removeClass("inactive");
+			//attackConfirmButton.enable();
+			//attackCancelButton.enable();
 		},
 		
 		mode : function(newMode){
@@ -783,6 +758,7 @@ function MapControls(elementId){
 			attackButtons.hide();
 			troopShiftButtons.hide();
 			dicer.hide();
+			console.log(mode);
 			if(mode === "attack"){
 				attackButtons.show();
 				dicerPanel.show();
@@ -883,7 +859,7 @@ function Dicer(width, height, element){
 			}
 		},
 		
-		animateResult : function(result){
+		animateResult : function(){
 			for(var i in result){
 				var success = result[i][0];
 				if(success === "win"){
@@ -916,7 +892,8 @@ function Dicer(width, height, element){
 						pointers[i].scale(1);
 					}
 					if(resultCallback){
-						resultCallback(result);
+						resultCallback();
+						View.update();
 					}
 				}
 
@@ -1006,7 +983,7 @@ function Dicer(width, height, element){
 				diceLayer.draw();
 				if(!running){
 					this.stop();
-					dices.animateResult(result);
+					dices.animateResult();
 				}
 			});
 			animation.start();

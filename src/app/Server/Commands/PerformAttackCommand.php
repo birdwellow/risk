@@ -31,17 +31,33 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
         
         foreach ($data->attackResult as $resultPart) {
             if(isset($resultPart[0]) && $resultPart[0] == "win"){
-                $defenderRegion->troops--;
-                $defenderRegion->save();
-            }
-            else if(isset($resultPart[0]) && $resultPart[0] == "lose"){
-                $attackorRegion->troops--;
-                $attackorRegion->save();
+                if($defenderRegion->troops >= 0){
+                    $defenderRegion->troops--;
+                } else {
+                    $resultPart[0] = null;
+                    $resultPart[1] = null;
+                    $resultPart[2] = null;
+                }
+            } else if(isset($resultPart[0]) && $resultPart[0] == "lose"){
+                if($attackorRegion->troops > 1){
+                    $attackorRegion->troops--;
+                } else {
+                    $resultPart[0] = null;
+                    $resultPart[1] = null;
+                    $resultPart[2] = null;
+                }
             }
             
         }
+        $defenderRegion->save();
+        $attackorRegion->save();
         
-        return new ServerEvent("attack.result", $event->getData(), $match);
+        $eventName = "attack.result";
+        if($defenderRegion->troops == 0){
+            $eventName = "attack.victory";
+        }
+        
+        return new ServerEvent($eventName, $event->getData(), $match);
     }
     
     
@@ -76,6 +92,11 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
             }
         }
         return $result;
+    }
+    
+    
+    protected function processArrangedResults() {
+        
     }
     
 }
