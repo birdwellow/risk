@@ -70,6 +70,8 @@ var Controller = {
 		moveStart : null,
 		moveEnd : null,
 		
+		shiftTroops : null,
+		
 		getMove : function(){
 			if(this.moveType !== null && this.moveStart !== null && this.moveEnd !== null){
 				return {

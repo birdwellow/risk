@@ -29,7 +29,7 @@ var Config = {
 			
 			"message.receive" : function(context){
 				console.log("received");
-			},
+			}
 			
 		},
 		
@@ -46,11 +46,12 @@ var Config = {
 							--loserRegion.troops;
 						}
 					}
-				}
+				};
 			},
 			
 			"attack.victory" : function(context){
 				Config.controller.utils.enrichResultsWithModels(context.attackResult, context.moveStart, context.moveEnd);
+				var result = context.attackResult;
 				context.callback = function(){
 					for(var i in result){
 						var resultPart = result[i];
@@ -60,8 +61,26 @@ var Config = {
 						}
 					}
 					context.moveEnd.owner = context.moveStart.owner;
-					context.moveType = "shift";
-				}
+					context.moveEnd.troops++;
+					context.moveStart.troops--;
+					context.moveType = "troopshift";
+				};
+				return "troopshift.after.attack";
+			},
+			
+			"troopshift.after.attack.result" : function(context){
+				console.log(context.shiftTroops);
+				console.log(context.moveEndTroops);
+				console.log(context.moveStartTroops);
+				context.moveEnd.troops = context.moveEndTroops;
+				context.moveStart.troops = context.moveStartTroops;
+				
+				delete context.shiftTroops;
+				context.moveEnd = null;
+				context.moveStart = null;
+				context.moveType = null;
+				
+				return "selecting.attack.start";
 			}
 
 		},
@@ -96,7 +115,8 @@ var Config = {
 				
 				"region.mouse.over" : function(context, event){
 					var region = event.data.model;
-					if(region !== context.moveStart && Model.me !== region.owner){
+					var isNeighborRegion = context.moveStart.neighbors.indexOf(region) > -1;
+					if(region !== context.moveStart && Model.me !== region.owner && isNeighborRegion){
 						context.mouseOverRegion = region;
 					}
 				},
@@ -108,10 +128,11 @@ var Config = {
 				"region.mouse.click" : function(context, event){
 					context.mouseOverRegion = null;
 					var region = event.data.model;
+					var isNeighborRegion = context.moveStart.neighbors.indexOf(region) > -1;
 					if(region === context.moveStart){
 						context.moveStart = null;
 						return "selecting.attack.start";
-					} else if (Model.me !== region.owner){
+					} else if (Model.me !== region.owner && isNeighborRegion){
 						context.moveEnd = region;
 						context.moveType = "attack";
 						return "confirm.attack";
@@ -121,21 +142,58 @@ var Config = {
 			
 			"confirm.attack" : {
 				
-				"attackConfirmButton.clicked" : function(context, event){
+				"button.attack.confirm.clicked" : function(context, event){
 					context.attackResult = "waiting";
 					var attackorTroops = Math.min(context.moveStart.troops - 1, 3);
 					var defenderTroops = Math.min(context.moveEnd.troops, 2);
 					context.attackTroops = [attackorTroops, defenderTroops];
-					console.log(context.attackTroops);
 					proxy.send("attack.confirm");
 				},
 				
-				"attackCancelButton.clicked" : function(context, event){
+				"button.attack.cancel.clicked" : function(context, event){
 					context.moveEnd = null;
 					context.moveStart = null;
 					context.moveType = null;
 					context.mouseOverRegion = null;
 					return "selecting.attack.start";
+				}
+				
+			},
+			
+			"troopshift.after.attack" : {
+				
+				"button.troopshift.plus.clicked" : function(context, event){
+					if(context.shiftTroops === undefined){
+						context.shiftTroops = 0;
+					}
+					var endRegion = context.moveEnd;
+					var startRegion = context.moveStart;
+					if(startRegion.troops > 1){
+						startRegion.troops--;
+						endRegion.troops++;
+						context.shiftTroops++;
+					}
+				},
+				
+				"button.troopshift.minus.clicked" : function(context, event){
+					if(context.shiftTroops === undefined){
+						context.shiftTroops = 0;
+					}
+					var endRegion = context.moveEnd;
+					var startRegion = context.moveStart;
+					if(endRegion.troops > 1){
+						startRegion.troops++;
+						endRegion.troops--;
+						context.shiftTroops--;
+					}
+				},
+				
+				"button.troopshift.confirm.clicked" : function(context, event){
+					if(context.shiftTroops === undefined){
+						context.shiftTroops = 0;
+					}
+					console.log(context.shiftTroops);
+					proxy.send("troopshift.after.attack.confirm");
 				}
 				
 			}
@@ -184,7 +242,8 @@ var Config = {
 				speed : 0.5,
 				fillLinearGradientColorStops: {
 					attack : [0, 'rgba(255,255,0,0)', 0.25, '#ff0', 0.75, '#f00', 1, '#f00'],
-					troopshift : [0, 'rgba(0,0,0,0)', 0.05, 'rgba(0,0,0,0)', 0.4, '#222', 1, '#222']
+					attackshift : [0, 'rgba(0,200,0,0)', 0.05, 'rgba(0,200,0,0)', 0.4, 'rgb(0,200,0)', 1, 'rgb(0,200,0)'],
+					troopshift : [0, 'rgba(0,200,0,0)', 0.05, 'rgba(0,200,0,0)', 0.4, 'rgb(0,200,0)', 1, 'rgb(0,200,0)']
 				}
 			}
 		},

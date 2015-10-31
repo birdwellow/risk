@@ -80,7 +80,7 @@ function DataMapper() {
 					} else {
 						encodedData[key] = this.encode(obj);
 					}
-				} else if (Utils.Type.isString(obj)) {
+				} else if (!Utils.Type.isFunction(obj)) {
 					encodedData[key] = obj;
 				}
 			}
@@ -129,7 +129,7 @@ function CommunicationProxy(url) {
 		send : function (type) {
 			
 			var encodedData = dataMapper.encode(Controller.getContext());
-			
+					
 			var msg = JSON.stringify({
 				"type": type,
 				"data": encodedData

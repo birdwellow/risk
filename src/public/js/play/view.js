@@ -111,16 +111,20 @@ function Map(model, config, context){
 			}
 				
 			var move = context.getMove();
-			if(!pointer && move){
+			if(move && !pointer){
 				var startRegion = move.start;
 				var endRegion = move.end;
 				if(move.type === "attack"){
 					attackMoveFromTo(startRegion, endRegion);
-				} else if(move.type === "shift"){
+				} else if(move.type === "troopshift"){
 					troopshiftMoveFromTo(startRegion, endRegion);
 				}
-			} else if(pointer && !move){
+			} else if(!move && pointer){
 				endMove();
+			} else if(move && pointer){
+				if(!pointer.isType(move.type)){
+					pointer.setType(move.type);
+				}
 			}
 			
 			if(move && context.attackResult === "waiting" && !mapControls.diceRolling() && context.attackTroops && context.attackTroops.length === 2){
@@ -131,6 +135,7 @@ function Map(model, config, context){
 			}
 			
 			mapControls.active(context.isClientActive());
+			mapControls.mode(context.moveType);
 			
 		},
 		
@@ -638,6 +643,12 @@ function Pointer(start, end, customConfig){
 			return kinetic;
 		},
 		
+		setCustomConfig : function(newCustomConfig){
+			for(var key in newCustomConfig){
+				kinetic[key](newCustomConfig[key]);
+			}
+		},
+		
 		scale : function(scale){
 			kinetic.setPoints([
 				start.x - 10 * vec[1].x,
@@ -667,7 +678,20 @@ function ActionPointer(startRegion, endRegion, type){
 	var customConfig = {
 		fillLinearGradientColorStops: colorStops
 	};
-	return new Pointer(start, end, customConfig);
+	
+	var pointer = new Pointer(start, end, customConfig);
+	pointer.isType = function(testType){
+		return testType === type;
+	};
+	pointer.setType = function(newType){
+		type = newType;
+		var colorStops = Config.view.map.pointers.fillLinearGradientColorStops[type];
+		var customConfig = {
+			fillLinearGradientColorStops: colorStops
+		};
+		this.setCustomConfig(customConfig);
+	};
+	return pointer;
 }
 
 
@@ -682,6 +706,7 @@ function MapButton(id, content, classes){
 	element.click(function(){
 		var event = new Event(id + ".clicked");
 		Controller.listen(event);
+		element.blur();
 	});
 	element.disable = function(){
 		element.prop("disabled", true);
@@ -705,18 +730,18 @@ function MapControls(elementId){
 	var buttonPanel = HTML.make("div");
 	
 	var attackButtons = HTML.make("div", "control-group");
-	var attackConfirmButton = new MapButton("attackConfirmButton", "confirm.png", "attack");
-	var attackCancelButton = new MapButton("attackCancelButton", "cancel.png", "cancel");
+	var attackConfirmButton = new MapButton("button.attack.confirm", "confirm.png", "attack");
+	var attackCancelButton = new MapButton("button.attack.cancel", "cancel.png", "cancel");
 	attackButtons.append(attackConfirmButton);
 	attackButtons.append(attackCancelButton);
 	
 	var troopShiftButtons = HTML.make("div", "control-group");
-	var shiftPlusButton = new MapButton("shiftPlusButton", "plus.png", "plus");
-	var shiftMinusButton = new MapButton("shiftMinusButton", "minus.png", "minus");
-	var shiftConfirmButton = new MapButton("shiftConfirmButton", "confirm.png", "confirm");
+	var shiftPlusButton = new MapButton("button.troopshift.plus", "plus.png", "plus");
+	var shiftConfirmButton = new MapButton("button.troopshift.confirm", "confirm.png", "confirm");
+	var shiftMinusButton = new MapButton("button.troopshift.minus", "minus.png", "minus");
 	troopShiftButtons.append(shiftPlusButton);
-	troopShiftButtons.append(shiftMinusButton);
 	troopShiftButtons.append(shiftConfirmButton);
+	troopShiftButtons.append(shiftMinusButton);
 	
 	buttonPanel.append(attackButtons);
 	buttonPanel.append(troopShiftButtons);
@@ -741,29 +766,27 @@ function MapControls(elementId){
 			} else {
 				buttonPanel.hide();
 			}
-			//base.removeClass("inactive");
-			//attackConfirmButton.enable();
-			//attackCancelButton.enable();
 		},
 		
 		mode : function(newMode){
 			var style = base.attr("style");
 			if(style){
-				console.log(style);
 				style = style.replace(/height:\s*([0-9])*px;/, '').replace(/width:\s*([0-9])*px;/, '');
-				console.log(style);
 				base.attr("style", style);
 			}
 			mode = newMode;
-			attackButtons.hide();
-			troopShiftButtons.hide();
-			dicer.hide();
-			console.log(mode);
 			if(mode === "attack"){
 				attackButtons.show();
+				troopShiftButtons.hide();
 				dicerPanel.show();
-			} else if(mode === "troopShift"){
+			} else if(mode === "troopshift"){
+				attackButtons.hide();
 				troopShiftButtons.show();
+			} else {
+				troopShiftButtons.hide();
+				attackButtons.hide();
+				dicerPanel.hide();
+				dicer.clear();
 			}
 		},
 		
@@ -772,7 +795,7 @@ function MapControls(elementId){
 		},
 		
 		troopShift : function(){
-			this.mode("troopShift");
+			this.mode("troopshift");
 		},
 		
 		none : function(){

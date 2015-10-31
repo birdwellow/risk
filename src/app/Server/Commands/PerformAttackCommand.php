@@ -55,6 +55,12 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
         $eventName = "attack.result";
         if($defenderRegion->troops == 0){
             $eventName = "attack.victory";
+            $newOwner = $attackorRegion->owner;
+            $defenderRegion->owner()->associate($newOwner);
+            $defenderRegion->troops += 1;
+            $attackorRegion->troops -= 1;
+            $defenderRegion->save();
+            $attackorRegion->save();
         }
         
         return new ServerEvent($eventName, $event->getData(), $match);

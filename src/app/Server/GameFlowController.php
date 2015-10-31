@@ -20,6 +20,7 @@ class GameFlowController {
         $this->eventMap = [
             "get.all" => "SendAllDataCommand",
             "attack.confirm" => "PerformAttackCommand",
+            "troopshift.after.attack.confirm" => "PerformTroopshiftAfterAttackCommand"
         ];
     }
     

@@ -36,7 +36,6 @@ class Region extends Model {
         foreach($this->neighbors as $neighborRegion){
             array_push($array['neighbors'], $neighborRegion->socketIdentifier());
         }
-        \Illuminate\Support\Facades\Log::info($array);
         return $array;
     }
     
