@@ -723,7 +723,7 @@ function MapControls(elementId){
 	
 	var base = $("#" + elementId);
 	base.addClass("mapControlPanel");
-	base.draggable({ snap: "#game-table" });
+	base.draggable({ snap: "#game-map" });
 	
 	var mode = null;
 	
@@ -1163,4 +1163,104 @@ function DicePointer(startDie, endDie, success){
 	var pointer = new Pointer(start, end, config);
 	pointer.scale(0);
 	return pointer;
+}
+
+
+
+function Chat(elementId, parent) {
+	
+	var container = $("#" + elementId),
+		content = $("#" + elementId + "content"),
+		input = $("#" + elementId + "input");
+	
+	var lastMessageSender,
+		lastContentContainer;
+	
+	input.keypress(function(event){
+		if(event.keyCode === 13 && input.val()){
+			var evt = new Event(
+				"message.send",
+				{text : input.val()},
+				parent
+			);
+			parent.fire(evt);
+			input.val("");
+		}
+	});
+		
+	return {
+		
+		addMessage : function(message, user){
+			var msgContainer = HTML.make("div", "chatMessage message-" + user.matchcolor);
+			
+			var nameLabelContainer = HTML.make("div", "chatMessageUserName").html(user.name + ":");
+			var textContainer = HTML.make("div", "chatMessageText").html(message);
+			var contentContainer = HTML.make("div", "chatMessageContent");
+			var contentPartContainer = HTML.make("div", "chatMessageContentPart");
+			contentPartContainer
+					.append(nameLabelContainer)
+					.append(textContainer);
+			contentContainer
+					.append(contentPartContainer);
+			
+			var userContainer = HTML.make("div", "chatMessageUser");
+			var avatar = HTML.make("img", "user-avatar")
+					.attr("src", "/img/avatars/" + user.avatarfile);
+			userContainer.append(avatar);
+			
+			if(lastMessageSender === user){
+				lastContentContainer.append(contentPartContainer);
+			} else {	
+				if(user === Model.me){
+					msgContainer.append(contentContainer);
+					msgContainer.append(userContainer);
+				} else {
+					msgContainer.append(userContainer);
+					msgContainer.append(contentContainer);
+				}
+				content.append(msgContainer);
+				lastContentContainer = contentContainer;
+			}
+			
+			content.animate({ scrollTop: content.prop("scrollHeight") }, "slow");
+			lastMessageSender = user;
+		}
+		
+	};
+	
+}
+
+function SideBar(model, config, context) {
+	
+	var parent;
+	
+	var self = {
+		setParent : function(newParent){
+			parent = newParent;
+		},
+		
+		getParent : function(){
+			return parent;
+		},
+		
+		render : function(){
+		},
+		
+		update : function(){
+			if(context.newChatMessage){
+				var msg = context.newChatMessage;
+				chat.addMessage(msg.text, msg.user);
+				delete context.newChatMessage;
+			}
+		},
+
+		fire : function(event){
+			parent.fire(event);
+		}
+	
+	};
+	
+	var chat = new Chat("chat", self);
+	
+	return self;
 }

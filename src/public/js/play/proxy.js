@@ -126,14 +126,16 @@ function CommunicationProxy(url) {
 	
 	instance = {
 
-		send : function (type) {
+		send : function (type, data) {
 			
-			var encodedData = dataMapper.encode(Controller.getContext());
+			var dataToEncode = ( data ? data : Controller.getContext() );
+			var encodedData = dataMapper.encode(dataToEncode);
 					
 			var msg = JSON.stringify({
 				"type": type,
 				"data": encodedData
 			});
+			
 			webSocket.send(msg);
 		},
 
@@ -158,6 +160,9 @@ proxy.on("get.all", function (data) {
 	
 	var map = new Map(Model, Config.view.map, Controller.getContext());
 	View.addComponent(map).as("Map");
+	
+	var sideBar = new SideBar(Model, Config.view.map, Controller.getContext());
+	View.addComponent(sideBar).as("SideBar");
 	
 	Controller.switchToState("selecting.attack.start");
 }, true);

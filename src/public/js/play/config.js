@@ -23,12 +23,12 @@ var Config = {
 		
 		globalEvents : {
 			
-			"message.send" : function(context){
-				console.log("send");
+			"message.send" : function(context, event){
+				proxy.send("new.chat.message", event.data);
 			},
 			
-			"message.receive" : function(context){
-				console.log("received");
+			"new.chat.message" : function(context, event){
+				context.newChatMessage = event.data;
 			}
 			
 		},

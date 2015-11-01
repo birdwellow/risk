@@ -20,7 +20,8 @@ class GameFlowController {
         $this->eventMap = [
             "get.all" => "SendAllDataCommand",
             "attack.confirm" => "PerformAttackCommand",
-            "troopshift.after.attack.confirm" => "PerformTroopshiftAfterAttackCommand"
+            "troopshift.after.attack.confirm" => "PerformTroopshiftAfterAttackCommand",
+            "new.chat.message" => "NewChatMessageCommand"
         ];
     }
     
@@ -33,7 +34,7 @@ class GameFlowController {
             $result = $command->perform($event, $match);
             return $result;
         } else {
-            Log::warn("Event key '" . $eventKey . "' not defined");
+            //Log::warn("Event key '" . $eventKey . "' not defined");
         }
         
     }
