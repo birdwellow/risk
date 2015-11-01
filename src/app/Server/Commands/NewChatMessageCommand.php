@@ -2,6 +2,8 @@
 
 namespace Game\Server\Commands;
 
+use Cmgmyr\Messenger\Models\Message;
+
 use Illuminate\Support\Facades\Log;
 
 use Game\Server\SocketEvent;
@@ -17,7 +19,20 @@ class NewChatMessageCommand extends AbstractGameFlowControllerCommand {
     
     public function perform(SocketEvent $event, Match $match){
         
-        $event->user = $event->getUser();
+        $user = $event->getUser();
+        $thread = $match->thread;
+        
+        Message::create([
+            'thread_id' => $thread->id,
+            'user_id' => $user->id,
+            'body' => $event->text,
+        ]);
+        $thread->markAsRead($user->id);
+        
+        Log::info("Saved: " . $event->text);
+        
+        $event->user = $user;
+        
         return new ServerEvent("new.chat.message", $event->getData(), $match);
 
     }

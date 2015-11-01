@@ -1187,6 +1187,10 @@ function Chat(elementId, parent) {
 			input.val("");
 		}
 	});
+	
+	container.mouseover(function(){
+		$("*[toggle-for=" + elementId + "]").removeClass("changed");
+	});
 		
 	return {
 		
@@ -1194,14 +1198,12 @@ function Chat(elementId, parent) {
 			var msgContainer = HTML.make("div", "chatMessage message-" + user.matchcolor);
 			
 			var nameLabelContainer = HTML.make("div", "chatMessageUserName").html(user.name + ":");
-			var textContainer = HTML.make("div", "chatMessageText").html(message);
+			var text = HTML.make("div", "chatMessageText").html(message);
+			var textContainer = HTML.make("div", "chatMessageTexts");
 			var contentContainer = HTML.make("div", "chatMessageContent");
-			var contentPartContainer = HTML.make("div", "chatMessageContentPart");
-			contentPartContainer
+			contentContainer
 					.append(nameLabelContainer)
 					.append(textContainer);
-			contentContainer
-					.append(contentPartContainer);
 			
 			var userContainer = HTML.make("div", "chatMessageUser");
 			var avatar = HTML.make("img", "user-avatar")
@@ -1209,8 +1211,9 @@ function Chat(elementId, parent) {
 			userContainer.append(avatar);
 			
 			if(lastMessageSender === user){
-				lastContentContainer.append(contentPartContainer);
-			} else {	
+				lastContentContainer.append(text);
+			} else {
+				textContainer.append(text);
 				if(user === Model.me){
 					msgContainer.append(contentContainer);
 					msgContainer.append(userContainer);
@@ -1219,11 +1222,15 @@ function Chat(elementId, parent) {
 					msgContainer.append(contentContainer);
 				}
 				content.append(msgContainer);
-				lastContentContainer = contentContainer;
+				lastContentContainer = textContainer;
 			}
 			
 			content.animate({ scrollTop: content.prop("scrollHeight") }, "slow");
 			lastMessageSender = user;
+			
+			if(user !== Model.me){
+				$("*[toggle-for=" + elementId + "]").addClass("changed");
+			}
 		}
 		
 	};

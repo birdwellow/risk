@@ -800,9 +800,15 @@
         display: inline-block;
         text-decoration: underline;
         padding-right: 5px;
+        vertical-align: top;
+    }
+    .chatMessageTexts{
+        display: inline-block;
+        max-width: 230px;
     }
     .chatMessageText{
-        display: inline-block;
+        white-space: normal;
+        margin-bottom: 5px;
     }
     .chatMessageUser{
         display: inline-block;

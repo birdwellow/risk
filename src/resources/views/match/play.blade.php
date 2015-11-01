@@ -27,7 +27,7 @@
                 <button class="toggle-btn right" toggle-function="toggleFixSideBar" title="{{ Lang::get("Fix Sidebar") }}">
                     <img src="/img/in.png">
                 </button>
-                <button class="toggle-btn active changed" toggle-for="chat" title="{{ Lang::get("Chat") }}">
+                <button class="toggle-btn active" toggle-for="chat" title="{{ Lang::get("Chat") }}">
                     <img src="/img/chat.png">
                 </button>
                 <button class="toggle-btn active" toggle-for="cards" title="{{ Lang::get("Cards") }}">
