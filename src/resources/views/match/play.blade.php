@@ -153,10 +153,6 @@
                     </div>
 
                     <div class="body" id="logcontent">
-                        <div>Event 1</div>
-                        <div>Event 2</div>
-                        <div>Event 3</div>
-                        <div>Event 4</div>
                     </div>
                 </div>
             </div>

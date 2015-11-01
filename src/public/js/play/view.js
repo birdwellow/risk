@@ -1237,6 +1237,50 @@ function Chat(elementId, parent) {
 	
 }
 
+function Log(elementId, parent){
+	
+	var TYPE_NORMAL = "normal";
+	
+	var container = $("#" + elementId + "content"),
+		entries = [];
+
+	function log(message, type){
+		if(!type){
+			type = TYPE_NORMAL;
+		}
+		var entry = {
+			message: message,
+			type: type,
+			time: new Date()
+		};
+		entries.push(entry);
+		addLogMessage(entry);
+	}
+	
+	function addLogMessage(entry){
+		var entryContainer = HTML.make("div", "log-entry " + entry.type);
+		var message = entry.time.getDate()
+				+ "-" + entry.time. getMonth()
+				+ "-" + entry.time.getFullYear()
+				+ ", " + entry.time.getHours()
+				+ ":" + entry.time.getMinutes()
+				+ ":" + entry.time.getSeconds();
+		message += ": " + entry.message;
+		entryContainer.html(message);
+		container.append(entryContainer);
+		container.animate({ scrollTop: container.prop("scrollHeight") }, "slow");
+	}
+	
+	return {
+		
+		log : function(message){
+			log(message, TYPE_NORMAL);
+		}
+		
+	}
+	
+}
+
 function SideBar(model, config, context) {
 	
 	var parent;
@@ -1268,6 +1312,9 @@ function SideBar(model, config, context) {
 	};
 	
 	var chat = new Chat("chat", self);
+	
+	var log = new Log("log", self);
+	window.log = log.log;
 	
 	return self;
 }

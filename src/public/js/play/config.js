@@ -29,6 +29,7 @@ var Config = {
 			
 			"new.chat.message" : function(context, event){
 				context.newChatMessage = event.data;
+				log("new Chat message!");
 			}
 			
 		},
