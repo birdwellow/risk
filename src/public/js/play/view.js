@@ -885,7 +885,7 @@ function Dicer(width, height, element){
 		animateResult : function(){
 			for(var i in result){
 				var success = result[i][0];
-				if(success === "win"){
+				if(success === "win" && this.attackor[i] && this.defender[i]){
 					var dicePointer = new DicePointer(
 						this.attackor[i],
 						this.defender[i],
@@ -893,7 +893,7 @@ function Dicer(width, height, element){
 					);
 					diceLayer.add(dicePointer.getKinetic());
 					this.pointers.push(dicePointer);
-				} else if(success === "lose"){
+				} else if(success === "lose" && this.attackor[i] && this.defender[i]){
 					var dicePointer = new DicePointer(
 						this.defender[i],
 						this.attackor[i],
@@ -901,7 +901,6 @@ function Dicer(width, height, element){
 					);
 					diceLayer.add(dicePointer.getKinetic());
 					this.pointers.push(dicePointer);
-				} else {
 				}
 			}
 			diceLayer.draw();
@@ -1309,36 +1308,42 @@ function PlayerList(elementId){
 			var playerIdentifier = "id=" + player.id;
 			var container = playerContainers[playerIdentifier];
 			container.state.removeClass("offline").addClass("online");
+			container.state.attr("title", "Online");
 		},
 		
 		offline : function(player){
 			var playerIdentifier = "id=" + player.id;
 			var container = playerContainers[playerIdentifier];
 			container.state.removeClass("online").addClass("offline");
+			container.state.attr("title", "Offline");
 		},
 		
 		unknown : function(player){
 			var playerIdentifier = "id=" + player.id;
 			var container = playerContainers[playerIdentifier];
 			container.state.removeClass("online").removeClass("offline");
+			container.state.attr("title", "Unkown");
 		},
 		
 		activePlayer : function(player){
 			$(".data.player").removeClass("active");
 			playerContainers["id=" + player.id].playerData.addClass("active");
+		},
+		
+		update : function(){
+			for(var i in Model.players){
+				var player = Model.players[i];
+				if(player.isonline){
+					self.online(player);
+				} else {
+					self.offline(player);
+				}
+			}
 		}
 		
 	};
 	
-	for(var i in Model.players){
-		var player = Model.players[i];
-		if(player.isonline){
-			self.online(player);
-		} else {
-			self.offline(player);
-		}
-	}
-	
+	self.update();
 	self.activePlayer(Model.activePlayer);
 	
 	return self;
@@ -1367,6 +1372,7 @@ function SideBar(model, config, context) {
 				chat.addMessage(msg.text, msg.user);
 				delete context.newChatMessage;
 			}
+			playerList.update();
 		},
 
 		fire : function(event){

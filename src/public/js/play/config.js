@@ -32,13 +32,15 @@ var Config = {
 			},
 			
 			"user.connected" : function(context, event){
-				log(event.data.user.name + " is online");
-				online(event.data.user);
+				var user = event.data.user;
+				log(user.name + " is online");
+				user.isonline = true;
 			},
 			
 			"user.disconnected" : function(context, event){
-				log(event.data.user.name + " is offline");
-				offline(event.data.user);
+				var user = event.data.user;
+				log(user.name + " is offline");
+				user.isonline = false;
 			}
 			
 		},
@@ -70,20 +72,23 @@ var Config = {
 							--loserRegion.troops;
 						}
 					}
+					
+					log(context.moveStart.owner.name + " conquered " + context.moveEnd.label + " from " + context.moveEnd.owner.name);
+					
 					context.moveEnd.owner = context.moveStart.owner;
 					context.moveEnd.troops++;
 					context.moveStart.troops--;
 					context.moveType = "troopshift";
 				};
+				
 				return "troopshift.after.attack";
 			},
 			
 			"troopshift.after.attack.result" : function(context){
-				console.log(context.shiftTroops);
-				console.log(context.moveEndTroops);
-				console.log(context.moveStartTroops);
 				context.moveEnd.troops = context.moveEndTroops;
 				context.moveStart.troops = context.moveStartTroops;
+				
+				log(context.moveStart.owner.name + " moved " + context.shiftTroops + " troop units from " + context.moveStart.label + " to " + context.moveEnd.label);
 				
 				delete context.shiftTroops;
 				context.moveEnd = null;
