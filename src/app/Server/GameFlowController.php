@@ -21,7 +21,9 @@ class GameFlowController {
             "get.all" => "SendAllDataCommand",
             "attack.confirm" => "PerformAttackCommand",
             "troopshift.after.attack.confirm" => "PerformTroopshiftAfterAttackCommand",
-            "new.chat.message" => "NewChatMessageCommand"
+            "new.chat.message" => "NewChatMessageCommand",
+            "player.connect" => "UserConnectCommand",
+            "player.disconnect" => "UserDisconnectCommand",
         ];
     }
     

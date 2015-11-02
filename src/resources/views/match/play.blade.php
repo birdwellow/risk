@@ -33,12 +33,14 @@
                 <button class="toggle-btn active" toggle-for="cards" title="{{ Lang::get("Cards") }}">
                     <img src="/img/cards.png">
                 </button>
-                <button class="toggle-btn active" toggle-for="statistics" title="{{ Lang::get("Statistics") }}">
-                    <img src="/img/statistics.png">
-                </button>
                 <button class="toggle-btn active" toggle-for="players" title="{{ Lang::get("Players") }}">
                     <img src="/img/players.png">
                 </button>
+                <!--
+                <button class="toggle-btn active" toggle-for="statistics" title="{{ Lang::get("Statistics") }}">
+                    <img src="/img/statistics.png">
+                </button>
+                -->
                 <button class="toggle-btn active" toggle-for="log" title="{{ Lang::get("Match Log") }}">
                     <img src="/img/log.png">
                 </button>
@@ -104,6 +106,18 @@
 
                 </div>
 
+                <div class="playmodule" id="players">
+                    <div class="header">
+                        <img class="icon" src="/img/players.png">
+                        {{ Lang::get( 'Players' ) }}
+                    </div>
+
+                    <div class="body" id="playerscontent">
+                    </div>
+
+                </div>
+
+                <!--
                 <div class="playmodule" id="statistics">
                     <div class="header">
                         <img class="icon" src="/img/statistics.png">
@@ -114,37 +128,7 @@
                         Some Stats
                     </div>
                 </div>
-
-                <div class="playmodule" id="players">
-                    <div class="header">
-                        <img class="icon" src="/img/players.png">
-                        {{ Lang::get( 'Players' ) }}
-                    </div>
-
-                    <div class="body" id="playerscontent">
-
-                        <div class="data player active">
-                            <img class="user-avatar" src="/img/avatars/Subberbazi_55c23ac1e59ea.jpg">
-                            <div class="state online"></div>
-                            Spieler 1
-                            <div></div>
-                        </div>
-                        <div class="data player">
-                            <img class="user-avatar" src="/img/avatars/SoEinBazi_55b916c7da5f4.gif">
-                            <div class="state offline"></div>
-                            Next Player
-                            <div></div>
-                        </div>
-                        <div class="data player">
-                            <img class="user-avatar" src="/img/avatars/Oberbazi_55b7bc6e55cda.gif">
-                            <div class="state online"></div>
-                            Letzter_User
-                            <div></div>
-                        </div>
-
-                    </div>
-
-                </div>
+                -->
 
                 <div class="playmodule" id="log">
                     <div class="header">

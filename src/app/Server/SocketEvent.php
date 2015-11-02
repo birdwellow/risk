@@ -31,7 +31,7 @@ class SocketEvent {
         $this->name = $message->type;
         $this->user = $session->getUser();
         $this->match = $session->getMatch();
-        $this->data = ( isset($message->data) ? $message->data : array());
+        $this->data = ( isset($message->data) ? $message->data : new \stdClass());
         
     }
 

@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration {
                         $table->string('language');
                         $table->string('matchcolor');
                         $table->integer('matchorder');
+                        $table->boolean('isonline');
 		});
 	}
 

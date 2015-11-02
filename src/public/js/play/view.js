@@ -1237,7 +1237,7 @@ function Chat(elementId, parent) {
 	
 }
 
-function Log(elementId, parent){
+function Log(elementId){
 	
 	var TYPE_NORMAL = "normal";
 	
@@ -1281,6 +1281,70 @@ function Log(elementId, parent){
 	
 }
 
+function PlayerList(elementId){
+	
+	var container = $("#" + elementId + "content"),
+		playerContainers = [];
+	
+	for(var i in Model.players){
+		var player = Model.players[i];
+		
+		var element = {
+			playerData : HTML.make("div", "data player"),
+			img : HTML.make("img", "user-avatar").attr("src", "/img/avatars/" + player.avatarfile),
+			state : HTML.make("div", "state"),
+			nameLabel : HTML.make("span").html(player.name)
+		};
+		element.playerData
+				.append(element.img)
+				.append(element.state)
+				.append(element.nameLabel);
+		container.append(element.playerData);
+		playerContainers["id=" + player.id] = element;
+	}
+	
+	var self = {
+		
+		online : function(player){
+			var playerIdentifier = "id=" + player.id;
+			var container = playerContainers[playerIdentifier];
+			container.state.removeClass("offline").addClass("online");
+		},
+		
+		offline : function(player){
+			var playerIdentifier = "id=" + player.id;
+			var container = playerContainers[playerIdentifier];
+			container.state.removeClass("online").addClass("offline");
+		},
+		
+		unknown : function(player){
+			var playerIdentifier = "id=" + player.id;
+			var container = playerContainers[playerIdentifier];
+			container.state.removeClass("online").removeClass("offline");
+		},
+		
+		activePlayer : function(player){
+			$(".data.player").removeClass("active");
+			playerContainers["id=" + player.id].playerData.addClass("active");
+		}
+		
+	};
+	
+	for(var i in Model.players){
+		var player = Model.players[i];
+		if(player.isonline){
+			self.online(player);
+		} else {
+			self.offline(player);
+		}
+	}
+	
+	self.activePlayer(Model.activePlayer);
+	
+	return self;
+	
+}
+
 function SideBar(model, config, context) {
 	
 	var parent;
@@ -1315,6 +1379,10 @@ function SideBar(model, config, context) {
 	
 	var log = new Log("log", self);
 	window.log = log.log;
+	
+	var playerList = new PlayerList("players");
+	window.online = playerList.online;
+	window.offline = playerList.offline;
 	
 	return self;
 }

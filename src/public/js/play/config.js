@@ -29,7 +29,16 @@ var Config = {
 			
 			"new.chat.message" : function(context, event){
 				context.newChatMessage = event.data;
-				log("new Chat message!");
+			},
+			
+			"user.connected" : function(context, event){
+				log(event.data.user.name + " is online");
+				online(event.data.user);
+			},
+			
+			"user.disconnected" : function(context, event){
+				log(event.data.user.name + " is offline");
+				offline(event.data.user);
 			}
 			
 		},
@@ -263,7 +272,7 @@ var Config = {
 				}
 			},
 
-			"blue" : {
+			"green" : {
 				fill : ["rgba(88,255,88,0.75)", "rgba(88,255,88,0.875)", "rgba(88,255,88,1)"],
 				stroke : ["", "", "rgba(44,127,44,1)"],
 				strokeWidth : [1, 3, 3],
@@ -276,7 +285,7 @@ var Config = {
 				}
 			},
 
-			"green" : {
+			"blue" : {
 				fill : ["rgba(88,88,255,0.75)", "rgba(88,88,255,0.875)", "rgba(88,88,255,1)"],
 				stroke : ["", "", "rgba(44,44,127,1)"],
 				strokeWidth : [1, 3, 3],

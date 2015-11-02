@@ -899,11 +899,13 @@
         height: 10px;
         display: inline-block;
         border-radius: 5px;
+        background: grey;
+        margin-right: 7px;
     }
     .data.player .state.online{
         background: green;
     }
-    .data.player .offline{
+    .data.player .state.offline{
         background: red;
     }
     #logcontent{

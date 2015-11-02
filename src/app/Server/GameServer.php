@@ -48,9 +48,19 @@ class GameServer implements GameServerInterface {
         
         $this->connect($conn);
         
+        $jsonData = json_encode([
+            "type" => "player.connect"
+        ]);
+        $this->onMessage($conn, $jsonData);
+        
     }
     
     public function onClose(ConnectionInterface $conn) {
+        
+        $jsonData = json_encode([
+            "type" => "player.disconnect"
+        ]);
+        $this->onMessage($conn, $jsonData);
         
         $this->disconnect($conn);
         
