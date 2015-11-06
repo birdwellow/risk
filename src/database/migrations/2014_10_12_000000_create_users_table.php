@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration {
                         $table->string('matchcolor');
                         $table->integer('matchorder');
                         $table->boolean('isonline');
+                        $table->string('newtroops');
 		});
 	}
 

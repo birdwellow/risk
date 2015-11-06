@@ -136,6 +136,8 @@ function Map(model, config, context){
 			
 			mapControls.active(context.isClientActive());
 			mapControls.mode(context.moveType);
+			mapControls.phase(Model.roundphase);
+			mapControls.activePlayer(Model.activePlayer);
 			
 		},
 		
@@ -727,6 +729,33 @@ function MapControls(elementId){
 	
 	var mode = null;
 	
+	var title = HTML.make("div");
+	title.html(Lang.get("controls"));
+	base.append(title);
+	
+	var activePlayerLabel = HTML.make("div");
+	base.append(activePlayerLabel);
+	
+	var currentPhase = HTML.make("div");
+	base.append(currentPhase);
+	var currentPhaseLabel = HTML.make("div");
+	var currentPhaseSymbols = HTML.make("div");
+	var phaseSymbols = {
+		"troopgain" : null,
+		"troopdeployment" : null,
+		"attack" : null,
+		"troopshift" : null
+	};
+	for(var key in phaseSymbols){
+		phaseSymbols[key] = HTML.make("img", "state-symbol");
+		phaseSymbols[key].attr("src", "/img/" + key + ".png");
+		phaseSymbols[key].attr("title", Lang.get("phase." + key));
+		currentPhaseSymbols.append(phaseSymbols[key]);
+	}
+	currentPhase.append(currentPhaseSymbols);
+	currentPhase.append(currentPhaseLabel);
+	base.append(currentPhase);
+	
 	var buttonPanel = HTML.make("div");
 	
 	var attackButtons = HTML.make("div", "control-group");
@@ -766,6 +795,23 @@ function MapControls(elementId){
 			} else {
 				buttonPanel.hide();
 			}
+		},
+		
+		phase : function(newPhase){
+			var activePhaseSymbol = phaseSymbols[newPhase];
+			if(activePhaseSymbol){
+				for(var key in phaseSymbols){
+					phaseSymbols[key].removeClass("active");
+				}
+				activePhaseSymbol.addClass("active");
+				currentPhaseLabel.html(Lang.get("phase." + newPhase));
+			}
+		},
+		
+		activePlayer : function(newActivePlayer){
+			var content = Lang.get("active.player") + ": ";
+			content = content + newActivePlayer.name;
+			activePlayerLabel.html(content);
 		},
 		
 		mode : function(newMode){
