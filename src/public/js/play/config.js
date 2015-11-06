@@ -115,7 +115,18 @@ var Config = {
 						context.region = region;
 						proxy.send("deploy.unit");
 					}
-				}
+				},
+				
+				"region.mouse.over" : function(context, event){
+					var region = event.data.model;
+					if(Model.me === region.owner){
+						context.mouseOverRegion = region;
+					}
+				},
+
+				"region.mouse.out" : function(context, event){
+					context.mouseOverRegion = null;
+				},
 				
 			},
 

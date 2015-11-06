@@ -820,7 +820,10 @@ function MapControls(elementId){
 		
 		newTroops : function(newTroops){
 			if(newTroops > 0){
+				newTroopsLabel.show();
 				newTroopsLabel.html(Lang.get("available.troops") + ": " + newTroops);
+			} else {
+				newTroopsLabel.hide();
 			}
 		},
 		
