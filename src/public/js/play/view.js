@@ -482,7 +482,7 @@ function RegionPath(model){
 	});
 
 	var nameLabelConfig = Config.view.map.regions.nameLabels;
-	nameLabelConfig.text = model.label;
+	nameLabelConfig.text = Lang.get("region." + model.name);
 	nameLabelConfig.offsetX = model.label.length + nameLabelConfig.offsetX;
 	nameLabelConfig.rotation = model.angle;
 	nameLabelConfig.data = model.pathdata;
@@ -1171,7 +1171,7 @@ function Chat(elementId, parent) {
 	var container = $("#" + elementId),
 		content = $("#" + elementId + "content"),
 		input = $("#" + elementId + "input");
-	
+
 	var lastMessageSender,
 		lastContentContainer;
 	

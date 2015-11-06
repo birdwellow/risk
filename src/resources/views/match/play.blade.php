@@ -144,7 +144,6 @@
     </div>
     
     <div id="map-controls">
-        Controls
     </div>
     
     <div id="game-map"></div>

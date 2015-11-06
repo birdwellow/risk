@@ -1,4 +1,9 @@
+var Lang = {
 
+	get : function(key){
+		return Model.translations[key] ? Model.translations[key] : key;
+	}
+};
 
 
 var Utils = {
