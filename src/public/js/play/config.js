@@ -96,11 +96,28 @@ var Config = {
 				context.moveType = null;
 				
 				return "selecting.attack.start";
+			},
+			
+			"unit.deployed" : function(context){
+				context.region.troops = context.newRegionTroops;
+				context.player.newtroops = context.newPlayerTroops;
 			}
 
 		},
 
 		states : {
+			
+			"troops.deploy" : {
+			
+				"region.mouse.click" : function(context, event){
+					var region = event.data.model;
+					if(Model.me === region.owner && Model.me.newtroops > 0){
+						context.region = region;
+						proxy.send("deploy.unit");
+					}
+				}
+				
+			},
 
 			"selecting.attack.start" : {
 				

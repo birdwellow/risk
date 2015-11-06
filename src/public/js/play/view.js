@@ -138,6 +138,7 @@ function Map(model, config, context){
 			mapControls.mode(context.moveType);
 			mapControls.phase(Model.roundphase);
 			mapControls.activePlayer(Model.activePlayer);
+			mapControls.newTroops(Model.activePlayer.newtroops);
 			
 		},
 		
@@ -756,6 +757,9 @@ function MapControls(elementId){
 	currentPhase.append(currentPhaseLabel);
 	base.append(currentPhase);
 	
+	var newTroopsLabel = HTML.make("div");
+	base.append(newTroopsLabel);
+	
 	var buttonPanel = HTML.make("div");
 	
 	var attackButtons = HTML.make("div", "control-group");
@@ -812,6 +816,12 @@ function MapControls(elementId){
 			var content = Lang.get("active.player") + ": ";
 			content = content + newActivePlayer.name;
 			activePlayerLabel.html(content);
+		},
+		
+		newTroops : function(newTroops){
+			if(newTroops > 0){
+				newTroopsLabel.html(Lang.get("available.troops") + ": " + newTroops);
+			}
 		},
 		
 		mode : function(newMode){

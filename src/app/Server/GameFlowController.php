@@ -24,6 +24,7 @@ class GameFlowController {
             "new.chat.message" => "NewChatMessageCommand",
             "player.connect" => "UserConnectCommand",
             "player.disconnect" => "UserDisconnectCommand",
+            "deploy.unit" => "DeployUnitCommand",
         ];
     }
     

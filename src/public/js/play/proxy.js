@@ -164,7 +164,7 @@ proxy.on("get.all", function (data) {
 	var sideBar = new SideBar(Model, Config.view.map, Controller.getContext());
 	View.addComponent(sideBar).as("SideBar");
 	
-	Controller.switchToState("selecting.attack.start");
+	Controller.switchToState("troops.deploy");
 }, true);
 
 proxy.on("chat.message", function (message) {
