@@ -143,7 +143,20 @@
 
     </div>
     
-    <div id="map-controls">
+    <div id="map-controls" class="map-controls">
+        <div class="title"></div>
+        <div class="active-player"></div>
+        <div class="current-phase">
+            <div class="label"></div>
+            <div class="symbols">
+                <img src="/img/troopgain.png" class="state-symbol troopgain">
+                <img src="/img/troopdeployment.png" class="state-symbol troopdeployment">
+                <img src="/img/attack.png" class="state-symbol attack">
+                <img src="/img/troopshift.png" class="state-symbol troopshift">
+            </div>
+            <div class="newtroops"></div>
+            <button class="btn-primary next-phase"></button>
+        </div>
     </div>
     
     <div id="game-map"></div>

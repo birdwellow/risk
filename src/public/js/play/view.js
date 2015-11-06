@@ -139,6 +139,7 @@ function Map(model, config, context){
 			mapControls.phase(Model.roundphase);
 			mapControls.activePlayer(Model.activePlayer);
 			mapControls.newTroops(Model.activePlayer.newtroops);
+			mapControls.nextPhase(context);
 			
 		},
 		
@@ -725,22 +726,18 @@ function MapButton(id, content, classes){
 function MapControls(elementId){
 	
 	var base = $("#" + elementId);
-	base.addClass("mapControlPanel");
 	base.draggable({ snap: "#game-map" });
 	
 	var mode = null;
 	
-	var title = HTML.make("div");
+	var title = base.find(".title");
 	title.html(Lang.get("controls"));
-	base.append(title);
 	
-	var activePlayerLabel = HTML.make("div");
-	base.append(activePlayerLabel);
+	var activePlayerLabel = base.find(".active-player");
 	
-	var currentPhase = HTML.make("div");
-	base.append(currentPhase);
-	var currentPhaseLabel = HTML.make("div");
-	var currentPhaseSymbols = HTML.make("div");
+	var currentPhase = base.find(".current-phase");
+	var currentPhaseLabel = currentPhase.find(".label");
+	var currentPhaseSymbols = currentPhase.find(".symbols");
 	var phaseSymbols = {
 		"troopgain" : null,
 		"troopdeployment" : null,
@@ -748,17 +745,19 @@ function MapControls(elementId){
 		"troopshift" : null
 	};
 	for(var key in phaseSymbols){
-		phaseSymbols[key] = HTML.make("img", "state-symbol");
-		phaseSymbols[key].attr("src", "/img/" + key + ".png");
+		phaseSymbols[key] = currentPhaseSymbols.find(".state-symbol." + key);
 		phaseSymbols[key].attr("title", Lang.get("phase." + key));
-		currentPhaseSymbols.append(phaseSymbols[key]);
 	}
-	currentPhase.append(currentPhaseSymbols);
-	currentPhase.append(currentPhaseLabel);
-	base.append(currentPhase);
 	
-	var newTroopsLabel = HTML.make("div");
-	base.append(newTroopsLabel);
+	var nextPhaseButton = currentPhase.find(".next-phase");
+	nextPhaseButton.click(function(){
+		var event = new Event("button.nextphase.clicked");
+		Controller.listen(event);
+		nextPhaseButton.blur();
+	});
+	nextPhaseButton.hide();
+	
+	var newTroopsLabel = currentPhase.find(".newtroops");
 	
 	var buttonPanel = HTML.make("div");
 	
@@ -824,6 +823,26 @@ function MapControls(elementId){
 				newTroopsLabel.html(Lang.get("available.troops") + ": " + newTroops);
 			} else {
 				newTroopsLabel.hide();
+			}
+		},
+		
+		nextPhase : function(context){
+			var nextPhase = context.nextPhase;
+			if(!nextPhase || !context.isClientActive()){
+				nextPhaseButton.hide();
+				return;
+			}
+			if(nextPhase === "troopgain"
+					|| nextPhase === "troopdeployment"
+					|| nextPhase === "attack"
+					|| nextPhase === "troopshift"){
+				var content = Lang.get("continue.with");
+				content += Lang.get("phase." + nextPhase);
+				content += "<img src='/img/" + nextPhase + ".png'/>";
+				nextPhaseButton.html(content);
+				nextPhaseButton.show();
+			} else {
+				nextPhaseButton.hide();
 			}
 		},
 		

@@ -665,7 +665,7 @@
         animation: fadeout 0.25s ease-in-out;
     }
     
-    .mapControlPanel{
+    .map-controls{
         padding: 10px;
         background: rgba(0,0,0,0.5);
         border-radius: 3px;
@@ -675,9 +675,6 @@
         cursor: move;
         text-align: center;
         width: 225px;
-    }
-    .mapControlPanel.inactive{
-        opacity: 0.25;
     }
     .actionheader{
         width: 500px;
@@ -698,6 +695,13 @@
     }
     .state-symbol.active{
         background: rgba(0,0,0,0.5);
+    }
+    .btn-primary.next-phase{
+        background: rgba(0,155,0,0.35);
+        border-radius: 3px;
+    }
+    .btn-primary.next-phase:hover{
+        background: rgba(0,155,0,0.5);
     }
     .symbol{
         width: 20%;

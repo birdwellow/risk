@@ -101,11 +101,24 @@ var Config = {
 			"unit.deployed" : function(context){
 				context.region.troops = context.newRegionTroops;
 				context.player.newtroops = context.newPlayerTroops;
+				if(context.player.newtroops <= 0){
+					context.nextPhase = "attack";
+					return "confirm.nextphase.attack";
+				}
 			}
 
 		},
 
 		states : {
+			
+			"confirm.nextphase.attack" : {
+			
+				"button.nextphase.clicked" : function(context, event){
+					delete context.nextPhase;
+					return "selecting.attack.start";
+				},
+				
+			},
 			
 			"troops.deploy" : {
 			
