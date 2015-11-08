@@ -47,6 +47,25 @@ var Config = {
 		
 		serverEvents : {
 			
+			"phase.troopgain" : function(context){
+				Model.activePlayer = context.ativePlayer;
+				Model.roundphase = context.roundPhase;
+				delete context.nextPlayer, context.roundPhase;
+				Model.activePlayer.newtroops = context.newtroops;
+			},
+			
+			"phase.troopdeployment" : function(context){
+				
+			},
+			
+			"phase.attack" : function(context){
+				
+			},
+			
+			"phase.troopshift" : function(context){
+				
+			},
+			
 			"attack.result" : function(context){
 				Config.controller.utils.enrichResultsWithModels(context.attackResult, context.moveStart, context.moveEnd);
 				var result = context.attackResult;
@@ -103,7 +122,7 @@ var Config = {
 				context.player.newtroops = context.newPlayerTroops;
 				if(context.player.newtroops <= 0){
 					context.nextPhase = "attack";
-					return "confirm.nextphase.attack";
+					return "confirm.finish.troopdeployment";
 				}
 			}
 
@@ -111,11 +130,38 @@ var Config = {
 
 		states : {
 			
-			"confirm.nextphase.attack" : {
+			"confirm.finish.troopgain" : {
 			
 				"button.nextphase.clicked" : function(context, event){
 					delete context.nextPhase;
-					return "selecting.attack.start";
+					proxy.send("finish.troopgain");
+				},
+				
+			},
+			
+			"confirm.finish.troopdeployment" : {
+			
+				"button.nextphase.clicked" : function(context, event){
+					delete context.nextPhase;
+					proxy.send("finish.troopdeployment");
+				},
+				
+			},
+			
+			"confirm.finish.attack" : {
+			
+				"button.nextphase.clicked" : function(context, event){
+					delete context.nextPhase;
+					proxy.send("finish.attack");
+				},
+				
+			},
+			
+			"confirm.finish.troopshift" : {
+			
+				"button.nextphase.clicked" : function(context, event){
+					delete context.nextPhase;
+					proxy.send("finish.troopshift");
 				},
 				
 			},
