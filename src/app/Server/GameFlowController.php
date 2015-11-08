@@ -25,6 +25,11 @@ class GameFlowController {
             "player.connect" => "UserConnectCommand",
             "player.disconnect" => "UserDisconnectCommand",
             "deploy.unit" => "DeployUnitCommand",
+            
+            "finish.troopgain" => "FinishTroopGainCommand",
+            "finish.troopdeployment" => "FinishTroopDeploymentCommand",
+            "finish.troopattack" => "FinishAttackCommand",
+            "finish.troopshift" => "FinishTroopShiftCommand",
         ];
     }
     
