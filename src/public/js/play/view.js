@@ -733,7 +733,7 @@ function MapControls(elementId){
 	var title = base.find(".title");
 	title.html(Lang.get("controls"));
 	
-	var activePlayerLabel = base.find(".active-player");
+	var activePlayerLabel = base.find("[role=active-player]");
 	
 	var currentPhase = base.find(".current-phase");
 	var currentPhaseLabel = currentPhase.find(".label");
@@ -812,9 +812,11 @@ function MapControls(elementId){
 		},
 		
 		activePlayer : function(newActivePlayer){
-			var content = Lang.get("active.player") + ": ";
-			content = content + newActivePlayer.name;
-			activePlayerLabel.html(content);
+			//var content = Lang.get("active.player") + ": ";
+			activePlayerLabel.html(newActivePlayer.name);
+			var avatar = HTML.make("img", "user-avatar icon").attr("src", "/img/avatars/" + newActivePlayer.avatarfile);
+			activePlayerLabel.append(avatar);
+			activePlayerLabel.attr("class", "matchUserColorScheme " + newActivePlayer.matchcolor);
 		},
 		
 		newTroops : function(newTroops){
@@ -836,10 +838,14 @@ function MapControls(elementId){
 					|| nextPhase === "troopdeployment"
 					|| nextPhase === "attack"
 					|| nextPhase === "troopshift"){
-				var content = Lang.get("continue.with");
-				content += Lang.get("phase." + nextPhase);
-				content += "<img src='/img/" + nextPhase + ".png'/>";
+				var content = Lang.get("phase." + nextPhase);
+				content += " <img src='/img/" + nextPhase + ".png'/>";
 				nextPhaseButton.html(content);
+				
+				var arrow = HTML.make("img").attr("src", "/img/continue.png");
+				nextPhaseButton.prepend(arrow);
+				var margin = (180-nextPhaseButton.width())/2;
+				nextPhaseButton.css("margin-left", margin + "px");
 				nextPhaseButton.show();
 			} else {
 				nextPhaseButton.hide();
