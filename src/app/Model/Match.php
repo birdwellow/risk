@@ -4,7 +4,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Match extends Model {
 
-    protected $fillable = ['cardChangeBonusLevel', 'map', 'name', 'maxUsers'];
+    protected $fillable = ['cardChangeBonusLevel', 'map', 'name', 'maxUsers', 'roundphase'];
+    
+    public $translations, $me;
 
     public function toArray(){
         $array = parent::toArray();
@@ -25,6 +27,9 @@ class Match extends Model {
         $array['regions'] = $this->regions;
         $array['players'] = $this->joinedUsers;
         $array['thread'] = $this->thread;
+        
+        $array['me'] = $this->me;
+        $array['translations'] = $this->translations;
         
         return $array;
     }

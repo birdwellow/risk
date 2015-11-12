@@ -1,7 +1,7 @@
 var Lang = {
 
 	get : function(key){
-		return Model.translations[key] ? Model.translations[key] : key;
+		return (Model.translations && Model.translations[key]) ? Model.translations[key] : key;
 	}
 };
 

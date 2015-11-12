@@ -11,8 +11,14 @@ var Controller = {
 	possibleStates : Config.controller.states,
 	
 	switchToState : function(newState){
+		if(this.state.onExit){
+			this.state.onExit(this.context);
+		}
 		if(this.possibleStates[newState]){
 			this.state = this.possibleStates[newState];
+		}
+		if(this.state.onEnter){
+			this.state.onEnter(this.context);
 		}
 	},
 

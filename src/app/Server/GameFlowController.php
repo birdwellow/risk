@@ -20,16 +20,16 @@ class GameFlowController {
         $this->eventMap = [
             "get.all" => "SendAllDataCommand",
             "attack.confirm" => "PerformAttackCommand",
-            "troopshift.after.attack.confirm" => "PerformTroopshiftAfterAttackCommand",
+            "attack.troopshift.confirm" => "PerformTroopshiftAfterAttackCommand",
             "new.chat.message" => "NewChatMessageCommand",
             "player.connect" => "UserConnectCommand",
             "player.disconnect" => "UserDisconnectCommand",
             "deploy.unit" => "DeployUnitCommand",
             
-            "finish.troopgain" => "FinishTroopGainCommand",
-            "finish.troopdeployment" => "FinishTroopDeploymentCommand",
-            "finish.troopattack" => "FinishAttackCommand",
-            "finish.troopshift" => "FinishTroopShiftCommand",
+            "troopgain.finish" => "FinishTroopGainCommand",
+            "troopdeployment.finish" => "FinishTroopDeploymentCommand",
+            "troopattack.finish" => "FinishAttackCommand",
+            "troopshift.finish" => "FinishTroopShiftCommand",
         ];
     }
     

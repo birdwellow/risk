@@ -19,6 +19,11 @@ class FinishAttackCommand extends AbstractGameFlowControllerCommand {
     
     public function perform(SocketEvent $event, Match $match){
         
+        $match->roundphase = "troopshift";
+        $match->save();
+        
+        $event->roundPhase = $match->roundphase;
+        
         return new ServerEvent("phase.troopshift", $event->getData(), $match);
         
     }
