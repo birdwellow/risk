@@ -250,6 +250,10 @@ class MatchManager {
                 
                 $this->distrubuteRegionsRandomlyToJoinedUsers($match);
                 
+                $this->distrubuteDeployTroopsRandomlyToRegions($match);
+                
+                $firstPlayer = $shuffledJoinedUsers->first();
+                $match->activePlayer()->associate($firstPlayer);
                 $match->state = self::MATCHSTATE_START;
                 $match->save();
                 
@@ -300,6 +304,27 @@ class MatchManager {
                     $index++;
                     
                 }
+        }
+        
+        
+        protected function distrubuteDeployTroopsRandomlyToRegions(Match $match) {
+            
+            foreach ($match->joinedUsers as $player) {
+                $troops = 24;
+                foreach ($player->regions as $playerRegion) {
+                    $playerRegion->troops++;
+                    $playerRegion->save();
+                    $troops--;
+                }
+                
+                while ($troops > 0){
+                    $randomPlayerRegion = $player->regions->random();
+                    $randomPlayerRegion->troops++;
+                    $randomPlayerRegion->save();
+                    $troops--;
+                }
+            }
+            
         }
     
 }
