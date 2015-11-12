@@ -33,7 +33,7 @@ class EarthMapTemplate extends MapTemplate {
             "angle" => 20,
             "pathdata" => '',
             "neighbors" => [
-                "usa", "canada"
+                "usa", "brazil"
             ],
         ],
         
