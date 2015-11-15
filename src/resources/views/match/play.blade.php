@@ -155,7 +155,10 @@
             </div>
             <div class="label"></div>
             <div class="newtroops"></div>
-            <button class="btn-primary next-phase"></button>
+            <button class="btn-primary next-phase">
+                <img src="/img/continue.png">
+                {{ Lang::get( 'match.next' ) }}
+            </button>
         </div>
     </div>
     

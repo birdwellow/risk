@@ -755,6 +755,8 @@ function MapControls(elementId){
 		Controller.listen(event);
 		nextPhaseButton.blur();
 	});
+	var margin = (180-nextPhaseButton.width())/2;
+	nextPhaseButton.css("margin-left", margin + "px");
 	nextPhaseButton.hide();
 	
 	var newTroopsLabel = currentPhase.find(".newtroops");
@@ -812,7 +814,6 @@ function MapControls(elementId){
 		},
 		
 		activePlayer : function(newActivePlayer){
-			//var content = Lang.get("active.player") + ": ";
 			activePlayerLabel.html(newActivePlayer.name);
 			var avatar = HTML.make("img", "user-avatar icon").attr("src", "/img/avatars/" + newActivePlayer.avatarfile);
 			activePlayerLabel.append(avatar);
@@ -829,24 +830,11 @@ function MapControls(elementId){
 		},
 		
 		nextPhase : function(context){
-			var nextPhase = context.nextPhase;
-			if(!nextPhase || !context.isClientActive()){
-				nextPhaseButton.hide();
-				return;
-			}
-			if(nextPhase === "troopgain"
-					|| nextPhase === "troopdeployment"
-					|| nextPhase === "attack"
-					|| nextPhase === "troopshift"){
-				var content = Lang.get("phase." + nextPhase);
-				content += " <img src='/img/" + nextPhase + ".png'/>";
-				nextPhaseButton.html(content);
-				
-				var arrow = HTML.make("img").attr("src", "/img/continue.png");
-				nextPhaseButton.prepend(arrow);
-				var margin = (180-nextPhaseButton.width())/2;
-				nextPhaseButton.css("margin-left", margin + "px");
+			if(context.isClientActive()){
 				nextPhaseButton.show();
+				delete context.nextPhase;
+				var disabled = ( context.nextPhase ? false : true );
+				nextPhaseButton.attr("disabled", disabled);
 			} else {
 				nextPhaseButton.hide();
 			}

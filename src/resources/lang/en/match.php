@@ -27,6 +27,7 @@ return [
         'phase.troopdeployment' => "Deploy troops",
         'phase.attack' => "Attack",
         'phase.troopshift' => "Shift troops",
+        'next' => "Continue",
         'current.phase' => "Current round phase",
         'active.player' => "Active Player",
         'available.troops' => "Available troops",

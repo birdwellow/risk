@@ -27,6 +27,7 @@ return [
         'phase.troopdeployment' => "Truppen einsetzen",
         'phase.attack' => "Angriff",
         'phase.troopshift' => "Truppen verschieben",
+        'next' => "Weiter",
         'current.phase' => "Aktuelle Zugphase",
         'active.player' => "Aktiver Spieler",
         'available.troops' => "Verfügbare Truppen",
