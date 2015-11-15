@@ -96,13 +96,12 @@ function DataMapper() {
 function CommunicationProxy(url) {
 	
 	var dataMapper = new DataMapper();
-	var instance;
+	var self = this;
 
 	var webSocket = new WebSocket(url);
-	var events = new Array();
 	
 	webSocket.addEventListener("open", function (e) {
-		instance.send("get.all");
+		self.send("get.init.data");
 	});
 
 	webSocket.addEventListener("close", function (e) {
@@ -113,60 +112,27 @@ function CommunicationProxy(url) {
 
 	webSocket.addEventListener("message", function (e) {
 		var message = JSON.parse(e.data);
-		if (events[message.type] && typeof events[message.type].callback === "function") {
-			if(!events[message.type].leaveEncoded){
-				dataMapper.decode(message.data);
-			}
-			events[message.type].callback(message.data);
-		} else {
+		
+		if(message.type !== "init.data"){
 			dataMapper.decode(message.data);
-			Controller.listen(new Event(message.type, message.data, this));
 		}
+		Controller.listen(new Event(message.type, message.data, this));
 	});
 	
-	instance = {
-
-		send : function (type, data) {
+	this.send = function (type, data) {
 			
-			var dataToEncode = ( data ? data : Controller.getContext() );
-			var encodedData = dataMapper.encode(dataToEncode);
-					
-			var msg = JSON.stringify({
-				"type": type,
-				"data": encodedData
-			});
-			
-			webSocket.send(msg);
-		},
+		var dataToEncode = ( data ? data : Controller.getContext() );
+		var encodedData = dataMapper.encode(dataToEncode);
 
-		on : function (eventName, callback, leaveEncoded) {
-			events[eventName] = {
-				callback: callback,
-				leaveEncoded: leaveEncoded ? true : false
-			};
-		}
+		var msg = JSON.stringify({
+			"type": type,
+			"data": encodedData
+		});
+
+		webSocket.send(msg);
 		
 	};
-	return instance;
 
 }
 
 var proxy = new CommunicationProxy("ws://dev.app.risk:7778/?joinid=" + joinId);
-
-proxy.on("get.all", function (data) {
-	Model.digest(data);
-	
-	View = new ViewInstance(Controller);
-	
-	var map = new Map(Model, Config.view.map, Controller.getContext());
-	View.addComponent(map).as("Map");
-	
-	var sideBar = new SideBar(Model, Config.view.map, Controller.getContext());
-	View.addComponent(sideBar).as("SideBar");
-	
-	Controller.switchToState(Model.roundphase);
-}, true);
-
-proxy.on("chat.message", function (message) {
-	//chat.receive(message.data, message.user);
-});

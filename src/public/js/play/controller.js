@@ -6,6 +6,8 @@ var Controller = {
 
 	globalEvents : Config.controller.globalEvents,
 
+	init : Config.controller.initServerEvent,
+
 	serverEvents : Config.controller.serverEvents,
 
 	possibleStates : Config.controller.states,
@@ -33,6 +35,10 @@ var Controller = {
 	},
 	
 	executeEventClosure : function(event){
+		
+		if(event.name === "init.data"){
+			return this.init(event.data);
+		}
 		
 		var eventClosure;
 		

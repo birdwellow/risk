@@ -45,6 +45,20 @@ var Config = {
 			
 		},
 		
+		initServerEvent : function (data) {
+			Model.digest(data);
+
+			View = new ViewInstance(Controller);
+
+			var map = new Map(Model, Config.view.map, Controller.getContext());
+			View.addComponent(map).as("Map");
+
+			var sideBar = new SideBar(Model, Config.view.map, Controller.getContext());
+			View.addComponent(sideBar).as("SideBar");
+
+			Controller.switchToState(Model.roundphase);
+		},
+		
 		serverEvents : {
 			
 			"phase.troopgain" : function(context){

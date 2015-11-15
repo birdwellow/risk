@@ -18,7 +18,7 @@ class GameFlowController {
     public function __construct() {
         
         $this->eventMap = [
-            "get.all" => "SendAllDataCommand",
+            "get.init.data" => "SendInitialDataCommand",
             "attack.confirm" => "PerformAttackCommand",
             "attack.troopshift.confirm" => "PerformTroopshiftAfterAttackCommand",
             "new.chat.message" => "NewChatMessageCommand",

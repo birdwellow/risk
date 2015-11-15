@@ -14,7 +14,7 @@ use Game\Model\Match;
  *
  * @author birdwellow
  */
-class SendAllDataCommand extends AbstractGameFlowControllerCommand {
+class SendInitialDataCommand extends AbstractGameFlowControllerCommand {
     
     public function perform(SocketEvent $event, Match $match){
         
@@ -23,7 +23,7 @@ class SendAllDataCommand extends AbstractGameFlowControllerCommand {
         App::setLocale($event->getUser()->language);
         $match->translations = Lang::get("match");
         
-        $serverEvent = new ServerEvent("get.all", $match, $match, ServerEvent::$FOR_SELF);
+        $serverEvent = new ServerEvent("init.data", $match, $match, ServerEvent::$FOR_SELF);
         return $serverEvent;
     }
     
