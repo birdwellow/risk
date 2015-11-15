@@ -19,6 +19,10 @@ class MatchManager {
         const MATCHSTATE_WAITING_FOR_PLAYERJOINS = "waitingforjoins";
         const MATCHSTATE_START = "started";
         
+        const ROUNDPHASE_TROOPGAIN = "troopgain";
+        const ROUNDPHASE_TROOPDEPLOYMENT = "troopdeployment";
+        const ROUNDPHASE_ATTACK = "attack";
+        const ROUNDPHASE_TROOPSHIFT = "troopshift";
         
         const COLORSCHEMES = [
             "red",
@@ -255,6 +259,7 @@ class MatchManager {
                 $firstPlayer = $shuffledJoinedUsers->first();
                 $match->activePlayer()->associate($firstPlayer);
                 $match->state = self::MATCHSTATE_START;
+                $match->roundphase = self::ROUNDPHASE_TROOPGAIN;
                 $match->save();
                 
 

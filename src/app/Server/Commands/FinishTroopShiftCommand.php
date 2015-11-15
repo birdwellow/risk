@@ -42,7 +42,7 @@ class FinishTroopShiftCommand extends AbstractGameFlowControllerCommand {
     protected function getNextPlayerForMatch(Match $match) {
         
         $activePlayer = $match->activePlayer;
-        $orderedPlayers = $match->sortBy('matchorder');
+        $orderedPlayers = $match->joinedUsers->sortBy('matchorder');
         
         $nextPlayer = $this->getFollowingPlayer($orderedPlayers, $activePlayer);
         if($nextPlayer == null){

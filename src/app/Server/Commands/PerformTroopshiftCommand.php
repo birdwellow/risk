@@ -13,7 +13,7 @@ use Game\Model\Match;
  *
  * @author birdwellow
  */
-class PerformTroopshiftAfterAttackCommand extends AbstractGameFlowControllerCommand {
+class PerformTroopshiftCommand extends AbstractGameFlowControllerCommand {
     
     public function perform(SocketEvent $event, Match $match){
         
@@ -32,7 +32,7 @@ class PerformTroopshiftAfterAttackCommand extends AbstractGameFlowControllerComm
             $startRegion->save();
             $endRegion->save();
         
-            return new ServerEvent("attack.troopshift.result", $event->getData(), $match);
+            return new ServerEvent("troopshift.result", $event->getData(), $match);
 
         }
     }

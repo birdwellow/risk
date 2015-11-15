@@ -28,7 +28,7 @@ class CreateMatchesTable extends Migration {
                         $table->string('joinid');
                         $table->string('mapname');
                         $table->integer('maxusers');
-                        $table->integer('cardChangeBonusLevel');
+                        $table->integer('cardchangebonuslevel');
 			$table->timestamps();
 		});
                 
