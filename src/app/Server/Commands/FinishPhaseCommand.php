@@ -29,6 +29,7 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
         $nextPlayer->save();
         
         $regionCard = $this->getRandomRegionsCard($match);
+        Log::info("Chose " . $regionCard->name);
         
         $event->roundPhase = $match->roundphase;
         $event->ativePlayer = $match->activePlayer;
@@ -97,9 +98,37 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
             $givenCards->merge($player->cards);
         }
         
-        $ungivenCards = $givenCards->diff($match->regions);
+        $ungivenCards = $this->getUngivenCards($givenCards, $match->regions);
         
         return $ungivenCards->random();
+        
+    }
+    
+    
+    
+    protected function getUngivenCards($givenCards, $allCards){
+        
+        $ungivenCards = Collection::make();
+        
+        foreach ($allCards as $card){
+            if(!$this->isCardInStack($card, $givenCards)){
+                $ungivenCards->push($card);
+            }
+        }
+        
+        return $ungivenCards;
+        
+    }
+    
+    
+    protected function isCardInStack($card, $stack) {
+        
+        foreach ($stack as $stackCard) {
+            if($card->id == $stackCard->id){
+                return true;
+            }
+        }
+        return false;
         
     }
     

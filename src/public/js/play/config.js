@@ -198,12 +198,14 @@ var Config = {
 			"troopdeployment" : {
 				
 				onEnter : function(context){
-					context.nextPhase = "attack";
+					if(!Model.me.newtroops > 0){
+						context.nextPhase = "attack";
+					}
 				},
 			
 				"region.mouse.click" : function(context, event){
 					var region = event.data.model;
-					if(Model.me === region.owner && Model.me.newtroops > 0){
+					if(Model.me === region.owner){
 						context.region = region;
 						proxy.send("deploy.unit");
 					}
@@ -225,7 +227,6 @@ var Config = {
 			"troopdeployment.finish" : {
 			
 				"button.nextphase.clicked" : function(context, event){
-					delete context.nextPhase;
 					proxy.send("troopdeployment.finish");
 				}
 				
@@ -251,7 +252,7 @@ var Config = {
 				"region.mouse.click" : function(context, event){
 					context.mouseOverRegion = null;
 					var region = event.data.model;
-					if(Model.me === region.owner){
+					if(Model.me === region.owner && region.troops > 1){
 						context.moveStart = region;
 						return "attack.select.end";
 					}
@@ -390,7 +391,7 @@ var Config = {
 				"region.mouse.click" : function(context, event){
 					context.mouseOverRegion = null;
 					var region = event.data.model;
-					if(Model.me === region.owner){
+					if(Model.me === region.owner && region.troops > 1){
 						context.moveStart = region;
 						return "troopshift.select.end";
 					}
