@@ -832,7 +832,6 @@ function MapControls(elementId){
 		nextPhase : function(context){
 			if(context.isClientActive()){
 				nextPhaseButton.show();
-				delete context.nextPhase;
 				var disabled = ( context.nextPhase ? false : true );
 				nextPhaseButton.attr("disabled", disabled);
 			} else {

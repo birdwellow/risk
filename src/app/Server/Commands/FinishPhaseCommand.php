@@ -16,7 +16,7 @@ use Game\Model\Match;
  *
  * @author birdwellow
  */
-class FinishTroopShiftCommand extends AbstractGameFlowControllerCommand {
+class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
     
     public function perform(SocketEvent $event, Match $match){
         

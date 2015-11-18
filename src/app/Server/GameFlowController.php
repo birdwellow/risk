@@ -30,7 +30,7 @@ class GameFlowController {
             "troopgain.finish" => "FinishTroopGainCommand",
             "troopdeployment.finish" => "FinishTroopDeploymentCommand",
             "attack.finish" => "FinishAttackCommand",
-            "troopshift.finish" => "FinishTroopShiftCommand",
+            "phase.finish" => "FinishPhaseCommand",
         ];
     }
     
@@ -41,6 +41,9 @@ class GameFlowController {
             $commandName = "Game\\Server\\Commands\\" . $this->eventMap[$eventKey];
             $command = new $commandName();
             $result = $command->perform($event, $match);
+            if($result){
+                Log::info("Received event '$eventKey'. Performing command '$commandName'. Result is '" . $result->getName() . "'");
+            }
             return $result;
         } else {
             //Log::warn("Event key '" . $eventKey . "' not defined");

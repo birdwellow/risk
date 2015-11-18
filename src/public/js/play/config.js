@@ -83,6 +83,7 @@ var Config = {
 			
 			"phase.troopdeployment" : function(context){
 				
+				Model.roundphase = context.roundPhase;
 				return "troopdeployment";
 				
 			},
@@ -143,8 +144,6 @@ var Config = {
 				context.moveEnd.troops = context.moveEndTroops;
 				context.moveStart.troops = context.moveStartTroops;
 				
-				log(context.moveStart.owner.name + " moved " + context.shiftTroops + " troop units from " + context.moveStart.label + " to " + context.moveEnd.label);
-				
 				delete context.shiftTroops;
 				context.moveEnd = null;
 				context.moveStart = null;
@@ -155,7 +154,20 @@ var Config = {
 			
 			"phase.troopshift" : function(context){
 				context.mouseOverRegion = null;
+				Model.roundphase = context.roundPhase;
 				return "troopshift";
+			},
+			
+			"troopshift.result" : function(context){
+				context.moveEnd.troops = context.moveEndTroops;
+				context.moveStart.troops = context.moveStartTroops;
+				
+				delete context.shiftTroops;
+				context.moveEnd = null;
+				context.moveStart = null;
+				context.moveType = null;
+				
+				return "phase.finish";
 			}
 
 		},
@@ -243,11 +255,19 @@ var Config = {
 						context.moveStart = region;
 						return "attack.select.end";
 					}
+				},
+				
+				"button.nextphase.clicked" : function(context, event){
+					proxy.send("attack.finish");
 				}
 
 			},
 			
 			"attack.select.end" : {
+				
+				onEnter : function(context){
+					delete context.nextPhase;
+				},
 				
 				"region.mouse.over" : function(context, event){
 					var region = event.data.model;
@@ -278,6 +298,10 @@ var Config = {
 			
 			"attack.confirm" : {
 				
+				onEnter : function(context){
+					delete context.nextPhase;
+				},
+				
 				"button.attack.confirm.clicked" : function(context, event){
 					context.attackResult = "waiting";
 					var attackorTroops = Math.min(context.moveStart.troops - 1, 3);
@@ -297,6 +321,10 @@ var Config = {
 			},
 			
 			"attack.troopshift" : {
+				
+				onEnter : function(context){
+					delete context.nextPhase;
+				},
 				
 				"button.troopshift.plus.clicked" : function(context, event){
 					if(context.shiftTroops === undefined){
@@ -347,15 +375,112 @@ var Config = {
 				onEnter : function(context){
 					context.nextPhase = "troopgain";
 				},
-			
 				
+				"region.mouse.over" : function(context, event){
+					var region = event.data.model;
+					if(Model.me === region.owner){
+						context.mouseOverRegion = region;
+					}
+				},
+
+				"region.mouse.out" : function(context, event){
+					context.mouseOverRegion = null;
+				},
+
+				"region.mouse.click" : function(context, event){
+					context.mouseOverRegion = null;
+					var region = event.data.model;
+					if(Model.me === region.owner){
+						context.moveStart = region;
+						return "troopshift.select.end";
+					}
+				},
+				
+				"button.nextphase.clicked" : function(context, event){
+					proxy.send("phase.finish");
+				}
+			
 			},
 			
-			"troopshift.finish" : {
-			
-				"button.nextphase.clicked" : function(context, event){
+			"troopshift.select.end" : {
+				
+				onEnter : function(context){
 					delete context.nextPhase;
-					proxy.send("troopshift.finish");
+				},
+				
+				"region.mouse.over" : function(context, event){
+					var region = event.data.model;
+					var isNeighborRegion = context.moveStart.neighbors.indexOf(region) > -1;
+					if(region !== context.moveStart && Model.me === region.owner && isNeighborRegion){
+						context.mouseOverRegion = region;
+					}
+				},
+
+				"region.mouse.out" : function(context, event){
+					context.mouseOverRegion = null;
+				},
+
+				"region.mouse.click" : function(context, event){
+					context.mouseOverRegion = null;
+					var region = event.data.model;
+					var isNeighborRegion = context.moveStart.neighbors.indexOf(region) > -1;
+					if(region === context.moveStart){
+						context.moveStart = null;
+						return "troopshift";
+					} else if (Model.me === region.owner && isNeighborRegion){
+						context.moveEnd = region;
+						context.moveType = "troopshift";
+						return "troopshift.confirm";
+					}
+				}
+			},
+			
+			"troopshift.confirm" : {
+				
+				onEnter : function(context){
+					delete context.nextPhase;
+				},
+				
+				"button.troopshift.plus.clicked" : function(context, event){
+					if(context.shiftTroops === undefined){
+						context.shiftTroops = 0;
+					}
+					var endRegion = context.moveEnd;
+					var startRegion = context.moveStart;
+					if(startRegion.troops > 1){
+						startRegion.troops--;
+						endRegion.troops++;
+						context.shiftTroops++;
+					}
+				},
+				
+				"button.troopshift.minus.clicked" : function(context, event){
+					if(context.shiftTroops === undefined){
+						context.shiftTroops = 0;
+					}
+					var endRegion = context.moveEnd;
+					var startRegion = context.moveStart;
+					if(endRegion.troops > 1){
+						startRegion.troops++;
+						endRegion.troops--;
+						context.shiftTroops--;
+					}
+				},
+				
+				"button.troopshift.confirm.clicked" : function(context, event){
+					proxy.send("troopshift.confirm");
+				}
+			
+			},
+			
+			"phase.finish" : {
+				
+				onEnter : function(context){
+					context.nextPhase = "troopgain";
+				},
+				
+				"button.nextphase.clicked" : function(context, event){
+					proxy.send("phase.finish");
 				}
 				
 			}

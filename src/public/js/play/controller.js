@@ -2,7 +2,7 @@ var Controller = {
 
 	state : {},
 	
-	stateData : {},
+	stateName : null,
 
 	globalEvents : Config.controller.globalEvents,
 
@@ -13,15 +13,19 @@ var Controller = {
 	possibleStates : Config.controller.states,
 	
 	switchToState : function(newState){
+		var out = this.stateName + " -> ";
 		if(this.state.onExit){
 			this.state.onExit(this.context);
 		}
 		if(this.possibleStates[newState]){
 			this.state = this.possibleStates[newState];
+			this.stateName = newState;
 		}
 		if(this.state.onEnter){
 			this.state.onEnter(this.context);
 		}
+		out += this.stateName;
+		console.log(out);
 	},
 
 	listen : function(event){
