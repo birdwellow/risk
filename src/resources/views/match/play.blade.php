@@ -65,8 +65,9 @@
                         {{ Lang::get( 'Cards' ) }}
                     </div>
 
-                    <div id="cardcontainer">
-
+                    <div class="container">
+                        
+                        <!--
                         <div class="card europe">
                             <div class="body">
                                 <div class="symbol category-1"></div>
@@ -101,8 +102,16 @@
                                 Greece
                             </div>
                         </div>
+                        -->
 
                     </div>
+                    
+                    <div class="center">
+                        <button class="btn btn-primary">
+                            Change
+                        </button>
+                    </div>
+                    
 
                 </div>
 

@@ -30,6 +30,12 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
         
         $regionCard = $this->getRandomRegionsCard($match);
         Log::info("Chose " . $regionCard->name);
+        if($regionCard){
+            $user = $event->getUser();
+            $user->cards()->attach($regionCard);
+            $user->save();
+            $event->newCard = $regionCard;
+        }
         
         $event->roundPhase = $match->roundphase;
         $event->ativePlayer = $match->activePlayer;

@@ -57,7 +57,6 @@ class SocketEvent {
     
     
     public function __get($name) {
-        //$this->mapAll();
         $this->map($name);
         if($this->__isset($name)){
             return $this->data->$name;
@@ -77,7 +76,13 @@ class SocketEvent {
     
     protected function map($name){
         if(isset($this->data->$name)){
-            $this->data->$name = $this->getMatchObject($this->data->$name);
+            if(is_object($this->data->$name)){
+                foreach ($this->data->$name as $key => $value) {
+                    $this->data->$name->$key = $this->getMatchObject($value);
+                }
+            } else {
+                $this->data->$name = $this->getMatchObject($this->data->$name);
+            }
         }
     }
     

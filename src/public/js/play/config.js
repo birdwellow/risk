@@ -78,6 +78,13 @@ var Config = {
 			"cards.traded" : function(context){
 				
 				Model.activePlayer.newtroops = context.newTroops;
+				for(var i in context.selectedCards){
+					var tradedCard = context.selectedCards[i];
+					var index = Model.activePlayer.cards.indexOf(tradedCard);
+					Model.activePlayer.cards.splice(index, 1);
+					tradedCard.cardOwner = null;
+				}
+				delete context.selectedCards;
 				
 			},
 			
@@ -181,11 +188,22 @@ var Config = {
 				},
 			
 				"regioncard.clicked" : function(context, event){
-					
+					if(!context.selectedCards){
+						context.selectedCards = [];
+					}
+					var card = event.data;
+					var cardIndex = context.selectedCards.indexOf(card);
+					if(cardIndex > -1){
+						context.selectedCards.splice(cardIndex, 1);
+					} else {
+						context.selectedCards.push(card);
+					}
 				},
 				
 				"button.tradecards.clicked" : function(context, event){
-					proxy.send("trade.cards");
+					if(context.selectedCards && context.selectedCards.length == 3){
+						proxy.send("trade.cards");
+					}
 				},
 			
 				"button.nextphase.clicked" : function(context, event){

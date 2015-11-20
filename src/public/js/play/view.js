@@ -1307,6 +1307,54 @@ function Chat(elementId, parent) {
 	
 }
 
+
+
+function CardStack(elementId, parent) {
+	
+	var container = $("#" + elementId).find(".container"),
+		changeButton = $("#" + elementId).find("button");
+	
+	changeButton.click(function(){
+		var event = new Event("button.tradecards.clicked", null, parent);
+		parent.fire(event);
+	});
+		
+	this.renderCards = function(player, context){
+		
+		if(context.selectedCards && context.selectedCards.length >= 3){
+			changeButton.show();
+		} else {
+			changeButton.hide();
+		}
+		
+		container.html("");
+		for(var cardKey in player.cards){
+			var card = player.cards[cardKey];
+			var classes = "card " + card.continent.name;
+			if(context.selectedCards && context.selectedCards.indexOf(card) > -1){
+				classes += " selected";
+			}
+			var cardDiv = HTML.make("div", classes);
+			var cardDivBody = HTML.make("div", "body");
+			var cardDivBodySymbol = HTML.make("div", "symbol category-" + card.cardunittype);
+
+			cardDivBody.append(cardDivBodySymbol);
+			cardDivBody.append(Lang.get(card.name));
+			cardDiv.append(cardDivBody);
+
+			container.append(cardDiv);
+			
+			cardDiv.click({card: card}, function(e){
+				var card = e.data.card;
+				var event = new Event("regioncard.clicked", card, parent);
+				parent.fire(event);
+			});
+		}
+		
+	};
+	
+}
+
 function Log(elementId){
 	
 	var TYPE_NORMAL = "normal";
@@ -1443,6 +1491,7 @@ function SideBar(model, config, context) {
 				chat.addMessage(msg.text, msg.user);
 				delete context.newChatMessage;
 			}
+			cardStack.renderCards(Model.me, context);
 			playerList.update();
 		},
 
@@ -1453,6 +1502,8 @@ function SideBar(model, config, context) {
 	};
 	
 	var chat = new Chat("chat", self);
+	
+	var cardStack = new CardStack("cards", self);
 	
 	var log = new Log("log", self);
 	window.log = log.log;

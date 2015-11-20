@@ -26,6 +26,7 @@ class GameFlowController {
             "player.disconnect" => "UserDisconnectCommand",
             "deploy.unit" => "DeployUnitCommand",
             "troopshift.confirm" => "PerformTroopshiftCommand",
+            "trade.cards" => "TradeCardsCommand",
             
             "troopgain.finish" => "FinishTroopGainCommand",
             "troopdeployment.finish" => "FinishTroopDeploymentCommand",
