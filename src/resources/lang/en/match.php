@@ -31,5 +31,8 @@ return [
         'current.phase' => "Current round phase",
         'active.player' => "Active Player",
         'available.troops' => "Available troops",
+    
+        'user.online' => ":name is online",
+        'user.offline' => ":name is offline",
 
 ];

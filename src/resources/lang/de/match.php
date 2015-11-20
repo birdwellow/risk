@@ -31,5 +31,8 @@ return [
         'current.phase' => "Aktuelle Zugphase",
         'active.player' => "Aktiver Spieler",
         'available.troops' => "Verfügbare Truppen",
+    
+        'user.online' => ":name ist online",
+        'user.offline' => ":name ist offline",
 
 ];

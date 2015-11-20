@@ -1,7 +1,13 @@
 var Lang = {
 
-	get : function(key){
-		return (Model.translations && Model.translations[key]) ? Model.translations[key] : key;
+	get : function(key, replaceArray){
+		var translation = (Model.translations && Model.translations[key]) ? Model.translations[key] : key;
+		if(replaceArray){
+			for(var key in replaceArray){
+				translation = translation.replace(":" + key, replaceArray[key]);
+			}
+		}
+		return translation;
 	}
 };
 

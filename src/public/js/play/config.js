@@ -33,13 +33,17 @@ var Config = {
 			
 			"user.connected" : function(context, event){
 				var user = event.data.user;
-				log(user.name + " is online");
+				log(Lang.get("user.online", {
+					"name" : user.name
+				}));
 				user.isonline = true;
 			},
 			
 			"user.disconnected" : function(context, event){
 				var user = event.data.user;
-				log(user.name + " is offline");
+				log(Lang.get("user.offline", {
+					"name" : user.name
+				}));
 				user.isonline = false;
 			}
 			
