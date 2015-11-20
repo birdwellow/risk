@@ -23,6 +23,14 @@ var Config = {
 		
 		globalEvents : {
 			
+			"view.mode.owner" : function(){
+				View.setMode('owner');
+			},
+			
+			"view.mode.continent" : function(){
+				View.setMode('continent');
+			},
+			
 			"message.send" : function(context, event){
 				proxy.send("new.chat.message", event.data);
 			},

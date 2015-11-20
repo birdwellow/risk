@@ -30,6 +30,9 @@
                 <button class="toggle-btn active" toggle-for="chat" title="{{ Lang::get("Chat") }}">
                     <img src="/img/chat.png">
                 </button>
+                <button class="toggle-btn active" toggle-for="viewmodes" title="{{ Lang::get("Views") }}">
+                    <img src="/img/view.png">
+                </button>
                 <button class="toggle-btn active" toggle-for="cards" title="{{ Lang::get("Cards") }}">
                     <img src="/img/cards.png">
                 </button>
@@ -59,52 +62,32 @@
                     <input type="text" id="chatinput"/>
                 </div>
 
+                <div class="playmodule" id="viewmodes">
+                    <div class="header">
+                        <img class="icon" src="/img/view.png">
+                        {{ Lang::get( 'View' ) }}
+                    </div>
+
+                    <div class="body">
+                        <button class="toggle-btn" mode="owner">
+                            <img src="/img/view_owner.png">
+                            <br>{{ Lang::get( 'Owner' ) }}
+                        </button>
+                        <button class="toggle-btn" mode="continent">
+                            <img src="/img/view_continent.png">
+                            <br>{{ Lang::get( 'Continent' ) }}
+                        </button>
+                    </div>
+
+                </div>
+
                 <div class="playmodule" id="cards">
                     <div class="header">
                         <img class="icon" src="/img/cards.png">
                         {{ Lang::get( 'Cards' ) }}
                     </div>
 
-                    <div class="container">
-                        
-                        <!--
-                        <div class="card europe">
-                            <div class="body">
-                                <div class="symbol category-1"></div>
-                                West Europe
-                            </div>
-                        </div>
-
-                        <div class="card america">
-                            <div class="body">
-                                <div class="symbol category-2"></div>
-                                Brazil
-                            </div>
-                        </div>
-
-                        <div class="card africa">
-                            <div class="body">
-                                <div class="symbol category-3"></div>
-                                Egypt
-                            </div>
-                        </div>
-
-                        <div class="card europe">
-                            <div class="body">
-                                <div class="symbol category-2"></div>
-                                England
-                            </div>
-                        </div>
-
-                        <div class="card europe">
-                            <div class="body">
-                                <div class="symbol category-3"></div>
-                                Greece
-                            </div>
-                        </div>
-                        -->
-
-                    </div>
+                    <div class="container"></div>
                     
                     <div class="center">
                         <button class="btn btn-primary">

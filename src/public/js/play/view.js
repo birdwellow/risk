@@ -558,7 +558,7 @@ function RegionPath(model){
 		
 		update : function(){
 			var mode = getMode();
-			var colorKey = model[mode].matchcolor;
+			var colorKey = model[mode].matchcolor || model[mode].colorscheme;
 			var theme = Config.view.themes[colorKey];
 
 			var fill = theme.fill[state];
@@ -1395,7 +1395,29 @@ function Log(elementId){
 			log(message, TYPE_NORMAL);
 		}
 		
-	}
+	};
+	
+}
+
+function ViewModes(elementId, parent){
+	
+	var module = $("#" + elementId);
+	var buttons = module.find("button");
+	buttons.each(function(index, button){
+		console.log(button);
+		button = $(button);
+		var mode = button.attr("mode");
+		var event = new Event("view.mode." + mode, null, parent);
+		button.click(function(){
+			parent.fire(event);
+			button.blur();
+			buttons.removeClass("active");
+			button.addClass("active");
+		});
+		if(View.getMode() === mode){
+			button.addClass("active");
+		}
+	});
 	
 }
 
@@ -1496,7 +1518,9 @@ function SideBar(model, config, context) {
 		},
 
 		fire : function(event){
-			parent.fire(event);
+			if(parent){
+				parent.fire(event);
+			}
 		}
 	
 	};
@@ -1511,6 +1535,8 @@ function SideBar(model, config, context) {
 	var playerList = new PlayerList("players");
 	window.online = playerList.online;
 	window.offline = playerList.offline;
+	
+	var viewModes = new ViewModes("viewmodes", self);
 	
 	return self;
 }
