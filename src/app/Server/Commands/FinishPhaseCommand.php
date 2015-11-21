@@ -21,6 +21,21 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
     public function perform(SocketEvent $event, Match $match){
         
         $match->roundphase = "troopgain";
+        
+        $roundPhaseData = json_decode($match->roundphasedata);
+        if(isset($roundPhaseData->conqueredregions) && $roundPhaseData->conqueredregions > 0){
+            $regionCard = $this->getRandomRegionsCard($match);
+            if($regionCard){
+                $activePlayer = $match->activePlayer;
+                $regionCard->cardOwner()->associate($activePlayer);
+                $regionCard->save();
+                $activePlayer->save();
+                $event->newCard = $regionCard;
+                $event->newCardOwner = $activePlayer;
+            }
+        }
+        
+        
         $nextPlayer = $this->getNextPlayerForMatch($match);
         $newTroopsObject = $this->getNewTroopsObjectForUser($nextPlayer);
         foreach ($newTroopsObject as $newTroops) {
@@ -31,14 +46,6 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
         
         $match->save();
         $nextPlayer->save();
-        
-        $regionCard = $this->getRandomRegionsCard($match);
-        if($regionCard){
-            $user = $event->getUser();
-            $regionCard->cardOwner()->associate($user);
-            $user->save();
-            $event->newCard = $regionCard;
-        }
         
         $event->roundPhase = $match->roundphase;
         $event->roundphasedata = $match->roundphasedata;
@@ -108,7 +115,7 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
         $givenCards = Collection::make();
         
         foreach($match->joinedUsers as $player){
-            $givenCards->merge($player->cards);
+            $givenCards = $givenCards->merge($player->cards);
         }
         
         $ungivenCards = $this->getUngivenCards($givenCards, $match->regions);

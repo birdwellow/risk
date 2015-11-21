@@ -61,6 +61,21 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
             $attackorRegion->troops -= 1;
             $defenderRegion->save();
             $attackorRegion->save();
+            
+            $roundPhaseData = $match->roundphasedata;
+            if(!$roundPhaseData){
+                $roundPhaseData = new \stdClass();
+                $roundPhaseData->conqueredregions = 0;
+            } else {
+                $roundPhaseData = json_decode($roundPhaseData);
+                if(!isset($roundPhaseData->conqueredregions)){
+                    $roundPhaseData->conqueredregions = 0;
+                }
+            }
+            $roundPhaseData->conqueredregions++;
+            $match->roundphasedata = json_encode($roundPhaseData);
+            $match->save();
+            
         }
         
         return new ServerEvent($eventName, $event->getData(), $match);

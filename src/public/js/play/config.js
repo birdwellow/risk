@@ -78,11 +78,14 @@ var Config = {
 				Model.roundphase = context.roundPhase;
 				Model.roundphasedata = JSON.parse(context.roundphasedata);
 				Model.activePlayer.newtroops = context.newTroops;
-				delete context.roundPhase;
 				
-				/*
-				 * Include some information on how the new troop amount had been calculated
-				 */
+				if(context.newCard && context.newCardOwner){
+					context.newCard.cardowner = context.newCardOwner;
+					context.newCardOwner.cards.push(context.newCard);
+				}
+				delete context.roundPhase;
+				delete context.newCard;
+				delete context.newCardOwner;
 				
 				context.nextPhase = "troopdeployment";
 				return "troopgain";

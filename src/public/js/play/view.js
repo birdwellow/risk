@@ -1350,7 +1350,7 @@ function CardStack(elementId, parent) {
 			var cardDivBodySymbol = HTML.make("div", "symbol category-" + card.cardunittype);
 
 			cardDivBody.append(cardDivBodySymbol);
-			cardDivBody.append(Lang.get(card.name));
+			cardDivBody.append(Lang.get("region." + card.name));
 			cardDiv.append(cardDivBody);
 
 			container.append(cardDiv);
