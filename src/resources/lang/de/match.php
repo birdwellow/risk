@@ -21,6 +21,15 @@ return [
         'region.newzealand' => "Neuseeland",
     
     
+        'america' => "Amerika",
+    
+    
+        'base' => "Grundverst&auml;rkung",
+        'regions' => "L&auml;nder",
+        'trade' => "Kartentausch",
+        'total' => "Gesamt",
+    
+    
         'controls' => "Steuerung",
         'continue.with' => "Weiter mit",
         'phase.troopgain' => "Truppen beschaffen",

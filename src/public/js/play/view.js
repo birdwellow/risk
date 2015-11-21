@@ -823,7 +823,18 @@ function MapControls(elementId){
 		newTroops : function(newTroops){
 			if(newTroops > 0){
 				newTroopsLabel.show();
-				newTroopsLabel.html(Lang.get("available.troops") + ": " + newTroops);
+				var html = "<h2>" + Lang.get("available.troops") + ":</h2>";
+				html += "<table>";
+				if(Model.roundphasedata){
+					for(var attr in Model.roundphasedata){
+						var value = Model.roundphasedata[attr];
+						html += "<tr><td>" + Lang.get(attr) + ":</td><td>" + value + "</td></tr>";
+					}
+				}
+				html += "<tr class=\"last\">";
+				html += "<td>" + Lang.get("total") + ": " + "</td><td>" + newTroops + "</td>";
+				html += "</tr></table>";
+				newTroopsLabel.html(html);
 			} else {
 				newTroopsLabel.hide();
 			}

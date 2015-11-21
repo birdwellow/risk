@@ -76,6 +76,7 @@ var Config = {
 			"phase.troopgain" : function(context){
 				Model.activePlayer = context.ativePlayer;
 				Model.roundphase = context.roundPhase;
+				Model.roundphasedata = JSON.parse(context.roundphasedata);
 				Model.activePlayer.newtroops = context.newTroops;
 				delete context.roundPhase;
 				
@@ -90,6 +91,7 @@ var Config = {
 			"cards.traded" : function(context){
 				
 				Model.activePlayer.newtroops = context.newTroops;
+				Model.roundphasedata = context.roundphasedata;
 				for(var i in context.selectedCards){
 					var tradedCard = context.selectedCards[i];
 					var index = Model.activePlayer.cards.indexOf(tradedCard);
@@ -103,6 +105,7 @@ var Config = {
 			"phase.troopdeployment" : function(context){
 				
 				Model.roundphase = context.roundPhase;
+				Model.roundphasedata = null;
 				return "troopdeployment";
 				
 			},
@@ -197,6 +200,9 @@ var Config = {
 				
 				onEnter : function(context){
 					context.nextPhase = "troopdeployment";
+					if(Utils.Type.isString(Model.roundphasedata)){
+						Model.roundphasedata = JSON.parse(Model.roundphasedata);
+					}
 				},
 			
 				"regioncard.clicked" : function(context, event){

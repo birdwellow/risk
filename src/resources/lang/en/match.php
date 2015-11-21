@@ -21,6 +21,15 @@ return [
         'region.newzealand' => "New Zealand",
     
     
+        'america' => "America",
+    
+    
+        'base' => "Base enforcement",
+        'regions' => "Countries",
+        'trade' => "Card trade",
+        'total' => "Total",
+    
+    
         'controls' => "Controls",
         'continue.with' => "Continue with",
         'phase.troopgain' => "Gain troops",

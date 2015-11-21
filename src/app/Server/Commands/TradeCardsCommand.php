@@ -30,6 +30,12 @@ class TradeCardsCommand extends AbstractGameFlowControllerCommand {
             return;
         }
         
+        $roundPhaseData = json_decode($match->roundphasedata);
+        $roundPhaseData->trade = $newTroops;
+        $roundPhaseDataJson = json_encode($roundPhaseData);
+        $match->roundphasedata = $roundPhaseDataJson;
+        $match->save();
+        
         $user = $event->getUser();
         $user->newtroops += $newTroops;
         $user->save();
@@ -39,6 +45,7 @@ class TradeCardsCommand extends AbstractGameFlowControllerCommand {
         }
         
         $event->newTroops = $user->newtroops;
+        $event->roundphasedata = $roundPhaseData;
         
         return new ServerEvent("cards.traded", $event->getData(), $match);
         

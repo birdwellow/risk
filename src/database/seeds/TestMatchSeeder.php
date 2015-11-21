@@ -32,10 +32,17 @@ class TestMatchSeeder extends Seeder {
         
         $thread = $this->createThread($player1, $player2);
         
+        $roundphasedata = new stdClass();
+        $roundphasedata->base = 3;
+        $roundphasedata->regions = 2;
+        $roundphasedata->america = 0;
+        $json = json_encode($roundphasedata);
+        
         $match = Match::create([
             'name' => 'Test Match',
             'state' => 'started',
             'roundphase' => 'troopgain',
+            'roundphasedata' => $json,
             'active_player_id' => $player1->id,
             'public' => false,
             'created_by_user_id' => $player1->id,

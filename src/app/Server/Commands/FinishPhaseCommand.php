@@ -22,22 +22,26 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
         
         $match->roundphase = "troopgain";
         $nextPlayer = $this->getNextPlayerForMatch($match);
-        $nextPlayer->newtroops = $this->getNewTroopsForUser($nextPlayer);
+        $newTroopsObject = $this->getNewTroopsObjectForUser($nextPlayer);
+        foreach ($newTroopsObject as $newTroops) {
+            $nextPlayer->newtroops += $newTroops;
+        }
+        $match->roundphasedata = json_encode($newTroopsObject);
         $match->activePlayer()->associate($nextPlayer);
         
         $match->save();
         $nextPlayer->save();
         
         $regionCard = $this->getRandomRegionsCard($match);
-        Log::info("Chose " . $regionCard->name);
         if($regionCard){
             $user = $event->getUser();
-            $user->cards()->attach($regionCard);
+            $regionCard->cardOwner()->associate($user);
             $user->save();
             $event->newCard = $regionCard;
         }
         
         $event->roundPhase = $match->roundphase;
+        $event->roundphasedata = $match->roundphasedata;
         $event->ativePlayer = $match->activePlayer;
         $event->newTroops = $nextPlayer->newtroops;
         
@@ -80,18 +84,21 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
 
 
     
-    protected function getNewTroopsForUser(\Game\User $player) {
+    protected function getNewTroopsObjectForUser(\Game\User $player) {
         
-        $newTroops = 0;
+        $newTroopsObject = new \stdClass();
+        
+        $newTroopsObject->base = 3;
         
         $regions = $player->regions;
-        $newTroops += floor(count($regions));
+        $newTroopsObject->regions = floor(count($regions));
         
         foreach ($player->continents as $continent){
-            $newTroops += $continent->troopbonus;
+            $continentName = $continent->name;
+            $newTroopsObject->$continentName = $continent->troopbonus;
         }
         
-        return $newTroops;
+        return $newTroopsObject;
         
     }
     
