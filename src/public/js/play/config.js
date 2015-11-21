@@ -82,6 +82,9 @@ var Config = {
 				if(context.newCard && context.newCardOwner){
 					context.newCard.cardowner = context.newCardOwner;
 					context.newCardOwner.cards.push(context.newCard);
+					if(Model.me === context.newCardOwner){
+						UI.info(new Card(context.newCard), Lang.get("new.region.card"));
+					}
 				}
 				delete context.roundPhase;
 				delete context.newCard;

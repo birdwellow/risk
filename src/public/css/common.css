@@ -621,6 +621,9 @@
     #modal-dialog.info {
         background-image: url("/img/classic-background.jpg");
     }
+    #modal-dialog .title{
+        margin: -10px 5px 0;
+    }
 
 
 
@@ -678,7 +681,7 @@
         box-shadow: 6px 16px 6px rgba(0, 0, 0, 0.35);
     }
     .title,[role=title]{
-        margin: -10px -10px 0 -10px;
+        margin: -10px -10px 0;
     }
     [role=active-player]{
         margin-top:10px;
@@ -913,6 +916,10 @@
         border: 2px solid #fff;
         margin: 0 5px 5px 0;
         box-shadow: 10px 10px 5px rgba(0,0,0,0.5);
+    }
+    #modal-dialog .card.selected {
+        padding: 7px;
+        margin-left: 180px;
     }
     .card .body {
         font-size: 0.8em;

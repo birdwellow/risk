@@ -40,6 +40,7 @@ return [
         'current.phase' => "Aktuelle Zugphase",
         'active.player' => "Aktiver Spieler",
         'available.troops' => "Verfügbare Truppen",
+        'new.region.card' => "Neue Gebietskarte",
     
         'user.online' => ":name ist online",
         'user.offline' => ":name ist offline",

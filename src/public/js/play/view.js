@@ -1320,6 +1320,25 @@ function Chat(elementId, parent) {
 
 
 
+function Card(model, context){
+	
+	var classes = "card " + model.continent.name;
+	if(!context || (context && context.selectedCards && context.selectedCards.indexOf(model) > -1)){
+		classes += " selected";
+	}
+	var cardDiv = HTML.make("div", classes);
+	var cardDivBody = HTML.make("div", "body");
+	var cardDivBodySymbol = HTML.make("div", "symbol category-" + model.cardunittype);
+
+	cardDivBody.append(cardDivBodySymbol);
+	cardDivBody.append(Lang.get("region." + model.name));
+	cardDiv.append(cardDivBody);
+	
+	return cardDiv;
+}
+
+
+
 function CardStack(elementId, parent) {
 	
 	var container = $("#" + elementId).find(".container"),
@@ -1341,17 +1360,7 @@ function CardStack(elementId, parent) {
 		container.html("");
 		for(var cardKey in player.cards){
 			var card = player.cards[cardKey];
-			var classes = "card " + card.continent.name;
-			if(context.selectedCards && context.selectedCards.indexOf(card) > -1){
-				classes += " selected";
-			}
-			var cardDiv = HTML.make("div", classes);
-			var cardDivBody = HTML.make("div", "body");
-			var cardDivBodySymbol = HTML.make("div", "symbol category-" + card.cardunittype);
-
-			cardDivBody.append(cardDivBodySymbol);
-			cardDivBody.append(Lang.get("region." + card.name));
-			cardDiv.append(cardDivBody);
+			var cardDiv = new Card(card, context);
 
 			container.append(cardDiv);
 			
@@ -1415,7 +1424,6 @@ function ViewModes(elementId, parent){
 	var module = $("#" + elementId);
 	var buttons = module.find("button");
 	buttons.each(function(index, button){
-		console.log(button);
 		button = $(button);
 		var mode = button.attr("mode");
 		var event = new Event("view.mode." + mode, null, parent);
