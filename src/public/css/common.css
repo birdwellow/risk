@@ -698,6 +698,10 @@
     .current-phase .newtroops{
         margin-top: 10px;
     }
+    .newtroops h2{
+        white-space: normal;
+        text-align: left;
+    }
     .newtroops td {
         text-align: left;
         padding-left: 10px;
