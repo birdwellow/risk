@@ -158,9 +158,16 @@ class MatchController extends Controller {
             
                 $user = Auth::user();
                 $match = $this->matchManager->getMatchForUser($user);
-                $this->accountManager->setSocketJoinId($user);
                 
-                return view('match.play')->with('match', $match);
+                if($match->state == MatchManager::MATCHSTATE_WAITING_FOR_PLAYERJOINS){
+                    return view('match.waiting')->with('match', $match);
+                } else if ($match->state == MatchManager::MATCHSTATE_STARTED){
+                    $this->accountManager->setSocketJoinId($user);
+                    return view('match.play')->with('match', $match);
+                } else if ($match->state == MatchManager::MATCHSTATE_FINISHED){
+                    $this->accountManager->setSocketJoinId($user);
+                    return view('match.finished')->with('match', $match);
+                }
             
         }
     

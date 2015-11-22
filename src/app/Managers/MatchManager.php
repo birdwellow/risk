@@ -17,7 +17,8 @@ class MatchManager {
     
     
         const MATCHSTATE_WAITING_FOR_PLAYERJOINS = "waitingforjoins";
-        const MATCHSTATE_START = "started";
+        const MATCHSTATE_STARTED = "started";
+        const MATCHSTATE_FINISHED = "finished";
         
         const ROUNDPHASE_TROOPGAIN = "troopgain";
         const ROUNDPHASE_TROOPDEPLOYMENT = "troopdeployment";
@@ -258,7 +259,7 @@ class MatchManager {
                 
                 $firstPlayer = $shuffledJoinedUsers->first();
                 $match->activePlayer()->associate($firstPlayer);
-                $match->state = self::MATCHSTATE_START;
+                $match->state = self::MATCHSTATE_STARTED;
                 $match->roundphase = self::ROUNDPHASE_TROOPGAIN;
                 $match->save();
                 

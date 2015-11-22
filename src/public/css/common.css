@@ -79,6 +79,14 @@
         border-color: inherit;
         background-image: inherit;
     }
+    .panel-body.center{
+        text-align: center;
+    }
+    .panel-body .summary {
+        width: 50%;
+        margin-left: 25%;
+        text-align: left;
+    }
     .right {
         float: right;
     }

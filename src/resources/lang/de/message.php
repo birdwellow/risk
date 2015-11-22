@@ -42,6 +42,7 @@ return [
         'button.add' => "Hinzuf&uuml;gen",
         'button.yes' => "Ja",
         'button.no' => "Nein",
+        'button.match.waiting.refresh' => "Hier den Stand aktualisieren",
     
         'error.userinput' => "Es gab einen Fehler mit deinen Daten.",
     
@@ -59,6 +60,10 @@ return [
         'title.init.match' => "Neues Match erstellen",
         'title.join.match' => "Match beitreten",
         'title.administrate.match' => "Match ':matchName' verwalten",
+        'title.waiting' => "Warte auf Match",
+        'title.waitingfor.match' => "Warte auf Start von Match ':matchName'",
+        'title.finished' => "Match beendet",
+        'title.finished.match' => "Match ':matchName' wurde beendet",
         'title.overview.matches' => "Laufende Matches",
         'title.overview.yourmatch' => "Dein Match",
         'title.overview.nomatch' => "Du bist keinem Match beigetreten.",
@@ -100,6 +105,9 @@ return [
         'label.match.cancel.warning-pt2' => "Dies sollte aber nur getan werden, wenn "
             . "zuvor alle Mitspielern zugestimmt haben oder wenn ein oder mehr "
             . "Spieler eine zu lange Zeit nicht mehr aktiv waren.",
+    
+        'label.match.not.started' => "Administrator ':createdBy' hat das Spiel noch nicht gestartet.",
+        'label.match.not.enough.players.joined' => "Es sind erst :joinedUsers von maximal :players Spielern beigetreten",
     
     
         'placeholder.search' => "Suche",

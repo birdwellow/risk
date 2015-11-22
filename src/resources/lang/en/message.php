@@ -42,6 +42,7 @@ return [
         'button.add' => "Add",
         'button.yes' => "Yes",
         'button.no' => "No",
+        'button.match.waiting.refresh' => "Refresh the state here",
     
         'error.userinput' => "There were some problems with your input.",
     
@@ -59,6 +60,10 @@ return [
         'title.init.match' => "Create a new Match",
         'title.join.match' => "Join Match",
         'title.administrate.match' => "Administrate Match ':matchName'",
+        'title.waiting' => "Waiting for Match",
+        'title.waitingfor.match' => "Waiting for Match ':matchName' to start",
+        'title.finished' => "Match finished",
+        'title.finished.match' => "Match ':matchName' was finished",
         'title.overview.matches' => "Running Matches",
         'title.overview.yourmatch' => "Your Match",
         'title.overview.nomatch' => "You are not joined to a match.",
@@ -95,6 +100,9 @@ return [
         'label.match.name' => "Name",
         'label.match.public' => "Public",
         'label.match.invitedusers' => "Invited Users",
+    
+        'label.match.not.started' => "Administrator ':createdBy' has not yet started the match.",
+        'label.match.not.enough.players.joined' => "Up to now, only :joinedUsers of at maximum :players joined the match",
     
     
         'placeholder.search' => "Search",
