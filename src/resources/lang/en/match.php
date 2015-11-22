@@ -37,6 +37,7 @@ return [
         'phase.attack' => "Attack",
         'phase.troopshift' => "Shift troops",
         'next' => "Continue",
+        'finish' => "Finish",
         'current.phase' => "Current round phase",
         'active.player' => "Active Player",
         'available.troops' => "Available troops",
@@ -50,5 +51,16 @@ return [
         'attack.result' => ":name has attacked :end from :start",
         'attack.victory' => ":name has conquered :region from :oldowner",
         'attack.troopshift.result' => ":name has shifted :troops troops from :start to :end",
+    
+    
+        'sidebar.toggle' => "Show/hide sidebar",
+        'sidebar.chat' => "Chat",
+        'sidebar.viewmodes' => "View Modes",
+        'sidebar.viewmodes.owner' => "Owner",
+        'sidebar.viewmodes.continent' => "Continent",
+        'sidebar.cards' => "Cards",
+        'sidebar.players' => "Players",
+        'sidebar.log' => "Match Log",
+        
 
 ];

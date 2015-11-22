@@ -24,19 +24,19 @@
     <div id="sidebar" class="navbar-left panel panel-default initial out">
 
             <div id="playmodule-togglebar">
-                <button class="toggle-btn right" toggle-function="toggleFixSideBar" title="{{ Lang::get("Fix Sidebar") }}">
+                <button class="toggle-btn right" toggle-function="toggleFixSideBar" title="{{ Lang::get("match.sidebar.toggle") }}">
                     <img src="/img/in.png">
                 </button>
-                <button class="toggle-btn active" toggle-for="chat" title="{{ Lang::get("Chat") }}">
+                <button class="toggle-btn active" toggle-for="chat" title="{{ Lang::get("match.sidebar.chat") }}">
                     <img src="/img/chat.png">
                 </button>
-                <button class="toggle-btn active" toggle-for="viewmodes" title="{{ Lang::get("Views") }}">
+                <button class="toggle-btn active" toggle-for="viewmodes" title="{{ Lang::get("match.sidebar.viewmodes") }}">
                     <img src="/img/view.png">
                 </button>
-                <button class="toggle-btn active" toggle-for="cards" title="{{ Lang::get("Cards") }}">
+                <button class="toggle-btn active" toggle-for="cards" title="{{ Lang::get("match.sidebar.cards") }}">
                     <img src="/img/cards.png">
                 </button>
-                <button class="toggle-btn active" toggle-for="players" title="{{ Lang::get("Players") }}">
+                <button class="toggle-btn active" toggle-for="players" title="{{ Lang::get("match.sidebar.players") }}">
                     <img src="/img/players.png">
                 </button>
                 <!--
@@ -44,7 +44,7 @@
                     <img src="/img/statistics.png">
                 </button>
                 -->
-                <button class="toggle-btn active" toggle-for="log" title="{{ Lang::get("Match Log") }}">
+                <button class="toggle-btn active" toggle-for="log" title="{{ Lang::get("match.sidebar.log") }}">
                     <img src="/img/log.png">
                 </button>
             </div>
@@ -53,7 +53,7 @@
                 <div class="playmodule" id="chat">
                     <div class="header">
                         <img class="icon" src="/img/chat.png">
-                        {{ Lang::get('message.title.match.chat') }}
+                        {{ Lang::get('match.sidebar.chat') }}
                     </div>
 
                     <div class="body" class="body" id="chatcontent">
@@ -65,17 +65,17 @@
                 <div class="playmodule" id="viewmodes">
                     <div class="header">
                         <img class="icon" src="/img/view.png">
-                        {{ Lang::get( 'View' ) }}
+                        {{ Lang::get( 'match.sidebar.viewmodes' ) }}
                     </div>
 
                     <div class="body">
                         <button class="toggle-btn" mode="owner">
                             <img src="/img/view_owner.png">
-                            <br>{{ Lang::get( 'Owner' ) }}
+                            <br>{{ Lang::get( 'match.sidebar.viewmodes.owner' ) }}
                         </button>
                         <button class="toggle-btn" mode="continent">
                             <img src="/img/view_continent.png">
-                            <br>{{ Lang::get( 'Continent' ) }}
+                            <br>{{ Lang::get( 'match.sidebar.viewmodes.continent' ) }}
                         </button>
                     </div>
 
@@ -84,7 +84,7 @@
                 <div class="playmodule" id="cards">
                     <div class="header">
                         <img class="icon" src="/img/cards.png">
-                        {{ Lang::get( 'Cards' ) }}
+                        {{ Lang::get( 'match.sidebar.cards' ) }}
                     </div>
 
                     <div class="container"></div>
@@ -101,7 +101,7 @@
                 <div class="playmodule" id="players">
                     <div class="header">
                         <img class="icon" src="/img/players.png">
-                        {{ Lang::get( 'Players' ) }}
+                        {{ Lang::get( 'match.sidebar.players' ) }}
                     </div>
 
                     <div class="body" id="playerscontent">
@@ -125,7 +125,7 @@
                 <div class="playmodule" id="log">
                     <div class="header">
                         <img class="icon" src="/img/log.png">
-                        {{ Lang::get( 'Match Log' ) }}
+                        {{ Lang::get( 'match.sidebar.log' ) }}
                     </div>
 
                     <div class="body" id="logcontent">

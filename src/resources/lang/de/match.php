@@ -37,6 +37,7 @@ return [
         'phase.attack' => "Angriff",
         'phase.troopshift' => "Truppen verschieben",
         'next' => "Weiter",
+        'finish' => "Beenden",
         'current.phase' => "Aktuelle Zugphase",
         'active.player' => "Aktiver Spieler",
         'available.troops' => "Verfügbare Truppen",
@@ -50,5 +51,15 @@ return [
         'attack.result' => ":name hat :end von :start aus angegriffen",
         'attack.victory' => ":name hat :region von :oldowner erobert",
         'attack.troopshift.result' => ":name hat :troops Einheiten von :start nach :end verschoben",
+    
+    
+        'sidebar.toggle' => "Sidebar anzeigen/verbergen",
+        'sidebar.chat' => "Chat",
+        'sidebar.viewmodes' => "Ansichten",
+        'sidebar.viewmodes.owner' => "Besitzer",
+        'sidebar.viewmodes.continent' => "Kontinent",
+        'sidebar.cards' => "Karten",
+        'sidebar.players' => "Spieler",
+        'sidebar.log' => "Match-Log",
 
 ];

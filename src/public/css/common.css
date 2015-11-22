@@ -747,6 +747,16 @@
     .btn-primary.next-phase:active{
         background: rgba(0,155,0,0.6);
     }
+    .btn-primary.next-round{
+        background: rgba(0, 30, 155, 0.75);
+        border-radius: 3px;
+    }
+    .btn-primary.next-round:hover{
+        background: rgba(0, 30, 155,0.75);
+    }
+    .btn-primary.next-round:active{
+        background: rgba(0, 30, 155,0.75);
+    }
     .btn-primary.next-phase[disabled=disabled],
     .btn-primary.next-phase[disabled=disabled]:hover,
     .btn-primary.next-phase[disabled=disabled]:active{

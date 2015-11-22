@@ -165,7 +165,7 @@ var Config = {
 						}
 					}
 					log(Lang.get("attack.result", {
-						"name" : context.player.name,
+						"name" : context.moveStart.owner.name,
 						"start" : "region." + context.moveStart.name,
 						"end" : "region." + context.moveEnd.name
 					}));
@@ -188,7 +188,7 @@ var Config = {
 						"name" : context.moveStart.owner.name,
 						"region" : "region." + context.moveEnd.label,
 						"oldowner" : context.moveEnd.owner.name
-					});
+					}));
 					
 					context.moveEnd.owner = context.moveStart.owner;
 					context.moveEnd.troops++;

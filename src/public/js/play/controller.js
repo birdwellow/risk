@@ -31,10 +31,10 @@ var Controller = {
 	listen : function(event){
 		
 		var resultingState = this.executeEventClosure(event);
-		View.update();
 		if(resultingState){
 			this.switchToState(resultingState);
 		}
+		View.update();
 
 	},
 	

@@ -840,11 +840,25 @@ function MapControls(elementId){
 			}
 		},
 		
-		nextPhase : function(context){
+		nextPhase : function(){
+			var context = Controller.getContext();
 			if(context.isClientActive()){
 				nextPhaseButton.show();
 				var disabled = ( context.nextPhase ? false : true );
 				nextPhaseButton.attr("disabled", disabled);
+				var html = "";
+				if(context.nextPhase === "troopgain"){
+					nextPhaseButton.removeClass("next-phase");
+					nextPhaseButton.addClass("next-round");
+					html += "<img src=\"/img/confirm.png\">" + Lang.get("finish");
+				} else {
+					nextPhaseButton.removeClass("next-round");
+					nextPhaseButton.addClass("next-phase");
+					html += "<img src=\"/img/continue.png\">" + Lang.get("next");
+				}
+				nextPhaseButton.html(html);
+				var margin = (180-nextPhaseButton.width())/2;
+				nextPhaseButton.css("margin-left", margin + "px");
 			} else {
 				nextPhaseButton.hide();
 			}
