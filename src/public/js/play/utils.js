@@ -4,7 +4,8 @@ var Lang = {
 		var translation = (Model.translations && Model.translations[key]) ? Model.translations[key] : key;
 		if(replaceArray){
 			for(var key in replaceArray){
-				translation = translation.replace(":" + key, replaceArray[key]);
+				var replaceTranslation = Lang.get(replaceArray[key]);
+				translation = translation.replace(":" + key, replaceTranslation);
 			}
 		}
 		return translation;

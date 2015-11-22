@@ -48,7 +48,7 @@ return [
         'cards.traded' => ":name has traded in cards and gets :troops new troops",
         'unit.deployed' => ":name has deployed a unit in :region",
         'attack.result' => ":name has attacked :end from :start",
-        'attack.victory' => ":name has conquered :region",
+        'attack.victory' => ":name has conquered :region from :oldowner",
         'attack.troopshift.result' => ":name has shifted :troops troops from :start to :end",
 
 ];

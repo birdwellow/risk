@@ -138,10 +138,10 @@ var Config = {
 					context.nextPhase = "attack";
 					return "troopdeployment.finish";
 				}
-				log(Lang.get("unit.deployed"), {
+				log(Lang.get("unit.deployed", {
 					"name" : context.player.name,
-					"region" : context.region.name
-				});
+					"region" : "region." + context.region.name
+				}));
 			},
 			
 			"phase.attack" : function(context){
@@ -164,11 +164,11 @@ var Config = {
 							--loserRegion.troops;
 						}
 					}
-					log(Lang.get("attack.result"), {
+					log(Lang.get("attack.result", {
 						"name" : context.player.name,
-						"start" : context.moveStart.name,
-						"end" : context.moveEnd.name
-					});
+						"start" : "region." + context.moveStart.name,
+						"end" : "region." + context.moveEnd.name
+					}));
 				};
 			},
 			
@@ -184,17 +184,21 @@ var Config = {
 						}
 					}
 					
-					log(context.moveStart.owner.name + " conquered " + context.moveEnd.label + " from " + context.moveEnd.owner.name);
+					log(Lang.get("attack.victory", {
+						"name" : context.moveStart.owner.name,
+						"region" : "region." + context.moveEnd.label,
+						"oldowner" : context.moveEnd.owner.name
+					});
 					
 					context.moveEnd.owner = context.moveStart.owner;
 					context.moveEnd.troops++;
 					context.moveStart.troops--;
 					context.moveType = "troopshift";
 					
-					log(Lang.get("attack.victory"), {
+					log(Lang.get("attack.victory", {
 						"name" : context.player.name,
-						"region" : context.moveEnd.name
-					});
+						"region" : "region." + context.moveEnd.name
+					}));
 				};
 				
 				return "attack.troopshift";
@@ -205,12 +209,12 @@ var Config = {
 				context.moveEnd.troops = context.moveEndTroops;
 				context.moveStart.troops = context.moveStartTroops;
 					
-				log(Lang.get("attack.troopshift.result"), {
+				log(Lang.get("attack.troopshift.result", {
 					"name" : Model.activePlayer.name,
-					"start" : context.moveStart,
-					"end" : context.moveEnd,
+					"start" : "region." + context.moveStart.name,
+					"end" : "region." + context.moveEnd.name,
 					"troops" : shiftedTroops
-				});
+				}));
 				
 				delete context.shiftTroops;
 				context.moveEnd = null;
@@ -234,12 +238,12 @@ var Config = {
 				context.moveEnd.troops = context.moveEndTroops;
 				context.moveStart.troops = context.moveStartTroops;
 					
-				log(Lang.get("attack.troopshift.result"), {
+				log(Lang.get("attack.troopshift.result", {
 					"name" : Model.activePlayer.name,
-					"start" : context.moveStart,
-					"end" : context.moveEnd,
+					"start" : "region." + context.moveStart.name,
+					"end" : "region." + context.moveEnd.name,
 					"troops" : shiftedTroops
-				});
+				}));
 				
 				delete context.shiftTroops;
 				context.moveEnd = null;
