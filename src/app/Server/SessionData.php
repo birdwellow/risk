@@ -37,4 +37,9 @@ class SessionData {
         return $this->conn;
     }
     
+    public function refresh(){
+        $this->user = $this->user->fresh();
+        $this->match = $this->match->fresh();
+    }
+    
 }

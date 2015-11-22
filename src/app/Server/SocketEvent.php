@@ -29,8 +29,8 @@ class SocketEvent {
         $message = json_decode($jsonData);
         
         $this->name = $message->type;
-        $this->user = $session->getUser()->fresh();
-        $this->match = $session->getMatch()->fresh();
+        $this->user = $session->getUser();
+        $this->match = $session->getMatch();
         $this->data = ( isset($message->data) ? $message->data : new \stdClass());
         
     }
