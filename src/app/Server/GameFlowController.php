@@ -43,7 +43,7 @@ class GameFlowController {
             $command = new $commandName();
             $result = $command->perform($event, $match);
             if($result){
-                Log::info("Received event '$eventKey'. Performing command '$commandName'. Result is '" . $result->getName() . "'");
+                Log::info("Result is '" . $result->getName() . "'");
             }
             return $result;
         } else {

@@ -79,6 +79,11 @@ var Config = {
 				Model.roundphasedata = JSON.parse(context.roundphasedata);
 				Model.activePlayer.newtroops = context.newTroops;
 				
+				log(Lang.get("phase." + Model.roundphase) + ". " + Lang.get("users.turn", {
+					"name" : Model.activePlayer.name,
+					"troops" : Model.activePlayer.newtroops
+				}));
+				
 				if(context.newCard && context.newCardOwner){
 					context.newCard.cardowner = context.newCardOwner;
 					context.newCardOwner.cards.push(context.newCard);
@@ -96,6 +101,7 @@ var Config = {
 			
 			"cards.traded" : function(context){
 				
+				var additionalTroops = context.newTroops - Model.activePlayer.newtroops;
 				Model.activePlayer.newtroops = context.newTroops;
 				Model.roundphasedata = context.roundphasedata;
 				for(var i in context.selectedCards){
@@ -104,6 +110,12 @@ var Config = {
 					Model.activePlayer.cards.splice(index, 1);
 					tradedCard.cardOwner = null;
 				}
+				
+				log(Lang.get("cards.traded", {
+					"name" : Model.activePlayer.name,
+					"troops" : additionalTroops
+				}));
+				
 				delete context.selectedCards;
 				
 			},
@@ -112,6 +124,9 @@ var Config = {
 				
 				Model.roundphase = context.roundPhase;
 				Model.roundphasedata = null;
+				
+				log(Lang.get("phase." + Model.roundphase) + ": " + Model.activePlayer.name);
+				
 				return "troopdeployment";
 				
 			},
@@ -123,11 +138,18 @@ var Config = {
 					context.nextPhase = "attack";
 					return "troopdeployment.finish";
 				}
+				log(Lang.get("unit.deployed"), {
+					"name" : context.player.name,
+					"region" : context.region.name
+				});
 			},
 			
 			"phase.attack" : function(context){
 				context.mouseOverRegion = null;
 				Model.roundphase = context.roundPhase;
+				
+				log(Lang.get("phase." + Model.roundphase) + ": " + Model.activePlayer.name);
+				
 				return "attack";
 			},
 			
@@ -142,6 +164,11 @@ var Config = {
 							--loserRegion.troops;
 						}
 					}
+					log(Lang.get("attack.result"), {
+						"name" : context.player.name,
+						"start" : context.moveStart.name,
+						"end" : context.moveEnd.name
+					});
 				};
 			},
 			
@@ -163,14 +190,27 @@ var Config = {
 					context.moveEnd.troops++;
 					context.moveStart.troops--;
 					context.moveType = "troopshift";
+					
+					log(Lang.get("attack.victory"), {
+						"name" : context.player.name,
+						"region" : context.moveEnd.name
+					});
 				};
 				
 				return "attack.troopshift";
 			},
 			
 			"attack.troopshift.result" : function(context){
+				var shiftedTroops = Math.abs(context.moveEndTroops - context.moveEnd.troops);
 				context.moveEnd.troops = context.moveEndTroops;
 				context.moveStart.troops = context.moveStartTroops;
+					
+				log(Lang.get("attack.troopshift.result"), {
+					"name" : Model.activePlayer.name,
+					"start" : context.moveStart,
+					"end" : context.moveEnd,
+					"troops" : shiftedTroops
+				});
 				
 				delete context.shiftTroops;
 				context.moveEnd = null;
@@ -183,12 +223,23 @@ var Config = {
 			"phase.troopshift" : function(context){
 				context.mouseOverRegion = null;
 				Model.roundphase = context.roundPhase;
+				
+				log(Lang.get("phase." + Model.roundphase) + ": " + Model.activePlayer.name);
+				
 				return "troopshift";
 			},
 			
 			"troopshift.result" : function(context){
+				var shiftedTroops = Math.abs(context.moveEndTroops - context.moveEnd.troops);
 				context.moveEnd.troops = context.moveEndTroops;
 				context.moveStart.troops = context.moveStartTroops;
+					
+				log(Lang.get("attack.troopshift.result"), {
+					"name" : Model.activePlayer.name,
+					"start" : context.moveStart,
+					"end" : context.moveEnd,
+					"troops" : shiftedTroops
+				});
 				
 				delete context.shiftTroops;
 				context.moveEnd = null;

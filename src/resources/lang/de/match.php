@@ -44,5 +44,11 @@ return [
     
         'user.online' => ":name ist online",
         'user.offline' => ":name ist offline",
+        'users.turn' => ":name ist an der Reihe mit :troops neuen Truppen",
+        'cards.traded' => ":name hat Karten eingetauscht und erh&auml; :troops neuen Truppen",
+        'unit.deployed' => ":name hat :region um eine Einheit verst&auml;rkt",
+        'attack.result' => ":name hat :end von :start aus angegriffen",
+        'attack.victory' => ":name hat :region erobert",
+        'attack.troopshift.result' => ":name hat :troops Einheiten von :start nach :end verschoben",
 
 ];

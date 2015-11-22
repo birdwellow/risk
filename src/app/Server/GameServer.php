@@ -78,7 +78,7 @@ class GameServer implements GameServerInterface {
         
         $socketEvent = new SocketEvent($session, $messageJson);
         
-        $serverEvent = $this->gameFlowController->processSocketEvent($socketEvent, $session->getMatch());
+        $serverEvent = $this->gameFlowController->processSocketEvent($socketEvent, $session->getMatch()->fresh());
         
         if($serverEvent instanceof ServerEvent){
             $this->sendServerEvent($serverEvent, $socketEvent->getUser());
@@ -99,11 +99,11 @@ class GameServer implements GameServerInterface {
             $eventReceiver = $session->getUser();
 
             $forAll = $serverEvent->isForAll();
-            $forOthersAndReceiverIsNotSender = $serverEvent->isForAllOthers() && $eventReceiver !== $originalSender;
-            $forSenderAndReceiverIsSender = $serverEvent->isForSender() && $eventReceiver == $originalSender;
+            $forOthersAndReceiverIsNotSender = $serverEvent->isForAllOthers() && $eventReceiver->id !== $originalSender->id;
+            $forSenderAndReceiverIsSender = $serverEvent->isForSender() && $eventReceiver->id == $originalSender->id;
 
             $mustSend = $forAll || $forOthersAndReceiverIsNotSender || $forSenderAndReceiverIsSender;
-
+            
             if($mustSend){
                 $socket = $session->getSocket();
                 $json = $serverEvent->toJson();
