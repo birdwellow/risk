@@ -6,8 +6,12 @@ use Illuminate\Support\Facades\Log;
 
 use Game\Server\SocketEvent;
 use Game\Server\ServerEvent;
+
+use Game\Managers\MatchManager;
+
 use Game\Model\Match;
 use Game\Model\Continent;
+use Game\User;
 
 /**
  * Description of PerformAttackCommand
@@ -77,6 +81,14 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
             $match->roundphasedata = json_encode($roundPhaseData);
             $match->save();
             
+            $event->loser = $this->kickLoser($match->fresh());
+            
+            $winner = $this->calculateWinner($match->fresh());
+            if($winner !== null){
+                $this->endMatchWithWinner($match, $winner);
+                $event->winner = $winner;
+            }
+            
         }
         
         $this->updateContinents($match);
@@ -145,6 +157,53 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
         }
         
         return $owner;
+        
+    }
+    
+    
+    protected function kickLoser(Match $match) {
+        
+        foreach ($match->joinedUsers as $player){
+            if(count($player->regions) == 0){
+                $player->joinedMatch()->dissociate();
+                $player->save();
+                
+                foreach($player->cards as $card){
+                    $card->cardOwner()->dissociate();
+                    $card->save();
+                }
+                return $player;
+            }
+        }
+        
+        return null;
+        
+    }
+    
+    
+    protected function calculateWinner(Match $match) {
+        
+        $totalRegions = count($match->regions);
+        
+        foreach ($match->joinedUsers as $player){
+            if(count($player->regions) == $totalRegions){
+                return $player;
+            }
+        }
+        
+        return null;
+        
+    }
+    
+    
+    protected function endMatchWithWinner(Match $match, User $player) {
+        
+        $roundPhaseData = new \stdClass();
+        $roundPhaseData->winner_id = $player->id;
+        $match->roundphasedata = json_encode($roundPhaseData);
+        $match->state = MatchManager::MATCHSTATE_FINISHED;
+        
+        $match->save();
         
     }
     

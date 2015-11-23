@@ -51,6 +51,14 @@ return [
         'attack.result' => ":name has attacked :end from :start",
         'attack.victory' => ":name has conquered :region from :oldowner",
         'attack.troopshift.result' => ":name has shifted :troops troops from :start to :end",
+        'attack.loser' => ":name has lost the last country and thus the match",
+        'end' => ":name won the match!",
+        
+    
+        'info.defeated.title' => "Match lost",
+        'info.defeated' => "<h1>Too bad - you lost the Match.</h1> With 'OK' you get back to the start page.",
+        'info.won.title' => "Match won",
+        'info.won' => "<h1>Congratulations - you won the Match!</h1> With 'OK' you get back to the start page.",
     
     
         'sidebar.toggle' => "Show/hide sidebar",

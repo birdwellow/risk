@@ -184,21 +184,49 @@ var Config = {
 						}
 					}
 					
-					log(Lang.get("attack.victory", {
-						"name" : context.moveStart.owner.name,
-						"region" : "region." + context.moveEnd.label,
-						"oldowner" : context.moveEnd.owner.name
-					}));
-					
 					context.moveEnd.owner = context.moveStart.owner;
 					context.moveEnd.troops++;
 					context.moveStart.troops--;
 					context.moveType = "troopshift";
 					
 					log(Lang.get("attack.victory", {
-						"name" : context.player.name,
-						"region" : "region." + context.moveEnd.name
+						"name" : context.moveStart.owner.name,
+						"region" : "region." + context.moveEnd.name,
+						"oldowner" : context.moveEnd.owner.name
 					}));
+					
+					if(context.loser){
+						var loserIndex = Model.players.indexOf(context.loser);
+						Model.players.splice(loserIndex, 1);
+
+						log(Lang.get("attack.loser", {
+							"name" : context.loser.name
+						}));
+						
+						if(Model.me === context.loser){
+							UI.confirmRedirect(
+								"/",
+								Lang.get('info.defeated'),
+								Lang.get('info.defeated.title')
+							);
+						}
+						delete context.loser;
+					}
+					
+					if(context.winner){
+						log(Lang.get("end", {
+							"name" : context.winner.name
+						}));
+						
+						if(Model.me === context.winner){
+							UI.confirmRedirect(
+								"/",
+								Lang.get('info.won'),
+								Lang.get('info.won.title')
+							);
+						}
+						Controller.switchToState("match.end");
+					}
 				};
 				
 				return "attack.troopshift";
@@ -580,6 +608,10 @@ var Config = {
 				"button.nextphase.clicked" : function(context, event){
 					proxy.send("phase.finish");
 				}
+				
+			},
+			
+			"match.end" : {
 				
 			}
 

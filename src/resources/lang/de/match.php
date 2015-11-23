@@ -51,6 +51,13 @@ return [
         'attack.result' => ":name hat :end von :start aus angegriffen",
         'attack.victory' => ":name hat :region von :oldowner erobert",
         'attack.troopshift.result' => ":name hat :troops Einheiten von :start nach :end verschoben",
+        'attack.loser' => ":name hat die letzte Region und damit das Spiel verloren",
+        
+    
+        'info.defeated.title' => "Match verloren",
+        'info.defeated' => "<h1>Schade, du hast das Match verloren.</h1> Mit 'OK' kommst du zur&uuml;k zur Startseite.",
+        'info.won.title' => "Match gewonnen",
+        'info.won' => "<h1>Gl&uuml;ckwunsch, du hast das Match gewonnen!</h1> Mit 'OK' kommst du zur&uuml;k zur Startseite.",
     
     
         'sidebar.toggle' => "Sidebar anzeigen/verbergen",
