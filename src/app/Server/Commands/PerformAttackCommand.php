@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Log;
 use Game\Server\SocketEvent;
 use Game\Server\ServerEvent;
 use Game\Model\Match;
+use Game\Model\Continent;
 
 /**
  * Description of PerformAttackCommand
@@ -78,6 +79,8 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
             
         }
         
+        $this->updateContinents($match);
+        
         return new ServerEvent($eventName, $event->getData(), $match);
     }
     
@@ -116,7 +119,32 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
     }
     
     
-    protected function processArrangedResults() {
+    protected function updateContinents(Match $match) {
+        
+        foreach ($match->continents as $continent) {
+            $owner = $this->calculateContinentOwner($continent);
+            if($owner !== null){
+                $continent->owner()->associate($owner);
+            } else {
+                $continent->owner()->dissociate();
+            }
+            $continent->save();
+        }
+        
+    }
+    
+    
+    protected function calculateContinentOwner(Continent $continent){
+        
+        $owner = $continent->regions->first()->owner;
+        
+        foreach ($continent->regions as $region){
+            if($region->owner->id !== $owner->id){
+                return null;
+            }
+        }
+        
+        return $owner;
         
     }
     

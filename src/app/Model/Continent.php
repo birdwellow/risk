@@ -34,6 +34,12 @@ class Continent extends Model {
     {
         return $this->belongsTo('Game\Model\Match', 'match_id', 'id');
     }
+                        
+        
+    public function owner()
+    {
+        return $this->belongsTo('Game\User', 'owner_id', 'id');
+    }
     
 
     public function regions()
