@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<!--meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"-->
+
+		
+		<title>Test</title>
+		
+		<style>
+			body{
+				font-family: 'Oswald'
+			}
+			@font-face {
+				font-family: 'KulminoituvaRegular';
+				src: url('http://www.miketaylr.com/f/kulminoituva.ttf');
+			}
+			@font-face {
+				font-family: 'Oswald';
+				font-style: normal;
+				font-weight: 400;
+				src: local('Oswald Regular'), local('Oswald-Regular'), url(res/Oswald-Regular.woff) format('woff');
+			}
+			#mainstage{
+				width: 700px;
+				height: 500px;
+			}
+			#console{
+				float: right;
+				width: 300px;
+				height: 500px;
+				left: 100%;
+				margin-left: -320px;
+				background: darkgreen;
+				color: lightgreen;
+				font: 12px Courier;
+				padding: 10px;
+				overflow-y: scroll;
+				position: fixed;
+				text-align: left;
+			}
+			.table{
+				display: table;
+			}
+			.tr{
+				display: table-row;
+			}
+			.td{
+				display: table-cell;
+			}
+			#controls{
+				text-align: center;
+				float: right;
+				width: 300px;
+				left: 100%;
+				margin-left: -320px;
+				font: 12px Courier;
+				padding: 10px;
+				position: fixed;
+				background: rgba(0,0,0,0.8);
+				z-index: 100;
+			}
+			#coordinates,
+			#pathdata{
+				border: none;
+				width: 290px;
+				background: rgba(255,255,255,0.1);
+				margin: 20px 0;
+				font: 12px Courier;
+				box-shadow: inset 2px 2px 2px 2px rgba(0,0,0,0.2);
+				padding: 4px;
+				height: 150px;
+			}
+			#miniconsole{
+				margin: 20px 0;
+				background: darkgreen;
+				color: lightgreen;
+				font: 12px Courier;
+				padding: 4px;
+				overflow-y: scroll;
+			}
+			button{
+				border: none;
+				background: none;
+			}
+			.buttonpart{
+				width: 200px;
+				margin: 5px;
+				border: 2px solid rgba(255,255,255,0.7);
+				border-radius: 4px;
+				text-align: center;
+			}
+			.zoom .button{
+				background: none;
+			}
+			.zoom{
+				float: left;
+				background: rgba(255,255,255,0.2);
+			}
+			.button{
+				cursor: pointer;
+				background: rgba(255,255,255,0.2);
+				font: 12px Courier;
+				color: rgba(255,255,155,1);
+				padding: 5px 20px;
+			}
+			.button:hover{
+				background: rgba(0,0,0,0.2);
+				color: rgba(255,155,155,1);
+				box-shadow: inset 2px 2px 2px 2px rgba(0,0,0,0.15);
+			}
+			.button:active{
+				background: rgba(0,0,0,0.4);
+				color: rgba(255,155,155,1);
+				padding: 7px 18px 3px 22px;
+				box-shadow: inset 4px 4px 2px 2px rgba(0,0,0,0.15);
+			}
+			#mapraster{
+				display: none;
+			}
+			#mouseposition{
+				margin: 20px 0;
+				box-shadow: inset 2px 2px 2px 2px rgba(0,0,0,0.2);
+				padding: 4px;
+				background: rgba(255,255,255,0.1);
+				padding: 5px;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="controls">
+			<!--div class="buttonpart zoom">
+				<button class="button" onclick="zoomIn()">+</button><br>
+				<button class="button" onclick="zoomOut()">-</button>
+			</div>
+			<button class="button buttonpart" onclick="changeMode()" id="mode">Mode: editting</button><br-->
+			<button class="button buttonpart" onclick="finishArea()">Finish area</button><br>
+			<button class="button buttonpart" onclick="finishCountry()">Finish country</button>
+			<div id="mouseposition"> | 
+			</div>
+			<textarea id="coordinates">
+			</textarea>
+			<textarea id="pathdata">
+			</textarea>
+			<button class="button buttonpart" onclick="initCoordinates()">Apply</button>
+			<div id="miniconsole">
+			</div>
+		</div>
+		<!-- <div id="console">
+		</div> -->
+		<div id="mainstage">
+		</div>
+		<div id="actiondatastage">
+		</div>
+		
+                <canvas id="mapraster" width="1000" height="1000"></canvas>
+        
+		<script src="js/ext-lib/jquery-1.11.0.js"></script>
+		<script src="js/ext-lib/jquery-ui.min.js"></script>
+		<script src="js/ext-lib/kinetic-v5.1.0.js"></script>
+		<script src="js/core.js"></script>
+		<script >
+                    App.init();
+                    $("#controls").draggable();
+                </script>
+	</body>
+</html>
