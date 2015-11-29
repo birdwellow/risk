@@ -169,12 +169,11 @@ function Map(model, config, context){
 		width: config.width,
 		height: config.height
 	});
+	kineticStage.on("mousemove", function(e){
+		//console.log(kineticStage.getPointerPosition());
+	});
 	
 	var mapControls = new MapControls("map-controls");
-	
-	/*kineticStage.on("mousemove", function(e){
-		console.log(e.evt.layerX + "|" + e.evt.layerY);
-	});*/
 	
 	function addRegionPath(regionPath){
 		regionPaths[regionPath.getIdentifier()] = regionPath;
@@ -487,11 +486,11 @@ function RegionPath(model){
 
 	var nameLabelConfig = Config.view.map.regions.nameLabels;
 	nameLabelConfig.text = Lang.get("region." + model.name);
-	nameLabelConfig.offsetX = model.label.length + nameLabelConfig.offsetX;
+	nameLabelConfig.offsetX = 3 * nameLabelConfig.text.length + 10;//nameLabelConfig.offsetX;
 	nameLabelConfig.rotation = model.angle;
 	nameLabelConfig.data = model.pathdata;
-	nameLabelConfig.x = model.centerx;
-	nameLabelConfig.y = model.centery;
+	nameLabelConfig.x = model.labelcenterx;
+	nameLabelConfig.y = model.labelcentery;
 	nameLabelConfig.fill = theme.text[state];
 	
 	var nameLabel = new Kinetic.Text(nameLabelConfig);

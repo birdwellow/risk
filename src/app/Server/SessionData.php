@@ -38,8 +38,12 @@ class SessionData {
     }
     
     public function refresh(){
-        $this->user = $this->user->fresh();
-        $this->match = $this->match->fresh();
+        if($this->user){
+            $this->user = $this->user->fresh();
+        }
+        if($this->match){
+            $this->match = $this->match->fresh();
+        }
     }
     
 }

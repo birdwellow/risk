@@ -136,7 +136,7 @@ var Config = {
 				context.player.newtroops = context.newPlayerTroops;
 				if(context.player.newtroops <= 0){
 					context.nextPhase = "attack";
-					return "troopdeployment.finish";
+					//return "troopdeployment.finish";
 				}
 				log(Lang.get("unit.deployed", {
 					"name" : context.player.name,
@@ -330,7 +330,9 @@ var Config = {
 			
 				"region.mouse.click" : function(context, event){
 					var region = event.data.model;
+					console.log("click");
 					if(Model.me === region.owner){
+						console.log("am owner");
 						context.region = region;
 						proxy.send("deploy.unit");
 					}
@@ -345,10 +347,16 @@ var Config = {
 
 				"region.mouse.out" : function(context, event){
 					context.mouseOverRegion = null;
+				},
+			
+				"button.nextphase.clicked" : function(context, event){
+					delete context.nextPhase;
+					proxy.send("troopdeployment.finish");
 				}
 				
 			},
 			
+			/*
 			"troopdeployment.finish" : {
 			
 				"button.nextphase.clicked" : function(context, event){
@@ -356,6 +364,7 @@ var Config = {
 				}
 				
 			},
+			*/
 
 			"attack" : {
 				
@@ -375,9 +384,9 @@ var Config = {
 				},
 
 				"region.mouse.click" : function(context, event){
-					context.mouseOverRegion = null;
 					var region = event.data.model;
 					if(Model.me === region.owner && region.troops > 1){
+						context.mouseOverRegion = null;
 						context.moveStart = region;
 						return "attack.select.end";
 					}
@@ -623,7 +632,7 @@ var Config = {
 		map : {
 			defaultMode : 'owner',
 			width : 1000,
-			height : 500,
+			height : 700,
 			containerId : "game-map",
 			
 			fade : {
@@ -637,17 +646,19 @@ var Config = {
 					fontFamily: 'Garamond',
 					fontSize: 18,
 					padding: 5,
-					offsetX: 5
+					offsetX: 5,
+					width: 100,
+					align: 'center'
 					//offsetY: 15
 				},
 				troopLabels : {
 					fontFamily: 'Calibri',
-					fontSize: 25,
-					padding: 5,
+					fontSize: 20,
+					padding: 1,
 					fontStyle: "100",
-					width: 40,
+					width: 30,
 					offsetY : -5,
-					cornerRadius: 20,
+					cornerRadius: 15,
 					align : 'center'
 					//offsetY: 15
 				}
@@ -667,10 +678,10 @@ var Config = {
 		
 		themes : {
 			"red" : {
-				fill : ["rgba(200,22,22,0.75)", "rgba(255,88,88,0.875)", "rgba(255,88,88,1)"],
-				stroke : ["", "", "rgba(127,44,44,1)"],
+				fill : ["rgba(200,22,22,0.75)", "rgba(255,88,88,0.875)", "rgba(255,130,130,1)"],
+				stroke : ["rgba(0,0,0,0.50)", "#000", "#000"],
 				strokeWidth : [1, 3, 3],
-				text : ["rgba(0,0,0,0.20)", "rgba(127,44,44,1)", "rgba(190,66,66,1)"],
+				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
 				troops : {
 					stroke : ["rgba(87,22,22,1)", "rgba(87,22,22,1)", "rgba(87,22,22,1)"],
 					strokeWidth : [2,2,2],
@@ -679,11 +690,24 @@ var Config = {
 				}
 			},
 
-			"green" : {
-				fill : ["rgba(88,255,88,0.75)", "rgba(88,255,88,0.875)", "rgba(88,255,88,1)"],
-				stroke : ["", "", "rgba(44,127,44,1)"],
+			"blue" : {
+				fill : ["rgba(88,88,255,0.75)", "rgba(150,150,255,0.875)", "rgba(180,180,255,1)"],
+				stroke : ["rgba(0,0,0,0.50)", "#000", "#000"],
 				strokeWidth : [1, 3, 3],
-				text : ["rgba(0,0,0,0.20)", "rgba(44,127,44,1)", "rgba(66,190,66,1)"],
+				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
+				troops : {
+					stroke : ["rgba(22,22,87,1)", "rgba(22,22,87,1)", "rgba(22,22,87,1)"],
+					strokeWidth : [2,2,2],
+					color : ["rgba(22,22,87,1)", "rgba(22,22,87,1)", "rgba(22,22,87,1)"],
+					fill : ["rgba(44,44,127,0.5)", "rgba(44,44,127,0.5)", "rgba(88,88,200,0.75)"]
+				}
+			},
+
+			"green" : {
+				fill : ["rgba(44,155,44,0.75)", "rgba(66,200,66,0.875)", "rgba(88,255,88,1)"],
+				stroke : ["rgba(0,0,0,0.50)", "#000", "#000"],
+				strokeWidth : [1, 3, 3],
+				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
 				troops : {
 					stroke : ["rgba(22,87,22,1)", "rgba(22,87,22,1)", "rgba(22,87,22,1)"],
 					strokeWidth : [2,2,2],
@@ -692,18 +716,57 @@ var Config = {
 				}
 			},
 
-			"blue" : {
-				fill : ["rgba(88,88,255,0.75)", "rgba(88,88,255,0.875)", "rgba(88,88,255,1)"],
-				stroke : ["", "", "rgba(44,44,127,1)"],
+			"yellow" : {
+				fill : ["rgba(200,200,0,0.75)", "rgba(230,230,0,0.875)", "rgba(255,255,0,1)"],
+				stroke : ["rgba(0,0,0,0.50)", "#000", "#000"],
 				strokeWidth : [1, 3, 3],
-				text : ["rgba(0,0,0,0.20)", "rgba(44,44,127,1)", "rgba(66,66,190,1)"],
+				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
 				troops : {
-					stroke : ["rgba(22,22,87,1)", "rgba(22,22,87,1)", "rgba(22,22,87,1)"],
+					stroke : ["rgba(100,100,0,1)", "rgba(100,100,0,1)", "rgba(100,100,0,1)"],
 					strokeWidth : [2,2,2],
-					color : ["rgba(22,22,87,1)", "rgba(22,22,87,1)", "rgba(22,22,87,1)"],
-					fill : ["rgba(44,44,127,0.5)", "rgba(44,44,127,0.5)", "rgba(88,88,200,0.75)"]
+					color : ["rgba(50,50,0,1)", "rgba(50,50,0,1)", "rgba(50,50,0,1)"],
+					fill : ["rgba(126,126,0,0.5)", "rgba(126,126,0,0.5)", "rgba(200,200,0,0.75)"]
 				}
-			}
+			},
+
+			"orange" : {
+				fill : ["rgba(230,160,0,0.75)", "rgba(255,180,0,0.75)", "rgba(255,180,0,1)"],
+				stroke : ["rgba(0,0,0,0.50)", "#000", "#000"],
+				strokeWidth : [1, 3, 3],
+				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
+				troops : {
+					stroke : ["rgba(120,80,0,1)", "rgba(120,80,0,1)", "rgba(120,80,0,1)"],
+					strokeWidth : [2,2,2],
+					color : ["rgba(70,40,0,1)", "rgba(70,40,0,1)", "rgba(70,40,0,1)"],
+					fill : ["rgba(150,100,0,0.5)", "rgba(150,100,0,0.5)", "rgba(220,120,0,0.75)"]
+				}
+			},
+
+			"brown" : {
+				fill : ["rgba(150,90,0,0.75)", "rgba(175,110,0,0.75)", "rgba(200,130,0,1)"],
+				stroke : ["rgba(0,0,0,0.50)", "#000", "#000"],
+				strokeWidth : [1, 3, 3],
+				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
+				troops : {
+					stroke : ["rgba(120,80,0,1)", "rgba(120,80,0,1)", "rgba(120,80,0,1)"],
+					strokeWidth : [2,2,2],
+					color : ["rgba(70,40,0,1)", "rgba(70,40,0,1)", "rgba(70,40,0,1)"],
+					fill : ["rgba(150,120,0,0.5)", "rgba(150,120,0,0.5)", "rgba(190,140,0,0.75)"]
+				}
+			},
+			
+			"purple" : {
+				fill : ["rgba(160,0,135,0.75)", "rgba(180,0,155,0.875)", "rgba(210,0,180,1)"],
+				stroke : ["rgba(0,0,0,0.50)", "#000", "#000"],
+				strokeWidth : [1, 3, 3],
+				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
+				troops : {
+					stroke : ["rgba(87,0,70,1)", "rgba(87,0,70,1)", "rgba(87,0,70,1)"],
+					strokeWidth : [2,2,2],
+					color : ["rgba(50,0,40,1)", "rgba(50,0,40,1)", "rgba(50,0,40,1)"],
+					fill : ["rgba(127,0,90,0.5)", "rgba(127,0,90,0.5)", "rgba(200,0,160,0.75)"]
+				}
+			},
 		}
 	}
 	
