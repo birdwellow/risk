@@ -3,7 +3,6 @@
 use Game\Model\Match;
 use Game\Exceptions\GameException;
 use Game\Services\IdTokenService;
-use Game\Model\Map;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Collection;

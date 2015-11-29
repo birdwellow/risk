@@ -36,7 +36,7 @@ class TestController extends Controller {
         
 	public function perform() {
             
-            $hits = array();
+            /*$hits = array();
             
             $testString = "[regions:id=3]";
             $regex = '/\[(.*?):(.*?)=(.*?)\]/';
@@ -48,8 +48,19 @@ class TestController extends Controller {
             
             $obj = new \stdClass();
             
-            echo ($obj->test instanceof \stdClass);
-                
+            echo ($obj->test instanceof \stdClass);*/
+            
+            $points = 
+                [20,20,80,80]
+            //    [120,120,280,280],
+            ;
+            
+            $conn = new \Game\Model\Connection();
+            $conn->points = json_encode($points);
+            $conn->save();
+            
+            var_dump(json_encode($points));
+              
 	}
 
 }

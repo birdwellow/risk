@@ -170,7 +170,7 @@ function Map(model, config, context){
 		height: config.height
 	});
 	kineticStage.on("mousemove", function(e){
-		//console.log(kineticStage.getPointerPosition());
+		console.log(kineticStage.getPointerPosition());
 	});
 	
 	var mapControls = new MapControls("map-controls");
@@ -179,6 +179,10 @@ function Map(model, config, context){
 		regionPaths[regionPath.getIdentifier()] = regionPath;
 		regionPath.setParent(self);
 		mapLayer.addRegionPath(regionPath);
+	}
+	
+	function addLine(kineticLine){
+		mapLayer.addLine(kineticLine);
 	}
 	
 	function getRegionPath (region){
@@ -365,6 +369,17 @@ function Map(model, config, context){
 		addRegionPath(regionPath);
 	}
 	
+	for(var key in model.connections){
+		var connection = new Kinetic.Line({
+			points: model.connections[key],
+			stroke: 'rgba(0,0,0,0.5)',
+			strokeWidth: 2,
+			lineJoin: 'round',
+			dashArray: [2, 2]
+		});
+		addLine(connection);
+	}
+	
 	mapLayer.update();
 	actionLayer.update();
 	
@@ -393,6 +408,10 @@ function MapLayer(kineticStage){
 			geoLayer.add(regionPath.getKineticPath());
 			labelLayer.add(regionPath.getKineticNameLabel());
 			troopLayer.add(regionPath.getKineticTroopLabel());
+		},
+		
+		addLine : function(kineticLine){
+			geoLayer.add(kineticLine);
 		},
 		
 		addPointer : function(pointer){

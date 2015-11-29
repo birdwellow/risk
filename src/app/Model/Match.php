@@ -25,6 +25,7 @@ class Match extends Model {
         $array['createdBy'] = "[players:id=" . $this->createdBy->id . "]";
         $array['continents'] = $this->continents;
         $array['regions'] = $this->regions;
+        $array['connections'] = $this->connections;
         $array['players'] = $this->joinedUsers;
         $array['thread'] = $this->thread;
         
@@ -56,6 +57,12 @@ class Match extends Model {
     public function continents()
     {
         return $this->hasMany('Game\Model\Continent', 'match_id', 'id');
+    }
+    
+
+    public function connections()
+    {
+        return $this->hasMany('Game\Model\Connection', 'match_id', 'id');
     }
     
     

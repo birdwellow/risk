@@ -2,7 +2,8 @@
 
 @section('content')
     
-<script src="/js/thirdparty/kinetic-v5.1.0.min.js" defer="defer"></script>
+<!--script src="/js/thirdparty/kinetic-v5.1.0.min.js" defer="defer"></script-->
+<script src="/js/thirdparty/kinetic-v4.7.3.min.js" defer="defer"></script>
 
 <script src="/js/play/config.js"></script>
 <script src="/js/play/proxy.js" defer="defer"></script>

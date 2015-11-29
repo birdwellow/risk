@@ -3,6 +3,7 @@
 use Game\Model\Match;
 use Game\Model\Continent;
 use Game\Model\Region;
+use Game\Model\Connection;
 
 use Exception;
 
@@ -33,6 +34,8 @@ class MapTemplateImplementer {
         $regions = $this->implementRegions($template->regionData(), $continents);
         
         $this->assignNeighbors($template->regionData(), $regions);
+        
+        $this->implementConnections($template->connectionData(), $match);
     }
     
     
@@ -106,6 +109,18 @@ class MapTemplateImplementer {
             
         }
         
+    }
+    
+    
+    protected function implementConnections($connectionsPoints, Match $match){
+        
+        foreach ($connectionsPoints as $index => $points) {
+            $connection = new Connection();
+            $connection->points = json_encode($points);
+            $connection->match()->associate($match);
+            
+            $connection->save();
+        }
     }
     
 }

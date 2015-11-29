@@ -13,4 +13,8 @@ abstract class MapTemplate {
         return $this->continentsData;
     }
     
+    public function connectionData() {
+        return $this->connections;
+    }
+    
 }

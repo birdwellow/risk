@@ -3,8 +3,6 @@
 use Illuminate\Database\Eloquent\Model;
 
 class Region extends Model {
-    
-    public $label = "default";
 
     protected $fillable = [
         'name',
@@ -28,7 +26,6 @@ class Region extends Model {
         unset($array["created_at"]);
         unset($array["updated_at"]);
         
-        $array["label"] = $this->label;
         $array["continent"] = $this->continent->socketIdentifier();
         $array["owner"] = ( $this->owner ? $this->owner->socketIdentifier() : null );
         $array["cardOwner"] = ( $this->cardOwner ? $this->cardOwner->socketIdentifier() : null );
