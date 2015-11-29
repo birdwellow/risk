@@ -644,7 +644,7 @@ var Config = {
 			regions : {
 				nameLabels : {
 					fontFamily: 'Garamond',
-					fontSize: 18,
+					fontSize: 16,
 					padding: 5,
 					offsetX: 5,
 					width: 100,
@@ -683,7 +683,7 @@ var Config = {
 				strokeWidth : [1, 3, 3],
 				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
 				troops : {
-					stroke : ["rgba(87,22,22,1)", "rgba(87,22,22,1)", "rgba(87,22,22,1)"],
+					stroke : ["", "rgba(87,22,22,1)", "rgba(87,22,22,1)"],
 					strokeWidth : [2,2,2],
 					color : ["rgba(87,22,22,1)", "rgba(87,22,22,1)", "rgba(87,22,22,1)"],
 					fill : ["rgba(127,44,44,0.5)", "rgba(127,44,44,0.5)", "rgba(200,88,88,0.75)"]
@@ -696,7 +696,7 @@ var Config = {
 				strokeWidth : [1, 3, 3],
 				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
 				troops : {
-					stroke : ["rgba(22,22,87,1)", "rgba(22,22,87,1)", "rgba(22,22,87,1)"],
+					stroke : ["", "rgba(22,22,87,1)", "rgba(22,22,87,1)"],
 					strokeWidth : [2,2,2],
 					color : ["rgba(22,22,87,1)", "rgba(22,22,87,1)", "rgba(22,22,87,1)"],
 					fill : ["rgba(44,44,127,0.5)", "rgba(44,44,127,0.5)", "rgba(88,88,200,0.75)"]
@@ -709,7 +709,7 @@ var Config = {
 				strokeWidth : [1, 3, 3],
 				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
 				troops : {
-					stroke : ["rgba(22,87,22,1)", "rgba(22,87,22,1)", "rgba(22,87,22,1)"],
+					stroke : ["", "rgba(22,87,22,1)", "rgba(22,87,22,1)"],
 					strokeWidth : [2,2,2],
 					color : ["rgba(22,87,22,1)", "rgba(22,87,22,1)", "rgba(22,87,22,1)"],
 					fill : ["rgba(44,127,44,0.5)", "rgba(44,127,44,0.5)", "rgba(88,200,88,0.75)"]
@@ -722,7 +722,7 @@ var Config = {
 				strokeWidth : [1, 3, 3],
 				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
 				troops : {
-					stroke : ["rgba(100,100,0,1)", "rgba(100,100,0,1)", "rgba(100,100,0,1)"],
+					stroke : ["", "rgba(100,100,0,1)", "rgba(100,100,0,1)"],
 					strokeWidth : [2,2,2],
 					color : ["rgba(50,50,0,1)", "rgba(50,50,0,1)", "rgba(50,50,0,1)"],
 					fill : ["rgba(126,126,0,0.5)", "rgba(126,126,0,0.5)", "rgba(200,200,0,0.75)"]
@@ -735,7 +735,7 @@ var Config = {
 				strokeWidth : [1, 3, 3],
 				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
 				troops : {
-					stroke : ["rgba(120,80,0,1)", "rgba(120,80,0,1)", "rgba(120,80,0,1)"],
+					stroke : ["", "rgba(120,80,0,1)", "rgba(120,80,0,1)"],
 					strokeWidth : [2,2,2],
 					color : ["rgba(70,40,0,1)", "rgba(70,40,0,1)", "rgba(70,40,0,1)"],
 					fill : ["rgba(150,100,0,0.5)", "rgba(150,100,0,0.5)", "rgba(220,120,0,0.75)"]
@@ -748,7 +748,7 @@ var Config = {
 				strokeWidth : [1, 3, 3],
 				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
 				troops : {
-					stroke : ["rgba(120,80,0,1)", "rgba(120,80,0,1)", "rgba(120,80,0,1)"],
+					stroke : ["", "rgba(120,80,0,1)", "rgba(120,80,0,1)"],
 					strokeWidth : [2,2,2],
 					color : ["rgba(70,40,0,1)", "rgba(70,40,0,1)", "rgba(70,40,0,1)"],
 					fill : ["rgba(150,120,0,0.5)", "rgba(150,120,0,0.5)", "rgba(190,140,0,0.75)"]
@@ -761,7 +761,7 @@ var Config = {
 				strokeWidth : [1, 3, 3],
 				text : ["rgba(0,0,0,0.50)", "rgba(0,0,0,0.75)", "rgba(0,0,0,1)"],
 				troops : {
-					stroke : ["rgba(87,0,70,1)", "rgba(87,0,70,1)", "rgba(87,0,70,1)"],
+					stroke : ["", "rgba(87,0,70,1)", "rgba(87,0,70,1)"],
 					strokeWidth : [2,2,2],
 					color : ["rgba(50,0,40,1)", "rgba(50,0,40,1)", "rgba(50,0,40,1)"],
 					fill : ["rgba(127,0,90,0.5)", "rgba(127,0,90,0.5)", "rgba(200,0,160,0.75)"]
