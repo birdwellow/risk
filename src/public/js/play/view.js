@@ -170,7 +170,7 @@ function Map(model, config, context){
 		height: config.height
 	});
 	kineticStage.on("mousemove", function(e){
-		console.log(kineticStage.getPointerPosition());
+		//console.log(kineticStage.getPointerPosition());
 	});
 	
 	var mapControls = new MapControls("map-controls");
@@ -248,6 +248,7 @@ function Map(model, config, context){
 			config.height,
 			100
 		);
+
 		var targetScale = centering.scale;
 		var targetOffset = centering.offset;
 		
@@ -375,7 +376,7 @@ function Map(model, config, context){
 			stroke: 'rgba(0,0,0,0.5)',
 			strokeWidth: 2,
 			lineJoin: 'round',
-			dashArray: [2, 2]
+			dash: [2, 2]
 		});
 		addLine(connection);
 	}

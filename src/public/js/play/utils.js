@@ -64,7 +64,7 @@ var Utils = {
 			var spreadY = Math.abs(point1.y - point2.y) + 2 * margin;
 			var scaleX = borderWidth / spreadX;
 			var scaleY = borderHeight / spreadY;
-			var scale = Math.min(scaleX, scaleY);
+			var scale = Math.min(scaleX, scaleY) / 1.45;
 			
 			var borderCenter = {
 				x: borderWidth / 2,
@@ -75,6 +75,7 @@ var Utils = {
 				x: scale * pointsMiddle.x,
 				y: scale * pointsMiddle.y
 			};
+			
 			var offset = this.fromToVector(borderCenter, scaledPointsCenter);
 			
 			return {
