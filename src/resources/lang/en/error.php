@@ -23,6 +23,7 @@ return [
         'join.match.wrong.parameters' => "You could not yet join the match. Please correct your inputs.",
         'cannot.delete.match' => "You may not cancel the match.",
         'cannot.administrate.match' => "You may not administrate the match.",
+        'cannot.start.match' => "Not enough players have joined the match.",
         'options.notsaved' => "Your options were not saved.",
         'password.notchanged' => "The password was not changed.",
         'thread.notcreated' => "The thread was not created.",

@@ -43,6 +43,10 @@ class GameException extends Exception {
             "message" => "error.cannot.administrate.match",
             "category" => "error.user"
         ],
+        "CANNOT.START.MATCH" => [
+            "message" => "error.cannot.start.match",
+            "category" => "error.user"
+        ],
         "ONLY.INVITED.USERS" => [
             "message" => "error.only.invited.users",
             "category" => "error.user"

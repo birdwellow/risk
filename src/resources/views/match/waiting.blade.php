@@ -60,6 +60,14 @@
                                 <button id="refresh" class="btn btn-primary">
                                     {{ Lang::get('message.button.match.waiting.refresh') }}
                                 </button>
+                                
+                                @if($match->createdBy->id == Auth::user()->id)
+                                <input
+                                        type="button"
+                                        class="action btn btn-primary"
+                                        onclick="UI.confirmRedirect('{{ route("match.start") }}', '{{ Lang::get('input.match_start') }}', '{{ Lang::get('message.title.match.start') }}', '{{ Lang::get('message.button.no') }}', '{{ Lang::get('message.button.yes') }}');"
+                                        value="{{ Lang::get('message.link.match.start') }}">
+                                @endif
                         </div>
                         
                 </div>  

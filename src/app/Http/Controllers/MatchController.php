@@ -154,6 +154,21 @@ class MatchController extends Controller {
         
         
         
+        public function startMatch() {
+            
+                $user = Auth::user();
+                $match = $this->matchManager->getMatchForUser($user);
+                $this->matchManager->checkUserCanAdministrateMatch($user, $match);
+                
+                $this->matchManager->startMatch($match);
+                
+                return redirect()
+                            ->route("match.goto");
+            
+        }
+        
+        
+        
         public function goToMatch() {
             
                 $user = Auth::user();

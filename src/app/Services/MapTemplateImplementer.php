@@ -77,6 +77,7 @@ class MapTemplateImplementer {
             $region->svgdata = $regionData["svgdata"];
             $region->centerx = $regionData["center"][0];
             $region->centery = $regionData["center"][1];
+            $region->cardunittype = $regionData["cardunittype"];
             $region->labelcenterx = $regionData["labelcenter"][0];
             $region->labelcentery = $regionData["labelcenter"][1];
             $region->angle = $regionData["angle"];

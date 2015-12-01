@@ -88,6 +88,11 @@ Route::get('match/cancel', [
     'uses' => 'MatchController@cancelMatch'
 ]);
 
+Route::get('match/start', [
+    'as' => 'match.start',
+    'uses' => 'MatchController@startMatch'
+]);
+
 Route::get('match/administrate', [
     'as' => 'match.administrate',
     'uses' => 'MatchController@administrateMatchForm'

@@ -546,11 +546,17 @@
     input.warn:hover{
         color: #ea645f;
     }
+    input.action{
+        color: #3c873d;
+    }
+    input.action:hover{
+        color: #3c873d;
+    }
     a.action{
-        color: #3c983d;
+        background: #3c873d;
     }
     a.action:hover{
-        color: #4da94e;
+        background: #3c873d;
     }
     .info-small{
         font-size: 0.8em;
@@ -779,7 +785,6 @@
         width: 20%;
         text-align: center;
         padding: 5px;
-        background-color: rgba(255,255,255,0.25);
         display: table-cell;
     }
     .control-group{
@@ -924,6 +929,7 @@
         margin: 0 -35px 5px 0;
         cursor: pointer;
         background-image: url("/img/classic-background.jpg");
+        border: 2px solid #fff
     }
     .card:hover {
         margin: 0 5px 5px 0;
@@ -931,7 +937,6 @@
     }
     .card.selected {
         padding: 5px;
-        border: 2px solid #fff;
         margin: 0 5px 5px 0;
         box-shadow: 10px 10px 5px rgba(0,0,0,0.5);
     }
@@ -945,23 +950,63 @@
         padding: 3px;
         color: #fff;
         text-align: center;
+        width: 80px;
+        height: 120px;
     }
     .card .symbol{
         width: 70px;
         height: 70px;
     }
-    .card.europe .body {
-        background: #4b4;
+    
+    .card.red .body {
+        background: rgba(255,130,130,1);
     }
-    .card.america .body {
-        background: rgba(200,200,50,0.5);
+    .card.red.selected .body {
+        background: rgba(255,130,130,0.5);
     }
-    .card.america.selected .body {
-        background: rgb(200,200,50);
+    
+    .card.blue .body {
+        background: rgba(180,180,255,0.5);
     }
-    .card.africa .body {
-        background: #553700;
+    .card.blue.selected .body {
+        background: rgba(180,180,255,1);
     }
+    
+    .card.green .body {
+        background: rgba(88,255,88,0.5);
+    }
+    .card.green.selected .body {
+        background: rgba(88,255,88,1);
+    }
+    
+    .card.yellow .body {
+        background: rgba(255,255,0,0.5);
+    }
+    .card.yellow.selected .body {
+        background: rgba(255,255,0,1);
+    }
+    
+    .card.orange .body {
+        background: rgba(255,180,0,0.5);
+    }
+    .card.orange.selected .body {
+        background: rgba(255,180,0,1);
+    }
+    
+    .card.brown .body {
+        background: rgba(200,130,0,0.5);
+    }
+    .card.brown.selected .body {
+        background: rgba(200,130,0,1);
+    }
+    
+    .card.purple .body {
+        background: rgba(210,0,180,0.5);
+    }
+    .card.purple.selected .body {
+        background: rgba(210,0,180,1);
+    }
+    
     .card .symbol.category-1{
         background: rgba(0, 0, 0, 0) url("/img/symbols/infantry.png") repeat scroll 0 0 / cover;
     }

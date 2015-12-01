@@ -23,6 +23,7 @@ return [
         'join.match.wrong.parameters' => "Du konntest dem Match noch nicht beitreten, bitte korrigiere deine Eingaben.",
         'cannot.delete.match' => "Du darfst das Spiel nicht beenden.",
         'cannot.administrate.match' => "Du darfst das Spiel nicht verwalten.",
+        'cannot.start.match' => "Dem Spiel sind noch nicht genug Spieler beigetreten.",
         'options.notsaved' => "Deine Optionen konnten nicht gespeichert werden.",
         'password.notchanged' => "Das Passwort konnte nicht ge&auml;ndert werden.",
         'thread.notcreated' => "Thread konnte nicht erstellt werden.",

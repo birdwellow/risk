@@ -19,6 +19,7 @@ return [
         'link.match.overview' => "&Uuml;bersicht",
         'link.match.new' => "Neues Match",
         'link.match.cancel' => "Match abbrechen",
+        'link.match.start' => "Match starten",
         'link.match.administrate' => "':matchName' verwalten",
         'link.login' => "Login",
         'link.logout' => "Logout",
@@ -78,6 +79,7 @@ return [
         'title.match.invitations' => "Spieler einladen",
         'title.match.data' => "Match-Daten",
         'title.match.cancel' => "Match abbrechen",
+        'title.match.start' => "Match starten",
         'title.search.match' => "Offene Matches suchen",
         'title.search.match.help' => "Es werden nur &ouml;ffentliche Matches angezeigt, "
                 . "die noch auf Mitspieler warten.",

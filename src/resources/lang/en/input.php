@@ -55,6 +55,8 @@ return [
         'match_cancel_warning_pt2' => "However, this should only be done if all "
             . "players agreed or one or more players haven't been active for "
             . "some time.",
+        'match_start' => "Do you want to start this match?",
+        'match_start_warning' => "The match will be closed for further users to join.",
     
         'match_state' => "State",
         'match_state.waitingforjoins' => "Waiting for players",

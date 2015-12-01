@@ -133,6 +133,32 @@
                                                 </div>
 
                                         </div>
+                                        
+                                        @if($match->state == "waitingforjoins")
+                                        <div class="section">
+                                                <h2>
+                                                    {{ Lang::get('message.title.match.start') }}
+                                                </h2>
+                                            
+                                                <div class="form-group">
+                                                        <label class="col-md-3 control-label">
+                                                                {{ Lang::get('input.match_start') }}
+                                                                <div class="small">
+                                                                    {{ Lang::get('input.match_start_warning') }}
+                                                                </div>
+                                                        </label>
+                                                    
+                                                        <div class="col-md-6 control">
+                                                                <input
+                                                                        type="button"
+                                                                        class="action btn btn-primary"
+                                                                        onclick="UI.confirmRedirect('{{ route("match.start") }}', '{{ Lang::get('input.match_start') }}', '{{ Lang::get('message.title.match.start') }}', '{{ Lang::get('message.button.no') }}', '{{ Lang::get('message.button.yes') }}');"
+                                                                        value="{{ Lang::get('message.link.match.start') }}">
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        @endif
+                                        
                                         <div class="section">
                                                 <h2>
                                                     {{ Lang::get('message.title.match.cancel') }}
@@ -152,7 +178,7 @@
                                                                 <input
                                                                         type="button"
                                                                         class="warn btn btn-primary"
-                                                                        onclick="UI.confirmRedirect('{{ route("match.cancel") }}', '{{ Lang::get('input.match_cancel') }}', '{{ Lang::get('message.title.match.cancel') }}', '{{ Lang::get('message.button.no') }}', '{{ Lang::get('message.button.yes') }}');"
+                                                                        onclick="UI.confirmRedirect('{{ route("match.cancel") }}', '{{ Lang::get('input.match_cancel') }}', '{{ Lang::get('message.title.match.cancel') }}', '{{ Lang::get('message.button.no') }}', '{{ Lang::get('message.button.yes') }}', 'warn');"
                                                                         value="{{ Lang::get('message.link.match.cancel') }}">
                                                         </div>
                                                 </div>

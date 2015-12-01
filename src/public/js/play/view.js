@@ -170,7 +170,7 @@ function Map(model, config, context){
 		height: config.height
 	});
 	kineticStage.on("mousemove", function(e){
-		//console.log(kineticStage.getPointerPosition());
+		console.log(kineticStage.getPointerPosition());
 	});
 	
 	var mapControls = new MapControls("map-controls");
@@ -1355,7 +1355,7 @@ function Chat(elementId, parent) {
 
 function Card(model, context){
 	
-	var classes = "card " + model.continent.name;
+	var classes = "card " + model.continent.colorscheme;
 	if(!context || (context && context.selectedCards && context.selectedCards.indexOf(model) > -1)){
 		classes += " selected";
 	}

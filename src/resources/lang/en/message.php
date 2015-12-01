@@ -19,6 +19,7 @@ return [
         'link.match.overview' => "Overview",
         'link.match.new' => "New Match",
         'link.match.cancel' => "Cancel Match",
+        'link.match.start' => "Start Match",
         'link.match.administrate' => "Administrate ':matchName'",
         'link.login' => "Login",
         'link.logout' => "Logout",
@@ -78,6 +79,7 @@ return [
         'title.match.invitations' => "Invite users",
         'title.match.data' => "Match Data",
         'title.match.cancel' => "Cancel Match",
+        'title.match.start' => "Start Match",
         'title.search.match' => "Search Open Matches",
         'title.search.match.help' => "Only public Matches are displayed, "
                 . "that are still waiting for players.",

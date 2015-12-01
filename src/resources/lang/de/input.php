@@ -55,6 +55,8 @@ return [
         'match_cancel_warning_pt2' => "Dies sollte aber nur getan werden, wenn "
             . "zuvor alle Mitspielern zugestimmt haben oder wenn ein oder mehr "
             . "Spieler eine zu lange Zeit nicht mehr aktiv waren.",
+        'match_start' => "Willst du dieses Match starten?",
+        'match_start_warning' => "Andere User werden dem Match nicht mehr beitreten k&ouml;nnen.",
     
         'match_state' => "Status",
         'match_state.waitingforjoins' => "Warte auf weitere Mitspieler",

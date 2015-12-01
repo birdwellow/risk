@@ -6,6 +6,7 @@ use Game\Services\IdTokenService;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Description of MatchManager
@@ -224,6 +225,8 @@ class MatchManager {
         
         public function cancelMatch($match) {
 
+                DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+                
                 foreach ($match->continents as $continent) {
                     foreach ($continent->regions as $region) {
                         $region->owner()->dissociate();
@@ -237,15 +240,21 @@ class MatchManager {
                 }
 
                 $match->delete();
+                
+                DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         }
 
         
         public function startMatch($match){
             
-                $i = 1;
                 $joinedUsers = $match->joinedUsers;
+                if(count($joinedUsers) < 2 || count($joinedUsers) > 6){
+                    throw new GameException("CANNOT.START.MATCH");
+                }
                 $shuffledJoinedUsers = $joinedUsers->shuffle();
+                
+                $i = 1;
                 foreach($shuffledJoinedUsers as $randomJoinedUser){
                     $randomJoinedUser->matchorder = $i;
                     $randomJoinedUser->save();
@@ -261,7 +270,6 @@ class MatchManager {
                 $match->state = self::MATCHSTATE_STARTED;
                 $match->roundphase = self::ROUNDPHASE_TROOPGAIN;
                 $match->save();
-                
 
         }
 
@@ -314,8 +322,11 @@ class MatchManager {
         
         protected function distrubuteDeployTroopsRandomlyToRegions(Match $match) {
             
+            $userCount = count($match->joinedUsers);
+            $troopsPerUser = $this->getTroopsForUserNumber($userCount);
+            
             foreach ($match->joinedUsers as $player) {
-                $troops = 24;
+                $troops = $troopsPerUser;
                 foreach ($player->regions as $playerRegion) {
                     $playerRegion->troops++;
                     $playerRegion->save();
@@ -328,6 +339,19 @@ class MatchManager {
                     $randomPlayerRegion->save();
                     $troops--;
                 }
+            }
+            
+        }
+        
+        
+        protected function getTroopsForUserNumber($userNumber){
+            
+            switch($userNumber){
+                case 2 : return 40;
+                case 3 : return 35;
+                case 4 : return 30;
+                case 5 : return 25;
+                case 6 : return 20;
             }
             
         }

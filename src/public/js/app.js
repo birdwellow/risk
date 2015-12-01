@@ -124,11 +124,11 @@ var UI = {
         
     },
     
-    confirmRedirect : function(url, message, title, abortLabel, confirmLabel){
+    confirmRedirect : function(url, message, title, abortLabel, confirmLabel, type){
         
         var config = {
             allowCloseOnBackground : false,
-            type : "info",
+            type : type || "info",
             message : message,
             title : title || "Confirm",
             buttons : {

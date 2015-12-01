@@ -4,7 +4,7 @@
 
 <div class="container">
     
-        <div class="col-md-8 col-md-offset-0">
+        <div class="col-md-7 col-md-offset-0">
                 <div class="panel panel-default">
                     @if(!Auth::user()->joinedMatch)
                         <div class="panel-heading">
@@ -159,7 +159,7 @@
                 </div>
         </div>
     
-        <div class="col-md-4 col-md-offset-0">
+        <div class="col-md-5 col-md-offset-0">
                 <div class="panel panel-default">
                         <div class="panel-heading">
                                 {{ Lang::get('message.title.overview.matches') }}
@@ -169,13 +169,13 @@
                                 <table>
                                         <tr>
                                                 <td>
-                                                        {{ Lang::get('input.match.name') }}
+                                                        {{ Lang::get('input.match_name') }}
                                                 </td>
                                                 <td>
-                                                        {{ Lang::get('input.match.joinedusers') }}
+                                                        {{ Lang::get('input.match_joinedusers') }}
                                                 </td>
                                                 <td>
-                                                        {{ Lang::get('input.match.startdate') }}
+                                                        {{ Lang::get('input.match_startdate') }}
                                                 </td>
                                         </tr>
 
@@ -186,11 +186,11 @@
                                                 </td>
                                                 <td>
                                                     @foreach($match->joinedUsers as $joinedUser)
-                                                        {{ $joinedUser->name }}
+                                                        {!! userlabel($joinedUser) !!}
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                        {{ $match->created_at }}
+                                                        {{ date("d M Y, H:m:s", strtotime($match->created_at)) }}
                                                 </td>
                                         </tr>
                                     @endforeach
