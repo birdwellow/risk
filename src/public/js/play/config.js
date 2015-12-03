@@ -63,10 +63,10 @@ var Config = {
 			View = new ViewInstance(Controller);
 
 			var map = new Map(Model, Config.view.map, Controller.getContext());
-			View.addComponent(map).as("Map");
+			View.addComponentAs(map, "Map");
 
 			var sideBar = new SideBar(Model, Config.view.map, Controller.getContext());
-			View.addComponent(sideBar).as("SideBar");
+			View.addComponentAs(sideBar, "SideBar");
 
 			Controller.switchToState(Model.roundphase);
 		},
@@ -156,11 +156,12 @@ var Config = {
 			"attack.result" : function(context){
 				Config.controller.utils.enrichResultsWithModels(context.attackResult, context.moveStart, context.moveEnd);
 				var result = context.attackResult;
+				console.log(result);
 				context.callback = function(){
 					for(var i in result){
 						var resultPart = result[i];
 						var loserRegion = resultPart[3];
-						if(Utils.Type.isObject(loserRegion) && loserRegion.troops){
+						if(Utils.Type.isObject(loserRegion) && loserRegion.troops > 1){
 							--loserRegion.troops;
 						}
 					}
@@ -169,7 +170,15 @@ var Config = {
 						"start" : "region." + context.moveStart.name,
 						"end" : "region." + context.moveEnd.name
 					}));
+					if(context.moveStart.troops <= 1){
+						context.moveEnd = null;
+						context.moveStart = null;
+						context.moveType = null;
+						Controller.switchToState("attack");
+					}
 				};
+				
+				return "attack.confirm";
 			},
 			
 			"attack.victory" : function(context){
@@ -185,8 +194,12 @@ var Config = {
 					}
 					
 					context.moveEnd.owner = context.moveStart.owner;
-					context.moveEnd.troops++;
-					context.moveStart.troops--;
+					var autoShiftTroops = Math.ceil(context.moveStart.troops / 2);
+					autoShiftTroops = Math.min(autoShiftTroops, context.moveStart.troops);
+					
+					context.moveEnd.troops += autoShiftTroops;
+					context.moveStart.troops -= autoShiftTroops;
+					context.shiftTroops = autoShiftTroops;
 					context.moveType = "troopshift";
 					
 					log(Lang.get("attack.victory", {
@@ -439,10 +452,11 @@ var Config = {
 				
 				"button.attack.confirm.clicked" : function(context, event){
 					context.attackResult = "waiting";
-					var attackorTroops = Math.min(context.moveStart.troops - 1, 3);
-					var defenderTroops = Math.min(context.moveEnd.troops, 2);
-					context.attackTroops = [attackorTroops, defenderTroops];
+					if(!context.moveStart.troops > 1){
+						return;
+					}
 					proxy.send("attack.confirm");
+					return "attack.waiting";
 				},
 				
 				"button.attack.cancel.clicked" : function(context, event){
@@ -452,6 +466,10 @@ var Config = {
 					context.mouseOverRegion = null;
 					return "attack";
 				}
+				
+			},
+			
+			"attack.waiting" : {
 				
 			},
 			

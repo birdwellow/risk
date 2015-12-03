@@ -71,7 +71,7 @@ class MatchController extends Controller {
                         $mapName,
                         "in:" . implode(",", $this->matchManager->getMapNames())
                     ],
-                    "match_invited_users" => sizeof($invitedUsersArray),
+                    "match_invited_users" => $isPublic | sizeof($invitedUsersArray),
                     "match_maximum_users" => $maxUsers
                 ], "CREATE.MATCH.WRONG.PARAMETERS");
 

@@ -26,15 +26,9 @@ function ViewInstance(controller) {
 			return controller.getContext();
 		},
 
-		addComponent : function(component, name){
-			components.push(component);
+		addComponentAs : function(component, name){
+			components[name] = component;
 			component.setParent(this);
-			return {
-				as : function(name){
-					components[name] = component;
-					return self;
-				}
-			};
 		},
 
 		getComponent : function(key){
@@ -153,8 +147,10 @@ function Map(model, config, context){
 				var regionPath = regionPaths[regionPathKey];
 				regionPath.update();
 			}
+			
 			mapLayer.update();
 			actionLayer.update();
+			
 			
 		},
 
@@ -170,7 +166,7 @@ function Map(model, config, context){
 		height: config.height
 	});
 	kineticStage.on("mousemove", function(e){
-		console.log(kineticStage.getPointerPosition());
+		//console.log(kineticStage.getPointerPosition());
 	});
 	
 	var mapControls = new MapControls("map-controls");
@@ -1592,3 +1588,13 @@ function SideBar(model, config, context) {
 	
 	return self;
 }
+
+start = function(){
+	startTime = new Date().getTime();
+};
+
+stop = function(string){
+	endTime = new Date().getTime();
+	console.log(string + ": " + (endTime - startTime));
+	delete startTime, endTime;
+};

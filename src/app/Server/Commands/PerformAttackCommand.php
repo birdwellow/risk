@@ -25,7 +25,7 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
         $data = $event->getData();
         
         $attackorRegion = $event->moveStart;
-        $attackorTroops = min($attackorRegion->troops, 3);
+        $attackorTroops = min($attackorRegion->troops-1, 3);
         $defenderRegion = $event->moveEnd;
         $defenderTroops = min($defenderRegion->troops, 2);
         
@@ -62,8 +62,12 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
             $eventName = "attack.victory";
             $newOwner = $attackorRegion->owner;
             $defenderRegion->owner()->associate($newOwner);
-            $defenderRegion->troops += 1;
-            $attackorRegion->troops -= 1;
+            
+            $autoShiftTroops = ceil($attackorRegion->troops / 2);
+            $autoShiftTroops = min($autoShiftTroops, $attackorRegion->troops);
+            
+            $defenderRegion->troops += $autoShiftTroops;
+            $attackorRegion->troops -= $autoShiftTroops;
             $defenderRegion->save();
             $attackorRegion->save();
             
@@ -85,9 +89,11 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
             
             $winner = $this->calculateWinner($match->fresh());
             if($winner !== null){
-                $this->endMatchWithWinner($match, $winner);
+                $this->endMatch($match, $winner);
                 $event->winner = $winner;
             }
+        
+            return new ServerEvent($eventName, $event->getData(), $match);
             
         }
         
@@ -196,14 +202,10 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
     }
     
     
-    protected function endMatchWithWinner(Match $match, User $player) {
+    protected function endMatch(Match $match) {
         
-        $roundPhaseData = new \stdClass();
-        $roundPhaseData->winner_id = $player->id;
-        $match->roundphasedata = json_encode($roundPhaseData);
-        $match->state = MatchManager::MATCHSTATE_FINISHED;
-        
-        $match->save();
+        $matchManager = new MatchManager();
+        $matchManager->cancelMatch($match);
         
     }
     

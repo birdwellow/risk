@@ -26,6 +26,8 @@ return [
         'link.register' => "Registrieren",
         'link.profile' => "Profil",
         'link.options' => "Optionen",
+        'link.suggestion.create.match' => "Erstelle ein neues Match",
+        'link.suggestion.search.match' => "Suche ein offenes Match",
     
     
         'name.language.en' => "English",

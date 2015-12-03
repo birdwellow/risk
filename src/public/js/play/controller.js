@@ -29,7 +29,6 @@ var Controller = {
 	},
 
 	listen : function(event){
-		
 		var resultingState = this.executeEventClosure(event);
 		if(resultingState){
 			this.switchToState(resultingState);

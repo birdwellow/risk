@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
+use Game\User;
+
 /**
  * Description of MatchManager
  *
@@ -223,15 +225,22 @@ class MatchManager {
         }
 
         
-        public function cancelMatch($match) {
+        public function cancelMatch(Match $match) {
 
                 DB::statement('SET FOREIGN_KEY_CHECKS=0;');
                 
                 foreach ($match->continents as $continent) {
                     foreach ($continent->regions as $region) {
-                        $region->owner()->dissociate();
-                        $region->save();
+                        foreach ($region->neighbors as $neighbor) {
+                            $region->neighbors()->detach($neighbor);
+                            $neighbor->neighbors()->detach($region);
+                        }
+                        $region->delete();
                     }
+                    $continent->delete();
+                }
+                foreach ($match->connections as $connection) {
+                    $connection->delete();
                 }
                 foreach ($match->joinedUsers as $joinedUser) {
                     $result = $joinedUser->joinedMatch()->dissociate();
@@ -269,7 +278,35 @@ class MatchManager {
                 $match->activePlayer()->associate($firstPlayer);
                 $match->state = self::MATCHSTATE_STARTED;
                 $match->roundphase = self::ROUNDPHASE_TROOPGAIN;
+                
+                $newTroopsObject = $this->getNewTroopsObjectForUser($firstPlayer);
+                foreach ($newTroopsObject as $newTroops) {
+                    $firstPlayer->newtroops += $newTroops;
+                }
+                $match->roundphasedata = json_encode($newTroopsObject);
+                
                 $match->save();
+                $firstPlayer->save();
+
+        }
+
+
+    
+        public function getNewTroopsObjectForUser(User $player) {
+
+            $newTroopsObject = new \stdClass();
+
+            $newTroopsObject->base = 3;
+
+            $regions = $player->regions;
+            $newTroopsObject->regions = floor(count($regions)/3);
+
+            foreach ($player->continents as $continent){
+                $continentName = $continent->name;
+                $newTroopsObject->$continentName = $continent->troopbonus;
+            }
+
+            return $newTroopsObject;
 
         }
 

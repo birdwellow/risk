@@ -6,21 +6,27 @@ class EarthMapTemplate extends MapTemplate {
     protected $continentsData = [
         "northamerica" => [
             "colorscheme" => "yellow",
+            "troopbonus" => 5,
         ],
         "southamerica" => [
             "colorscheme" => "orange",
+            "troopbonus" => 2,
         ],
         "africa" => [
             "colorscheme" => "brown",
+            "troopbonus" => 3,
         ],
         "europe" => [
             "colorscheme" => "blue",
+            "troopbonus" => 5,
         ],
         "asia" => [
             "colorscheme" => "green",
+            "troopbonus" => 7,
         ],
         "australia" => [
             "colorscheme" => "purple",
+            "troopbonus" => 2,
         ],
     ];
     

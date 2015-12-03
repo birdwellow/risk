@@ -10,6 +10,8 @@ use Illuminate\Support\Collection;
 use Game\Server\SocketEvent;
 use Game\Server\ServerEvent;
 use Game\Model\Match;
+use Game\User;
+use Game\Managers\MatchManager;
 
 /**
  * Description of PerformAttackCommand
@@ -91,21 +93,11 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
 
 
     
-    protected function getNewTroopsObjectForUser(\Game\User $player) {
+    protected function getNewTroopsObjectForUser(User $player) {
         
-        $newTroopsObject = new \stdClass();
+        $matchManager = new MatchManager();
         
-        $newTroopsObject->base = 3;
-        
-        $regions = $player->regions;
-        $newTroopsObject->regions = floor(count($regions));
-        
-        foreach ($player->continents as $continent){
-            $continentName = $continent->name;
-            $newTroopsObject->$continentName = $continent->troopbonus;
-        }
-        
-        return $newTroopsObject;
+        return $matchManager->getNewTroopsObjectForUser($player);
         
     }
     

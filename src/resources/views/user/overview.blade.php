@@ -12,6 +12,13 @@
                         </div>
                     
                         <div class="panel-body">
+                            <a class="suggestion" href="{{ route('match.new') }}">
+                                <img src="/img/plus.png"/> {{ Lang::get('message.link.suggestion.create.match') }}
+                            </a>
+                            <br>
+                            <a class="suggestion" href="{{ route('match.search') }}">
+                                <img src="/img/search.png"/> {{ Lang::get('message.link.suggestion.search.match') }}
+                            </a>
                         </div>
                     @else
                         <div class="panel-heading">

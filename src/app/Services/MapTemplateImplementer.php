@@ -48,6 +48,7 @@ class MapTemplateImplementer {
             $continent = new Continent();
             $continent->name = $index;
             $continent->colorscheme = $continentData["colorscheme"];
+            $continent->troopbonus = $continentData["troopbonus"];
             
             $continent->match()->associate($match);
             
