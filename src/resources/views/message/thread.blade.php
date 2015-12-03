@@ -6,7 +6,7 @@
                                     @foreach($thread->participants as $participant)
                                         {!! userlabel($participant->user) !!}
                                     @endforeach
-                                <a class="mini-button" href="javascript:UI.toggle('#add-users')">+</a>
+                                <a class="mini-button" toggle-for="add-users" >+</a>
                             </div>
                             
                             <div id="add-users" style="display: none;">

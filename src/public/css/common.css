@@ -435,6 +435,7 @@
         border: 1px solid #fff;
         margin-left: 5px;
         margin-top: -5px;
+        cursor: pointer;
     }
     .mini-button:hover{
         background: rgba(255,255,255,0.25);
