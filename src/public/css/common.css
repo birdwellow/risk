@@ -177,6 +177,14 @@
         line-height: 70px;
         height: 90px;
     }
+    .navbar > .container .navbar-brand,
+    .navbar > .container-fluid .navbar-brand{
+        margin: 5px -15px -5px;
+    }
+    .navbar-brand img {
+        width:80px;
+        margin:-25px -0px 5px -30px;
+    }
     .navbar-default .navbar-nav > li > a {
       color: #fff;
     }

@@ -27,7 +27,7 @@ class MatchManager {
         const ROUNDPHASE_ATTACK = "attack";
         const ROUNDPHASE_TROOPSHIFT = "troopshift";
         
-        const COLORSCHEMES = [
+        static protected $COLORSCHEMES = [
             "red",
             "blue",
             "yellow",
@@ -175,7 +175,7 @@ class MatchManager {
                 array_push($takenColorSchemes, $user->matchcolor);
             }
             
-            $allowedColorSchemes = array_diff(self::COLORSCHEMES, $takenColorSchemes);
+            $allowedColorSchemes = array_diff(self::$COLORSCHEMES, $takenColorSchemes);
             
             return $allowedColorSchemes;
             

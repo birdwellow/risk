@@ -830,7 +830,11 @@ function MapControls(elementId){
 		
 		activePlayer : function(newActivePlayer){
 			activePlayerLabel.html(newActivePlayer.name);
-			var avatar = HTML.make("img", "user-avatar icon").attr("src", "/img/avatars/" + newActivePlayer.avatarfile);
+			var avatarImage = newActivePlayer.avatarfile;
+			if(!avatarImage){
+				avatarImage = "default.png";
+			}
+			var avatar = HTML.make("img", "user-avatar icon").attr("src", "/img/avatars/" + avatarImage);
 			activePlayerLabel.append(avatar);
 			activePlayerLabel.attr("class", "matchUserColorScheme " + newActivePlayer.matchcolor);
 		},
@@ -1477,9 +1481,16 @@ function PlayerList(elementId){
 	for(var i in Model.players){
 		var player = Model.players[i];
 		
+		var avatarImg = "";
+		if(player.avatarfile){
+			avatarImg = player.avatarfile;
+		} else {
+			avatarImg = "default.png";
+		}
+		
 		var element = {
 			playerData : HTML.make("div", "data player"),
-			img : HTML.make("img", "user-avatar").attr("src", "/img/avatars/" + player.avatarfile),
+			img : HTML.make("img", "user-avatar").attr("src", "/img/avatars/" + avatarImg),
 			state : HTML.make("div", "state"),
 			nameLabel : HTML.make("span").html(player.name)
 		};

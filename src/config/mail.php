@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => "contact@fvogel.net", 'name' => "Risk System"],
+	'from' => ['address' => "contact@fvogel.net", 'name' => "Conquera System"],
 
 	/*
 	|--------------------------------------------------------------------------

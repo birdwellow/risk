@@ -156,7 +156,6 @@ var Config = {
 			"attack.result" : function(context){
 				Config.controller.utils.enrichResultsWithModels(context.attackResult, context.moveStart, context.moveEnd);
 				var result = context.attackResult;
-				console.log(result);
 				context.callback = function(){
 					for(var i in result){
 						var resultPart = result[i];
@@ -199,7 +198,8 @@ var Config = {
 					
 					context.moveEnd.troops += autoShiftTroops;
 					context.moveStart.troops -= autoShiftTroops;
-					context.shiftTroops = autoShiftTroops;
+					context.shiftTroops = 0;
+					console.log("Shift: " + context.shiftTroops);
 					context.moveType = "troopshift";
 					
 					log(Lang.get("attack.victory", {
@@ -343,9 +343,7 @@ var Config = {
 			
 				"region.mouse.click" : function(context, event){
 					var region = event.data.model;
-					console.log("click");
 					if(Model.me === region.owner){
-						console.log("am owner");
 						context.region = region;
 						proxy.send("deploy.unit");
 					}
@@ -509,6 +507,7 @@ var Config = {
 					if(context.shiftTroops === undefined){
 						context.shiftTroops = 0;
 					}
+					console.log("Shifting " + context.shiftTroops);
 					proxy.send("attack.troopshift.confirm");
 				}
 				

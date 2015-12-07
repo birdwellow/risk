@@ -26,8 +26,8 @@ return [
         "resetemail.body.link.click" => "Klicke hier, um dein Passwort zu &auml;ndern",
         "resetemail.body.ignore" => "Solltest du keinen Passwort-Reset angefordert haben, kannst du diese E-Mail ignorieren.",
         "resetemail.body.support" => "Im Falle weiterer Probleme, wende dich gerne an unseren Support",
-        "resetemail.body.havefun" => "Wir w&uuml;nschen dir noch viel Spa&szlig; mit Risk!",
+        "resetemail.body.havefun" => "Wir w&uuml;nschen dir noch viel Spa&szlig; mit Conquera!",
         "resetemail.body.goodbye" => "Viele Gr&uuml;&szlig;e",
-        "resetemail.body.signature" => "Dein Risk Team",
+        "resetemail.body.signature" => "Dein Conquera Team",
 
 ];

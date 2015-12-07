@@ -59,7 +59,9 @@ class AccountController extends Controller {
                 
                 $newUserName = Input::get('new_user_name');
                 $newUserEmail = Input::get('new_user_email');
-                $newUserAvatarFile = Input::get('new_user_avatarfile');
+                $newUserAvatarFile = Input::file('new_user_avatarfile');
+                Log::info($newUserEmail);
+                Log::info($newUserAvatarFile);
                 
                 $attributes = array();
                 if($user->name !== $newUserName){

@@ -95,9 +95,12 @@ class AccountManager {
                     $user->avatarfile = $newUserAvatarFileName;
 
                     $fileManager->deleteAvatarFile($oldAvatarFileName);
-                }
                 
-                $user->save();
+                    $user->save();
+                    
+                } else {
+                    Log::info("Uploaded file is not valid");
+                }
 
         }
 

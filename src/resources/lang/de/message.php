@@ -56,7 +56,7 @@ return [
         'success.users.invited' => "User eingeladen.",
     
     
-        'title' => "Risiko",
+        'title' => "Conquera",
         'title.login' => "Login",
         'title.password.reset' => "Passwort zur&uuml;cksetzen",
         'title.register' => "Registrierung",

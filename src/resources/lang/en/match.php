@@ -39,7 +39,7 @@ return [
         "region.southern-europe" => "South Europe",
         "region.scandinavia" => "Scandinavia",
         "region.ucraine" => "Ucraine",
-        "region.middle-east" => "Middel East",
+        "region.middle-east" => "Middle East",
         "region.afghanistan" => "Afghanistan",
         "region.ural" => "Ural",
         "region.siberia" => "Siberia",

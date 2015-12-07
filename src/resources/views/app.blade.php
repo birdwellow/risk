@@ -38,7 +38,10 @@
 					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand">
-                                        Risiko
+                                        <nobr>
+                                            Conquera
+                                            <img src="/img/logo.new.png">
+                                        </nobr>
                                 </a>
 			</div>
 

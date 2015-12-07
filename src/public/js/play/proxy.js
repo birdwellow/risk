@@ -135,4 +135,4 @@ function CommunicationProxy(url) {
 
 }
 
-var proxy = new CommunicationProxy("ws://dev.app.risk:7778/?joinid=" + joinId);
+var proxy = new CommunicationProxy("ws://" + location.hostname + ":7778/?joinid=" + joinId);
