@@ -23,7 +23,7 @@ return [
         'link.match.administrate' => "':matchName' verwalten",
         'link.login' => "Login",
         'link.logout' => "Logout",
-        'link.register' => "Registrieren",
+        'link.register' => "Noch nicht registriert?",
         'link.profile' => "Profil",
         'link.options' => "Optionen",
         'link.suggestion.create.match' => "Erstelle ein neues Match",
@@ -37,6 +37,7 @@ return [
         'button.login' => "Login",
         'button.save' => "Speichern",
         'button.send' => "Senden",
+        'button.cancel' => "Abbrechen",
         'button.register' => "Registrierung",
         'button.send.password.reset.link' => "Passwort-Reset-Link schicken",
         'button.password.reset' => "Passwort zur&uuml;cksetzen",
@@ -46,6 +47,7 @@ return [
         'button.yes' => "Ja",
         'button.no' => "Nein",
         'button.match.waiting.refresh' => "Hier den Stand aktualisieren",
+        'button.goto.match' => "Zu deinem Match",
     
         'error.userinput' => "Es gab einen Fehler mit deinen Daten.",
     
@@ -95,10 +97,16 @@ return [
         'title.message.firstthreadmessage' => "Erste Nachricht",
     
     
-        'text.no.new.messages' => "Keine neuen Nachrichten.",
+        'text.no.new.messages' => "Keine neuen Nachrichten.",    
+        'text.no.messages' => "Keine Nachrichten.",
+        'text.no.new.messages' => "Kein Thread ausgew&auml;hlt.",
+        'text.match:yourturn' => "Du bist an der Reihe!",
+        'text.match:won' => "Du hast das letzte Match gewonnen!",
+        'text.match:lost' => "Leider hast du das letzte Match verloren.",
     
     
         'label.match.players' => "Mitspieler",
+        'label.match.activeplayer' => "An der Reihe",
         'label.match.date.start' => "Startdatum",
         'label.match.creator.name' => "Erstellt von",
         'label.match.name' => "Name",
@@ -119,5 +127,12 @@ return [
         'placeholder.new.message' => "Deine Nachricht",
         'placeholder.subject' => "Betreff",
         'placeholder.searchrecipient' => "Suche Empf&auml;nger",
-
+    
+        'bugreporter.head' => "Berichte einen Bug / Fehler",
+        'bugreporter.field.contactinfo' => "Deine Kontakt-Information (opitonal)",
+        'bugreporter.field.contactinfo.placeholder' => "z.B. deine Email-Adresse",
+        'bugreporter.field.description' => "Beschreibe den Bug/Fehler so detailliert wie m&ouml;glich",
+        'bugreporter.field.description.placeholder' => "z.B. 'Wenn ich auf der &Uuml;bersichtsseite Home klicke, erscheinen 7000 Pop-Ups...'",
+        'bugreporter.field.description.info' => "Bitte mindestens 30 Zeichen eingeben. Eingegeben: ",
+        'bugreporter.report.sent' => "Dein Bug-/Fehler-Bericht wurde versandt - Vielen Dank f&uuml;r dein Feedback!",
 ];

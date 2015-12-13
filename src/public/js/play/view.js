@@ -131,6 +131,7 @@ function Map(model, config, context){
 			mapControls.active(context.isClientActive());
 			mapControls.mode(context.moveType);
 			mapControls.phase(Model.roundphase);
+			mapControls.help(Controller.stateName);
 			mapControls.activePlayer(Model.activePlayer);
 			mapControls.newTroops(Model.activePlayer.newtroops);
 			mapControls.nextPhase(context);
@@ -746,12 +747,13 @@ function MapControls(elementId){
 	var mode = null;
 	
 	var title = base.find(".title");
-	title.html(Lang.get("controls"));
 	
 	var activePlayerLabel = base.find("[role=active-player]");
 	
 	var currentPhase = base.find(".current-phase");
 	var currentPhaseLabel = currentPhase.find(".label");
+	var helpText = currentPhase.find(".help-info");
+	
 	var currentPhaseSymbols = currentPhase.find(".symbols");
 	var phaseSymbols = {
 		"troopgain" : null,
@@ -826,6 +828,17 @@ function MapControls(elementId){
 				activePhaseSymbol.addClass("active");
 				currentPhaseLabel.html(Lang.get("phase." + newPhase));
 			}
+		},
+		
+		help : function(stateName){
+				var infoKey = "info." + stateName;
+				if(Controller.getContext().isClientActive()){
+					infoKey += ".active";
+				}
+				var info = Lang.get(infoKey, {
+					"user" : Model.activePlayer.name
+				});
+				helpText.html(info);
 		},
 		
 		activePlayer : function(newActivePlayer){
@@ -932,6 +945,9 @@ function MapControls(elementId){
 	};
 	
 	self.none();
+	
+	base.find(".hidden").removeClass("hidden");
+	base.find(".waiting").remove();
 	
 	return self;
 }
@@ -1356,7 +1372,7 @@ function Chat(elementId, parent) {
 function Card(model, context){
 	
 	var classes = "card " + model.continent.colorscheme;
-	if(!context || (context && context.selectedCards && context.selectedCards.indexOf(model) > -1)){
+	if(context && context.selectedCards && context.selectedCards.indexOf(model) > -1){
 		classes += " selected";
 	}
 	var cardDiv = HTML.make("div", classes);
@@ -1477,8 +1493,18 @@ function PlayerList(elementId){
 	
 	var container = $("#" + elementId + "content"),
 		playerContainers = [];
+
+	function compare(player1, player2) {
+		if (player1.matchorder < player2.matchorder)
+			return -1;
+		if (player1.matchorder > player2.matchorder)
+			return 1;
+		return 0;
+	}
+
+	var sortedPlayerList = Model.players.sort(compare);
 	
-	for(var i in Model.players){
+	for(var i in sortedPlayerList){
 		var player = Model.players[i];
 		
 		var avatarImg = "";

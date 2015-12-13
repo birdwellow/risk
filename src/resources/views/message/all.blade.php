@@ -54,6 +54,8 @@
                                             </div>
                                         </a>
                                     @endforeach
+                                @else
+                                    {{ Lang::get('message.text.no.messages') }}
                                 @endif
                         </div>
                 </div>
@@ -66,6 +68,12 @@
             
                 @include('message.thread')
             
+            @else
+                <div class="panel panel-default game-panel">
+                    <div class="panel-body">
+                        {{ Lang::get('message.text.no.new.messages') }}
+                    </div>
+                </div>
             @endif
             
         </div>

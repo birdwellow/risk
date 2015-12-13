@@ -30,16 +30,15 @@ class MatchManager {
         static protected $COLORSCHEMES = [
             "red",
             "blue",
-            "yellow",
             "green", 
-            "black",
-            "white",
+            "yellow",
+            "orange",
+            "brown",
+            "purple",
         ];
         
         protected $mapTemplates = [
             "earth",
-            "middle_earth",
-            "after_apocalypse"
         ];
 
 
@@ -276,6 +275,7 @@ class MatchManager {
                 
                 $firstPlayer = $shuffledJoinedUsers->first();
                 $match->activePlayer()->associate($firstPlayer);
+                $firstPlayer->matchnotfication = "match:yourturn";
                 $match->state = self::MATCHSTATE_STARTED;
                 $match->roundphase = self::ROUNDPHASE_TROOPGAIN;
                 

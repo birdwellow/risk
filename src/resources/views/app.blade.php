@@ -26,7 +26,57 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
-<body>  
+<body>
+    
+        <div class="side-toggles">
+            <div class="side-toggle" toggle-for="bug-reporter">
+                <img src="/img/bug.png" class="icon">
+                {{ Lang::get('message.bugreporter.head') }}
+            </div>
+            <!--
+            <div class="side-toggle">
+                <div class="help icon">?</div>
+                Show tooltips
+            </div>
+            -->
+        </div>
+        
+        <div id="bug-reporter">
+            <div class="modal-background"></div>
+            <div id="bug-reporter-panel">
+                    <div class="panel-heading">
+                        <img src="/img/bug.png" class="icon">
+                        {{ Lang::get('message.bugreporter.head') }}
+                    </div>
+
+                    <div class="panel-body">
+                        
+                        <form method="POST" action="{{ route('bug.report') }}" class="form-horizontal" role="form">
+
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                            {{ Lang::get('message.bugreporter.field.contactinfo') }}
+                            @if(Auth::user())
+                            <input type="text" name="contactinfo" placeholder="{{ Lang::get('message.bugreporter.field.contactinfo.placeholder') }}" value="{{ Auth::user()->name . " (" . Auth::user()->email . ")" }}">
+                            @else
+                            <input type="text" name="contactinfo" placeholder="{{ Lang::get('message.bugreporter.field.contactinfo.placeholder') }}">
+                            @endif
+
+                            <br>
+                            <br>
+                            {{ Lang::get('message.bugreporter.field.description') }}
+                            <textarea name="description" placeholder="{{ Lang::get('message.bugreporter.field.description.placeholder') }}"></textarea>
+                            {{ Lang::get('message.bugreporter.field.description.info') }}<span class="enteredchars"></span>
+
+                            <div class="button-container">
+                                <input class="btn btn-primary cancel" type="button" value="{{ Lang::get('message.button.cancel') }}">
+                                <input class="btn btn-primary send" type="submit" value="{{ Lang::get('message.button.send') }}">
+                            </div>
+                            
+                        </form>
+                    </div>
+            </div>
+        </div>
         
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -61,6 +111,14 @@
                                                         <span class="caret"></span>
                                                 </a>
                                                 <ul class="dropdown-menu" role="menu">
+                                                        
+                                                        @if(Auth::user()->joinedMatch)
+                                                        <li>
+                                                                <a href="{{ route('match.goto') }}">
+                                                                        {{ Lang::get('message.button.goto.match') }}
+                                                                </a>
+                                                        </li>
+                                                        @endif
                                                         
                                                         @if(!Auth::user()->joinedMatch)
                                                         <li>
@@ -154,16 +212,18 @@
                                         </li>
                                         
 					@if (Auth::guest())
+                                            <!--
 						<li>
                                                         <a href="/auth/login">
                                                                 {{ Lang::get('message.link.login') }}
                                                         </a>
                                                 </li>
-						<li>
+                                        	<li>
                                                         <a href="/auth/register">
                                                                 {{ Lang::get('message.link.register') }}
                                                         </a>
                                                 </li>
+                                            -->
 					@else
 						<li class="dropdown">
                                                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

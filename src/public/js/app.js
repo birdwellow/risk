@@ -5,6 +5,13 @@ function log(arg){
 var UI = {
     
     init : function() {
+
+        $('#bug-reporter').each(function(index, value){
+            var element = $(value);
+            window.bugreporter = new BugReporter(element);
+        });
+		
+		$('[data-toggle="tooltip"]').tooltip();
         
         $('input[type="userselector"]').each(function(index, value){
             var element = $(value);
@@ -42,6 +49,11 @@ var UI = {
             });
         });
 		
+		$('.confirm-matchnotification').click(function(){
+			UI.fade(".alert-matchnotification");
+			$.get("/match/removematchnotification");
+		});
+		
 		window.toggleFixSideBar = function(toggle){
 			$("#sidebar").removeClass("initial");
 			if($('#sidebar').hasClass("in")){
@@ -72,6 +84,17 @@ var UI = {
             return false;
         } else {
             element.show("blind", 250);
+            return true;
+        }
+    },
+    
+    fade : function (selector){
+        element = $(selector);
+        if(element.is(":visible")){
+            element.fadeOut(500);
+            return false;
+        } else {
+            element.fadeIn(500);
             return true;
         }
     },
@@ -368,7 +391,7 @@ function Dialog(config){
     
     if(!Dialog._initiated){
         Dialog._stack = HTML.make("div", "", "modal");
-        Dialog._background = HTML.make("div", "", "modal-background");
+        Dialog._background = HTML.make("div", ".modal-background");
         Dialog._stack.append(Dialog._background);
         HTML.body.prepend(Dialog._stack);
         Dialog._initiated = true;
@@ -404,6 +427,8 @@ function Dialog(config){
     
     this.close = function(){
         Dialog._stack.hide();
+		Dialog._stack.remove();
+		Dialog._initiated = false;
     };
     if(config.allowCloseOnBackground){
         Dialog._background.click(function(){
@@ -598,4 +623,38 @@ function UserSelector(baseInput){
         this.addUserName(userName);
     }
     baseInput.val("");
+}
+
+
+function BugReporter(element) {
+    
+    element.hide();
+    
+    var self = this;
+	
+	var descriptionInput = element.find("[name=description]");
+	var enteredCharsField = element.find(".enteredchars");
+	
+	var cancelButton = element.find(".cancel");
+	var sendButton = element.find(".send");
+	sendButton.attr("disabled", "disabled");
+    
+	cancelButton.click(function(){
+		element.hide();
+	});
+	
+	descriptionInput.keyup(function(){
+		var length = descriptionInput.val().length;
+		if(length < 30){
+			sendButton.attr("disabled", "disabled");
+		} else {
+			sendButton.removeAttr("disabled");
+		}
+		enteredCharsField.html(length);
+	});
+			
+	this.show = function(){
+		console.log("show");
+		element.show();
+	};
 }

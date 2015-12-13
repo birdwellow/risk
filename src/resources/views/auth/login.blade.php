@@ -38,11 +38,29 @@
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary" style="margin-right: 15px;">
-									{{ Lang::get('message.button.login') }}
-								</button>
+                                                            
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <button type="submit" class="btn btn-primary" style="margin-right: 15px;">
+                                                                                {{ Lang::get('message.button.login') }}
+                                                                        </button>
+                                                                    </td>
+                                                                    
+                                                                    <td>
+                                                                        <a href="/password/email">
+                                                                                {{ Lang::get('message.link.password.forgotten') }}
+                                                                        </a>
 
-								<a href="/password/email">{{ Lang::get('message.link.password.forgotten') }}</a>
+                                                                        <br>
+
+                                                                        <a href="/auth/register">
+                                                                                {{ Lang::get('message.link.register') }}
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            
 							</div>
 						</div>
 					</form>

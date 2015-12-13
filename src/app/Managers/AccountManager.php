@@ -45,7 +45,8 @@ class AccountManager {
         public function changeLanguageForSession($lang) {
             
                 if(in_array($lang, $this->allowedLocales)){
-                    Session::set($this->sessionLangToken, $this->fallbackLocale);
+                    Session::set($this->sessionLangToken, $lang);
+                    Log::info("Switched to $lang");
                 }
                 
         }
@@ -119,6 +120,7 @@ class AccountManager {
                     'name' => $username,
                     'email' => $email,
                     'password' => bcrypt($password),
+                    'avatarfile' => "default.png"
 		]);
 	
         }

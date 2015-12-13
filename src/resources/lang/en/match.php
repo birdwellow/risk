@@ -110,6 +110,35 @@ return [
         'sidebar.cards' => "Cards",
         'sidebar.players' => "Players",
         'sidebar.log' => "Match Log",
+    
+    
+        'info.troopgain' => ":user receives enforcement units and may trade cards.",
+        'info.troopdeployment' => ":user deploys his enforcement units.",
+        'info.attack' => ":user is selecting, from where to start the next attack.",
+        'info.attack.select.end' => ":user selects the attack target.",
+        'info.attack.confirm' => ":user must confirm the attack.",
+        'info.attack.waiting' => "Waiting for the result from the server...",
+        'info.attack.troopshift' => ":user is shifting troops after the attack.",
+        'info.attack.finish' => ":user finishes the attack.",
+        'info.troopshift' => ":user is shifting troops.",
+        'info.troopshift.select.end' => ":user is selecting a target.",
+        'info.troopshift.confirm' => ":user must confirm the troop shift.",
+        'info.phase.finish' => ":user is finishing the phase.",
+        'info.match.end' => "The match is finished!",
+    
+        'info.troopgain.active' => "You received enforcement units. If you have three 3 different or 3 equal cards, you can trade them. When you are ready, click 'Continue'.",
+        'info.troopdeployment.active' => "Deploy your enforcement units. When you're done, click 'Continue'.",
+        'info.attack.active' => "Select from where you want to start your next attack from.",
+        'info.attack.select.end.active' => "Select your attack's target.",
+        'info.attack.confirm.active' => "Confirm or cancel your attack.",
+        'info.attack.waiting.active' => "Waiting for the result from the server...",
+        'info.attack.troopshift.active' => "After the attack you can shift troops.",
+        'info.attack.finish.active' => "Finish the attack.",
+        'info.troopshift.active' => "Do you want to shift troops? If so, select from where you want to shift them.",
+        'info.troopshift.select.end.active' => "Select to where you want to shift your troops.",
+        'info.troopshift.confirm.active' => "Confirm the troop shift.",
+        'info.phase.finish.active' => "You can finish the phase.",
+        'info.match.end.active' => "The match is finished!",
         
 
 ];

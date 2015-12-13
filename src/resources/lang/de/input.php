@@ -46,8 +46,9 @@ return [
             'match_user_colorscheme.blue' => "Blau",
             'match_user_colorscheme.yellow' => "Gelb",
             'match_user_colorscheme.green' => "Gr&uuml;n",
-            'match_user_colorscheme.black' => "Schwarz",
-            'match_user_colorscheme.white' => "Wei&szlig;",
+            'match_user_colorscheme.orange' => "Orange",
+            'match_user_colorscheme.brown' => "Braun",
+            'match_user_colorscheme.purple' => "Violett",
         'match_invitationmessage' => "Deine Einladungs-Nachricht",
         'match_cancel' => "Willst du dieses Match abbrechen?",
         'match_cancel_warning_pt1' => "Danach werden alle Spieler wieder neue "

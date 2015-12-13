@@ -136,24 +136,54 @@
     </div>
     
     <div id="map-controls" class="map-controls">
-        <div class="title panel-heading"></div>
-        <div role="active-player"></div>
-        <div class="current-phase">
-            <div class="symbols">
-                <img src="/img/troopgain.png" class="state-symbol troopgain">
-                <img src="/img/troopdeployment.png" class="state-symbol troopdeployment">
-                <img src="/img/attack.png" class="state-symbol attack">
-                <img src="/img/troopshift.png" class="state-symbol troopshift">
+        <div class="title panel-heading">
+            <table>
+                <tr>
+                    <td>
+                        {{ Lang::get('match.controls') }}
+                    </td>
+                    <td>
+                        <a class="help-button" toggle-for="help-info">?</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="waiting">
+            <img src="/img/loading_big.gif">
+        </div>
+        <div class="hidden">
+            <div role="active-player"></div>
+            <div class="current-phase">
+                <div class="symbols">
+                    <img src="/img/troopgain.png" class="state-symbol troopgain">
+                    <img src="/img/troopdeployment.png" class="state-symbol troopdeployment">
+                    <img src="/img/attack.png" class="state-symbol attack">
+                    <img src="/img/troopshift.png" class="state-symbol troopshift">
+                </div>
+                <div class="label"></div>
+                <div id="help-info" style="display: none;">
+                    <table>
+                        <tr>
+                            <td class="help-symbol">
+                                ?
+                            </td>
+                            <td class="help-info"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="newtroops"></div>
+                <button class="btn-primary next-phase">
+                    <img src="/img/continue.png">
+                    {{ Lang::get( 'match.next' ) }}
+                </button>
             </div>
-            <div class="label"></div>
-            <div class="newtroops"></div>
-            <button class="btn-primary next-phase">
-                <img src="/img/continue.png">
-                {{ Lang::get( 'match.next' ) }}
-            </button>
         </div>
     </div>
     
-    <div id="game-map"></div>
+    <div id="game-map">
+        <div class="waiting">
+            <img src="/img/loading_big.gif">
+        </div>
+    </div>
 </div>
 @endsection

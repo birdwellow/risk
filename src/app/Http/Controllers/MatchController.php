@@ -284,6 +284,15 @@ class MatchController extends Controller {
         }
         
         
+        public function removeMatchnotification() {
+            
+                $user = Auth::user();
+                $user->matchnotfication = null;
+                $user->save();
+            
+        }
+        
+        
         protected function createJoinMatchThreadMessage($message, $match) {
             
                 return  "<br>"

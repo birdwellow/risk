@@ -113,6 +113,11 @@ Route::get('match/search', [
     'uses' => 'MatchController@searchMatch'
 ]);
 
+Route::get('match/removematchnotification', [
+    'as' => 'match.remove.matchnotification',
+    'uses' => 'MatchController@removeMatchnotification'
+]);
+
 
 
 /*
@@ -203,6 +208,14 @@ Route::get('password/reset/{token}', [
 Route::post('password/reset', [
     'as' => 'passwordreset.perform',
     'uses' => 'PasswordController@postReset'
+]);
+
+
+
+
+Route::post('bug/report', [
+    'as' => 'bug.report',
+    'uses' => 'BugReportingController@report'
 ]);
 
 

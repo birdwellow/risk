@@ -24,7 +24,7 @@
     <br>
     {{ trans('passwords.resetemail.body.ignore') }}
     <br>
-    {{ trans('passwords.resetemail.body.support') }}: <a style="color:#fff" href="mailto:support@risk.net">support@risk.net</a>.
+    {{ trans('passwords.resetemail.body.support') }}: <a style="color:#fff" href="mailto:contact@fvogel.net">contact@fvogel.net</a>.
     <br>
     <br>
     {{ trans('passwords.resetemail.body.havefun') }}

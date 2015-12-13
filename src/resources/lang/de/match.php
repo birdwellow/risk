@@ -109,5 +109,35 @@ return [
         'sidebar.cards' => "Karten",
         'sidebar.players' => "Spieler",
         'sidebar.log' => "Match-Log",
+    
+    
+        'info.troopgain' => ":user erh&auml;lt Verst&auml;rkungen und tauscht evtl. Karten ein.",
+        'info.troopdeployment' => ":user setzt seine Verst&auml;rkungen ein.",
+        'info.attack' => ":user w&auml;hlt aus, von wo aus der n&auml;chste Angriff stattfinden soll.",
+        'info.attack.select.end' => ":user w&auml;hlt das Angriffsziel aus.",
+        'info.attack.confirm' => ":user muss den Angriff best&auml;tigen.",
+        'info.attack.waiting' => "Warten auf Ergebnis vom Server...",
+        'info.attack.troopshift' => ":user verschiebt nach der Eroberung Einheiten.",
+        'info.attack.finish' => ":user beendet den Angriff.",
+        'info.troopshift' => ":user verschiebt Truppen",
+        'info.troopshift.select.end' => ":user w&auml;hlt das Ziel aus.",
+        'info.troopshift.confirm' => ":user muss die Verschiebung best&auml;tigen.",
+        'info.phase.finish' => ":user beendet die Phase.",
+        'info.match.end' => "Das Match ist beendet!",
+    
+        'info.troopgain.active' => "Du hast Verst&auml;rkungen erhalten. Wenn du 3 verschiedene oder 3 gleiche Karten hast, kannst du diese eintauschen. Wenn du fertig bist, klicke auf 'Weiter'.",
+        'info.troopdeployment.active' => "Setze deine Verst&auml;rkungen ein. Wenn du fertig bist, klicke auf 'Weiter'.",
+        'info.attack.active' => "W&auml;hle aus, von wo aus du einen Angriff starten m&ouml;chtest.",
+        'info.attack.select.end.active' => "W&auml;hle das Angriffsziel aus.",
+        'info.attack.confirm.active' => "Best&auml;tige den Angriff (<img src='/img/confirm.png'>) oder brich ab (<img src='/img/cancel.png'>).",
+        'info.attack.waiting.active' => "Warte auf Ergebnis vom Server...",
+        'info.attack.troopshift.active' => "Nach dem Angriff kannst du Truppen verschieben. W&auml;hle dazu Start und Ende aus.",
+        'info.attack.finish.active' => "Beende den Angriff.",
+        'info.troopshift.active' => "Willst du noch Truppen verschieben? Dann w&auml;hle aus, von wo Truppen verschoben werden sollen.",
+        'info.troopshift.select.end.active' => "W&auml;hle aus, wohin die Truppen verschoben werden sollen.",
+        'info.troopshift.confirm.active' => "Bestimme mit <img src='/img/plus.png'> und <img src='/img/minus.png'>, wieviele Truppen verschoben werden sollen. Best&auml;tige anschlie&szlig;end mit <img src='/img/confirm.png'>.",
+        'info.phase.finish.active' => "Du kannst die Phase beenden.",
+        'info.match.end.active' => "Das Match ist beendet!",
+    
 
 ];

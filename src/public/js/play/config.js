@@ -336,7 +336,7 @@ var Config = {
 			"troopdeployment" : {
 				
 				onEnter : function(context){
-					if(!Model.me.newtroops > 0){
+					if(Model.me.newtroops <= 0){
 						context.nextPhase = "attack";
 					}
 				},
@@ -653,7 +653,7 @@ var Config = {
 			containerId : "game-map",
 			
 			fade : {
-				speed : 0.25,
+				speed : 0.4,
 				targetOpacity : 0.25
 			},
 			

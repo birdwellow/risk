@@ -279,6 +279,7 @@
         border-radius: 5px;
         padding: 5px 15px;
         float: left;
+        margin-bottom: 10px;
     }
     .status.started {
         background: #3c763d;
@@ -342,6 +343,13 @@
         background-color: rgba(0,0,0,0.5);
         box-shadow: inset 1px 3px 3px 3px rgba(0,0,0,0.5);
         padding: 15px 9px 9px 15px;
+    }
+    .btn-primary.disabled,
+    .btn-primary:disabled,
+    .btn-primary[disabled]{
+        background: rgba(0,0,0,0.5);
+        opacity: 0.5;
+        background-image: none;
     }
     .btn-lg,
     .btn-group-lg > .btn {
@@ -547,6 +555,36 @@
     .alert-error .alert-link {
         color: #843534;
     }
+    .alert-matchnotification{
+        background: rgba(0, 0, 0, 0.25);
+        border: 1px solid #fff;
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5) inset;
+    }
+    .alert-matchnotification.lost{
+        background: rgba(155, 0, 0, 0.5);
+    }
+    .alert-matchnotification.won{
+        background: rgba(0, 155, 0, 0.5);
+    }
+    .confirm-matchnotification{
+        border: 1px solid #fff;
+        border-radius: 15px;
+        display: inline-block;
+        margin-right: 5px;
+        padding: 0 2px;
+        cursor: pointer;
+        float: right;
+    }
+    .confirm-matchnotification:hover{
+        background: rgba(0,0,0,0.25);
+    }
+    .confirm-matchnotification:active{
+        background: rgba(0,0,0,0.5);
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5) inset;
+    }
+    .confirm-matchnotification:active img{
+        margin: 2px -2px -2px 2px;
+    }
     input.warn,
     input.warn{
         color: #d9534f;
@@ -608,7 +646,7 @@
     #modal{
         display: none;
     }
-    #modal-background {
+    .modal-background {
         position: fixed;
         z-index: 10000;
         background: rgba(0,0,0,0.65);
@@ -708,6 +746,13 @@
         text-align: center;
         width: 225px;
         box-shadow: 6px 16px 6px rgba(0, 0, 0, 0.35);
+        height: auto!important;
+    }
+    .map-controls .hidden{
+        display: none;
+    }
+    .waiting{
+        padding: 10px 0;
     }
     .title,[role=title]{
         margin: -10px -10px 0;
@@ -725,7 +770,43 @@
         margin-top: 10px;
     }
     .current-phase .label {
+        display: block;
         color: #888;
+        margin-top: 10px;
+        white-space: normal;
+    }
+    .current-phase .label .name{
+        color: #ccc;
+        font-weight: bold;
+    }
+    #help-info table {
+        border-radius: 3px;
+    }
+    #help-info{
+        font-size: 75%;
+        white-space: normal;
+        margin: 10px 0;
+        background: rgba(255, 255, 255, 0.125);
+        border-radius: 0 3px 3px 0;
+    }
+    .help-symbol{
+        font-size: 150%;
+        background: rgba(255, 255, 255, 0.25);
+        padding: 0 10px;
+        border-radius: 3px 0 0 3px;
+    }
+    .help-button{
+        color: #fff;
+        border-radius: 20px;
+        border: 2px solid #fff;
+        padding: 3px 9px 2px 9px;
+        float: right;
+        line-height: 1;
+        cursor: pointer;
+    }
+    .help-button:hover{
+        color: #fff;
+        background-color: rgba(255,255,255,0.25);
     }
     .current-phase .newtroops{
         margin-top: 10px;
@@ -945,7 +1026,7 @@
         cursor: pointer;
         background-image: url("/img/classic-background.jpg");
         border: 2px solid #fff;
-        width: 103px;
+        width: 107px;
         height: auto;
     }
     .card:hover {
@@ -957,7 +1038,7 @@
         margin: 0 5px 5px 0;
         box-shadow: 10px 10px 5px rgba(0,0,0,0.5);
     }
-    #modal-dialog .card.selected {
+    #modal-dialog .card {
         padding: 7px;
         margin-left: 180px;
     }
@@ -967,7 +1048,9 @@
         padding: 3px;
         color: #fff;
         text-align: center;
-        height: 114px;
+        height: 120px;
+        line-height: 1;
+        white-space: normal;
     }
     .card .symbol{
         width: 70px;
@@ -1091,10 +1174,10 @@
             background: rgba(0,50,255,0.85);
         }
     .matchUserColorScheme.yellow {
-        background: rgba(127,127,0,0.35);
+        background: rgba(255,255,0,0.35);
     }
         .container .dropdown-menu > li.matchUserColorScheme.yellow:hover {
-            background: rgba(177,177,0,0.85);
+            background: rgba(255,255,0,0.85);
         }
     .matchUserColorScheme.green {
         background: rgba(0,185,0,0.35);
@@ -1102,18 +1185,23 @@
         .container .dropdown-menu > li.matchUserColorScheme.green:hover {
             background: rgba(0,185,0,0.85);
         }
-    .matchUserColorScheme.black {
-        background: rgba(0,0,0,0.6);
+    .matchUserColorScheme.orange {
+        background: rgba(255,180,0,0.35);
     }
-        .container .dropdown-menu > li.matchUserColorScheme.black:hover {
-            background: #000;
+        .container .dropdown-menu > li.matchUserColorScheme.orange:hover {
+            background: rgba(255,180,0,0.85);
         }
-    .matchUserColorScheme.white {
-        color: black;
-        background: rgba(255,255,255,0.35);
+    .matchUserColorScheme.brown {
+        background: rgba(40,20,0,0.35);
     }
-        .container .dropdown-menu > li.matchUserColorScheme.white:hover {
-            background: rgba(255,255,255,0.85);
+        .container .dropdown-menu > li.matchUserColorScheme.brown:hover {
+            background: rgba(40,20,0,0.85);
+        }
+    .matchUserColorScheme.purple {
+        background: rgba(180,0,155,0.35);
+    }
+        .container .dropdown-menu > li.matchUserColorScheme.purple:hover {
+            background: rgba(180,0,155,0.85);
         }
     
 
@@ -1281,4 +1369,55 @@
         border-radius: 3px;
         border: 1px solid #fff;
         box-shadow: 7px 7px 7px rgba(0,0,0,0.75);
+    }
+    
+    
+
+
+
+/****************************************************
+    Bug reporter
+****************************************************/
+
+    #bug-reporter{
+        display: none;
+    }
+    #bug-reporter-panel{
+        background-image: url(/img/classic-background.jpg);
+        left: 50%;
+        margin-left: -250px;
+        position: absolute;
+        top: 100px;
+        width: 500px;
+        border-radius: 3px;
+        z-index: 10000;
+    }
+    #bug-reporter-panel .icon{
+        margin-right: 10px;
+    }
+    .side-toggles{
+        position: fixed;
+        left: 100%;
+        margin-left: -35px;
+        top: 100px;
+        width: 500px;
+        z-index: 10000;
+    }
+    .side-toggle{
+        margin-top: 10px;
+        background-image: url(/img/classic-background.jpg);
+        border-radius: 3px;
+        padding: 5px;
+        cursor: pointer;
+        box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.25);
+    }
+    .side-toggle:hover{
+        margin-left: -250px;
+    }
+    .side-toggle .help{
+        border: 1px solid #fff;
+        border-radius: 20px;
+        display: inline;
+        padding: 0 7px;
+        margin-right: 7px;
     }

@@ -23,7 +23,7 @@ return [
         'link.match.administrate' => "Administrate ':matchName'",
         'link.login' => "Login",
         'link.logout' => "Logout",
-        'link.register' => "Register",
+        'link.register' => "Not yet registered?",
         'link.profile' => "Profile",
         'link.options' => "Options",
         'link.suggestion.create.match' => "Create a new Match",
@@ -37,6 +37,7 @@ return [
         'button.login' => "Login",
         'button.save' => "Save",
         'button.send' => "Send",
+        'button.cancel' => "Cancel",
         'button.register' => "Register",
         'button.send.password.reset.link' => "Send Password Reset Link",
         'button.password.reset' => "Reset password",
@@ -46,6 +47,7 @@ return [
         'button.yes' => "Yes",
         'button.no' => "No",
         'button.match.waiting.refresh' => "Refresh the state here",
+        'button.goto.match' => "Go to Match",
     
         'error.userinput' => "There were some problems with your input.",
     
@@ -96,9 +98,15 @@ return [
     
     
         'text.no.new.messages' => "No new messages.",
+        'text.no.messages' => "No messages.",
+        'text.no.new.messages' => "No thread selected.",
+        'text.match:yourturn' => "It's your turn!",
+        'text.match:won' => "You won the last Match!",
+        'text.match:lost' => "You lost the last Match.",
     
     
         'label.match.players' => "Players",
+        'label.match.activeplayer' => "Current player",
         'label.match.date.start' => "Start date",
         'label.match.creator.name' => "Created by",
         'label.match.name' => "Name",
@@ -114,5 +122,13 @@ return [
         'placeholder.new.message' => "Your message",
         'placeholder.subject' => "Subject",
         'placeholder.searchrecipient' => "Search Recipients",
+    
+        'bugreporter.head' => "Report a bug / error",
+        'bugreporter.field.contactinfo' => "Your contact info (opitonal)",
+        'bugreporter.field.contactinfo.placeholder' => "e.g. your email address",
+        'bugreporter.field.description' => "Describe the bug/error as detailed as possible",
+        'bugreporter.field.description.placeholder' => "e.g. 'When clicking Home on the overview page, I get 7000 error pop-ups...'",
+        'bugreporter.field.description.info' => "Please enter at least 30 characters. Entered: ",
+        'bugreporter.report.sent' => "Your bug/error report was sent - Thank you very much for your feedback!",
     
 ];

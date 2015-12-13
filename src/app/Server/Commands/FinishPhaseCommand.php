@@ -45,6 +45,11 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
         }
         $match->roundphasedata = json_encode($newTroopsObject);
         $match->activePlayer()->associate($nextPlayer);
+        foreach($match->joinedUsers as $joinedUser){
+            $joinedUser->matchnotfication = null;
+            $joinedUser->save();
+        }
+        $nextPlayer->matchnotfication = "match:yourturn";
         
         $match->save();
         $nextPlayer->save();

@@ -28,7 +28,7 @@ class AccountController extends Controller {
                 $this->matchManager = $matchManager;
                 $this->messageManager = $messageManager;
                 
-                $this->middleware('auth');
+                $this->middleware('auth', ['except' => 'switchToLanguage']);
                 
 	}
 
@@ -37,7 +37,8 @@ class AccountController extends Controller {
             
                 $user = Auth::user();
                 $unreadThreads = $this->messageManager->getUnreadThreadsForUser($user);
-                $matches = $this->matchManager->getAllPublicMatches();
+                //$matches = $this->matchManager->getAllPublicMatches();
+                $matches = $this->matchManager->getAllMatches();
                 
 		return view('user.overview')
                         ->with("matches", $matches)

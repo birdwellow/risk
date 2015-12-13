@@ -27,6 +27,25 @@
                         </div>
                         
                         <div class="panel-body">
+    
+                                @if(Auth::user()->matchnotfication)
+
+                                <div id="alert-container">
+                                        <?php
+                                            $filtered = array();
+                                            preg_match('/(.*?):(.*)/', Auth::user()->matchnotfication, $filtered);
+                                            $class = (isset($filtered[2]) ? $filtered[2] : '');
+                                        ?>
+                                        <div class="alert alert-matchnotification {{ $class }}">
+                                                <div class="confirm-matchnotification">
+                                                    <img src="/img/confirm.png">
+                                                </div>
+                                                {{ Lang::get("message.text." . Auth::user()->matchnotfication) }}
+                                        </div>
+                                </div>
+
+                                @endif
+                            
                                 <table>
                                             
                                         <tr>
@@ -41,17 +60,25 @@
                                         </tr>
                                         
                                         <tr>
-                                            <td colspan="2" class="placeholder"></td>
-                                        </tr>
-                                        
-                                        <tr>
                                                 <td>
-                                                        {{ Lang::get('message.label.match.players') }} ({{ count(Auth::user()->joinedMatch->joinedUsers) }}/{{ Auth::user()->joinedMatch->maxusers }})
+                                                        {{ Lang::get('message.label.match.players') }}
+                                                        @if(Auth::user()->joinedMatch->state == 'waitingforjoins')
+                                                            ({{ count(Auth::user()->joinedMatch->joinedUsers) }}/{{ Auth::user()->joinedMatch->maxusers }})
+                                                        @endif
                                                 </td>
                                                 <td class="data">
                                                     @foreach(Auth::user()->joinedMatch->joinedUsers as $joinedUser)
                                                         {!! userlabel($joinedUser) !!}
                                                     @endforeach
+                                                </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                                <td>
+                                                        {{ Lang::get('message.label.match.activeplayer') }}
+                                                </td>
+                                                <td class="data">
+                                                        {!! userlabel(Auth::user()->joinedMatch->activeplayer) !!}
                                                 </td>
                                         </tr>
                                         
@@ -102,7 +129,7 @@
                                 <br>
                             
                                 <a class="action btn btn-primary right table" href="{{ route('match.goto') }}">
-                                    Go to match
+                                    {{ Lang::get('message.button.goto.match') }}
                                 </a>
                         </div>
             
