@@ -12,13 +12,32 @@
                         </div>
                     
                         <div class="panel-body">
-                            <a class="suggestion" href="{{ route('match.new') }}">
-                                <img src="/img/plus.png"/> {{ Lang::get('message.link.suggestion.create.match') }}
-                            </a>
-                            <br>
-                            <a class="suggestion" href="{{ route('match.search') }}">
-                                <img src="/img/search.png"/> {{ Lang::get('message.link.suggestion.search.match') }}
-                            </a>
+                            
+                                @if(Auth::user()->matchnotfication)
+
+                                <div id="alert-container">
+                                        <?php
+                                            $filtered = array();
+                                            preg_match('/(.*?):(.*)/', Auth::user()->matchnotfication, $filtered);
+                                            $class = (isset($filtered[2]) ? $filtered[2] : '');
+                                        ?>
+                                        <div class="alert alert-matchnotification {{ $class }}">
+                                                <div class="confirm-matchnotification">
+                                                    <img src="/img/confirm.png">
+                                                </div>
+                                                {{ Lang::get("message.text." . Auth::user()->matchnotfication) }}
+                                        </div>
+                                </div>
+
+                                @endif
+
+                                <a class="suggestion" href="{{ route('match.new') }}">
+                                    <img src="/img/plus.png"/> {{ Lang::get('message.link.suggestion.create.match') }}
+                                </a>
+                                <br>
+                                <a class="suggestion" href="{{ route('match.search') }}">
+                                    <img src="/img/search.png"/> {{ Lang::get('message.link.suggestion.search.match') }}
+                                </a>
                         </div>
                     @else
                         <div class="panel-heading">
