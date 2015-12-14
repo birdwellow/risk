@@ -101,7 +101,7 @@ return [
         'text.no.messages' => "No messages.",
         'text.no.new.messages' => "No thread selected.",
         'text.match:yourturn' => "It's your turn!",
-        'text.match:won' => "You won the last Match!",
+        'text.match:won' => "You won the last Match and got +1 point!",
         'text.match:lost' => "You lost the last Match.",
     
     

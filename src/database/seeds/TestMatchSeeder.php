@@ -57,11 +57,14 @@ class TestMatchSeeder extends Seeder {
         $player1->joinedMatch()->associate($match);
         $player1->matchcolor = 'red';
         $player1->matchorder = 1;
+        $player1->matchescreated = 1;
+        $player1->matchesplayed = 1;
         $player1->save();
         
         $player2->joinedMatch()->associate($match);
         $player2->matchcolor = 'blue';
         $player2->matchorder = 2;
+        $player2->matchesplayed = 1;
         $player2->save();
         
         $america = Continent::create([

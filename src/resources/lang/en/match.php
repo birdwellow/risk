@@ -99,7 +99,7 @@ return [
         'info.defeated.title' => "Match lost",
         'info.defeated' => "<h1>Too bad - you lost the Match.</h1> With 'OK' you get back to the start page.",
         'info.won.title' => "Match won",
-        'info.won' => "<h1>Congratulations - you won the Match!</h1> With 'OK' you get back to the start page.",
+        'info.won' => "<h1>Congratulations - you won the Match!</h1> You get +1 point! With 'OK' you get back to the start page.",
     
     
         'sidebar.toggle' => "Show/hide sidebar",

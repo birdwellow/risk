@@ -98,7 +98,7 @@ return [
         'info.defeated.title' => "Match verloren",
         'info.defeated' => "<h1>Schade, du hast das Match verloren.</h1> Mit 'OK' kommst du zur&uuml;k zur Startseite.",
         'info.won.title' => "Match gewonnen",
-        'info.won' => "<h1>Gl&uuml;ckwunsch, du hast das Match gewonnen!</h1> Mit 'OK' kommst du zur&uuml;k zur Startseite.",
+        'info.won' => "<h1>Gl&uuml;ckwunsch, du hast das Match gewonnen!</h1> Du erh&auml;lst +1 Punkt! Mit 'OK' kommst du zur&uuml;k zur Startseite.",
     
     
         'sidebar.toggle' => "Sidebar anzeigen/verbergen",
