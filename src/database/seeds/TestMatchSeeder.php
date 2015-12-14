@@ -42,7 +42,7 @@ class TestMatchSeeder extends Seeder {
         $match = Match::create([
             'name' => 'Test Match',
             'state' => 'started',
-            'roundphase' => "troopshift",
+            'roundphase' => "attack",
             'roundphasedata' => $json,
             'active_player_id' => $player1->id,
             'public' => false,

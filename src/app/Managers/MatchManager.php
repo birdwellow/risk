@@ -198,6 +198,9 @@ class MatchManager {
                 $match->thread()->associate($thread);
                 
                 $match->save();
+                
+                $creatorUser->matchescreated += 1;
+                $creatorUser->save();
 
                 return $match;
 
@@ -264,6 +267,7 @@ class MatchManager {
                 
                 $i = 1;
                 foreach($shuffledJoinedUsers as $randomJoinedUser){
+                    $randomJoinedUser->matchesplayed += 1;
                     $randomJoinedUser->matchorder = $i;
                     $randomJoinedUser->save();
                     $i++;
