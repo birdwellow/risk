@@ -92,6 +92,7 @@
                                                 </td>
                                         </tr>
                                         
+                                        @if(Auth::user()->joinedMatch->activeplayer)
                                         <tr>
                                                 <td>
                                                         {{ Lang::get('message.label.match.activeplayer') }}
@@ -100,6 +101,7 @@
                                                         {!! userlabel(Auth::user()->joinedMatch->activeplayer) !!}
                                                 </td>
                                         </tr>
+                                        @endif
                                         
                                         <tr>
                                                 <td>

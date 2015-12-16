@@ -50,5 +50,3 @@
         return userlabel( $user, $link, true );
         
     }
-
-?>
