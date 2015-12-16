@@ -2,6 +2,8 @@
 
 @section('content')
 
+<img src="/img/world.png" class="background-img"/>
+
 <div class="container">
     
         <div class="col-md-4">

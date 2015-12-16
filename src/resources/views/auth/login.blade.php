@@ -1,15 +1,24 @@
 @extends('app')
 
 @section('content')
+
+<img src="/img/world.png" class="background-img welcome"/>
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default">
 				<div class="panel-heading">{{ Lang::get('message.title.login') }}</div>
 				<div class="panel-body">
+                                    
+                                        <div class="welcome">
+                                            <h1 class="">
+                                                {{ Lang::get("message.title.welcome") }}
+                                            </h1>
+                                        </div>
 
 					<form class="form-horizontal" role="form" method="POST" action="/auth/login">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">{{ Lang::get('input.user_email') }}</label>

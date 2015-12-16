@@ -59,6 +59,7 @@ return [
     
     
         'title' => "Conquera",
+        'title.welcome' => "Welcome to Conquera!",
         'title.login' => "Login",
         'title.password.reset' => "Reset Password",
         'title.register' => "Register",
@@ -103,6 +104,7 @@ return [
         'text.match:yourturn' => "It's your turn!",
         'text.match:won' => "You won the last Match and got +1 point!",
         'text.match:lost' => "You lost the last Match.",
+        'text.match:cancelled' => "The last Match was has been cancelled by the administrator.",
     
     
         'label.match.players' => "Players",

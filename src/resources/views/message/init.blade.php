@@ -1,7 +1,8 @@
 @extends('app')
 
 @section('content')
-    
+
+<img src="/img/world.png" class="background-img"/>
 
 <div class="container">
     

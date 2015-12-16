@@ -44,6 +44,11 @@ Route::get('switchlanguage/{lang}', [
     'uses' => 'AccountController@switchToLanguage'
 ]);
 
+Route::get('json/users', [
+    'as' => 'json.users',
+    'uses' => 'JsonRestController@allUsersExceptCurrentUser'
+]);
+
 Route::get('json/users/names', [
     'as' => 'json.users/names',
     'uses' => 'JsonRestController@allUserNamesExceptCurrentUser'

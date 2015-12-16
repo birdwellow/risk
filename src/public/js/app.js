@@ -391,7 +391,7 @@ function Dialog(config){
     
     if(!Dialog._initiated){
         Dialog._stack = HTML.make("div", "", "modal");
-        Dialog._background = HTML.make("div", ".modal-background");
+        Dialog._background = HTML.make("div", "modal-background");
         Dialog._stack.append(Dialog._background);
         HTML.body.prepend(Dialog._stack);
         Dialog._initiated = true;
@@ -504,11 +504,11 @@ function UserSelector(baseInput){
     
     baseInput.addClass("loading");
     
-    baseInput.wrap("<div class='" + classes + " userselector-wrapper'></div>");
-    
+    var div = baseInput.wrap("<div class='" + classes + " userselector-wrapper'></div>");
+	
     var marginTop = 7;
     
-    this.sourceURL = "/json/users/names";
+    this.sourceURL = "/json/users";
     this.usernames = new Array();
     var _selfpointer = this;
     
@@ -520,6 +520,8 @@ function UserSelector(baseInput){
             .attr("type", "hidden");
     baseInput.after(namesDisplay);
     baseInput.after(hidden);
+    
+	//baseInput.after("<div style='width:50%; display:inline-block; padding:10px; border:1px solid #fff;'></div>");
     
     var _split = function( val ) {
         return val.split( /,\s*/ );
@@ -569,7 +571,30 @@ function UserSelector(baseInput){
         
     };
     
-    $.get(this.sourceURL, function(usernames){
+    $.get(this.sourceURL, function(usersJSON){
+		
+		var list = HTML.make("div", "userselector-wrapper-userlist");
+		div.parent().after(list);
+		
+		var users = JSON.parse(usersJSON);
+		
+		var usernames = new Array();
+		for(var i = 0; i < users.length; i++){
+			usernames.push(users[i].name);
+		}
+		
+		for(var i = 0; i < users.length; i++){
+			var user = users[i];
+			var link = HTML.make("a");
+			var tag = HTML.make("div", "user-label").attr("style", "margin:5px;");
+			link.append(tag);
+			tag.html("+ <img class=\"user-avatar icon\" src=\"/img/avatars/" + user.avatarfile + "\"><span class=\"user-name\">" + user.name + "</span>");
+			
+			link.click({user: user},function(event){
+				_selfpointer.addUserName(event.data.user.name);
+			});
+			list.append(link);
+		}
         
         baseInput
             // don't navigate away from the field on tab when selecting an item

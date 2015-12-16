@@ -25,6 +25,16 @@ class UserManager {
         }
 
 
+        public function getAllUsers($exceptUserName) {
+                
+                if($exceptUserName){
+                    return $allUsers = User::where('name', "!=", $exceptUserName)->get();
+                } else {
+                    return $allUsers = User::all();
+                }
+        }
+
+
         public function findUsersForNames($userNameArray) {
 
                 $users = array();

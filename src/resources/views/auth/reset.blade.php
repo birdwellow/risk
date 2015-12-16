@@ -1,6 +1,9 @@
 @extends('app')
 
 @section('content')
+
+<img src="/img/world.png" class="background-img"/>
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">

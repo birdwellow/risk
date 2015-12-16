@@ -15,10 +15,11 @@ class JsonRestController extends Controller {
                 
 	}
 
-	public function allUserNamesExceptCurrentUser() {
+	public function allUsersExceptCurrentUser() {
             
-                $userNames = $this->userManager->getAllUserNames([Auth::user()->name]);
-		return $userNames;
+                $users = $this->userManager->getAllUsers(Auth::user()->name);
+                \Illuminate\Support\Facades\Log::info($users->first());
+		return json_encode($users);
                 
 	}
 

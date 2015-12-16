@@ -384,7 +384,8 @@
     input[type="select"],
     select,
     .userselector-wrapper,
-    button.dropdown-toggle {
+    button.dropdown-toggle,
+    .userselector-wrapper-userlist{
         width: 100%;
         background-color: rgba(0,0,0,0.5);
         color: #fff;
@@ -393,6 +394,11 @@
         border-radius: 2px;
         box-sizing: border-box;
         box-shadow: inset 5px 5px 5px rgba(0,0,0,0.5);
+    }
+    .userselector-wrapper-userlist{
+        margin-top: 5px;
+        max-height: 150px;
+        overflow-y: scroll;
     }
     .button-container{
         margin-top: 20px;
@@ -1237,6 +1243,9 @@
     a > .user-label:hover {
         background: rgba(0,0,0,0.5);
     }
+    .userselector-wrapper-userlist .user-label {
+        display: block;
+    }
     .user-label img.icon {
         margin: 0 5px 0 0;
     }
@@ -1420,4 +1429,33 @@
         display: inline;
         padding: 0 7px;
         margin-right: 7px;
+    }
+    
+    
+
+
+
+/****************************************************
+    Welcome Page
+****************************************************/
+
+    .welcome {
+        text-align: center;
+    }
+    .welcome-background {
+        margin-left: 50px;
+        opacity: 0.4;
+        height:400px;
+    }
+    .welcome-title {
+        margin:-350px 0 20px 0;
+    }
+    
+    .background-img{
+        position: absolute;
+        z-index: 0;
+        width: 60%;
+        opacity: 0.4;
+        left: 50%;
+        margin-left: -30%;
     }

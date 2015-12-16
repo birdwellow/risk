@@ -247,6 +247,7 @@ class MatchManager {
                 foreach ($match->joinedUsers as $joinedUser) {
                     $result = $joinedUser->joinedMatch()->dissociate();
                     $joinedUser->matchorder = 0;
+                    $joinedUser->matchnotification = "match:cancelled";
                     $joinedUser->save();
                 }
 
