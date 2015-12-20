@@ -108,6 +108,7 @@ return [
         'sidebar.viewmodes.owner' => "Owner",
         'sidebar.viewmodes.continent' => "Continent",
         'sidebar.cards' => "Cards",
+        'sidebar.cards.trade' => "Trade",
         'sidebar.players' => "Players",
         'sidebar.log' => "Match Log",
     

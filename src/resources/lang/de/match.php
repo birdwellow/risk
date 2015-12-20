@@ -107,6 +107,7 @@ return [
         'sidebar.viewmodes.owner' => "Besitzer",
         'sidebar.viewmodes.continent' => "Kontinent",
         'sidebar.cards' => "Karten",
+        'sidebar.cards.trade' => "Tauschen",
         'sidebar.players' => "Spieler",
         'sidebar.log' => "Match-Log",
     

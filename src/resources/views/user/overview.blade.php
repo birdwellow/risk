@@ -211,6 +211,10 @@
                                                     </div>
                                                 </a>
                                         @endforeach
+                                @else
+                                    <a class="suggestion" href="{{ route('new.thread.init') }}">
+                                        <img src="/img/plus.png"/> {{ Lang::get('message.link.suggestion.create.thread') }}
+                                    </a>
                                 @endif
                         </div>
                 </div>

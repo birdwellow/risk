@@ -706,7 +706,6 @@
 
     #game-table{
         width: 100%;
-        overflow-x: auto;
         white-space: nowrap;
     }
     #game-map{
@@ -1040,7 +1039,6 @@
         box-shadow: 10px 10px 5px rgba(0,0,0,0.25);
     }
     .card.selected {
-        padding: 5px;
         margin: 0 5px 5px 0;
         box-shadow: 10px 10px 5px rgba(0,0,0,0.5);
     }
@@ -1088,7 +1086,7 @@
         background: rgba(255,255,0,0.5);
     }
     .card.yellow.selected .body {
-        background: rgba(255,255,0,1);
+        background: rgba(225,225,0,1);
     }
     
     .card.orange .body {

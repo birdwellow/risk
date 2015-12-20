@@ -28,6 +28,7 @@ return [
         'link.options' => "Optionen",
         'link.suggestion.create.match' => "Erstelle ein neues Match",
         'link.suggestion.search.match' => "Suche ein offenes Match",
+        'link.suggestion.create.thread' => "Erstelle einen Thread &amp; schreibe eine Nachricht",
     
     
         'name.language.en' => "English",
@@ -100,7 +101,7 @@ return [
     
         'text.no.new.messages' => "Keine neuen Nachrichten.",    
         'text.no.messages' => "Keine Nachrichten.",
-        'text.no.new.messages' => "Kein Thread ausgew&auml;hlt.",
+        'text.no.thread.selected' => "Kein Thread ausgew&auml;hlt.",
         'text.match:yourturn' => "Du bist an der Reihe!",
         'text.match:won' => "Du hast das letzte Match gewonnen und bekommst +1 Punkt!",
         'text.match:lost' => "Leider hast du das letzte Match verloren.",

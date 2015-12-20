@@ -91,7 +91,7 @@
                     
                     <div class="center">
                         <button class="btn btn-primary">
-                            Change
+                        {{ Lang::get( 'match.sidebar.cards.trade' ) }}
                         </button>
                     </div>
                     

@@ -217,6 +217,7 @@ class MatchManager {
                 $match->load("joinedUsers");
                 
                 $user->matchcolor = $colorScheme;
+                $user->matchnotification = null;
                 $user->save();
                 
                 if(count($match->joinedUsers) >= $match->maxusers){
