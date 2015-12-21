@@ -30,7 +30,7 @@
     
         <div class="side-toggles">
             <div class="side-toggle" toggle-for="bug-reporter">
-                <img src="/img/bug.png" class="icon">
+                <img src="/img/report.png" class="icon">
                 {{ Lang::get('message.bugreporter.head') }}
             </div>
             <!--

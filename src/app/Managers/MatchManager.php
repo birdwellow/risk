@@ -246,7 +246,7 @@ class MatchManager {
                     $connection->delete();
                 }
                 foreach ($match->joinedUsers as $joinedUser) {
-                    $result = $joinedUser->joinedMatch()->dissociate();
+                    $joinedUser->joinedMatch()->dissociate();
                     $joinedUser->matchorder = 0;
                     $joinedUser->matchnotification = "match:cancelled";
                     $joinedUser->save();
@@ -281,7 +281,7 @@ class MatchManager {
                 
                 $firstPlayer = $shuffledJoinedUsers->first();
                 $match->activePlayer()->associate($firstPlayer);
-                $firstPlayer->matchnotfication = "match:yourturn";
+                $firstPlayer->matchnotification = "match:yourturn";
                 $match->state = self::MATCHSTATE_STARTED;
                 $match->roundphase = self::ROUNDPHASE_TROOPGAIN;
                 

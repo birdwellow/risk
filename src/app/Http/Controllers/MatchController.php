@@ -287,7 +287,7 @@ class MatchController extends Controller {
         public function removeMatchnotification() {
             
                 $user = Auth::user();
-                $user->matchnotfication = null;
+                $user->matchnotification = null;
                 $user->save();
             
         }

@@ -61,6 +61,7 @@ return [
     
         'title' => "Conquera",
         'title.welcome' => "Welcome to Conquera!",
+        'title.tour' => "Have a look!",
         'title.login' => "Login",
         'title.password.reset' => "Reset Password",
         'title.register' => "Register",
@@ -133,5 +134,10 @@ return [
         'bugreporter.field.description.placeholder' => "e.g. 'When clicking Home on the overview page, I get 7000 error pop-ups...'",
         'bugreporter.field.description.info' => "Please enter at least 30 characters. Entered: ",
         'bugreporter.report.sent' => "Your bug/error report was sent - Thank you very much for your feedback!",
+    
+        'tour.caption.map' => "Play against up to 6 opponents - on a real-time map!",
+        'tour.caption.conquer' => "Conquer your opponent's countries...",
+        'tour.caption.enforments' => "...and get enforcements to gain the victory!",
+        'tour.caption.communicate' => "Invite friends and chat with the other players!",
     
 ];

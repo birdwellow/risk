@@ -61,6 +61,7 @@ return [
     
         'title' => "Conquera",
         'title.welcome' => "Willkommen bei Conquera!",
+        'title.tour' => "Sieh' es dir an!",
         'title.login' => "Login",
         'title.password.reset' => "Passwort zur&uuml;cksetzen",
         'title.register' => "Registrierung",
@@ -138,4 +139,9 @@ return [
         'bugreporter.field.description.placeholder' => "z.B. 'Wenn ich auf der &Uuml;bersichtsseite Home klicke, erscheinen 7000 Pop-Ups...'",
         'bugreporter.field.description.info' => "Bitte mindestens 30 Zeichen eingeben. Eingegeben: ",
         'bugreporter.report.sent' => "Dein Bug-/Fehler-Bericht wurde versandt - Vielen Dank f&uuml;r dein Feedback!",
+    
+        'tour.caption.map' => "Spiele gegen bis zu 6 Gegner - auf einer Echzeit-Karte!",
+        'tour.caption.conquer' => "Erobere die L&auml;nder deiner Gegner...",
+        'tour.caption.enforments' => "...und erhalte Verst&auml;rkungen um zu siegen!",
+        'tour.caption.communicate' => "Lade Freunde ein und chatte mit deinen Mitspielern!",
 ];

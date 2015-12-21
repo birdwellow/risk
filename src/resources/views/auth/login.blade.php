@@ -4,6 +4,58 @@
 
 <img src="/img/world.png" class="background-img welcome"/>
 
+<div id="tour-carousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#tour-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#tour-carousel" data-slide-to="1"></li>
+        <li data-target="#tour-carousel" data-slide-to="2"></li>
+        <li data-target="#tour-carousel" data-slide-to="3"></li>
+    </ol>
+
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <div class="carousel-caption">
+                {{ Lang::get('message.tour.caption.map') }}
+            </div>
+            <img src="/img/tour/1.png">
+        </div>
+
+        <div class="item">
+            <div class="carousel-caption">
+                {{ Lang::get('message.tour.caption.conquer') }}
+            </div>
+            <img src="/img/tour/2.png">
+        </div>
+
+        <div class="item">
+            <div class="carousel-caption">
+                {{ Lang::get('message.tour.caption.enforments') }}
+            </div>
+            <img src="/img/tour/3.png">
+        </div>
+
+        <div class="item">
+            <div class="carousel-caption">
+                {{ Lang::get('message.tour.caption.communicate') }}
+            </div>
+            <img src="/img/tour/4.png">
+        </div>
+    </div>
+
+    <a class="left carousel-control" href="#tour-carousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">
+            Previous
+        </span>
+    </a>
+    <a class="right carousel-control" href="#tour-carousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">
+            Next
+        </span>
+    </a>
+</div>
+
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
@@ -12,10 +64,18 @@
 				<div class="panel-body">
                                     
                                         <div class="welcome">
-                                            <h1 class="">
+                                            <h1>
                                                 {{ Lang::get("message.title.welcome") }}
                                             </h1>
+                                            
+                                            <a href="#" toggle-for="tour-carousel">
+                                                <div class="h3">
+                                                    {{ Lang::get("message.title.tour") }}
+                                                </div>
+                                            </a>
                                         </div>
+                                    
+                                    
 
 					<form class="form-horizontal" role="form" method="POST" action="/auth/login">
                                             	<input type="hidden" name="_token" value="{{ csrf_token() }}">

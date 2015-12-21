@@ -15,19 +15,19 @@
                     
                         <div class="panel-body">
                             
-                                @if(Auth::user()->matchnotfication)
+                                @if(Auth::user()->matchnotification)
 
                                 <div id="alert-container">
                                         <?php
                                             $filtered = array();
-                                            preg_match('/(.*?):(.*)/', Auth::user()->matchnotfication, $filtered);
+                                            preg_match('/(.*?):(.*)/', Auth::user()->matchnotification, $filtered);
                                             $class = (isset($filtered[2]) ? $filtered[2] : '');
                                         ?>
                                         <div class="alert alert-matchnotification {{ $class }}">
                                                 <div class="confirm-matchnotification">
                                                     <img src="/img/confirm.png">
                                                 </div>
-                                                {{ Lang::get("message.text." . Auth::user()->matchnotfication) }}
+                                                {{ Lang::get("message.text." . Auth::user()->matchnotification) }}
                                         </div>
                                 </div>
 
@@ -49,19 +49,19 @@
                         
                         <div class="panel-body">
     
-                                @if(Auth::user()->matchnotfication)
+                                @if(Auth::user()->matchnotification)
 
                                 <div id="alert-container">
                                         <?php
                                             $filtered = array();
-                                            preg_match('/(.*?):(.*)/', Auth::user()->matchnotfication, $filtered);
+                                            preg_match('/(.*?):(.*)/', Auth::user()->matchnotification, $filtered);
                                             $class = (isset($filtered[2]) ? $filtered[2] : '');
                                         ?>
                                         <div class="alert alert-matchnotification {{ $class }}">
                                                 <div class="confirm-matchnotification">
                                                     <img src="/img/confirm.png">
                                                 </div>
-                                                {{ Lang::get("message.text." . Auth::user()->matchnotfication) }}
+                                                {{ Lang::get("message.text." . Auth::user()->matchnotification) }}
                                         </div>
                                 </div>
 

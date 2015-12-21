@@ -172,7 +172,7 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
         foreach ($match->joinedUsers as $player){
             if(count($player->regions) == 0){
                 $player->joinedMatch()->dissociate();
-                $player->matchnotfication = 'match:lost';
+                $player->matchnotification = 'match:lost';
                 $player->save();
                 
                 foreach($player->cards as $card){
@@ -205,7 +205,7 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
     
     protected function endMatch(Match $match, User $winner) {
         
-        $winner->matchnotfication = 'match:won';
+        $winner->matchnotification = 'match:won';
         $winner->matcheswon += 1;
         $winner->save();
         $matchManager = new MatchManager();
