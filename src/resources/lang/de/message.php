@@ -78,6 +78,8 @@ return [
         'title.match.chat' => "Chat",
         'title.home' => "Home",
         'title.matches' => "Matches",
+        'title.profile' => "Profil",
+        'title.profile.statistics' => "Statistiken",
         'title.user.profile' => "User-Profil",
         'title.user.options' => "User-Optionen",
         'title.user.data' => "User-Daten",
@@ -124,6 +126,11 @@ return [
     
         'label.match.not.started' => "Administrator ':createdBy' hat das Spiel noch nicht gestartet.",
         'label.match.not.enough.players.joined' => "Es sind erst :joinedUsers von maximal :players Spielern beigetreten",
+        'label.membersince' => "Mitglied seit :date",
+        'label.contact' => "Kontakt",
+        'label.matches.created' => "Er&ouml;ffnete Matches",
+        'label.matches.played' => "Gespielte Matches",
+        'label.matches.won' => "Gewonnene Matches",
     
     
         'placeholder.search' => "Suche",

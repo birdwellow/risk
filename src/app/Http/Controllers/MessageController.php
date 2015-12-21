@@ -32,6 +32,18 @@ class MessageController extends Controller {
             return view("message.init");
             
     }
+
+    
+    
+    public function newThreadWithNewMessageForUserForm($userid) {
+
+            $user = $this->userManager->getUserForId($userid);
+            return view("message.init")
+                ->with("user", $user)
+                ->with("messageTitle", "")
+                ->with("reuseOldThread", true);
+            
+    }
     
 
     

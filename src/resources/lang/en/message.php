@@ -78,6 +78,8 @@ return [
         'title.match.chat' => "Chat",
         'title.home' => "Home",
         'title.matches' => "Matches",
+        'title.profile' => "Profile",
+        'title.profile.statistics' => "Statistics",
         'title.user.profile' => "User Profile",
         'title.user.options' => "User Options",
         'title.user.data' => "User Data",
@@ -119,6 +121,11 @@ return [
     
         'label.match.not.started' => "Administrator ':createdBy' has not yet started the match.",
         'label.match.not.enough.players.joined' => "Up to now, only :joinedUsers of at maximum :players joined the match",
+        'label.membersince' => "Member since :date",
+        'label.contact' => "Contact",
+        'label.matches.created' => "Created matches",
+        'label.matches.played' => "Played matches",
+        'label.matches.won' => "Won matches",
     
     
         'placeholder.search' => "Search",

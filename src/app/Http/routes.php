@@ -54,6 +54,16 @@ Route::get('json/users/names', [
     'uses' => 'JsonRestController@allUserNamesExceptCurrentUser'
 ]);
 
+Route::get('profile', [
+    'as' => 'profile.self',
+    'uses' => 'AccountController@profile'
+]);
+
+Route::get('profile/{id}', [
+    'as' => 'profile.foreign',
+    'uses' => 'AccountController@profile'
+]);
+
 
 
 
@@ -134,6 +144,11 @@ Route::get('match/removematchnotification', [
 Route::get('thread/new', [
     'as' => 'new.thread.init',
     'uses' => 'MessageController@newThreadWithNewMessageForm'
+]);
+
+Route::get('thread/new/to/{userid}', [
+    'as' => 'new.thread.init.to.user',
+    'uses' => 'MessageController@newThreadWithNewMessageForUserForm'
 ]);
 
 Route::post('thread/new', [

@@ -105,6 +105,10 @@ class GameException extends Exception {
             "message" => "error.thread.not.found",
             "category" => "error.system"
         ],
+        "USER.NOT.FOUND" => [
+            "message" => "error.user.not.found",
+            "category" => "error.user"
+        ],
         "USER.NOT.FOUND.BY.EMAIL" => [
             "message" => "error.user.not.found.by.email",
             "category" => "error.system"

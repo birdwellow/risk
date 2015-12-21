@@ -3,12 +3,15 @@
 use Game\Managers\AccountManager;
 use Game\Managers\MatchManager;
 use Game\Managers\MessageManager;
+use Game\Managers\UserManager;
 use Game\Handlers\Messages\SuccessFeedback;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Log;
+
+use Game\User;
 
 
 
@@ -17,16 +20,19 @@ class AccountController extends Controller {
         protected $accountManager;
         protected $matchManager;
         protected $messageManager;
+        protected $userManager;
         
 
         public function __construct(
                 AccountManager $accountManager,
                 MatchManager $matchManager,
-                MessageManager $messageManager) {
+                MessageManager $messageManager,
+                UserManager $userManager) {
 		
                 $this->accountManager = $accountManager;
                 $this->matchManager = $matchManager;
                 $this->messageManager = $messageManager;
+                $this->userManager = $userManager;
                 
                 $this->middleware('auth', ['except' => 'switchToLanguage']);
                 
@@ -125,6 +131,21 @@ class AccountController extends Controller {
                     $this->accountManager->changeLanguageForSession($lang);
                 }
                 return redirect()->back();
+                
+	}
+
+        
+	public function profile($id = null) {
+            
+                $user = null;
+                if($id){
+                    $user = $this->userManager->getUserForId($id);
+                }
+                else{
+                    $user = Auth::user();
+                }
+                return view('user.profile')
+                    ->with("user", $user);
                 
 	}
 

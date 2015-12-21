@@ -51,6 +51,19 @@ class UserManager {
         }
 
 
+        public function getUserForId($id) {
+
+                $user = User::find($id);
+                
+                if(!$user){
+                    throw new \Game\Exceptions\GameException("USER.NOT.FOUND");
+                }
+
+                return $user;
+
+        }
+
+
         public function extractUserIdsFromUsers($userArray){
 
                 $userIds = array();

@@ -39,6 +39,7 @@ return [
         'match.not.found' => "Spiel konnte nicht gefunden werden.",
         'thread.not.found' => "Thread konnte nicht gefunden werden.",
         'user.not.found.by.email' => "Konnte keinen User mit dieser E-Mail-Adresse finden.",
+        'user.not.found' => "Konnte User nicht finden.",
     
         'login.credentials.invalid' => "Deine Login-Daten sind ung&uuml;ltig.",
         'registration.data.invalid' => "Deine Registrierungs-Daten sind ung&uuml;ltig.",

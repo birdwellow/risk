@@ -27,7 +27,7 @@
         
         $html = "";
         if($link){
-            $html .= '<a href="/">';
+            $html .= '<a href="' . route('profile.foreign', $user->id) . '">';
         }
         $html .= '<div class="' . $class . '">';
         if($user->avatarfile){

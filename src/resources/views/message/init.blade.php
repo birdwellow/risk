@@ -25,7 +25,7 @@
                                                                 {{ Lang::get('input.thread_subject') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <input value="{{ old('thread_subject') }}" type="text" name="thread_subject" class="{{ invalid('thread_subject') }}" />
+                                                                <input value="{{ isset($messageTitle) ? $messageTitle : old('thread_subject') }}" type="text" name="thread_subject" class="{{ invalid('thread_subject') }}" />
                                                         </div>
                                                 </div>
                                             
@@ -34,7 +34,7 @@
                                                                 
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <input type="checkbox" id="thread_reuseexistingthread" name="thread_reuseexistingthread" />
+                                                                <input type="checkbox" id="thread_reuseexistingthread" name="thread_reuseexistingthread" @if($reuseOldThread) checked @endif/>
                                                                 <label for="thread_reuseexistingthread">
                                                                     {{ Lang::get('input.thread_reuseexistingthread') }}
                                                                 </label>
@@ -53,7 +53,7 @@
                                                                 {{ Lang::get('input.thread_recipients') }}
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <input value="{{ old('thread_recipients') }}" name="thread_recipients" type="userselector" class="{{ invalid('thread_recipients') }}" />
+                                                                <input value="{{ isset($user) ? $user->name : old('thread_recipients') }}" name="thread_recipients" type="userselector" class="{{ invalid('thread_recipients') }}" />
                                                         </div>
                                                 </div>
 

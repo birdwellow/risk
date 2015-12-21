@@ -39,6 +39,7 @@ return [
         'match.not.found' => "Could not find match.",
         'thread.not.found' => "Could not find thread.",
         'user.not.found.by.email' => "Could not find a user with that e-mail address.",
+        'user.not.found' => "Could not find user.",
     
         'login.credentials.invalid' => "Your login credentials are invalid.",
         'registration.data.invalid' => "Your registration data are invalid.",
