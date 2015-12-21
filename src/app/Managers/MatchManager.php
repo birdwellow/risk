@@ -230,6 +230,13 @@ class MatchManager {
         
         public function cancelMatch(Match $match) {
 
+                $this->endMatch($match, "match:cancelled");
+
+        }
+
+        
+        public function endMatch(Match $match, $matchNotification = null) {
+
                 DB::statement('SET FOREIGN_KEY_CHECKS=0;');
                 
                 foreach ($match->continents as $continent) {
@@ -248,7 +255,9 @@ class MatchManager {
                 foreach ($match->joinedUsers as $joinedUser) {
                     $joinedUser->joinedMatch()->dissociate();
                     $joinedUser->matchorder = 0;
-                    $joinedUser->matchnotification = "match:cancelled";
+                    if($matchNotification){
+                        $joinedUser->matchnotification = $matchNotification;
+                    }
                     $joinedUser->save();
                 }
 

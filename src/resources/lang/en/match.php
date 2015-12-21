@@ -140,6 +140,11 @@ return [
         'info.troopshift.confirm.active' => "Confirm the troop shift.",
         'info.phase.finish.active' => "You can finish the phase.",
         'info.match.end.active' => "The match is finished!",
+    
+        'warn.continuewithshift' => "You have not yet conquered a country - continue, however? Unfortunately, you won't get a region card in this case...",
+        'warn.continuewithshift.title' => "Confirm going to troop shift",
+        'warn.continuewithshift.cancel' => "No",
+        'warn.continuewithshift.confirm' => "Yes",
         
 
 ];

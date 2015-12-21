@@ -140,5 +140,10 @@ return [
         'info.phase.finish.active' => "Du kannst die Phase beenden.",
         'info.match.end.active' => "Das Match ist beendet!",
     
+        'warn.continuewithshift' => "Du hast noch kein Land erobert - trotzdem weiter? Du bekommst dann leider keine Gebiets-Karte...",
+        'warn.continuewithshift.title' => "Weiter zu Truppenverschiebung best&auml;tigen",
+        'warn.continuewithshift.cancel' => "Nein",
+        'warn.continuewithshift.confirm' => "Ja",
+    
 
 ];

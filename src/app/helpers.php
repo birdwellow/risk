@@ -50,3 +50,11 @@
         return userlabel( $user, $link, true );
         
     }
+    
+    
+    function handyDate($dateString){
+        
+        $date = strtotime($dateString);
+        return date("d M Y, H:m:s", $date);
+        
+    }

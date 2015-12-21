@@ -83,6 +83,7 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
             }
             $roundPhaseData->conqueredregions++;
             $match->roundphasedata = json_encode($roundPhaseData);
+            $event->roundphasedata = json_encode($roundPhaseData);
             $match->save();
             
             $event->loser = $this->kickLoser($match->fresh());
@@ -209,7 +210,7 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
         $winner->matcheswon += 1;
         $winner->save();
         $matchManager = new MatchManager();
-        $matchManager->cancelMatch($match);
+        $matchManager->endMatch($match);
         
     }
     

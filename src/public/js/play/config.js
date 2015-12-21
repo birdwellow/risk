@@ -154,6 +154,7 @@ var Config = {
 			},
 			
 			"attack.result" : function(context){
+				
 				Config.controller.utils.enrichResultsWithModels(context.attackResult, context.moveStart, context.moveEnd);
 				var result = context.attackResult;
 				context.callback = function(){
@@ -181,6 +182,9 @@ var Config = {
 			},
 			
 			"attack.victory" : function(context){
+				
+				Model.roundphasedata = JSON.parse(context.roundphasedata);
+				
 				Config.controller.utils.enrichResultsWithModels(context.attackResult, context.moveStart, context.moveEnd);
 				var result = context.attackResult;
 				context.callback = function(){
@@ -404,7 +408,19 @@ var Config = {
 				},
 				
 				"button.nextphase.clicked" : function(context, event){
-					proxy.send("attack.finish");
+						console.log(Model.roundphasedata);
+					if(Model.roundphasedata && Model.roundphasedata.conqueredregions > 0){
+						proxy.send("attack.finish");
+					} else {
+						UI.confirmAction(function(){
+							proxy.send("attack.finish");
+						},
+						Lang.get('warn.continuewithshift'), 
+						Lang.get('warn.continuewithshift.title'), 
+						Lang.get('warn.continuewithshift.cancel'), 
+						Lang.get('warn.continuewithshift.confirm'),
+						"warn");
+					}
 				}
 
 			},

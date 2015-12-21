@@ -35,9 +35,12 @@
                         <div class="panel-body">
                             
                             <div class="messages">
-                                @foreach($thread->messages as $message)
+                                @foreach($thread->messages->reverse() as $message)
                                         <div class="message">
-                                            {!! userlabel($message->user, false) !!}:
+                                            {!! userlabel($message->user, false) !!}
+                                            <span class="date-label">
+                                                [{!! handyDate($message->created_at) !!}]:
+                                            </span>
                                             <span class="messagebody">
                                                 {!! $message->body !!}
                                             </span>

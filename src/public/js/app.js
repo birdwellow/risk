@@ -170,6 +170,27 @@ var UI = {
         
     },
     
+    confirmAction : function(actionCallback, message, title, abortLabel, confirmLabel, type){
+        
+        var config = {
+            allowCloseOnBackground : false,
+            type : type || "info",
+            message : message,
+            title : title || "Confirm",
+            buttons : {
+                close: {
+                    label : abortLabel || "Cancel"
+                },
+                action : {
+                    label : confirmLabel || "OK",
+                    callback : actionCallback
+                }
+            }
+        };
+        this.warnDialog = new Dialog(config);
+        
+    },
+    
     setLoading : function(element, isLoading) {
         
         if(isLoading == false){
