@@ -2,8 +2,31 @@
 
 @section('content')
 
+<div class="welcome">
+    <div class="title">
+        {{ Lang::get("message.title.welcome") }}
+    </div>
+    <img src="/img/logo.png">
+    <div>
+        <a href="#login">
+            <button class="btn btn-primary">
+                    {{ Lang::get('message.button.login') }}
+            </button>
+        </a>
+        <div class="links">
+            <a href="#tour-carousel">
+                    {{ Lang::get('message.title.tour') }}
+            </a>
+            <a href="/auth/register">
+                    {{ Lang::get('message.link.register') }}
+            </a>
+        </div>
+    </div>
+</div>
+
 <img src="/img/world.png" class="background-img welcome"/>
 
+<a name="tour-carousel"></a>
 <div id="tour-carousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#tour-carousel" data-slide-to="0" class="active"></li>
@@ -56,6 +79,7 @@
     </a>
 </div>
 
+<a name="login"></a>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
@@ -63,20 +87,6 @@
 				<div class="panel-heading">{{ Lang::get('message.title.login') }}</div>
 				<div class="panel-body">
                                     
-                                        <div class="welcome">
-                                            <h1>
-                                                {{ Lang::get("message.title.welcome") }}
-                                            </h1>
-                                            
-                                            <a href="#" toggle-for="tour-carousel">
-                                                <div class="h3">
-                                                    {{ Lang::get("message.title.tour") }}
-                                                </div>
-                                            </a>
-                                        </div>
-                                    
-                                    
-
 					<form class="form-horizontal" role="form" method="POST" action="/auth/login">
                                             	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
