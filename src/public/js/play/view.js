@@ -497,7 +497,7 @@ function RegionPath(model){
 	kineticPath.on('mouseout', function() {
 		fire("region.mouse.out");
 	});
-	kineticPath.on('click', function() {
+	kineticPath.on('click tap', function() {
 		fire("region.mouse.click");
 	});
 
@@ -517,7 +517,7 @@ function RegionPath(model){
 	nameLabel.on('mouseout', function() {
 		fire("region.mouse.out");
 	});
-	nameLabel.on('click', function() {
+	nameLabel.on('click tap', function() {
 		fire("region.mouse.click");
 	});
 	
@@ -546,7 +546,7 @@ function RegionPath(model){
 	troopLabel.on('mouseout', function() {
 		fire("region.mouse.out");
 	});
-	troopLabel.on('click', function() {
+	troopLabel.on('click tap', function() {
 		fire("region.mouse.click");
 	});
 	
