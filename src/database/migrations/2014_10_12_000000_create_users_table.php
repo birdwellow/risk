@@ -18,16 +18,16 @@ class CreateUsersTable extends Migration {
 			$table->string('name');
 			$table->string('email')->unique();
 			$table->string('password', 60);
-			$table->string('role');
+			$table->string('role')->default('user');
 			$table->rememberToken();
-			$table->timestamps();
-                        $table->string('joinid');
-                        $table->string('avatarfile');
-                        $table->string('language');
-                        $table->string('matchcolor');
-                        $table->integer('matchorder');
-                        $table->boolean('isonline');
-                        $table->string('newtroops');
+			$table->nullableTimestamps();
+                        $table->string('joinid')->nullable();
+                        $table->string('avatarfile')->nullable();
+                        $table->string('language')->nullable();
+                        $table->string('matchcolor')->nullable();
+                        $table->integer('matchorder')->nullable();
+                        $table->boolean('isonline')->default(false);
+                        $table->string('newtroops')->nullable();
 		});
 	}
 

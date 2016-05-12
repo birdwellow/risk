@@ -18,7 +18,7 @@ class CreateConnectionsTable extends Migration {
                         $table->json('points');
                         $table->integer('match_id')->nullable()->unsigned();
                         $table->foreign('match_id')->references('id')->on('matches');
-                        $table->timestamps();
+                        $table->nullableTimestamps();
                 });
 	}
 

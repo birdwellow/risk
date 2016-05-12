@@ -22,7 +22,7 @@ class CreateContintents extends Migration {
                         $table->foreign('match_id')->references('id')->on('matches');
                         $table->integer('owner_id')->nullable()->unsigned();
                         $table->foreign('owner_id')->references('id')->on('users');
-                        $table->timestamps();
+                        $table->nullableTimestamps();
 		});
 	}
 

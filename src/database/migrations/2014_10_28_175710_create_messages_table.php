@@ -17,7 +17,7 @@ class CreateMessagesTable extends Migration
             $table->integer('thread_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->text('body');
-            $table->timestamps();
+            $table->nullableTimestamps();
 
             $table->foreign('thread_id')->references('id')->on('threads');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');

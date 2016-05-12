@@ -34,8 +34,8 @@ class CreateRegions extends Migration {
                         $table->integer('labelcenterx');
                         $table->integer('labelcentery');
                         $table->integer('angle');
-                        $table->string('pathdata');
-                        $table->timestamps();
+                        $table->string('pathdata')->nullable();
+                        $table->nullableTimestamps();
 		});
 	}
 

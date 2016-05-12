@@ -30,7 +30,7 @@ class CreateMatchesTable extends Migration {
                         $table->string('mapname');
                         $table->integer('maxusers');
                         $table->integer('cardchangebonuslevel');
-			$table->timestamps();
+			$table->nullableTimestamps();
 		});
                 
                 Schema::table('users', function(Blueprint $table)
