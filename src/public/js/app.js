@@ -704,3 +704,39 @@ function BugReporter(element) {
 		element.show();
 	};
 }
+
+var dumpButton = $(".dump-data");
+dumpButton.click(function(){
+	if(window.Model){
+		var seen = [];
+		var modelString = JSON.stringify(Model, function(key, val) {
+		   if (!!val && typeof val == "object") {
+				if (seen.indexOf(val) >= 0) {
+					return;
+				}
+				seen.push(val);
+			}
+			return val;
+		});
+		console.log("Model=" + modelString);
+	} else {
+		console.log("Model=undefined");
+	}
+	
+	if(Controller){
+		var context = Controller.getContext();
+		var seen = [];
+		var contextString = JSON.stringify(context, function(key, val) {
+		   if (!!val && typeof val == "object") {
+				if (seen.indexOf(val) >= 0) {
+					return;
+				}
+				seen.push(val);
+			}
+			return val;
+		});
+		console.log("Controller.getContext()=" + contextString);
+	} else {
+		console.log("Controller.getContext()=undefined");
+	}
+});
