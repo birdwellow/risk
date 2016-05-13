@@ -298,7 +298,7 @@ class MatchManager {
                 foreach ($newTroopsObject as $newTroops) {
                     $firstPlayer->newtroops += $newTroops;
                 }
-                $match->roundphasedata = json_encode($newTroopsObject);
+                $match->roundphasedata = json_encode($newTroopsObject, JSON_NUMERIC_CHECK);
                 
                 $match->save();
                 $firstPlayer->save();

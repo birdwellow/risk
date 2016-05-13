@@ -32,7 +32,7 @@ class TradeCardsCommand extends AbstractGameFlowControllerCommand {
         
         $roundPhaseData = json_decode($match->roundphasedata);
         $roundPhaseData->trade = $newTroops;
-        $roundPhaseDataJson = json_encode($roundPhaseData);
+        $roundPhaseDataJson = json_encode($roundPhaseData, JSON_NUMERIC_CHECK);
         $match->roundphasedata = $roundPhaseDataJson;
         $match->cardchangebonuslevel++;
         $match->save();

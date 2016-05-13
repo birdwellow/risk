@@ -43,7 +43,7 @@ class FinishPhaseCommand extends AbstractGameFlowControllerCommand {
         foreach ($newTroopsObject as $newTroops) {
             $nextPlayer->newtroops += $newTroops;
         }
-        $match->roundphasedata = json_encode($newTroopsObject);
+        $match->roundphasedata = json_encode($newTroopsObject, JSON_NUMERIC_CHECK);
         $match->activePlayer()->associate($nextPlayer);
         foreach($match->joinedUsers as $joinedUser){
             $joinedUser->matchnotification = null;

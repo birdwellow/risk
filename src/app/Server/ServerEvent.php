@@ -71,7 +71,7 @@ class ServerEvent {
         return json_encode([
             "type" => $this->name,
             "data" => $this->data
-        ]);
+        ], JSON_NUMERIC_CHECK);
     }
     
     protected function encodeData(){

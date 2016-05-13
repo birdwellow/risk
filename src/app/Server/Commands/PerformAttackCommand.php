@@ -82,8 +82,8 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
                 }
             }
             $roundPhaseData->conqueredregions++;
-            $match->roundphasedata = json_encode($roundPhaseData);
-            $event->roundphasedata = json_encode($roundPhaseData);
+            $match->roundphasedata = json_encode($roundPhaseData, JSON_NUMERIC_CHECK);
+            $event->roundphasedata = json_encode($roundPhaseData, JSON_NUMERIC_CHECK);
             $match->save();
             
             $event->loser = $this->kickLoser($match->fresh());

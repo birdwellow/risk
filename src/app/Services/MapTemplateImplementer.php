@@ -118,7 +118,7 @@ class MapTemplateImplementer {
         
         foreach ($connectionsPoints as $index => $points) {
             $connection = new Connection();
-            $connection->points = json_encode($points);
+            $connection->points = json_encode($points, JSON_NUMERIC_CHECK);
             $connection->match()->associate($match);
             
             $connection->save();

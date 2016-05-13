@@ -37,7 +37,7 @@ class TestMatchSeeder extends Seeder {
         $roundphasedata->regions = 2;
         $roundphasedata->america = 0;*/
         $roundphasedata->conqueredregions = 2;
-        $json = json_encode($roundphasedata);
+        $json = json_encode($roundphasedata, JSON_NUMERIC_CHECK);
         
         $match = Match::create([
             'name' => 'Test Match',
