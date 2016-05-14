@@ -42,7 +42,7 @@ class TestMatchSeeder extends Seeder {
         $match = Match::create([
             'name' => 'Test Match',
             'state' => 'started',
-            'roundphase' => "troopgain",
+            'roundphase' => "attack",
             'roundphasedata' => $json,
             'active_player_id' => $player1->id,
             'public' => false,
@@ -72,7 +72,7 @@ class TestMatchSeeder extends Seeder {
             'colorscheme' => 'yellow',
             'troopbonus' => 2,
             'match_id' => $match->id,
-            'owner_id' => $player1->id,
+            'owner_id' => $player2->id,
         ]);
         $southamerica = Continent::create([
             'name' => 'southamerica',
@@ -84,7 +84,7 @@ class TestMatchSeeder extends Seeder {
         
         $canada = Region::create([
             'name' => 'northwestern-territory',
-            'troops' => 12,
+            'troops' => 1,
             'continent_id' => $america->id,
             'owner_id' => $player2->id,
             'cardunittype' => '1',

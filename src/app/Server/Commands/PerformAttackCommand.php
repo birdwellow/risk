@@ -92,9 +92,10 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
             if($winner !== null){
                 $this->endMatch($match, $winner);
                 $event->winner = $winner;
+                
+                // Do not update continents, as they have been deleted by endMatch()
+                return new ServerEvent($eventName, $event->getData(), $match);
             }
-        
-            return new ServerEvent($eventName, $event->getData(), $match);
             
         }
         
@@ -140,11 +141,15 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
     
     protected function updateContinents(Match $match) {
         
+        Log::info('Updating continents');
+        
         foreach ($match->continents as $continent) {
             $owner = $this->calculateContinentOwner($continent);
             if($owner !== null){
+                Log::info('Continent ' . $continent->name . ' belongs to ' . $owner->name);
                 $continent->owner()->associate($owner);
             } else {
+                Log::info('Continent ' . $continent->name . ' belongs to nobody');
                 $continent->owner()->dissociate();
             }
             $continent->save();
