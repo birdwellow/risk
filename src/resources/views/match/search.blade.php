@@ -57,7 +57,9 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('match.join.init', $match->joinid) }}">
-                                                    Join
+                                                    <button class="btn btn-primary">
+                                                        Join
+                                                    </button>
                                                 </a>
                                             </td>
                                         </tr>

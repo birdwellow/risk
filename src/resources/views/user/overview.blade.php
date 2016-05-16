@@ -243,7 +243,9 @@
                                     @foreach($matches as $match)
                                         <tr class="data">
                                                 <td>
+                                                    <a href="{{route('match.join.init', $match->joinid)}}">
                                                         {{ $match->name }}
+                                                    </a>
                                                 </td>
                                                 <td>
                                                     @foreach($match->joinedUsers as $joinedUser)
