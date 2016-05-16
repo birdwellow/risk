@@ -34,7 +34,7 @@
                                                                 
                                                         </label>
                                                         <div class="col-md-9">
-                                                                <input type="checkbox" id="thread_reuseexistingthread" name="thread_reuseexistingthread" @if($reuseOldThread) checked @endif/>
+                                                                <input type="checkbox" id="thread_reuseexistingthread" name="thread_reuseexistingthread"/>
                                                                 <label for="thread_reuseexistingthread">
                                                                     {{ Lang::get('input.thread_reuseexistingthread') }}
                                                                 </label>
