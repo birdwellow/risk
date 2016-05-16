@@ -79,7 +79,7 @@ class MatchController extends Controller {
                         "Match '" . $matchName . "'",
                         $user,
                         $invitedUsersArray,
-                        true
+                        false
                 );
                 
                 $match = $this->matchManager->createMatch(
