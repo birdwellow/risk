@@ -704,3 +704,23 @@ function BugReporter(element) {
 		element.show();
 	};
 }
+
+$('button.login-link').click(function (){
+	$('html, body').animate({
+		scrollTop: ($('[name="login"]').offset().top)
+	}, 'slow');
+	$('[name="user_email"]').focus();
+});
+
+$('button.login-link').click(function (){
+	$('html, body').animate({
+		scrollTop: ($('[name="login"]').offset().top)
+	}, 'slow');
+	$('[name="user_email"]').focus();
+});
+
+$('#tour-link').click(function () {
+	$('html, body').animate({
+		scrollTop: ($('#tour-carousel').offset().top)
+	}, 'slow');
+});

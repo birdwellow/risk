@@ -8,13 +8,11 @@
     </div>
     <img src="/img/logo.png">
     <div>
-        <a href="#login">
-            <button class="btn btn-primary">
-                    {{ Lang::get('message.button.login') }}
-            </button>
-        </a>
+        <button class="login-link btn btn-primary">
+                {{ Lang::get('message.button.login') }}
+        </button>
         <div class="links">
-            <a href="#tour-carousel">
+            <a href="#" id="tour-link">
                     {{ Lang::get('message.title.tour') }}
             </a>
             <a href="/auth/register">
@@ -26,7 +24,6 @@
 
 <img src="/img/world.png" class="background-img welcome"/>
 
-<a name="tour-carousel"></a>
 <div id="tour-carousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#tour-carousel" data-slide-to="0" class="active"></li>
