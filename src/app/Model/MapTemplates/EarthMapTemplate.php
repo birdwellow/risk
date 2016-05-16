@@ -59,7 +59,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "northamerica",
                 "center" => [90,95],
                 "labelcenter" => [60,110],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -71,7 +71,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "northamerica",
                 "center" => [187,144],
                 "labelcenter" => [147,155],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -83,7 +83,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "northamerica",
                 "center" => [198,193],
                 "labelcenter" => [165,192],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -95,7 +95,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "northamerica",
                 "center" => [190,262],
                 "labelcenter" => [195,277],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -107,7 +107,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "northamerica",
                 "center" => [248,203],
                 "labelcenter" => [250,221],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -119,7 +119,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "northamerica",
                 "center" => [205,91],
                 "labelcenter" => [185,91],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -131,7 +131,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "northamerica",
                 "center" => [235,148],
                 "labelcenter" => [238,161],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -143,7 +143,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "northamerica",
                 "center" => [319,143],
                 "labelcenter" => [294,160],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -155,7 +155,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "northamerica",
                 "center" => [393,61],
                 "labelcenter" => [380,82],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -167,7 +167,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "southamerica",
                 "center" => [248,314],
                 "labelcenter" => [288,296],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -179,7 +179,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "southamerica",
                 "center" => [235,367],
                 "labelcenter" => [245,372],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -191,7 +191,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "southamerica",
                 "center" => [319,355],
                 "labelcenter" => [325,371],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -203,7 +203,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "southamerica",
                 "center" => [279,437],
                 "labelcenter" => [279,452],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -215,7 +215,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "africa",
                 "center" => [536,455],
                 "labelcenter" => [526,472],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -227,7 +227,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "africa",
                 "center" => [614,446],
                 "labelcenter" => [616,459],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -239,7 +239,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "africa",
                 "center" => [573,340],
                 "labelcenter" => [586,355],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -251,7 +251,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "africa",
                 "center" => [527,376],
                 "labelcenter" => [508,392],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -263,7 +263,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "africa",
                 "center" => [455,295],
                 "labelcenter" => [455,309],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -275,7 +275,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "africa",
                 "center" => [510,282],
                 "labelcenter" => [542,275],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -287,7 +287,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "europe",
                 "center" => [429,116],
                 "labelcenter" => [400,130],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -299,7 +299,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "europe",
                 "center" => [449,165],
                 "labelcenter" => [429,178],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -311,7 +311,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "europe",
                 "center" => [458,212],
                 "labelcenter" => [443,218],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -323,7 +323,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "europe",
                 "center" => [491,177],
                 "labelcenter" => [494,185],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -335,7 +335,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "europe",
                 "center" => [517,216],
                 "labelcenter" => [511,226],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -347,7 +347,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "europe",
                 "center" => [511,115],
                 "labelcenter" => [507,131],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -359,7 +359,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "europe",
                 "center" => [585,150],
                 "labelcenter" => [565,167],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -371,7 +371,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [598,260],
                 "labelcenter" => [620,276],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -383,7 +383,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [667,193],
                 "labelcenter" => [657,210],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -395,7 +395,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [667,129],
                 "labelcenter" => [663,145],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -407,7 +407,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [728,100],
                 "labelcenter" => [718,118],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -419,7 +419,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [823,92],
                 "labelcenter" => [808,107],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -431,7 +431,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [800,150],
                 "labelcenter" => [760,162],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -443,7 +443,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [910,102],
                 "labelcenter" => [910,116],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -455,7 +455,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [834,195],
                 "labelcenter" => [771,191],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -467,7 +467,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [775,241],
                 "labelcenter" => [785,251],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -479,7 +479,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [704,280],
                 "labelcenter" => [714,302],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -491,7 +491,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [897,212],
                 "labelcenter" => [877,228],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -503,7 +503,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "asia",
                 "center" => [797,315],
                 "labelcenter" => [777,337],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -515,7 +515,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "australia",
                 "center" => [912,444],
                 "labelcenter" => [945,454],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [
@@ -527,7 +527,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "australia",
                 "center" => [845,448],
                 "labelcenter" => [855,472],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "1",
                 "neighbors" => [
@@ -539,7 +539,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "australia",
                 "center" => [918,368],
                 "labelcenter" => [928,386],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "2",
                 "neighbors" => [
@@ -551,7 +551,7 @@ class EarthMapTemplate extends MapTemplate {
                 "continent" => "australia",
                 "center" => [844,371],
                 "labelcenter" => [844,390],
-                "angle" => "",
+                "angle" => 0,
                 "pathdata" => "",
                 "cardunittype" => "3",
                 "neighbors" => [

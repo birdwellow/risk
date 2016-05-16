@@ -17,7 +17,7 @@ class CreateMatchesTable extends Migration {
 			$table->increments('id');
                         $table->string('name');
                         $table->string('state');
-                        $table->string('roundphase');
+                        $table->string('roundphase')->nullable();
                         $table->json('roundphasedata')->nullable();
                         $table->integer('active_player_id')->nullable()->unsigned();
                         $table->foreign('active_player_id')->references('id')->on('users');
@@ -29,7 +29,7 @@ class CreateMatchesTable extends Migration {
                         $table->string('joinid');
                         $table->string('mapname');
                         $table->integer('maxusers');
-                        $table->integer('cardchangebonuslevel');
+                        $table->integer('cardchangebonuslevel')->default(0);
 			$table->nullableTimestamps();
 		});
                 

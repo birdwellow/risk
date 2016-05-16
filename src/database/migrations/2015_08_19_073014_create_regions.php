@@ -17,7 +17,7 @@ class CreateRegions extends Migration {
 			$table->increments('id');
                         $table->string('name');
                         
-                        $table->integer('troops');
+                        $table->integer('troops')->nullable();
                         
                         $table->integer('continent_id')->nullable()->unsigned();
                         $table->foreign('continent_id')->references('id')->on('continents');
