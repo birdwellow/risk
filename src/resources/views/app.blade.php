@@ -33,16 +33,6 @@
                 <img src="/img/report.png" class="icon">
                 {{ Lang::get('message.bugreporter.head') }}
             </div>
-            <div class="side-toggle dump-data">
-                <img src="/img/log.png" class="icon">
-                Dump
-            </div>
-            <!--
-            <div class="side-toggle">
-                <div class="help icon">?</div>
-                Show tooltips
-            </div>
-            -->
         </div>
         
         <div id="bug-reporter">

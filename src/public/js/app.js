@@ -704,20 +704,3 @@ function BugReporter(element) {
 		element.show();
 	};
 }
-
-var dumpButton = $(".dump-data");
-dumpButton.click(function(){
-	if(window.Model){
-		console.log("Model=");
-		console.log(Model);
-	} else {
-		console.log("Model=undefined");
-	}
-	
-	if(window.Controller){
-		console.log("Controller.getContext()=");
-		console.log(Controller.getContext());
-	} else {
-		console.log("Controller.getContext()=undefined");
-	}
-});
