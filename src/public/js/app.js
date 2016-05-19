@@ -609,7 +609,8 @@ function UserSelector(baseInput){
 			var link = HTML.make("a");
 			var tag = HTML.make("div", "user-label").attr("style", "margin:5px;");
 			link.append(tag);
-			tag.html("+ <img class=\"user-avatar icon\" src=\"/img/avatars/" + user.avatarfile + "\"><span class=\"user-name\">" + user.name + "</span>");
+			var avatarFile = user.avatarfile ? user.avatarfile : 'default.png';
+			tag.html("+ <img class=\"user-avatar icon\" src=\"/img/avatars/" + avatarFile + "\"><span class=\"user-name\">" + user.name + "</span>");
 			
 			link.click({user: user},function(event){
 				_selfpointer.addUserName(event.data.user.name);
