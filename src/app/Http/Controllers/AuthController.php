@@ -71,7 +71,9 @@ class AuthController extends Controller {
                     "new_user_password_confirmation" => $passwordConfirmation,
                 ], "REGISTRATION.ERROR");
                 
-                $newUser = $this->accountManager->registerNewUserWith($username, $email, $password, $passwordConfirmation);
+                $language = $this->accountManager->getSessionAppLocale();
+                
+                $newUser = $this->accountManager->registerNewUserWith($username, $email, $password, $language);
             
             	Auth::login($newUser);
 

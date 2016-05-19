@@ -52,17 +52,24 @@ class AccountManager {
         }
 
 
-        public function getUserAppLocale($user) {
-            
-                if($user && $user->language){
-                    Session::set($this->sessionLangToken, $user->language);
-                }
+        public function getSessionAppLocale() {
 
                 if(!Session::get($this->sessionLangToken)){
                     Session::set($this->sessionLangToken, $this->fallbackLocale);
                 }
                 
                 return Session::get($this->sessionLangToken);
+                
+        }
+
+
+        public function getUserAppLocale($user) {
+            
+                if($user && $user->language){
+                    Session::set($this->sessionLangToken, $user->language);
+                }
+                
+                return $this->getSessionAppLocale();
                 
         }
         
@@ -114,13 +121,14 @@ class AccountManager {
         }
         
         
-        public function registerNewUserWith($username, $email, $password, $passwordConfirmation) {
+        public function registerNewUserWith($username, $email, $password, $language) {
                 
                 return User::create([
                     'name' => $username,
                     'email' => $email,
                     'password' => bcrypt($password),
-                    'avatarfile' => "default.png"
+                    'avatarfile' => "default.png",
+                    'language' => $language
 		]);
 	
         }
