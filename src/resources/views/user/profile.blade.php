@@ -19,7 +19,11 @@
                                 <table>
                                     <tr>
                                         <td class="user-avatar-profile-container">
-                                            <img src="/img/avatars/{{ $user->avatarfile }}">
+                                            @if( $user->avatarfile )
+                                                <img class="user-avatar" src="/img/avatars/{{ $user->avatarfile }}" />
+                                            @else
+                                                <img class="user-avatar" src="/img/avatars/default.png">
+                                            @endif
                                         </td>
                                         <td class="user-name-profile-container">
                                             <div>
