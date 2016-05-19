@@ -714,6 +714,6 @@ $('button.login-link').click(function (){
 
 $('#tour-link').click(function () {
 	$('html, body').animate({
-		scrollTop: ($('#tour-carousel').offset().top)
+		scrollTop: ($('#tour-carousel').offset().top) - 100
 	}, 'slow');
 });
