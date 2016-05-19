@@ -183,5 +183,12 @@ class MessageManager {
 
         }
 
+
+        public function addUserToThread($user, $thread){
+
+                $thread->addParticipants([$user->id]);
+
+        }
+
     
 }

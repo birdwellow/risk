@@ -141,6 +141,8 @@ class MatchController extends Controller {
 
                 $this->matchManager->joinUserToMatch($match, $user, $colorScheme);
                 
+                $this->messageManager->addUserToThread($user, $match->thread);
+                
                 $this->messageManager->newMessage(
                     $match->thread,
                     $user,
