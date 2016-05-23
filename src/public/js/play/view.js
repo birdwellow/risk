@@ -1517,7 +1517,7 @@ function PlayerList(elementId){
 		}
 		
 		var element = {
-			playerData : HTML.make("div", "data player"),
+			playerData : HTML.make("div", "data player " + player.matchcolor),
 			img : HTML.make("img", "user-avatar").attr("src", "/img/avatars/" + avatarImg),
 			state : HTML.make("div", "state"),
 			nameLabel : HTML.make("span").html(player.name)
