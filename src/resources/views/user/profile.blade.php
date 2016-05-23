@@ -33,7 +33,9 @@
                                                 {{ Lang::get('message.label.membersince', ['date' => handyDate($user->created_at)]) }}
                                             </div>
                                             <div class="small">
+                                                @if( $user->language )
                                                 ({{ Lang::get('message.name.language.' . $user->language) }})
+                                                @endif
                                             </div>
                                             <div class="small">
                                                 <a class="contact" href="{{ route('new.thread.init.to.user', $user->id) }}">
