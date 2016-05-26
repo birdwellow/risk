@@ -1568,6 +1568,7 @@ function PlayerList(elementId){
 					self.offline(player);
 				}
 			}
+			this.activePlayer(Model.activePlayer);
 		}
 		
 	};
