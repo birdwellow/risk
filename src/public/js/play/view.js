@@ -1374,7 +1374,8 @@ function Chat(elementId, parent) {
 function Card(model, context){
 	
 	var classes = "card " + model.continent.colorscheme;
-	if(context && context.selectedCards && context.selectedCards.indexOf(model) > -1){
+	if(context && context.selectedCards && context.selectedCards.indexOf
+		&& context.selectedCards.indexOf(model) > -1){
 		classes += " selected";
 	}
 	var cardDiv = HTML.make("div", classes);
