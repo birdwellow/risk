@@ -862,8 +862,6 @@ function MapControls(elementId){
 						var value = Model.roundphasedata[attr];
 						html += "<tr><td>" + Lang.get(attr) + ":</td><td>" + value + "</td></tr>";
 					}
-				} else {
-					console.error('Round phase data is not an object: ' + JSON.stringify(Model.roundphasedata));
 				}
 				html += "<tr class=\"last\">";
 				html += "<td>" + Lang.get("total") + ": " + "</td><td>" + newTroops + "</td>";
