@@ -33,6 +33,22 @@
                         </div>
                     
                         <div class="panel-body">
+
+                            <div class="newmessage">
+                                <form method="POST" action="{{ route('thread.newmessage', $thread->id) }}" class="form-horizontal" role="form" enctype="multipart/form-data" >
+
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                                        <div class="form-group">
+                                            <div class="col-md-10">
+                                                    <textarea id="message" name="thread_message_text" class="{{ invalid('thread_message_text') }}"></textarea>
+                                            </div>
+                                            <div class="col-md-2">
+                                                    <input type="submit" value="{{ Lang::get('message.button.send') }}" class="btn btn-primary" >
+                                            </div>
+                                        </div>
+                                </form>
+                            </div>
                             
                             <div class="messages">
                                 @foreach($thread->messages->reverse() as $message)
@@ -47,21 +63,6 @@
                                         </div>
                                     </a>
                                 @endforeach
-                            </div>
-
-                            <div class="newmessage">
-                                <form method="POST" action="{{ route('thread.newmessage', $thread->id) }}" class="form-horizontal" role="form" enctype="multipart/form-data" >
-
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                                        <div class="form-group">
-                                            <div class="col-md-12">
-                                                    <textarea id="message" name="thread_message_text" class="{{ invalid('thread_message_text') }}"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <input type="submit" value="{{ Lang::get('message.button.send') }}" class="btn btn-primary" >
-                                </form>
                             </div>
                         </div>
                 </div>
