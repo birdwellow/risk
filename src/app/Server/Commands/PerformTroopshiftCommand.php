@@ -40,8 +40,9 @@ class PerformTroopshiftCommand extends AbstractGameFlowControllerCommand {
             $startRegion->save();
             $endRegion->save();
             
-            $roundPhaseData = json_decode($match->roundphasedata);
             $roundPhaseData->shiftedTroops = true;
+            $match->roundphasedata = json_encode($roundPhaseData, JSON_NUMERIC_CHECK);
+            $match->save();
         
             return new ServerEvent("troopshift.result", $event->getData(), $match);
 
