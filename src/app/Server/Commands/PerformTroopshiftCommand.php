@@ -21,7 +21,15 @@ class PerformTroopshiftCommand extends AbstractGameFlowControllerCommand {
         $endRegion = $event->moveEnd;
         $shiftTroops = $event->shiftTroops;
         
-        if($startRegion->troops - $shiftTroops >= 1){
+        $roundPhaseData = json_decode($match->roundphasedata);
+        
+        if ($startRegion->troops - $shiftTroops < 1){
+            Log::error('Remaining troops in start region are less than 1');
+            return;
+        } else if(isset($roundPhaseData->shiftedTroops) && $roundPhaseData->shiftedTroops) {
+            Log::error('Troops already shifted');
+            return;
+        } else {
             
             $startRegion->troops -= $shiftTroops;
             $endRegion->troops += $shiftTroops;
@@ -31,6 +39,9 @@ class PerformTroopshiftCommand extends AbstractGameFlowControllerCommand {
             
             $startRegion->save();
             $endRegion->save();
+            
+            $roundPhaseData = json_decode($match->roundphasedata);
+            $roundPhaseData->shiftedTroops = true;
         
             return new ServerEvent("troopshift.result", $event->getData(), $match);
 

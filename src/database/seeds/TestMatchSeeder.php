@@ -112,7 +112,7 @@ class TestMatchSeeder extends Seeder {
         
         $mexico = Region::create([
             'name' => 'mexico',
-            'troops' => 31,
+            'troops' => 1,
             'continent_id' => $america->id,
             'owner_id' => $player1->id,
             'cardunittype' => '3',
