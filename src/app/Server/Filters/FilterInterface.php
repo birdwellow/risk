@@ -11,6 +11,10 @@ use Game\Server\SocketEvent;
  */
 interface FilterInterface {
     
-    public function doFilter(SocketEvent $event, Match $match);
+    public function filterIncomingEvent(SocketEvent $event, Match $match);
+    
+    public function filterOutgoingEvent(SocketEvent $event, Match $match);
+    
+    public function clear(Match $match);
     
 }

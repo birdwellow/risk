@@ -45,7 +45,7 @@ class GameFlowController {
         $eventKey = $event->getName();
         if(isset($this->eventMap[$eventKey])){
             try {
-                $this->filter($event, $match);
+                $this->filterIncomingEvent($event, $match);
             } catch (Exception $exception) {
                 Log::error("Filter error: " . $exception->getMessage());
                 return;
@@ -69,10 +69,16 @@ class GameFlowController {
         array_push($this->filters, $filter);
     }
     
-    private function filter(SocketEvent $event, Match $match){
+    public function clear(Match $match){
+        foreach ($this->filters as $filter) {
+            $filter->clear($match);
+        }
+    }
+    
+    private function filterIncomingEvent(SocketEvent $event, Match $match){
         
         foreach ($this->filters as $filter) {
-            $filter->doFilter($event, $match);
+            $filter->filterIncomingEvent($event, $match);
         }
         
     }
