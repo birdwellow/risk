@@ -20,8 +20,20 @@ class TradeCardsCommand extends AbstractGameFlowControllerCommand {
         $selectedCards = $this->mapObjectToArray($event->selectedCards);
         
         if(sizeof($selectedCards) !== 3){
-            Log::info(sizeof($selectedCards));
+            Log::error('Error, trying to trade ' . sizeof($selectedCards) . ' cards!');
             return;
+        }
+        
+        $differentCardInstances = 
+                ($selectedCards[0]->name !== $selectedCards[1]->name)
+                && ($selectedCards[1]->name !== $selectedCards[2]->name)
+                && ($selectedCards[2]->name !== $selectedCards[0]->name);
+        if(!$differentCardInstances) {
+            Log::error('The traded cards are not all different: '
+                    . $selectedCards[0]->name . ", "
+                    . $selectedCards[1]->name . ", "
+                    . $selectedCards[2]->name);
+                    return 0;
         }
         
         $newTroops = $this->getTroopsForCards($selectedCards);
@@ -53,10 +65,7 @@ class TradeCardsCommand extends AbstractGameFlowControllerCommand {
     }
     
     
-    
-    protected function getTroopsForCards($cardsObject) {
-        
-        $cardsArray = $this->mapObjectToArray($cardsObject);
+    protected function getTroopsForCards($cardsArray) {
         
         $sameType = 
                 ($cardsArray[0]->cardunittype == $cardsArray[1]->cardunittype)
