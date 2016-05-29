@@ -13,8 +13,6 @@ use Game\Model\Match;
 use Game\Model\Region;
 use Game\Model\Continent;
 
-use Illuminate\Support\Facades\Hash;
-
 class TestMatchSeeder extends Seeder {
     
     public function run() {
@@ -42,7 +40,7 @@ class TestMatchSeeder extends Seeder {
         $match = Match::create([
             'name' => 'Test Match',
             'state' => 'started',
-            'roundphase' => "attack",
+            'roundphase' => "troopgain",
             'roundphasedata' => $json,
             'active_player_id' => $player1->id,
             'public' => false,
