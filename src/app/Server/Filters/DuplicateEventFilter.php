@@ -15,6 +15,14 @@ use Game\Server\SocketEvent;
  */
 class DuplicateEventFilter implements FilterInterface {
     
+    private $duplicateAllowedEvents = [
+            "get.init.data",
+            "new.chat.message",
+            "player.connect",
+            "player.disconnect",
+            "deploy.unit"
+        ];
+    
     private $matchLastEvents;
     
     public function __construct() {
@@ -56,8 +64,13 @@ class DuplicateEventFilter implements FilterInterface {
         }
         $lastEvent = $this->matchLastEvents[$matchKey];
         if($event->getName() == $lastEvent->getName()){
-            if($event->getName() == "trade.cards") {
-                throw new Exception("trade.cards sent too often!!");
+            \Illuminate\Support\Facades\Log::info(
+                    'Checking: ' . $event->getName() . ' in ' . implode(", ", $this->duplicateAllowedEvents) . '?');
+            if(!in_array($event->getName(), $this->duplicateAllowedEvents)) {
+                \Illuminate\Support\Facades\Log::info('-> no');
+                throw new Exception($event->getName() . " has been sent more than once subsequently!");
+            } else {
+                \Illuminate\Support\Facades\Log::info('-> yes, allowed');
             }
         }
         

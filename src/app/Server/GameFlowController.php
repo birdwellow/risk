@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Log;
 
 use Game\Server\Filters\FilterInterface;
 use Game\Server\Filters\DuplicateEventFilter;
+use Game\Server\Filters\AbortiveEventFilter;
+
 use Game\Model\Match;
 
 /**
