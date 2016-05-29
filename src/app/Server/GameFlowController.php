@@ -44,21 +44,20 @@ class GameFlowController {
         
         $eventKey = $event->getName();
         if(isset($this->eventMap[$eventKey])){
-            try {
-                $this->filterIncomingEvent($event, $match);
-            } catch (Exception $exception) {
-                Log::error("Filter error: " . $exception->getMessage());
-                return;
-            }
+            
+            $this->filterBeforeProcessing($event, $match);
             
             $commandName = "Game\\Server\\Commands\\" . $this->eventMap[$eventKey];
             $command = new $commandName();
-            
             $result = $command->perform($event, $match);
             if($result){
                 Log::info("Result is '" . $result->getName() . "'");
             }
+            
+            $this->filterAfterProcessing($event, $match);
+            
             return $result;
+            
         } else {
             //Log::warn("Event key '" . $eventKey . "' not defined");
         }
@@ -75,10 +74,28 @@ class GameFlowController {
         }
     }
     
-    private function filterIncomingEvent(SocketEvent $event, Match $match){
+    private function filterBeforeProcessing(SocketEvent $event, Match $match){
         
-        foreach ($this->filters as $filter) {
-            $filter->filterIncomingEvent($event, $match);
+        try {
+            foreach ($this->filters as $filter) {
+                $filter->filterBeforeProcessing($event, $match);
+            }
+        } catch (Exception $exception) {
+            Log::error("Filter error: " . $exception->getMessage());
+            return;
+        }
+        
+    }
+    
+    private function filterAfterProcessing(SocketEvent $event, Match $match){
+        
+        try {
+            foreach ($this->filters as $filter) {
+                $filter->filterAfterProcessing($event, $match);
+            }
+        } catch (Exception $exception) {
+            Log::error("Filter error: " . $exception->getMessage());
+            return;
         }
         
     }

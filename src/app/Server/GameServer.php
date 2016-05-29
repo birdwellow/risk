@@ -185,7 +185,7 @@ class GameServer implements GameServerInterface {
         
         if(count($this->matchSessions["match:id=".$match->id]) == 0){
             unset($this->matchSessions["match:id=".$match->id]);
-            $this->gameFlowController->clearFilters($match);
+            $this->gameFlowController->clear($match);
         }
         
     }

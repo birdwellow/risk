@@ -24,7 +24,7 @@ class DuplicateEventFilter implements FilterInterface {
     }
     
     
-    public function filterIncomingEvent(SocketEvent $event, Match $match){
+    public function filterBeforeProcessing(SocketEvent $event, Match $match){
         
         $matchKey = "match:id=".$match->id;
         $this->check($matchKey, $event);
@@ -34,7 +34,7 @@ class DuplicateEventFilter implements FilterInterface {
     }
     
     
-    public function filterOutgoingEvent(SocketEvent $event, Match $match){
+    public function filterAfterProcessing(SocketEvent $event, Match $match){
         
         // nothing to do here
         
