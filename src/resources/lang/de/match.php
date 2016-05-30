@@ -140,10 +140,20 @@ return [
         'info.phase.finish.active' => "Du kannst die Phase beenden.",
         'info.match.end.active' => "Das Match ist beendet!",
     
-        'warn.continuewithshift' => "Du hast noch kein Land erobert - trotzdem weiter? Du bekommst dann leider keine Gebiets-Karte...",
-        'warn.continuewithshift.title' => "Weiter zu Truppenverschiebung best&auml;tigen",
-        'warn.continuewithshift.cancel' => "Nein",
-        'warn.continuewithshift.confirm' => "Ja",
+        'warn.continue.without.attack.text' => "Du hast noch kein Land erobert. Trotzdem weiter? Du bekommst dann leider keine Gebiets-Karte.",
+        'warn.continue.without.attack.title' => "Weiter zu Truppenverschiebung best&auml;tigen",
+        'warn.continue.without.attack.cancel' => "Nein",
+        'warn.continue.without.attack.confirm' => "Ja",
+    
+        'warn.continue.withouth.final.shift.text' => "Du kannst noch Truppen verschieben. Trotzdem weiter?",
+        'warn.continue.withouth.final.shift.title' => "Beenden ohne Truppenverschiebung best&auml;tigen",
+        'warn.continue.withouth.final.shift.cancel' => "Nein",
+        'warn.continue.withouth.final.shift.confirm' => "Ja",
+    
+        'warn.continue.withouth.card.trade.text' => "Da kannst Karten tauschen. Trotzdem weiter?",
+        'warn.continue.withouth.card.trade.title' => "Weiter ohne Kartentausch best&auml;tigen",
+        'warn.continue.withouth.card.trade.cancel' => "Nein",
+        'warn.continue.withouth.card.trade.confirm' => "Ja",
     
 
 ];

@@ -141,10 +141,20 @@ return [
         'info.phase.finish.active' => "You can finish the phase.",
         'info.match.end.active' => "The match is finished!",
     
-        'warn.continuewithshift' => "You have not yet conquered a country - continue, however? Unfortunately, you won't get a region card in this case...",
-        'warn.continuewithshift.title' => "Confirm going to troop shift",
-        'warn.continuewithshift.cancel' => "No",
-        'warn.continuewithshift.confirm' => "Yes",
+        'warn.continue.without.attack.text' => "You have not conquered a country, yet. Continue anyway? You won't get a region card in this case.",
+        'warn.continue.without.attack.title' => "Confirm going to troop shift",
+        'warn.continue.without.attack.cancel' => "No",
+        'warn.continue.without.attack.confirm' => "Yes",
+    
+        'warn.continue.withouth.final.shift.text' => "You can still shift troops. Continue anyway?",
+        'warn.continue.withouth.final.shift.title' => "Confirm finishing without troop shift",
+        'warn.continue.withouth.final.shift.cancel' => "No",
+        'warn.continue.withouth.final.shift.confirm' => "Yes",
+    
+        'warn.continue.withouth.card.trade.text' => "You can trade cards. Continue anyway?",
+        'warn.continue.withouth.card.trade.title' => "Confirm continue without trading cards",
+        'warn.continue.withouth.card.trade.cancel' => "No",
+        'warn.continue.withouth.card.trade.confirm' => "Yes",
         
 
 ];

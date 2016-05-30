@@ -331,8 +331,39 @@ var Config = {
 				},
 			
 				"button.nextphase.clicked" : function(context, event){
-					delete context.nextPhase;
-					proxy.send("troopgain.finish");
+					
+					var myCards = Model.me.cards;
+					var differentCardTypes = {};
+					for (var index in myCards) {
+						var card = myCards[index];
+						differentCardTypes["#" + card.cardunittype] = (
+								differentCardTypes["#" + card.cardunittype] === undefined ?
+								1 :
+								differentCardTypes["#" + card.cardunittype] + 1	);
+					}
+					
+					var atLeastThreeCardsOfDifferentType = (Object.keys(differentCardTypes).length >= 3);
+					
+					var atLeastThreeCardsOfSameType = false;
+					for (var key in differentCardTypes) {
+						atLeastThreeCardsOfSameType = atLeastThreeCardsOfSameType
+								|| differentCardTypes[key] >= 3;
+					}
+					
+					if (atLeastThreeCardsOfDifferentType || atLeastThreeCardsOfSameType) {
+						
+						UI.confirmAction(function(){
+								proxy.send("troopgain.finish");
+							},
+							Lang.get('warn.continue.withouth.card.trade.text'), 
+							Lang.get('warn.continue.withouth.card.trade.title'), 
+							Lang.get('warn.continue.withouth.card.trade.cancel'), 
+							Lang.get('warn.continue.withouth.card.trade.confirm'),
+							"warn");
+					} else {
+						delete context.nextPhase;
+						proxy.send("troopgain.finish");
+					}
 				}
 				
 			},
@@ -413,13 +444,13 @@ var Config = {
 						proxy.send("attack.finish");
 					} else {
 						UI.confirmAction(function(){
-							proxy.send("attack.finish");
-						},
-						Lang.get('warn.continuewithshift'), 
-						Lang.get('warn.continuewithshift.title'), 
-						Lang.get('warn.continuewithshift.cancel'), 
-						Lang.get('warn.continuewithshift.confirm'),
-						"warn");
+								proxy.send("attack.finish");
+							},
+							Lang.get('warn.continue.without.attack.text'), 
+							Lang.get('warn.continue.without.attack.title'), 
+							Lang.get('warn.continue.without.attack.cancel'), 
+							Lang.get('warn.continue.without.attack.confirm'),
+							"warn");
 					}
 				}
 
@@ -565,7 +596,19 @@ var Config = {
 				},
 				
 				"button.nextphase.clicked" : function(context, event){
-					proxy.send("phase.finish");
+					if(!Model.roundphasedata.shiftedTroops) {
+						UI.confirmAction(function(){
+								proxy.send("phase.finish");
+							},
+							Lang.get('warn.continue.withouth.final.shift.text'), 
+							Lang.get('warn.continue.withouth.final.shift.title'), 
+							Lang.get('warn.continue.withouth.final.shift.cancel'), 
+							Lang.get('warn.continue.withouth.final.shift.confirm'),
+							"warn");
+					} else {
+						// Just for the case...
+						proxy.send("phase.finish");
+					}
 				}
 			
 			},
