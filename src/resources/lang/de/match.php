@@ -155,5 +155,10 @@ return [
         'warn.continue.withouth.card.trade.cancel' => "Nein",
         'warn.continue.withouth.card.trade.confirm' => "Ja",
     
+        'warn.continue.finish.attack.text' => "Willst du die Angriffs-Phase beenden?",
+        'warn.continue.finish.attack.title' => "Angriffs-Phase beenden",
+        'warn.continue.finish.attack.cancel' => "Nein",
+        'warn.continue.finish.attack.confirm' => "Ja",
+    
 
 ];

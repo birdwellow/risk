@@ -155,6 +155,11 @@ return [
         'warn.continue.withouth.card.trade.title' => "Confirm continue without trading cards",
         'warn.continue.withouth.card.trade.cancel' => "No",
         'warn.continue.withouth.card.trade.confirm' => "Yes",
+    
+        'warn.continue.finish.attack.text' => "Do you want to finish the attack phase?",
+        'warn.continue.finish.attack.title' => "Confirm finishing attack phase",
+        'warn.continue.finish.attack.cancel' => "No",
+        'warn.continue.finish.attack.confirm' => "Yes",
         
 
 ];

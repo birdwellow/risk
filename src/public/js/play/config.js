@@ -441,7 +441,14 @@ var Config = {
 				"button.nextphase.clicked" : function(context, event){
 						console.log(Model.roundphasedata);
 					if(Model.roundphasedata && Model.roundphasedata.conqueredregions > 0){
-						proxy.send("attack.finish");
+						UI.confirmAction(function(){
+								proxy.send("attack.finish");
+							},
+							Lang.get('warn.continue.finish.attack.text'), 
+							Lang.get('warn.continue.finish.attack.title'), 
+							Lang.get('warn.continue.finish.attack.cancel'), 
+							Lang.get('warn.continue.finish.attack.confirm'),
+							"warn");
 					} else {
 						UI.confirmAction(function(){
 								proxy.send("attack.finish");
