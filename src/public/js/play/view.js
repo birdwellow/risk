@@ -1321,48 +1321,53 @@ function Chat(elementId, parent) {
 	container.mouseover(function(){
 		$("*[toggle-for=" + elementId + "]").removeClass("changed");
 	});
+	
+	var addMessage = function(message, user){
+		var msgContainer = HTML.make("div", "chatMessage message-" + user.matchcolor);
+
+		var nameLabelContainer = HTML.make("div", "chatMessageUserName").html(user.name + ":");
+		var text = HTML.make("div", "chatMessageText").html(message);
+		var textContainer = HTML.make("div", "chatMessageTexts");
+		var contentContainer = HTML.make("div", "chatMessageContent");
+		contentContainer
+				.append(nameLabelContainer)
+				.append(textContainer);
+
+		var userContainer = HTML.make("div", "chatMessageUser");
+		var avatar = HTML.make("img", "user-avatar")
+				.attr("src", "/img/avatars/" + user.avatarfile);
+		userContainer.append(avatar);
+
+		if(lastMessageSender && lastMessageSender.id === user.id){
+			lastContentContainer.append(text);
+		} else {
+			textContainer.append(text);
+			if(user.id === Model.me.id){
+				msgContainer.append(contentContainer);
+				msgContainer.append(userContainer);
+			} else {
+				msgContainer.append(userContainer);
+				msgContainer.append(contentContainer);
+			}
+			content.append(msgContainer);
+			lastContentContainer = textContainer;
+		}
+
+		content.animate({ scrollTop: content.prop("scrollHeight") }, "slow");
+		lastMessageSender = user;
+
+		if(user !== Model.me){
+			$("*[toggle-for=" + elementId + "]").addClass("changed");
+		}
+	};
+	
+	for (var key in Model.thread.messages) {
+		var message = Model.thread.messages[key];
+		addMessage(message.message, message.user);
+	}
 		
 	return {
-		
-		addMessage : function(message, user){
-			var msgContainer = HTML.make("div", "chatMessage message-" + user.matchcolor);
-			
-			var nameLabelContainer = HTML.make("div", "chatMessageUserName").html(user.name + ":");
-			var text = HTML.make("div", "chatMessageText").html(message);
-			var textContainer = HTML.make("div", "chatMessageTexts");
-			var contentContainer = HTML.make("div", "chatMessageContent");
-			contentContainer
-					.append(nameLabelContainer)
-					.append(textContainer);
-			
-			var userContainer = HTML.make("div", "chatMessageUser");
-			var avatar = HTML.make("img", "user-avatar")
-					.attr("src", "/img/avatars/" + user.avatarfile);
-			userContainer.append(avatar);
-			
-			if(lastMessageSender === user){
-				lastContentContainer.append(text);
-			} else {
-				textContainer.append(text);
-				if(user === Model.me){
-					msgContainer.append(contentContainer);
-					msgContainer.append(userContainer);
-				} else {
-					msgContainer.append(userContainer);
-					msgContainer.append(contentContainer);
-				}
-				content.append(msgContainer);
-				lastContentContainer = textContainer;
-			}
-			
-			content.animate({ scrollTop: content.prop("scrollHeight") }, "slow");
-			lastMessageSender = user;
-			
-			if(user !== Model.me){
-				$("*[toggle-for=" + elementId + "]").addClass("changed");
-			}
-		}
-		
+		addMessage: addMessage
 	};
 	
 }
