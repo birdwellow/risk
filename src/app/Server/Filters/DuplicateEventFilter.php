@@ -20,6 +20,7 @@ class DuplicateEventFilter implements FilterInterface {
             "new.chat.message",
             "player.connect",
             "player.disconnect",
+            "attack.confirm",
             "deploy.unit"
         ];
     
