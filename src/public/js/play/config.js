@@ -117,6 +117,9 @@ var Config = {
 				}));
 				
 				delete context.selectedCards;
+				delete context.nextPhase;
+				
+				proxy.send("troopgain.finish");
 				
 			},
 			
@@ -127,6 +130,11 @@ var Config = {
 				
 				log(Lang.get("phase." + Model.roundphase) + ": " + Model.activePlayer.name);
 				
+				if(context.newTroops === undefined || context.newTroops <= 0){
+					delete context.nextPhase;
+					proxy.send("troopdeployment.finish");
+					return;
+				}
 				return "troopdeployment";
 				
 			},
@@ -134,14 +142,15 @@ var Config = {
 			"unit.deployed" : function(context){
 				context.region.troops = context.newRegionTroops;
 				context.player.newtroops = context.newPlayerTroops;
-				if(context.player.newtroops <= 0){
-					context.nextPhase = "attack";
-					//return "troopdeployment.finish";
-				}
 				log(Lang.get("unit.deployed", {
 					"name" : context.player.name,
 					"region" : "region." + context.region.name
 				}));
+				if(context.player.newtroops === undefined || context.player.newtroops <= 0){
+					context.nextPhase = "attack";
+					proxy.send("troopdeployment.finish");
+					return;
+				}
 			},
 			
 			"phase.attack" : function(context){
@@ -694,11 +703,12 @@ var Config = {
 			"phase.finish" : {
 				
 				onEnter : function(context){
-					context.nextPhase = "troopgain";
+					delete context.nextPhase;// = "troopgain";
+					proxy.send("phase.finish");
 				},
 				
 				"button.nextphase.clicked" : function(context, event){
-					proxy.send("phase.finish");
+					//proxy.send("phase.finish");
 				}
 				
 			},
