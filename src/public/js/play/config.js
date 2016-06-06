@@ -205,20 +205,37 @@ var Config = {
 						}
 					}
 					
-					context.moveEnd.owner = context.moveStart.owner;
-					var autoShiftTroops = Math.ceil(context.moveStart.troops / 2);
-					autoShiftTroops = Math.min(autoShiftTroops, context.moveStart.troops);
 					
-					context.moveEnd.troops += autoShiftTroops;
-					context.moveStart.troops -= autoShiftTroops;
+					var conqueredRegion = context.moveEnd;
+					var attackingRegion = context.moveStart;
+					var loser = conqueredRegion.owner;
+					var winner = attackingRegion.owner;
+					
+					// Update regions
+					loser.regions.splice(loser.regions.indexOf(conqueredRegion), 1);
+					conqueredRegion.owner = winner;
+					context.moveStart.owner.regions.push(attackingRegion);
+					
+					// Update continents
+					var continent = conqueredRegion.continent;
+					loser.continents.splice(loser.continents.indexOf(continent), 1);
+					if(winner.continents.indexOf(continent) === -1) {
+						winner.continents.push(continent);
+					}
+					
+					var autoShiftTroops = Math.ceil(attackingRegion.troops / 2);
+					autoShiftTroops = Math.min(autoShiftTroops, attackingRegion.troops);
+					
+					conqueredRegion.troops += autoShiftTroops;
+					attackingRegion.troops -= autoShiftTroops;
 					context.shiftTroops = 0;
 					console.log("Shift: " + context.shiftTroops);
 					context.moveType = "troopshift";
 					
 					log(Lang.get("attack.victory", {
-						"name" : context.moveStart.owner.name,
-						"region" : "region." + context.moveEnd.name,
-						"oldowner" : context.moveEnd.owner.name
+						"name" : winner.name,
+						"region" : "region." + conqueredRegion.name,
+						"oldowner" : loser.name
 					}));
 					
 					if(context.loser){

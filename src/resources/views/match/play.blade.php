@@ -39,11 +39,9 @@
                 <button class="toggle-btn active" toggle-for="players" title="{{ Lang::get("match.sidebar.players") }}">
                     <img src="/img/players.png">
                 </button>
-                <!--
                 <button class="toggle-btn active" toggle-for="statistics" title="{{ Lang::get("Statistics") }}">
                     <img src="/img/statistics.png">
                 </button>
-                -->
                 <button class="toggle-btn active" toggle-for="log" title="{{ Lang::get("match.sidebar.log") }}">
                     <img src="/img/log.png">
                 </button>
@@ -109,18 +107,16 @@
 
                 </div>
 
-                <!--
                 <div class="playmodule" id="statistics">
                     <div class="header">
                         <img class="icon" src="/img/statistics.png">
-                        {{ Lang::get( 'Statistics' ) }}
+                        {{ Lang::get( 'Statisticsss' ) }}
                     </div>
 
                     <div class="body" id="statisticscontent">
                         Some Stats
                     </div>
                 </div>
-                -->
 
                 <div class="playmodule" id="log">
                     <div class="header">

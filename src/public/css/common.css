@@ -1210,47 +1210,66 @@
         }
         
         
-    .data.player.red {
+    .data.player.red, tr.red {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 75%, rgba(255,0,0,0.85));
     }
     .data.player.red.active {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 75%, rgba(255,0,0,0.85));
     }
-    .data.player.blue {
+    .data.player.blue, tr.blue {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 75%, rgba(0,50,255,0.85));
     }
     .data.player.blue.active {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 75%, rgba(0,50,255,0.85));
     }
-    .data.player.yellow {
+    .data.player.yellow, tr.yellow {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 75%, rgba(255,255,0,0.85));
     }
     .data.player.yellow.active {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 75%, rgba(255,255,0,0.85));
     }
-    .data.player.green {
+    .data.player.green, tr.green {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 75%, rgba(0,185,0,0.85));
     }
     .data.player.green.active {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 75%, rgba(0,185,0,0.85));
     }
-    .data.player.orange {
+    .data.player.orange, tr.orange {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 75%, rgba(255,180,0,0.85));
     }
     .data.player.orange.active {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 75%, rgba(255,180,0,0.85));
     }
-    .data.player.brown {
+    .data.player.brown, tr.brown {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 75%, rgba(40,20,0,0.85));
     }
     .data.player.brown.active {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 75%, rgba(40,20,0,0.85));
     }
-    .data.player.purple {
+    .data.player.purple, tr.purple {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 75%, rgba(180,0,155,0.85));
     }
     .data.player.purple.active {
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 75%, rgba(180,0,155,0.85));
+    }
+    
+    table.statistics {
+        border-spacing: 5px;
+    }
+    .statistics tr .user-avatar {
+        height: 24px;
+        width: 24px;
+        margin-left: 3px;
+    }
+    .statistics tr {
+        height: 24px;
+        width: 24px;
+    }
+    
+    .statistics th,
+    .statistics td.data {
+        padding: 3px;
+        text-align: center;
     }
     
 

@@ -101,6 +101,8 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
         
         $this->updateContinents($match);
         
+        $event->continent = $defenderRegion->fresh()->continent;
+                
         return new ServerEvent($eventName, $event->getData(), $match);
     }
     

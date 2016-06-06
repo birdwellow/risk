@@ -1474,6 +1474,57 @@ function Log(elementId){
 	
 }
 
+function Statistics(elementId){
+	
+	var container = $("#" + elementId + "content");
+	
+	var table = HTML.make("table", "statistics");
+	var headRow = HTML.make("tr")
+			.append(HTML.make("th"))
+			.append(HTML.make("th").html("Countries"))
+			.append(HTML.make("th").html("Continents"));
+	table.append(headRow);
+	
+	var playerRows = [];
+	for (var i in Model.players) {
+		var tdClass = i % 2 === 0 ? "even" : "odd";
+		var player = Model.players[i];
+		var playerRow = HTML.make("tr", player.matchcolor);
+		playerRow.player = player;
+		playerRow.dataCells = {
+			label: HTML.make("td"),
+			countries: HTML.make("td", "data"),
+			continents: HTML.make("td", "data")
+		};
+		
+		var avatar = HTML.make("img", "user-avatar").attr("src", "/img/avatars/" + player.avatarfile);
+		playerRow.dataCells.label
+			.append(avatar)
+			.append(player.name);
+		playerRow.append(playerRow.dataCells.label)
+			.append(playerRow.dataCells.countries)
+			.append(playerRow.dataCells.continents);
+		table.append(playerRow);
+		playerRows.push(playerRow);
+	}
+	
+	container.html(table);
+	
+	var update = function () {
+		for (var i in playerRows) {
+			var playerRow = playerRows[i];
+			var player = playerRow.player;
+			playerRow.dataCells.continents.html(player.continents.length);
+			playerRow.dataCells.countries.html(player.regions.length);
+		}
+	};
+	
+	return {
+		update: update
+	};
+	
+}
+
 function ViewModes(elementId, parent){
 	
 	var module = $("#" + elementId);
@@ -1607,6 +1658,7 @@ function SideBar(model, config, context) {
 			}
 			cardStack.renderCards(Model.me, context);
 			playerList.update();
+			statistics.update();
 		},
 
 		fire : function(event){
@@ -1623,6 +1675,8 @@ function SideBar(model, config, context) {
 	
 	var log = new Log("log", self);
 	window.log = log.log;
+	
+	var statistics = new Statistics("statistics");
 	
 	var playerList = new PlayerList("players");
 	window.online = playerList.online;
