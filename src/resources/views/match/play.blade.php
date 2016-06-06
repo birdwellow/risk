@@ -110,7 +110,7 @@
                 <div class="playmodule" id="statistics">
                     <div class="header">
                         <img class="icon" src="/img/statistics.png">
-                        {{ Lang::get( 'Statisticsss' ) }}
+                        {{ Lang::get( 'match.sidebar.statistics' ) }}
                     </div>
 
                     <div class="body" id="statisticscontent">

@@ -111,6 +111,7 @@ return [
         'sidebar.cards.trade' => "Trade",
         'sidebar.players' => "Players",
         'sidebar.log' => "Match Log",
+        'sidebar.statistics' => "Statistics",
     
     
         'info.troopgain' => ":user receives enforcement units and may trade cards.",

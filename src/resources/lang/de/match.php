@@ -110,6 +110,7 @@ return [
         'sidebar.cards.trade' => "Tauschen",
         'sidebar.players' => "Spieler",
         'sidebar.log' => "Match-Log",
+        'sidebar.statistics' => "Statistik",
     
     
         'info.troopgain' => ":user erh&auml;lt Verst&auml;rkungen und tauscht evtl. Karten ein.",
