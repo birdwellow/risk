@@ -2,8 +2,6 @@
 
 @section('content')
 
-<img src="/img/world.png" class="background-img"/>
-
 <div class="container">
     
         <div class="col-md-10 col-md-offset-1">
@@ -45,6 +43,21 @@
                                                         </label>
                                                         <div class="col-md-6">
                                                                 <input type="file" name="new_user_avatarfile" accept="image/*">
+                                                        </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                        <label class="col-md-4 control-label">
+                                                                {{ Lang::get('input.new_user_theme') }}
+                                                        </label>
+                                                        <div class="col-md-6 data">
+                                                                <select class="{{ invalid('new_user_theme') }}" name="new_user_theme" id="new_user_theme">
+                                                                    @foreach($allowedThemes as $theme)
+                                                                    <option value="{{ $theme }}" {{ Auth::user()->csstheme == $theme ? 'selected' : '' }}>
+                                                                            {{ Lang::get('input.new_user_theme.' . $theme) }}
+                                                                    </option>
+                                                                    @endforeach
+                                                                </select>
                                                         </div>
                                                 </div>
 

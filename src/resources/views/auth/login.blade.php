@@ -22,8 +22,6 @@
     </div>
 </div>
 
-<img src="/img/world.png" class="background-img welcome"/>
-
 <div id="tour-carousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#tour-carousel" data-slide-to="0" class="active"></li>

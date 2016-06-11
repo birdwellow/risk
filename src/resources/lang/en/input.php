@@ -16,6 +16,9 @@ return [
         'new_user_password' => 'New Password',
         'new_user_password_confirmation' => "Confirm New Password",
         'new_user_avatarfile' => "Avatar File",
+        'new_user_theme' => "Theme",
+            'new_user_theme.classic' => "Classic",
+            'new_user_theme.coldwar' => "Cold War",
     
         'user_email' => "E-Mail Address",
         'user_password' => 'Password',

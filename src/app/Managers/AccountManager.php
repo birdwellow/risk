@@ -19,6 +19,10 @@ use Game\Exceptions\GameException;
 class AccountManager {
     
         protected $passwords;
+        
+        protected $sessionTheme = "theme";
+        protected $fallbackTheme = "classic";
+        protected $allowedThemes = ["classic", "coldwar"];
 
         protected $sessionLangToken = "language";
         protected $fallbackLocale = "en";
@@ -70,6 +74,57 @@ class AccountManager {
                 }
                 
                 return $this->getSessionAppLocale();
+                
+        }
+        
+        
+        public function getAllowedThemes(){
+            
+                return $this->allowedThemes;
+            
+        }
+        
+        
+        public function changeThemeForUser($user, $theme){
+
+                if(in_array($theme, $this->allowedThemes)){
+                    $user->csstheme = $theme;
+                    $user->save();
+                }
+                
+                $this->changeThemeForSession($theme);
+
+        }
+        
+        
+        public function changeThemeForSession($theme) {
+            
+                if(in_array($theme, $this->allowedThemes)){
+                    Session::set($this->sessionTheme, $theme);
+                    Log::info("Switched to $theme");
+                }
+                
+        }
+
+
+        public function getSessionTheme() {
+
+                if(!Session::get($this->sessionTheme)){
+                    Session::set($this->sessionTheme, $this->fallbackTheme);
+                }
+                
+                return Session::get($this->sessionTheme);
+                
+        }
+
+
+        public function getUserTheme($user) {
+            
+                if($user && $user->csstheme){
+                    Session::set($this->sessionTheme, $user->csstheme);
+                }
+                
+                return $this->getSessionTheme();
                 
         }
         

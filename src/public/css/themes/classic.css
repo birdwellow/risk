@@ -1,0 +1,22 @@
+
+    @font-face {
+      font-family: 'Garamond';
+      font-style: normal;
+      font-weight: 400;
+      src: url('/font/EBGaramond.otf') format('opentype');
+    }
+    
+    body {
+        background:
+            url(/img/classic-world.png) no-repeat center 50px,
+            url(/img/classic-background.jpg);
+    }
+    
+    .side-toggle,
+    #bug-reporter-panel,
+    .ui-menu,
+    .card,
+    #modal-dialog.info,
+    .container .dropdown-menu{
+        background-image: url("/img/classic-background.jpg");
+    }

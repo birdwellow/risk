@@ -1,0 +1,23 @@
+
+    @font-face {
+      font-family: 'Garamond';
+      font-style: normal;
+      font-weight: 400;
+      src: url('/font/Oswald-Regular.woff') format('woff2');
+    }
+    
+    body {
+        background:
+            url(/img/coldwar-world.png) no-repeat center 50px,
+            url(/img/coldwar-grid.png),
+            linear-gradient(to right, #121, #daa);
+    }
+    
+    .side-toggle,
+    #bug-reporter-panel,
+    .ui-menu,
+    .card,
+    #modal-dialog.info,
+    .container .dropdown-menu{
+        background-image: url("/img/coldwar-background-secondary.jpg");
+    }

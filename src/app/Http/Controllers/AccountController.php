@@ -54,8 +54,10 @@ class AccountController extends Controller {
 
         
         public function options() {
-            
-		return view('user.options');
+                
+                $allowedThemes = $this->accountManager->getAllowedThemes();
+		return view('user.options')
+                        ->with("allowedThemes", $allowedThemes);
                 
 	}
         
@@ -67,8 +69,10 @@ class AccountController extends Controller {
                 $newUserName = Input::get('new_user_name');
                 $newUserEmail = Input::get('new_user_email');
                 $newUserAvatarFile = Input::file('new_user_avatarfile');
+                $newUserTheme = Input::get('new_user_theme');
                 Log::info($newUserEmail);
                 Log::info($newUserAvatarFile);
+                Log::info($newUserTheme);
                 
                 $attributes = array();
                 if($user->name !== $newUserName){
@@ -80,10 +84,14 @@ class AccountController extends Controller {
                 if($newUserAvatarFile){
                     $attributes["new_user_avatarfile"] = $newUserAvatarFile;
                 }
+                if($user->csstheme !== $newUserTheme){
+                    $attributes["new_user_theme"] = $newUserTheme;
+                }
                 $this->check($attributes, "INVALID.OPTIONS");
                 
                 $this->accountManager->setNameForUser($user, $newUserName);
                 $this->accountManager->setEmailForUser($user, $newUserEmail);
+                $this->accountManager->changeThemeForUser($user, $newUserTheme);
                 if($newUserAvatarFile){
                     $this->accountManager->setAvatarFileForUser($user, $newUserAvatarFile);
                 }

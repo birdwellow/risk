@@ -12,6 +12,7 @@
 	<link href="/css/bootstrap-theme.css" rel="stylesheet">
 	<link href="/css/jquery-ui.css" rel="stylesheet">
 	<link href="/css/common.css" rel="stylesheet">
+	<link href="/css/themes/{{ session('theme') }}.css" rel="stylesheet" id="theme-css-file">
 	<!--link href="/css/DEF.css" rel="stylesheet"-->
 
 	<script src="/js/thirdparty/jquery.min.js"></script>
@@ -27,7 +28,6 @@
 	<![endif]-->
 </head>
 <body>
-    
         <div class="side-toggles">
             <div class="side-toggle" toggle-for="bug-reporter">
                 <img src="/img/report.png" class="icon">

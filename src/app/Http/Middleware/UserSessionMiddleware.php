@@ -6,6 +6,7 @@ use Game\Managers\AccountManager;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserSessionMiddleware {
     
@@ -30,6 +31,9 @@ class UserSessionMiddleware {
             
                 $userLocale = $this->accountManager->getUserAppLocale(Auth::user());
                 App::setLocale($userLocale);
+                
+                $this->accountManager->getUserTheme(Auth::user());
+                //Session::put('theme', $userTheme);
                 
 		return $next($request);
                 

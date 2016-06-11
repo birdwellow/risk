@@ -2,8 +2,6 @@
 
 @section('content')
 
-<img src="/img/world.png" class="background-img"/>
-
 <script>
     
     var joinId = "{{ Auth::user()->joinid }}";
