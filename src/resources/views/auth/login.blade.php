@@ -1,12 +1,14 @@
 @extends('app')
 
+@section('body-class'){{ 'login' }}@stop
+
 @section('content')
 
 <div class="welcome">
     <div class="title">
         {{ Lang::get("message.title.welcome") }}
     </div>
-    <img src="/img/logo.png">
+    <div class="showcase"></div>
     <div>
         <button class="login-link btn btn-primary">
                 {{ Lang::get('message.button.login') }}

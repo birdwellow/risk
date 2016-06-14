@@ -25,7 +25,7 @@
                                 <table class="summary">
                                     <tr>
                                         <td>
-                                            <img src="/img/hourglass.png" style="height: 100px; margin: 20px;">
+                                            <div class="waiting-img"></div>
                                         </td>
                                         <td>
                                             <h1>

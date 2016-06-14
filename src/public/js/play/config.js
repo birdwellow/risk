@@ -629,7 +629,8 @@ var Config = {
 				},
 				
 				"button.nextphase.clicked" : function(context, event){
-					if(!Model.roundphasedata.shiftedTroops) {
+					if(!Model.roundphasedata || 
+							(Model.roundphasedata && !Model.roundphasedata.shiftedTroops)) {
 						UI.confirmAction(function(){
 								proxy.send("phase.finish");
 							},

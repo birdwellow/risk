@@ -8,16 +8,245 @@
     
     body {
         background:
-            url(/img/coldwar-world.png) no-repeat center 50px,
-            url(/img/coldwar-grid.png),
+            url(/img/themes/coldwar/world.png) no-repeat center 50px,
+            url("/img/themes/coldwar/grid.png"),
             linear-gradient(to right, #121, #daa);
     }
     
+    body.play,
+    body.login {
+        background:
+            url("/img/themes/coldwar/grid.png"),
+            linear-gradient(to right, #121, #daa);
+    }
+    .showcase {
+        height: 250px;
+        width: 100%;
+        background: url("/img/themes/coldwar/welcome.png") no-repeat scroll center 0;
+    }
+    .waiting-img {
+        height: 400px;
+        width: 100px;
+        margin: 20px 40px 20px 0px;
+        background: url("/img/themes/coldwar/waiting.png") no-repeat scroll center center;
+    }
+    #tour-carousel{
+        margin-bottom: 30px;
+        margin-top: 620px;
+    }
+    
+    #bug-reporter-panel {
+        background:
+            url("/img/themes/coldwar/grid.png"),
+            linear-gradient(to bottom, #121, #daa);
+    }
     .side-toggle,
-    #bug-reporter-panel,
-    .ui-menu,
-    .card,
-    #modal-dialog.info,
-    .container .dropdown-menu{
-        background-image: url("/img/coldwar-background-secondary.jpg");
+    .card {
+        background:
+            linear-gradient(to bottom, #121, #544);
+    }
+    
+    img {
+        filter: grayscale(67%);
+    }
+    
+    
+    .welcome img {
+        margin-top: 0;
+        margin-bottom: 30px;
+    }
+    
+    .card .symbol.category-1{
+        background: rgba(0, 0, 0, 0) url(/img/themes/coldwar/symbol-infantry.png) repeat scroll 0 0 / cover;
+    }
+    .card .symbol.category-2{
+        background: rgba(0, 0, 0, 0) url(/img/themes/coldwar/symbol-cavalry.png) repeat scroll 0 0 / cover;
+    }
+    .card .symbol.category-3{
+        background: rgba(0, 0, 0, 0) url(/img/themes/coldwar/symbol-artillery2.png) repeat scroll 0 0 / cover;
+    }
+    
+    .status.started {
+        background: rgba(120, 160, 120, 0.85);
+    }
+    .status.waitingforjoins {
+        background: rgba(147, 77, 0, 0.85);
+    }
+    
+    .alert-success {
+        background-color: rgba(100, 140, 100, 0.85);
+    }
+    .alert-error {
+        background-color: rgba(127, 60, 60, 0.85);
+        border: 1px solid rgba(255, 120, 120, 1);
+    }
+    .alert-error hr {
+        border-top-color: #e4b9c0;
+    }
+    .alert-error .alert-link {
+        color: #843534;
+    }
+    
+    .usernamedisplay .removesymbol {
+        border-radius: 0 3px 3px 0;
+        margin-right: 0;
+    }
+    
+    .container .dropdown-menu > li:hover,
+    .container .dropdown-menu > li:focus {
+      text-decoration: none;
+      background-color: rgba(255,255,255,0.35);
+    }
+    
+    .close {
+        margin: -5px 5px;
+    }
+    .toggle-btn:hover {
+        padding: 5px 8px 3px 10px;
+        background: rgba(255,120,120,0.15);
+        border: 1px solid rgba(255,120,120,0.5);
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.35) inset;
+    }
+    .toggle-btn.active {
+        padding: 7px 6px 1px 12px;
+        background: rgba(255,120,120,0.35);
+        border: 1px solid rgba(255,120,120,0.75);
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5) inset;
+    }
+    .toggle-btn.changed {
+        background: rgba(255,120,120,1);
+        animation: changed 2s linear infinite;
+    }
+    @keyframes changed {
+        0% { background: none }
+        50% { background: rgba(255,120,120,1) }
+        100% { background: none }
+    }
+    
+    .btn-primary {
+        color: #fff;
+        background-color: rgba(160,160,160,0.5);
+        padding: inherit;
+        padding: 12px;
+        background-image: none;
+        border: 1px solid rgba(160,160,160,0.5);
+    }
+    .btn-primary:hover{
+        color: #fff;
+        background-color: rgba(160,160,160,0.5);
+        box-shadow: inset 0 2px 2px 2px rgba(0,0,0,0.5);
+        padding: 14px 10px 10px 14px;
+        border: 1px solid rgba(160,160,160,0.75);
+    }
+    .btn-primary:focus,
+    .btn-primary.focus,
+    .btn-primary:active,
+    .btn-primary.active{
+        color: #fff;
+        background-color: rgba(160,160,160,0.75);
+        box-shadow: inset 1px 3px 3px 3px rgba(0,0,0,0.5);
+        padding: 15px 9px 9px 15px;
+        border: 1px solid rgba(160,160,160,1);
+    }
+    
+    .btn-primary.next-phase{
+        background: rgba(255,120,120,0.15);
+        border: 1px solid rgba(255,120,120,0.5);
+        border-radius: 3px;
+    }
+    .btn-primary.next-phase:hover{
+        background: rgba(255,120,120,0.35);
+        border: 1px solid rgba(255,120,120,0.75);
+    }
+    .btn-primary.next-phase:active{
+        background: rgba(255,120,120,0.6);
+        border: 1px solid rgba(255,120,120,1);
+    }
+    .btn-primary.next-round{
+        background: rgba(60,120,255,0.15);
+        border-radius: 3px;
+        border: 1px solid rgba(60,120,255,0.5);
+    }
+    .btn-primary.next-round:hover{
+        background: rgba(60,120,255,0.35);
+        border: 1px solid rgba(60,120,255,0.75);
+    }
+    .btn-primary.next-round:active{
+        background: rgba(60,120,255,0.6);
+        border: 1px solid rgba(60,120,255,1);
+    }
+    .btn-primary.next-phase[disabled=disabled],
+    .btn-primary.next-phase[disabled=disabled]:hover,
+    .btn-primary.next-phase[disabled=disabled]:active{
+        opacity: 0.5;
+        background: rgba(155, 155, 155, 0.6);
+        border: 1px solid rgba(255,255,255, 0.5);
+        color: #fff;
+        padding: inherit;
+        padding: 12px;
+        box-shadow: none;
+    }
+    
+    a.action,
+    input.action{
+        background: rgba(120,180,120,0.5);
+    }
+    a.action:hover,
+    input.action:hover{
+        background: rgba(120,180,120,0.75);
+    }
+    a.action:active{
+        background: rgba(120,180,120,1);
+    }
+    
+    .state-symbol.active{
+        background: rgba(255,255,255,0.25);
+    }
+    
+    
+/****************************************************
+    Navigation Bar
+****************************************************/
+
+    .navbar-brand {
+        padding-right: 60px !important;
+        margin-right: 30px !important;
+        background: url(/img/themes/coldwar/logo.png) no-repeat right 20px;
+    }
+    
+    .navbar > .container .navbar-brand,
+    .navbar > .container-fluid .navbar-brand{
+        margin: 0;
+    }
+    
+    .navbar-default .navbar-nav > li > a:hover,
+    .navbar-default .navbar-nav > li > a:focus {
+        color: inherit;
+        background-color: rgba(255,255,255,0.25);
+    }
+    
+    .navbar-default .navbar-nav > .open > a,
+    .navbar-default .navbar-nav > .open > a:hover,
+    .navbar-default .navbar-nav > .open > a:focus {
+        background-color: rgba(255,255,255,0.15);
+        background-image: none;
+        box-shadow: inset 5px 5px 5px rgb(0,0,0);
+        opacity: 0.75;
+        color: #ccc;
+    }
+    
+    
+
+/****************************************************
+    Modal Dialog
+****************************************************/
+
+    #modal-dialog.error {
+        background: rgba(200, 80, 80,0.85);
+    }
+    #modal-dialog.warn {
+        background: rgba(225, 120, 70, 0.85);
+    }
+    #modal-dialog.info {
+        background: linear-gradient(45deg, #121, #daa);
     }

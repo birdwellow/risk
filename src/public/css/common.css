@@ -171,30 +171,12 @@
         line-height: 70px;
         height: 90px;
     }
-    .navbar > .container .navbar-brand,
-    .navbar > .container-fluid .navbar-brand{
-        margin: 5px -15px -5px;
-    }
     .navbar-brand img {
         width:80px;
         margin:-25px -0px 5px -30px;
     }
     .navbar-default .navbar-nav > li > a {
       color: #fff;
-    }
-    .navbar-default .navbar-nav > li > a:hover,
-    .navbar-default .navbar-nav > li > a:focus {
-        color: inherit;
-        background-color: rgba(0,0,0,0.5);
-    }
-    .navbar-default .navbar-nav > .open > a,
-    .navbar-default .navbar-nav > .open > a:hover,
-    .navbar-default .navbar-nav > .open > a:focus {
-        background-color: rgba(0,0,0,0.5);
-        background-image: none;
-        box-shadow: inset 5px 5px 5px rgb(0,0,0);
-        opacity: 0.75;
-        color: #ccc;
     }
     .nav .open > a,
     .nav .open > a:hover,
@@ -275,12 +257,6 @@
         float: left;
         margin-bottom: 10px;
     }
-    .status.started {
-        background: #3c763d;
-    }
-    .status.waitingforjoins {
-        background: rgba(255,127,0,0.85);
-    }
     .namemarker{
         font-weight: bold;
         text-decoration: underline;
@@ -313,30 +289,6 @@
         color: inherit;
         background-color: inherit;
         border-color: inherit;
-    }
-    .btn-primary {
-        color: #fff;
-        background-color: rgba(0,0,0,0.5);
-        padding: inherit;
-        padding: 12px;
-        background-image: none;
-        border: none;
-    }
-    .btn-primary:hover{
-        color: #fff;
-        background-color: rgba(0,0,0,0.5);
-        box-shadow: inset 0 2px 2px 2px rgba(0,0,0,0.5);
-        padding: 14px 10px 10px 14px;
-        border: none;
-    }
-    .btn-primary:focus,
-    .btn-primary.focus,
-    .btn-primary:active,
-    .btn-primary.active{
-        color: #fff;
-        background-color: rgba(0,0,0,0.5);
-        box-shadow: inset 1px 3px 3px 3px rgba(0,0,0,0.5);
-        padding: 15px 9px 9px 15px;
     }
     .btn-primary.disabled,
     .btn-primary:disabled,
@@ -465,10 +417,8 @@
         background: rgba(255,255,255,0.15);
     }
     .usernamedisplay .removesymbol {
-        border-radius: 3px;
         cursor: pointer;
         padding: 0 7px;
-        margin: 5px;
         font-size: 1.2em;
         font-weight: bold;
     }
@@ -511,6 +461,7 @@
         margin-top: 8px;
         padding: 0;
     }
+    
     .container .dropdown-menu > li {
         display: block;
         padding: 5px;
@@ -519,11 +470,6 @@
         line-height: 1.42857143;
         white-space: nowrap;
         cursor: pointer;
-    }
-    .container .dropdown-menu > li:hover,
-    .container .dropdown-menu > li:focus {
-      text-decoration: none;
-      background-color: rgba(0,0,0,0.5);
     }
     
     
@@ -535,24 +481,15 @@
     .alert {
         box-shadow: none;
         border: none;
-    }
-    .alert-success {
-        background-color: #3c763d;
-        border-color: inherit;
-        background-image: none;
-        color: #dff0d8;
-    }
-    .alert-error {
-        background-color: #a94442;
-        border: none;
-        background-image: none;
         color: #fff;
     }
-    .alert-error hr {
-        border-top-color: #e4b9c0;
+    .alert-success {
+        border-color: inherit;
+        background-image: none;
     }
-    .alert-error .alert-link {
-        color: #843534;
+    .alert-error {
+        border: none;
+        background-image: none;
     }
     .alert-matchnotification{
         background: rgba(0, 0, 0, 0.25);
@@ -591,18 +528,6 @@
     input.warn:hover,
     input.warn:hover{
         color: #ea645f;
-    }
-    input.action{
-        color: #3c873d;
-    }
-    input.action:hover{
-        color: #3c873d;
-    }
-    a.action{
-        background: #3c873d;
-    }
-    a.action:hover{
-        background: #3c873d;
     }
     a.suggestion{
         opacity: 0.7;
@@ -677,14 +602,6 @@
     #modal-dialog .btn {
         margin: 0 5px;
         min-width: 100px;
-    }
-    #modal-dialog.error {
-        background: rgba(200,0,0,0.85);
-    }
-    #modal-dialog.warn {
-        background: rgba(255,127,0,0.85);
-    }
-    #modal-dialog.info {
     }
     #modal-dialog .title{
         margin: -10px 5px 0;
@@ -841,39 +758,6 @@
         padding: 10px;
         border-radius: 5px;
     }
-    .state-symbol.active{
-        background: rgba(0,0,0,0.5);
-    }
-    .btn-primary.next-phase{
-        background: rgba(0,155,0,0.35);
-        border-radius: 3px;
-    }
-    .btn-primary.next-phase:hover{
-        background: rgba(0,155,0,0.5);
-    }
-    .btn-primary.next-phase:active{
-        background: rgba(0,155,0,0.6);
-    }
-    .btn-primary.next-round{
-        background: rgba(0, 30, 155, 0.75);
-        border-radius: 3px;
-    }
-    .btn-primary.next-round:hover{
-        background: rgba(0, 30, 155,0.75);
-    }
-    .btn-primary.next-round:active{
-        background: rgba(0, 30, 155,0.75);
-    }
-    .btn-primary.next-phase[disabled=disabled],
-    .btn-primary.next-phase[disabled=disabled]:hover,
-    .btn-primary.next-phase[disabled=disabled]:active{
-        opacity: 0.5;
-        background: rgba(155, 155, 155, 0.6);
-        color: #fff;
-        padding: inherit;
-        padding: 12px;
-        box-shadow: none;
-    }
     .symbol{
         width: 20%;
         text-align: center;
@@ -916,24 +800,6 @@
         background: none;
         border: none;
         border-radius: 3px;
-    }
-    .toggle-btn:hover {
-        padding: 6px 9px 4px 11px;
-        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.35) inset;
-    }
-    .toggle-btn.active {
-        padding: 8px 7px 2px 13px;
-        background: rgba(0,0,0,0.25);
-        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5) inset;
-    }
-    .toggle-btn.changed {
-        background: rgba(255,255,255,0.5);
-        animation: changed 2s linear infinite;
-    }
-    @keyframes changed {
-        0% { background: none }
-        50% { background: rgba(255,255,255,0.5) }
-        100% { background: none }
     }
     #playmodule-container {
         margin-top: 5px;
@@ -1099,16 +965,6 @@
     }
     .card.purple.selected .body {
         background: rgba(210,0,180,1);
-    }
-    
-    .card .symbol.category-1{
-        background: rgba(0, 0, 0, 0) url("/img/symbols/infantry.png") repeat scroll 0 0 / cover;
-    }
-    .card .symbol.category-2{
-        background: rgba(0, 0, 0, 0) url(/img/symbols/cavalry.png) repeat scroll 0 0 / cover;
-    }
-    .card .symbol.category-3{
-        background: rgba(0, 0, 0, 0) url(/img/symbols/artillery.png) repeat scroll 0 0 / cover;
     }
     
     #statscontent{
@@ -1580,10 +1436,6 @@
         height: 400px;
     }
     
-    #tour-carousel{
-        margin-bottom: 30px;
-        margin-top: 500px;
-    }
     .carousel-caption{
         font-size: 1.5em;
         background: rgba(0, 0, 0, 0.65);

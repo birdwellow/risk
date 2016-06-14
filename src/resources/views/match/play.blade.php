@@ -1,6 +1,9 @@
 @extends('app')
 
+@section('body-class'){{ 'play' }}@stop
+
 @section('content')
+
     
 <script src="/js/thirdparty/kinetic-v5.1.0.min.js" defer="defer"></script>
 

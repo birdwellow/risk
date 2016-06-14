@@ -27,7 +27,7 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
-<body>
+<body class="@yield('body-class', '')">
         <div class="side-toggles">
             <div class="side-toggle" toggle-for="bug-reporter">
                 <img src="/img/report.png" class="icon">
@@ -84,7 +84,6 @@
 				<a class="navbar-brand">
                                         <nobr>
                                             Conquera
-                                            <img src="/img/logo.new.png">
                                         </nobr>
                                 </a>
 			</div>

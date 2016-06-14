@@ -76,7 +76,9 @@ class PerformAttackCommand extends AbstractGameFlowControllerCommand {
                 $roundPhaseData = new \stdClass();
                 $roundPhaseData->conqueredregions = 0;
             } else {
-                $roundPhaseData = json_decode($roundPhaseData);
+                if(!is_object($roundPhaseData)){
+                    $roundPhaseData = json_decode($roundPhaseData);
+                }
                 if(!isset($roundPhaseData->conqueredregions)){
                     $roundPhaseData->conqueredregions = 0;
                 }
